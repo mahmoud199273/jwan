@@ -44,6 +44,8 @@ class CreateUsersTable extends Migration
             
             $table->string('video')->nullable();
 
+            
+
             $table->string('facebook')->nullable();
             $table->integer('facebook_follwers')->nullable();
 

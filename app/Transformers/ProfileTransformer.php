@@ -28,6 +28,8 @@ class ProfileTransformer extends Transformer
 
             'type'          => (boolean) $user->type,
 
+            'minimumRate'   => $user->minimumRate,
+
             'facebook'     => $user->facebook,
             'facebook_follwers' => $user->facebook_follwers,
 

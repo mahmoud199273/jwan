@@ -286,6 +286,8 @@ class AuthController extends Controller
 
             'type'          => 'required',
 
+            'minimumRate'   =>  'required',
+
             'facebook'      => 'required',
 
             'facebook_follwers'   => 'required',
@@ -357,6 +359,8 @@ class AuthController extends Controller
             $user->account_manger      = $request->account_manger;
 
             $user->type              = $request->type;
+
+            $user->minimumRate      =$request->minimumRate;
 
             $user->facebook          = $request->facebook;
 
