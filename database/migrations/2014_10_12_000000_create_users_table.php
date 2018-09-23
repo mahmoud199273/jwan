@@ -14,19 +14,32 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
+
             $table->increments('id');
-            $table->string('name')->nullable();
+            
             $table->string('email')->unique()->nullable();
+
             $table->string('phone')->unique()->index();
             
             $table->string('password');
+
             $table->string('image')->nullable();
+
+            $table->string('name')->nullable();
+
+            $table->enum('gender',[0,1])->nullable(); // male OR female
+
+            $table->string('nationality')->nullable();
+
+            $table->longtext('notes')->nullable();
+
+            $table->enum('account_manger',[0,1])->nullable();
+
             
-            $table->enum('type',[0,1,2])->nullable(); //Admin OR USer OR influncer
+            $table->enum('type',[0,1,2])->nullable(); //government OR personal OR company
 
             $table->enum('is_active',[0,1])->nullable();
-            
-            $table->enum('gender',[1,2])->nullable(); // Male OR female 
+             
             
             
             $table->string('video')->nullable();
@@ -49,7 +62,7 @@ class CreateUsersTable extends Migration
             $table->string('youtube')->nullable();
             $table->integer('youtube_follwers')->nullable();
 
-            $table->longtext('notes')->nullable();
+            
 
             $table->rememberToken();
             $table->timestamps();

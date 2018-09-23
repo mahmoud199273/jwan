@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
-    protected $fillable = ['country','code'];
-
-    public function user_id()
+     public function area()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Area::class);
+    }
+
+    public function user()
+    {
+        return $this->hasMany(User::class);
     }
 }

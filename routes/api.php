@@ -17,9 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('user/register', 'APIRegisterController@register');
+//Route::post('user/register', 'APIRegisterController@register');
 
-Route::post('user/login', 'APILoginController@login');
+//Route::post('user/login', 'APILoginController@login');
 
 
 
@@ -30,3 +30,46 @@ Route::middleware('jwt.auth')->get('/users', function (Request $request) {
 //Route::get('user/{id}/', 'APIRegisterController@showprofile');
 
 //Route::post('user/{id}/','APIRegisterController@updateProfile');
+
+Route::group(['prefix' => 'v1'], function() {
+
+
+  // Users Routes
+
+
+Route::post('/register', 'API\V1\AuthController@register');
+
+Route::post('/login', 'API\V1\AuthController@login');
+
+Route::post('/logout', 'API\V1\AuthController@logout');
+
+Route::post('/refresh/token','API\V1\AuthController@refreshToken');
+
+//Route::post('/reset/password', 'API\V1\ResetPasswordController@resetPassword');
+
+
+
+Route::get('user/profile', 'API\V1\UserController@profile');
+
+Route::post('user/update/profile', 'API\V1\UserController@updateProfile');
+
+Route::post('user/update/password'	, 'API\V1\UserController@updatePassword');
+
+
+//Influncer Routes
+
+Route::post('influncer/register', 'API\V1\AuthController@registerInfluncer');
+
+
+Route::get('influncer/profile', 'API\V1\UserController@profile');
+
+ Route::resource('countries', 'API\V1\CountryController');
+
+ Route::resource('ares', 'API\V1\AreasController');
+
+ Route::resource('categories', 'API\V1\CategoriesController');
+
+
+
+
+});
