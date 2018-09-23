@@ -17,7 +17,7 @@ class ProfileTransformer extends Transformer
             
             'email'         => $user->email,
             'phone'         => $user->phone,
-            'image'         => ($user->image) ?config('app.url').$user->user_image : null,
+            'image'         => ($user->image) ?config('app.url').$user->image : null,
             //'is_instructor' => (boolean) $user->is_instructor,
             'notes'         => $user->notes,
             'gender'        =>(boolean)$user->gender,
@@ -45,7 +45,13 @@ class ProfileTransformer extends Transformer
             'linkedin_follwers' => $user->linkedin_follwers,
 
             'youtube'   => $user->youtube,
-            'youtube_follwers' => $user->youtube_follwers
+            'youtube_follwers' => $user->youtube_follwers,
+
+            'categories_id' =>(int) $user->categories_id,
+
+            'countries_id' =>(int) $user->countries_id,
+
+            'areas_id' =>(int) $user->areas_id
 
         ];
     }

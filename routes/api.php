@@ -36,6 +36,7 @@ Route::group(['prefix' => 'v1'], function() {
 
   // Users Routes
 
+Route::post('/validate/email', 'Api\V1\AuthController@isEmailExists');
 
 Route::post('/register', 'API\V1\AuthController@register');
 

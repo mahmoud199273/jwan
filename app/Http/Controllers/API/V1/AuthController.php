@@ -27,7 +27,8 @@ class AuthController extends Controller
   	}
 
 
-	public function sendCode( Request $request )
+	/*
+    *public function sendCode( Request $request )
 	{
 		$validator = Validator::make( $request->all(), [
             'phone'  => 'required|max:16|min:9',
@@ -47,12 +48,13 @@ class AuthController extends Controller
         
 
         return $this->respondCreated(trans('api_msgs.code_sent'));
-	}
+	}*/
 
 
 
 
-    public function formatPhone( $phone )
+    /*
+    *public function formatPhone( $phone )
     {
 	$is_valid_phone = preg_match('/^(9665|\9665|05)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/', $phone);
         if ($is_valid_phone) {
@@ -64,10 +66,11 @@ class AuthController extends Controller
         }
 
         return false;
-    }
+    }*/
 
 
-	public function createVerificationCode( $phone )
+	/*
+    *public function createVerificationCode( $phone )
     {
         $verify_code    = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
         $current_time   = Carbon::now();
@@ -81,7 +84,7 @@ class AuthController extends Controller
 	                                            ]);
         //send message to mobile
        // @sendSMS($phone , __('api_msgs.sms_code_text').$verify_code );
-    }
+    }*/
 
 
     public function isPhoneExists( $phone )
@@ -93,7 +96,8 @@ class AuthController extends Controller
 
 
 
-    public function verifyCode( Request $request ) 
+    /*
+    *public function verifyCode( Request $request ) 
     {
 
     	$validator = Validator::make( $request->all(), [
@@ -138,7 +142,7 @@ class AuthController extends Controller
         }
 
 
-    }
+    }*/
 
 
     public function register( Request $request )
@@ -242,6 +246,8 @@ class AuthController extends Controller
             $user->youtube             = $request->youtube;
 
             $user->youtube_follwers   = $request->youtube_follwers;
+
+            $user->countries_id    = $request->countries_id;
 
             $user->is_active    =  '1'; 
 			$user->save();
@@ -375,6 +381,12 @@ class AuthController extends Controller
             $user->youtube             = $request->youtube;
 
             $user->youtube_follwers   = $request->youtube_follwers;
+
+            $user->categories_id  =$request->categories_id;
+
+            $user->countries_id   =$request->countries_id;
+
+            $user->areas_id   =$request->areas_id;
 
             $user->is_active    =  '1'; 
             $user->save();
@@ -550,7 +562,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 'success', 
                 'message'=> "User successfully logged out."
-            ]);
+            ]); 
         } catch (JWTException $e) {
             // something went wrong whilst attempting to encode the token
             return response()->json([

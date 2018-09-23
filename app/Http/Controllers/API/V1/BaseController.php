@@ -16,11 +16,12 @@ class BaseController extends Controller
 
     use ValidatesRequests, Restable;
 
-    public function sendResponse($result , $message){
+    public function sendResponse($result , $message,$code = 200){
         $response = [
             'success' => true,
             'data' => $result,
-            'message' => $message
+            'message' => $message,
+            'status_code' => $code
         ];
         return response()->json($response , 200);
     }
@@ -36,6 +37,13 @@ class BaseController extends Controller
         }
         return response()->json($response , $code);
         
+    }
+
+    public function transformCollection(Collection $items ) : Collection
+    {
+        return $items->map(function ( $item ){
+            return $this->transform($item  );
+        });
     }
 
 

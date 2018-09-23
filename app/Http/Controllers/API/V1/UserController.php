@@ -32,6 +32,8 @@ class UserController extends Controller
     	return $this->respond(['data' => $this->profileTransformer->transform($user) ]);
     }
 
+
+
     public function influncerProfile( Request $request )
     {
         $influncer =  $this->getAuthenticatedUser();
@@ -39,14 +41,140 @@ class UserController extends Controller
     }
 
 
+
     public function updateProfile( Request $request )
+    {
+        $user =  $this->getAuthenticatedUser();
+
+        $validator = Validator::make( $request->all(), [
+            'name'         => 'required|string|max:50|min:2',
+
+            'email'      => 'required',
+
+            'phone'      => 'required',
+
+            'image'      => 'required|string',
+
+            'notes'     => 'required',
+
+            'country_id' => 'required',
+
+            'type'      => 'required',
+
+            'facebook'      => 'nullable',
+
+            'twitter'      => 'nullable',
+
+            'instgrame'      => 'nullable',
+
+            'snapchat'      => 'nullable',
+
+            'linkedin'      => 'nullable',
+
+            'youtube'      => 'nullable'
+
+            
+            
+        ]);
+
+        
+        if ($validator->fails()) {
+            // return $this->setStatusCode(422)->respondWithError($validator->messages());
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
+        }
+
+       
+
+        $user = User::find( $user->id );
+
+        $user->name      =  $request->name;
+        
+        if ( $request->email )   {
+
+            if ($this->isEmailExists($request->email, $user->id)) {
+                return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
+            }
+            $user->email   = $request->email;
+         }
+
+         if ( $request->phone )   {
+
+            if ($this->isPhoneExists($request->phone, $user->id)) {
+                return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+            }
+            $user->phone   = $request->phone;
+         }
+
+        $user->image   =  $request->image;
+
+        $user->notes       = $request->notes;
+
+        $user->type        = $request->type;
+
+        $user->country_id  = $request->country_id;
+ 
+        $user->facebook    = $request->facebook;
+
+        $user->twitter     = $request->twitter;
+
+        $user->instgrame   = $request->instgrame;
+
+        $user->snapchat    = $request->snapchat;
+
+        $user->snapchat    = $request->snapchat;
+
+        $user->linkedin    = $request->linkedin;
+
+        $user->youtube    = $request->youtube;
+
+
+        $user->save();
+
+        return $this->respondWithSuccess(trans('api_msgs.profile_updated'));
+
+
+    }
+
+    public function updateInfluncerProfile(Request $request )
     {
     	$user =  $this->getAuthenticatedUser();
 
     	$validator = Validator::make( $request->all(), [
-            'name'          => 'required|string|max:50|min:2',
-            'fullname'		=> 'sometimes|string|max:30|min:2',
-            'image'			=> 'string',
+            'name'     => 'required|string|max:50|min:2',
+            'email'	   => 'nullable|string|max:30|min:2',
+            'image'			=> 'nullable',
+            'nationality'   => 'nullable',
+            'notes'         => 'required',
+            'account_manger' => 'required',
+
+            'type' => 'required',
+
+            'facebook' =>'nullable',
+
+            'facebook_follwers' => 'nullable',
+
+            'twitter' => 'nullable',
+
+            'twitter_follwers' => 'nullable',
+
+            'instgrame' => 'nullable',
+
+            'instgrame_follwers' => 'nullable',
+
+            'snapchat' =>'nullable',
+
+            'snapchat_follwers'  => 'nullable',
+
+            'linkedin' => 'nullable',
+
+            'linkedin_follwers' => 'nullable',
+
+            'youtube'  => 'nullable',
+
+            'youtube_follwers' => 'nullable'
+
+
+
         ]);
 
         

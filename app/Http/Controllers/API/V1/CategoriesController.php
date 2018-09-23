@@ -15,7 +15,7 @@ public function index()
 {
     # code...
     $categories = Category::all();
-    return $this->sendResponse($categories->toArray(), 'categories read succesfully');
+    return $this->sendResponse($categories->toArray(), 'categories read succesfully',200);
 }
 
 
