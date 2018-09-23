@@ -15,7 +15,7 @@ public function index()
 {
     # code...
     $countries = Country::all();
-    return $this->sendResponse($countries->toArray(), 'countries read succesfully');
+    return $this->sendResponse($countries->toArray(), 'countries read succesfully',200);
 }
 
 

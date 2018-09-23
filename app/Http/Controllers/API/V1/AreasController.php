@@ -15,7 +15,7 @@ public function index()
 {
     # code...
     $ares = Area::all();
-    return $this->sendResponse($ares->toArray(), 'ares read succesfully');
+    return $this->sendResponse($ares->toArray(), 'ares read succesfully',200);
 }
 
 
