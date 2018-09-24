@@ -2,20 +2,36 @@
 
 
 namespace App\Http\Controllers\API\V1;
-use Illuminate\Http\Request;
+
 use App\Http\Controllers\API\V1\BaseController as BaseController;
+use App\Transformers\CountryTransformer;
 use App\Country;
-use  Validator;
+use Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 
 class CountryController extends BaseController  
 {
 
+        protected $countryTransformer;
+
+        function __construct(Request $request, CountryTransformer $countryTransformer ){
+        App::setlocale($request->lang);
+        // $this->middleware('jwt.auth');
+        $this->countryTransformer = $countryTransformer;
+    }
+
+
 public function index()
 {
     # code...
-    $countries = Country::all();
-    return $this->sendResponse($countries->toArray(), 'countries read succesfully',200);
+    $countries = $this->countryTransformer->transformCollection(Country::all());
+
+    return $this->sendResponse($countries, 'countries read succesfully',200);
 }
 
 

@@ -21,6 +21,7 @@ class AuthController extends Controller
   
 
   	function __construct( Request $request ){
+
         App::setlocale($request->lang);
   		$this->middleware('jwt.auth')->only(['logout']);
 
@@ -92,6 +93,11 @@ class AuthController extends Controller
         return User::where('phone',$phone)->first() ? true : false;
     }
 
+    /*public function isEmailExists( $email )
+    {
+        return User::where('email',$email)->first() ? true : false;
+    }*/
+
 
 
 
@@ -147,7 +153,7 @@ class AuthController extends Controller
 
     public function register( Request $request )
     {
-
+        // dd(App::getLocale());
     	$validator = Validator::make( $request->all(), [
 
             'email'         => 'required',
@@ -160,7 +166,7 @@ class AuthController extends Controller
 
             'image'         => 'required',
 
-            'name'          => 'required',
+            'name'          => 'required|string|max:25|min:2',
 
             'notes'         => 'required',
 
@@ -197,6 +203,8 @@ class AuthController extends Controller
         if ($this->isPhoneExists( $request->phone )) {
            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
         }
+
+        
         
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
@@ -254,7 +262,7 @@ class AuthController extends Controller
 
            // $this->createVerificationCode( arTOen($request->phone) );
 
-            return $this->respondCreated(trans('api_msgs.code_sent'));
+            return $this->respondCreated(trans('api_msgs.success'));
 			
 
 
@@ -284,33 +292,33 @@ class AuthController extends Controller
 
             'account_manger' => 'required',
 
-            'type'          => 'required',
+            
 
             'minimumRate'   =>  'required',
 
             'facebook'      => 'required',
 
-            'facebook_follwers'   => 'required',
+            'facebook_follwers' => 'nullable',
 
-            'twitter'             => 'required',
+            'twitter' => 'nullable',
 
-            'twitter_follwers'    => 'required',
- 
-            'instgrame'           => 'required',
+            'twitter_follwers' => 'nullable',
 
-            'instgrame_follwers'  => 'required',
+            'instgrame' => 'nullable',
 
-            'snapchat'            => 'required',
+            'instgrame_follwers' => 'nullable',
 
-            'snapchat_follwers'   => 'required',
+            'snapchat' => 'nullable',
 
-            'linkedin'            => 'required',
+            'snapchat_follwers' => 'nullable',
 
-            'linkedin_follwers'   => 'required',
+            'linkedin' => 'nullable',
 
-            'youtube'             => 'required',
+            'linkedin_follwers' => 'nullable',
 
-            'youtube_follwers'    => 'required',
+            'youtube'       => 'nullable',
+
+            'youtube_follwers' => 'nullable',
 
             'categories_id'      => 'required',
 
@@ -358,7 +366,7 @@ class AuthController extends Controller
 
             $user->account_manger      = $request->account_manger;
 
-            $user->type              = $request->type;
+            
 
             $user->minimumRate      =$request->minimumRate;
 
@@ -530,15 +538,16 @@ class AuthController extends Controller
     }
 
 
-   /* public function logout(Request $request)
+   /*
+   * public function logout(Request $request)
     {
         $user = $this->getAuthenticatedUser();
 
-        /*$validator = Validator::make( $request->all(), [
+        $validator = Validator::make( $request->all(), [
             'player_id'     => 'required',
         ]);
         
-        /*if ($validator->fails()) {
+        if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('parameters failed validation');
         }
         
@@ -556,7 +565,7 @@ class AuthController extends Controller
     }*/
 
 
-    public function logout(Request $request) 
+      public function logout(Request $request) 
     {
         // Get JWT Token from the request header key "Authorization"
         $token = $request->header('Authorization');
@@ -575,6 +584,8 @@ class AuthController extends Controller
             ], 500);
         }
     }
+
+
 
 
 

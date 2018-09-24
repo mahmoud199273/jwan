@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
             $table->longtext('notes')->nullable();
 
             $table->enum('account_manger',[0,1])->nullable();
-
+            // 0 manager   1 = personal
             
             $table->enum('type',[0,1,2])->nullable(); //government OR personal OR company
 

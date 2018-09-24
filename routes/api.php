@@ -31,12 +31,12 @@ Route::middleware('jwt.auth')->get('/users', function (Request $request) {
 
 //Route::post('user/{id}/','APIRegisterController@updateProfile');
 
-Route::group(['prefix' => 'v1'], function() {
+Route::group(['prefix' => 'v1/{lang}'], function() {
 
 
   // Users Routes
 
-Route::post('/validate/email', 'Api\V1\AuthController@isEmailExists');
+Route::post('/validate/email', 'API\V1\AuthController@isEmailExists');
 
 Route::post('/register', 'API\V1\AuthController@register');
 
@@ -64,9 +64,11 @@ Route::post('influncer/register', 'API\V1\AuthController@registerInfluncer');
 
 Route::get('influncer/profile', 'API\V1\UserController@profile');
 
+
+
  Route::resource('countries', 'API\V1\CountryController');
 
- Route::resource('ares', 'API\V1\AreasController');
+ Route::resource('areas', 'API\V1\AreasController');
 
  Route::resource('categories', 'API\V1\CategoriesController');
 

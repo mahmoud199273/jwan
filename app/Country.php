@@ -8,7 +8,7 @@ class Country extends Model
 {
      public function area()
     {
-        return $this->hasMany(Area::class);
+        return $this->hasMany('App\Area','countries_id','id');
     }
 
     public function user()

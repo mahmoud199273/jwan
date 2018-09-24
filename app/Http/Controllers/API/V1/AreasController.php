@@ -2,20 +2,35 @@
 
 
 namespace App\Http\Controllers\API\V1;
-use Illuminate\Http\Request;
+
 use App\Http\Controllers\API\V1\BaseController as BaseController;
+use App\Transformers\AreasTransformer;
 use App\Area;
-use  Validator;
+use Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 
 class AreasController extends BaseController  
 {
 
+    protected $areastransformer;
+
+
+    function __construct(Request $request, AreasTransformer $areasTransformer ){
+        App::setlocale($request->lang);
+        // $this->middleware('jwt.auth');
+        $this->areasTransformer = $areasTransformer;
+    }
+
 public function index()
 {
     # code...
-    $ares = Area::all();
-    return $this->sendResponse($ares->toArray(), 'ares read succesfully',200);
+    $areas = $this->areasTransformer->transformCollection(Area::all());
+    return $this->sendResponse($areas,'ares read succesfully',200);
 }
 
 
