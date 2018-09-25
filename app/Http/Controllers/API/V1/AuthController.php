@@ -538,18 +538,18 @@ class AuthController extends Controller
     }
 
 
-   /*
-   * public function logout(Request $request)
+   
+    public function logout(Request $request)
     {
         $user = $this->getAuthenticatedUser();
 
-        $validator = Validator::make( $request->all(), [
-            'player_id'     => 'required',
-        ]);
+        //$validator = Validator::make( $request->all(), [
+           // 'player_id'     => 'required',
+        //]);
         
-        if ($validator->fails()) {
-            return $this->setStatusCode(422)->respondWithError('parameters failed validation');
-        }
+       // if ($validator->fails()) {
+         //   return $this->setStatusCode(422)->respondWithError('parameters failed validation');
+       // }
         
 
         $current_token  = JWTAuth::getToken();
@@ -562,13 +562,13 @@ class AuthController extends Controller
         JWTAuth::setToken( $current_token )->invalidate();
         return $this->respondWithSuccess( trans('api_msgs.loggedout') );
 
-    }*/
+    }
 
 
-      public function logout(Request $request) 
+    /*  public function logout(Request $request) 
     {
         // Get JWT Token from the request header key "Authorization"
-        $token = $request->header('Authorization');
+       // $token = $request->header('Authorization');
         // Invalidate the token
         try {
             JWTAuth::invalidate($token);
@@ -583,7 +583,7 @@ class AuthController extends Controller
               'message' => 'Failed to logout, please try again.'
             ], 500);
         }
-    }
+    }*/
 
 
 
