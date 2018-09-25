@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Transformers;
-
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use JWTAuth;
+use Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
@@ -262,7 +263,11 @@ class AuthController extends Controller
 
            // $this->createVerificationCode( arTOen($request->phone) );
 
-            return $this->respondCreated(trans('api_msgs.success'));
+            $token = JWTAuth::fromUser($user);
+        
+            return Response::json( compact('token'));
+
+            //return $this->respondCreated(trans('api_msgs.success'));
 			
 
 
@@ -286,7 +291,7 @@ class AuthController extends Controller
 
             'gender'        => 'required',
 
-            'nationality'   => 'required',
+            'nationality_id'   => 'required',
 
             'notes'          => 'required',
 
@@ -296,7 +301,7 @@ class AuthController extends Controller
 
             'minimumRate'   =>  'required',
 
-            'facebook'      => 'required',
+            'facebook'      => 'nullable',
 
             'facebook_follwers' => 'nullable',
 
@@ -359,7 +364,7 @@ class AuthController extends Controller
 
             $user->gender      =    $request->gender;
 
-            $user->nationality       = $request->nationality;
+            $user->nationality_id       = $request->nationality_id;
 
 
             $user->notes             = $request->notes;
@@ -405,7 +410,9 @@ class AuthController extends Controller
 
            // $this->createVerificationCode( arTOen($request->phone) );
 
-            return $this->respondCreated(trans('api_msgs.code_sent'));
+            $token = JWTAuth::fromUser($user);
+        
+            return Response::json( compact('token'));
             
 
 
@@ -428,17 +435,48 @@ class AuthController extends Controller
 
 
 
-    public function login( Request $request )
+    public function checkPhone( Request $request )
+    {
+        $validator = Validator::make( $request->all(), [
+            'phone'         => 'required|unique:users'
+        ]);
+        
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+        }
+        return $this->respondWithSuccess('success');
+
+    }
+
+
+     public function checkData( Request $request )
+    {
+        $validator = Validator::make( $request->all(), [
+            'phone'         => 'required|unique:users',
+            'email'         => 'required|unique:users'
+        ]);
+        
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.data_exists'));
+        }
+        return $this->respondWithSuccess('success');
+
+    }
+
+
+
+   /* public function login( Request $request )
     {
     	$validator = Validator::make( $request->all(), [
-            'phone'			=> 'required',
+            'phone'         => 'required',
+            'email'			=> 'required',
             'password'		=> 'required',
         ]);
         
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('parameters failed validation');
         }
-        $credentails =  $request->only('phone' ,'password');
+        $credentails =  $request->only('phone','email' ,'password');
 
         if ( !$this->isActiveAccount( $credentails ) ) {
 
@@ -446,11 +484,48 @@ class AuthController extends Controller
 
         }else{
 
-			return $this->generateToken( $request->only('phone' ,'password') );
+			return $this->generateToken( $request->only('phone','email' ,'password') );
 
         }
     		
+    }*/
+
+
+     public function login(Request $request){
+        $validator = Validator::make($request -> all(),[
+         'email' => 'required',
+         'password'=> 'required'
+        ]);
+
+        if ($validator -> fails()) {
+            # code...
+            return response()->json($validator->errors());
+            
+        }
+
+       
+        $credentials = $request->only('email','password');
+        try{
+            if (! $token = JWTAuth::attempt( $credentials) ) {
+                # code...
+                return response()->json( ['error'=> 'invalid phone_number and password'],401);
+            }
+        }catch(JWTException $e){
+
+          return response()->json( ['error'=> 'could not create token'],500);
+        }
+
+
+        return response()->json( compact('token'));
+        
     }
+
+
+
+
+
+
+
 
 
     public function isActiveAccount( array $credentails ) :bool

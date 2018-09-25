@@ -38,6 +38,10 @@ Route::group(['prefix' => 'v1/{lang}'], function() {
 
 Route::post('/validate/email', 'API\V1\AuthController@isEmailExists');
 
+Route::post('/validate/phone', 'API\V1\AuthController@checkPhone');
+
+Route::post('/check','API\V1\AuthController@checkData');
+
 Route::post('/register', 'API\V1\AuthController@register');
 
 Route::post('/login', 'API\V1\AuthController@login');
@@ -63,7 +67,6 @@ Route::post('influncer/register', 'API\V1\AuthController@registerInfluncer');
 
 
 Route::get('influncer/profile', 'API\V1\UserController@profile');
-
 
 
  Route::resource('countries', 'API\V1\CountryController');

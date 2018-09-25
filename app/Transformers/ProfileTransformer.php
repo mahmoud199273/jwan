@@ -9,6 +9,11 @@ class ProfileTransformer extends Transformer
     /**
      * {@inheritdoc}
      */
+
+    
+
+
+
     public function transform($user ) : array
     {
         return [
@@ -22,7 +27,7 @@ class ProfileTransformer extends Transformer
             'notes'         => $user->notes,
             'gender'        =>(boolean)$user->gender,
 
-            'nationality'   => $user->nationality,
+            'nationality_id'   =>(int) $user->nationality_id,
 
             'account_manger' => (boolean) $user->account_manger,
 
@@ -49,7 +54,7 @@ class ProfileTransformer extends Transformer
             'youtube'   => $user->youtube,
             'youtube_follwers' => $user->youtube_follwers,
 
-            'categories_id' =>(int) $user->categories_id,
+            'categories' =>$user->categories,
 
             'countries_id' =>(int) $user->countries_id,
 

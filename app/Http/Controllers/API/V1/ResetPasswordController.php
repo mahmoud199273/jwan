@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\API\V1\BaseController as Controller;
-//use App\ResetPassword;
+use App\ResetPassword;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,9 +20,9 @@ class ResetPasswordController extends Controller
     
 
 
-	public function sendCode( Request $request )
-	{
-		$validator = Validator::make( $request->all(), [
+    public function sendCode( Request $request )
+    {
+        $validator = Validator::make( $request->all(), [
             'phone'                  => 'required|max:14|min:9|exists:users',
         ]);
         
@@ -34,20 +34,20 @@ class ResetPasswordController extends Controller
         $this->createToken( $request->phone );
         
         return $this->respondCreated(trans('api_msgs.code_sent'));
-	}
+    }
 
-	public function createToken( $phone )
+    public function createToken( $phone )
     {
         $token    = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
         $current_time   = Carbon::now();
         $created_at     = $current_time->toDateTimeString();
         $expired_at     = $current_time->addHours(1)->toDateTimeString();
         DB::table('phone_forget_password')->insert([         
-		           'phone'         => $phone ,
+                   'phone'         => $phone ,
                    'token'         => $token ,
-		           'created_at'    => $created_at,
-		           'expired_at'    => $expired_at
-	                                            ]);
+                   'created_at'    => $created_at,
+                   'expired_at'    => $expired_at
+                                                ]);
         //send message to mobile
         @sendSMS($this->formatPhone($phone) , __('api_msgs.reset_pass_code').$token );
         
@@ -107,16 +107,16 @@ class ResetPasswordController extends Controller
     public function resetPassword( Request $request ) 
     {
 
-    	$validator = Validator::make( $request->all(), [
+        $validator = Validator::make( $request->all(), [
             'code'                  => 'required|max:4|min:4',
-            'password'				=> 'required|string|max:25|min:8'
+            'password'              => 'required|string|max:25|min:8'
         ]);
         
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('parameters faild validation');
         }
 
-        $code	= ResetPassword::where([ [ 'token', $request->code ],[ 'used', '0'] ])->first();
+        $code   = ResetPassword::where([ [ 'token', $request->code ],[ 'used', '0'] ])->first();
 
         if ( !$code ) {
 
@@ -131,7 +131,7 @@ class ResetPasswordController extends Controller
             return $this->setStatusCode(404)->respondWithError(trans('api_msgs.invalid_code'));
 
         }else{
-        	ResetPassword::where([ [ 'token', $request->code ],[ 'used', '0'] ])->update(['used' => '1']);
+            ResetPassword::where([ [ 'token', $request->code ],[ 'used', '0'] ])->update(['used' => '1']);
 
             //update the password 
            $this->updatePassword( $code->phone , $request->password );
@@ -145,7 +145,7 @@ class ResetPasswordController extends Controller
 
     public function updatePassword(  $phone , $password )
     {
-    	User::where('phone' , $phone )->update(['password' => bcrypt($password)]);
+        User::where('phone' , $phone )->update(['password' => bcrypt($password)]);
     }
 
 

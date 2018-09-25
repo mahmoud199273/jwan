@@ -22,7 +22,7 @@ class User extends Authenticatable
 
             public function area()
             {
-                return $this->belongsTo(Area::class);
+               return $this->hasMany('App\Area','area_id','id');
             }
 
 
@@ -39,9 +39,17 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->hasMany('App\Category','user_id','id');
+    }
+
+
+    public function nathionality()
+    {
+
+        return $this->hasone('App\Nathionality', 'nathionality_id', 'id');
+        
     }
 
 

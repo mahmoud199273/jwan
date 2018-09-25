@@ -1,21 +1,35 @@
 <?php
 
-
+ 
 namespace App\Http\Controllers\API\V1;
-use Illuminate\Http\Request;
+
 use App\Http\Controllers\API\V1\BaseController as BaseController;
+use App\Transformers\CategoriesTransformer;
 use App\Category;
-use  Validator;
+use Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 
 class CategoriesController extends BaseController  
 {
 
+    protected $categoriestransformer;
+
+    function __construct(Request $request, CategoriesTransformer $categoriesTransformer ){
+        App::setlocale($request->lang);
+        // $this->middleware('jwt.auth');
+        $this->categoriesTransformer = $categoriesTransformer;
+    }
+
 public function index()
 {
     # code...
-    $categories = Category::all();
-    return $this->sendResponse($categories->toArray(), 'categories read succesfully',200);
+    $categories = $this->categoriesTransformer->transformCollection( Category::all());
+    return $this->sendResponse($categories, 'categories read succesfully',200);
 }
 
 

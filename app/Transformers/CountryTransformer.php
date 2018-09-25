@@ -19,6 +19,7 @@ class CountryTransformer extends Transformer
             'name'          => $country->name,
             'name_ar'       => $country->name_ar,
             'code'          => $country->code,
+            'flag'          => $country->flag,
             'areas'			=> $country->area
 
         ];

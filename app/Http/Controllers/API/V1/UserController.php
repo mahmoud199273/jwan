@@ -28,7 +28,10 @@ class UserController extends Controller
 
     public function profile( Request $request )
     {
+
+
     	$user =  $this->getAuthenticatedUser();
+
     	return $this->respond(['data' => $this->profileTransformer->transform($user) ]);
     }
 
