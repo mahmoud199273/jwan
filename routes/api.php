@@ -42,6 +42,8 @@ Route::post('/validate/phone', 'API\V1\AuthController@checkPhone');
 
 Route::post('/check','API\V1\AuthController@checkData');
 
+Route::post('file/upload','API\V1\FileController@fileUpload');
+
 Route::post('/register', 'API\V1\AuthController@register');
 
 Route::post('/login', 'API\V1\AuthController@login');
