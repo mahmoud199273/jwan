@@ -41,7 +41,9 @@ class User extends Authenticatable
 
     public function categories()
     {
-        return $this->hasMany('App\Category','user_id','id');
+
+         return $this->belongsToMany('App\Category', 'user_categories', 
+                'user_id', 'categories_id');
     }
 
 

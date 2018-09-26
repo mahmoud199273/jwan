@@ -9,8 +9,8 @@ class UserCategory extends Model
 
 	protected $table = 'user_categories';
   
-    public function user()
-    {
-        return $this->hasMany(User::class);
-    }
+   public function category()
+   {
+   	 return $this->belongsToMany('App\Category','categories_id','id');
+   }
 }

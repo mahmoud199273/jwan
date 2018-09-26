@@ -20,13 +20,16 @@ class CreateUserCategoriesTable extends Migration
 
             $table->integer('user_id')->unsigned()->nullable();
              
-             $table->foreign('user_id')->references('id')->on('users')->onUpdate('set null')->onDelete('set null');
+             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             
 
 
             $table->integer('categories_id')->unsigned()->nullable();
              
-             $table->foreign('categories_id')->references('id')->on('categories')->onUpdate('set null')->onDelete('set null');
+             $table->foreign('categories_id')->references('id')->on('categories')->onDelete('cascade');
+
+
+
 
             $table->timestamps();
 

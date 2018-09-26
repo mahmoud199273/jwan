@@ -343,7 +343,7 @@ class AuthController extends Controller
         
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
-            // return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
+         return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
         }
 
         
@@ -491,32 +491,33 @@ class AuthController extends Controller
     }*/
 
 
-     public function login(Request $request){
+    public function login(Request $request){
         $validator = Validator::make($request -> all(),[
          'email' => 'required',
          'password'=> 'required'
         ]);
 
-        if ($validator -> fails()) {
+        /*if ($validator -> fails()) {
             # code...
             return response()->json($validator->errors());
             
+        }*/
+
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError('parameters failed validation');
         }
 
        
         $credentials = $request->only('email','password');
-        try{
-            if (! $token = JWTAuth::attempt( $credentials) ) {
-                # code...
-                return response()->json( ['error'=> 'invalid phone_number and password'],401);
-            }
-        }catch(JWTException $e){
+         if ( !$this->isActiveAccount( $credentials ) ) {
 
-          return response()->json( ['error'=> 'could not create token'],500);
+            return $this->respondUnauthorized( trans('api_msgs.check_credentials') );
+
+        }else{
+
+            return $this->generateToken( $request->only('email' ,'password') );
+
         }
-
-
-        return response()->json( compact('token'));
         
     }
 
@@ -530,7 +531,7 @@ class AuthController extends Controller
 
     public function isActiveAccount( array $credentails ) :bool
     {
-         if (! Auth::attempt(['phone' => $credentails['phone'] , 'password' => $credentails['password'] ,'is_active'=> '1' ])) {
+         if (! Auth::attempt(['email' => $credentails['email'] , 'password' => $credentails['password'] ,'is_active'=> '1' ])) {
             // not active user
             return false;
 

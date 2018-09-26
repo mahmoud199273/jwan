@@ -54,7 +54,7 @@ class ProfileTransformer extends Transformer
             'youtube'   => $user->youtube,
             'youtube_follwers' => $user->youtube_follwers,
 
-            'categories' => $user->category,
+            'categories' => $user->categories ,
 
             'countries_id' =>(int) $user->countries_id,
 
