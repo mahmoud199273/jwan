@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
 
             $table->enum('gender',[0,1])->nullable(); // male OR female
 
-            $table->string('nationality')->nullable();
+            
 
             $table->longtext('notes')->nullable();
 
@@ -39,10 +39,8 @@ class CreateUsersTable extends Migration
             $table->enum('type',[0,1,2])->nullable(); //government OR personal OR company
 
             $table->enum('is_active',[0,1])->nullable();
-             
-            
-            
-            $table->string('video')->nullable();
+
+            $table->string('minimumRate')->nullable();
 
             
 

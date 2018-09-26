@@ -15,7 +15,7 @@ class CreateNewColumsToUsers extends Migration
     {
         Schema::table('users', function($table) {
 
-             $table->dropColumn('nationality');
+            
 
              $table->integer('nationality_id')->after('gender')->unsigned()->nullable();
              

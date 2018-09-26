@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMinimumRateColumnToUsers extends Migration
+class CreateCategoriesIdColumnOnUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,11 @@ class CreateMinimumRateColumnToUsers extends Migration
     public function up()
     {
         Schema::table('users', function($table) {
-            $table->string('minimumRate')->after('video')->nullable();
-            });
+
+             $table->integer('categories_id')->unsigned()->nullable();
+             
+             $table->foreign('categories_id')->references('id')->on('categories')->onUpdate('set null')->onDelete('set null');
+              });
     }
 
     /**

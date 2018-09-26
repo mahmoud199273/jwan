@@ -75,6 +75,8 @@ Route::get('influncer/profile', 'API\V1\UserController@profile');
 
  Route::resource('categories', 'API\V1\CategoriesController');
 
+ Route::get('/nathionalities','API\V1\NathionalitiesController@index');
+
 
 
 
