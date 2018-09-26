@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserCategory extends Model
 {
 
-	protected $table = 'user_category';
+	protected $table = 'user_categories';
   
     public function user()
     {
