@@ -145,14 +145,25 @@ class UserController extends Controller
     	$validator = Validator::make( $request->all(), [
             'name'     => 'required|string|max:50|min:2',
             'email'	   => 'nullable|string|max:30|min:2',
-            'image'			=> 'nullable',
-            'nationality'   => 'nullable',
-            'notes'         => 'required',
+            
+
+            'image'         => 'required',
+
+            'name'          => 'required',
+
+            'gender'        => 'required',
+
+            'nationality_id' => 'required',
+
+            'notes'          => 'required',
+
             'account_manger' => 'required',
 
-            'type' => 'required',
+            
 
-            'facebook' =>'nullable',
+            'minimumRate'   =>  'required',
+
+            'facebook'      => 'nullable',
 
             'facebook_follwers' => 'nullable',
 
@@ -164,17 +175,23 @@ class UserController extends Controller
 
             'instgrame_follwers' => 'nullable',
 
-            'snapchat' =>'nullable',
+            'snapchat' => 'nullable',
 
-            'snapchat_follwers'  => 'nullable',
+            'snapchat_follwers' => 'nullable',
 
             'linkedin' => 'nullable',
 
             'linkedin_follwers' => 'nullable',
 
-            'youtube'  => 'nullable',
+            'youtube'       => 'nullable',
 
-            'youtube_follwers' => 'nullable'
+            'youtube_follwers' => 'nullable',
+
+            'categories_id'      => 'required',
+
+            'countries_id'    => 'required',
+
+            'areas_id'      => 'required'
 
 
 
@@ -190,19 +207,89 @@ class UserController extends Controller
 
         $user = User::find( $user->id );
 
-        $user->name 		=  $request->name;
-        if ( $request->full_name )   {
-            $user->full_name 	= $request->full_name;
-        }
-        if ( $request->email )   {
+            $user->phone        =  $request->phone; 
 
-            if ($this->isEmailExists($request->email, $user->id)) {
-                return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
-            }
-            $user->user_email 	= $request->email;
-         }
-		$user->user_image 	=  $request->image;
+            $user->email        =  $request->email; 
+            
+            $user->image        = $request->image;
+
+            $user->name         =  $request->name;
+
+            $user->gender       =    $request->gender;
+
+            $user->nationality_id    = $request->nationality_id;
+
+
+            $user->notes             = $request->notes;
+
+            $user->account_manger      = $request->account_manger;
+
+            
+
+            $user->minimumRate      =$request->minimumRate;
+
+            $user->facebook          = $request->facebook;
+
+            $user->facebook_follwers  = $request->facebook_follwers;
+
+            $user->twitter            = $request->twitter;
+
+            $user->twitter_follwers   = $request->twitter_follwers;
+
+            $user->instgrame           = $request->instgrame;
+
+            $user->instgrame_follwers  =$request->instgrame_follwers;
+
+            $user->snapchat            = $request->snapchat;
+
+            $user->snapchat_follwers   = $request->snapchat_follwers;
+
+            $user->linkedin             = $request->linkedin;
+
+            $user->linkedin_follwers   = $request->linkedin_follwers;
+
+            $user->youtube             = $request->youtube;
+
+            $user->youtube_follwers   = $request->youtube_follwers;
         $user->save();
+
+        $categories_id  =$request->categories_id;    
+
+            foreach ($categories_id  as $id) {
+                UserCategory::create([
+
+                'user_id'       => $user->id,
+
+                'categories_id' => $id,
+            
+
+                      ]);
+            }
+            $countries_id  =$request->countries_id;    
+
+            foreach ($countries_id  as $id) {
+                UserCountry::create([
+
+                'user_id'       => $user->id,
+
+                'country_id' => $id,
+            
+
+                      ]);
+            }
+
+            $areas_id  =$request->areas_id;    
+
+            foreach ($areas_id  as $id) {
+                UserArea::create([
+
+                'user_id'       => $user->id,
+
+                'area_id' => $id,
+            
+
+                      ]);
+            }
 
         return $this->respondWithSuccess(trans('api_msgs.profile_updated'));
 
