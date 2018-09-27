@@ -56,9 +56,9 @@ class ProfileTransformer extends Transformer
 
             'categories' => $user->categories ,
 
-            'countries_id' =>(int) $user->countries_id,
+            'countries' => $user->countries,
 
-            'areas_id' =>(int) $user->areas_id
+            'areas' =>$user->areas,
 
         ];
     }

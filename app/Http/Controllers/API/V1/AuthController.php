@@ -4,6 +4,9 @@ namespace App\Http\Controllers\API\V1;
  
 use App\Http\Controllers\API\V1\BaseController as Controller;
 use App\User;
+use App\UserCategory;
+use App\UserCountry;
+use App\UserArea;
 //use App\UserPlayerId;
 //use App\VerifyPhoneCode;
 use Carbon\Carbon;
@@ -279,7 +282,7 @@ class AuthController extends Controller
 
         $validator = Validator::make( $request->all(), [
 
-            'email'         => 'required',
+            'email'         => 'required|unique:users,email',
         
             'phone'         => 'required|max:14|min:9',
             
@@ -399,14 +402,62 @@ class AuthController extends Controller
 
             $user->youtube_follwers   = $request->youtube_follwers;
 
-            $user->categories_id  =$request->categories_id;
+           // $user->categories_id  =$request->categories_id;
+          
 
-            $user->countries_id   =$request->countries_id;
 
-            $user->areas_id   =$request->areas_id;
+        
+
+
+
+            
 
             $user->is_active    =  '1'; 
             $user->save();
+
+           $categories_id  =$request->categories_id;    
+
+            foreach ($categories_id  as $id) {
+                UserCategory::create([
+
+                'user_id'       => $user->id,
+
+                'categories_id' => $id,
+            
+
+                      ]);
+            }
+            $countries_id  =$request->countries_id;    
+
+            foreach ($countries_id  as $id) {
+                UserCountry::create([
+
+                'user_id'       => $user->id,
+
+                'country_id' => $id,
+            
+
+                      ]);
+            }
+
+            $areas_id  =$request->areas_id;    
+
+            foreach ($areas_id  as $id) {
+                UserArea::create([
+
+                'user_id'       => $user->id,
+
+                'area_id' => $id,
+            
+
+                      ]);
+            }
+
+                 
+
+        
+        
+
 
            // $this->createVerificationCode( arTOen($request->phone) );
 

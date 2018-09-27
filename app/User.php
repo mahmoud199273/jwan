@@ -15,10 +15,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-        public function country_id()
-            {
-                return $this->belongsTo(Country::class);
-            }
+        
 
             public function area()
             {
@@ -44,6 +41,20 @@ class User extends Authenticatable
 
          return $this->belongsToMany('App\Category', 'user_categories', 
                 'user_id', 'categories_id');
+    }
+
+    public function countries()
+    {
+
+         return $this->belongsToMany('App\Country', 'user_countries', 
+                'user_id', 'country_id');
+    }
+
+    public function areas()
+    {
+
+         return $this->belongsToMany('App\Area', 'user_areas', 
+                'user_id', 'area_id');
     }
 
 
