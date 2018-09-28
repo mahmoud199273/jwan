@@ -25,6 +25,11 @@ class UserController extends Controller
     	$this->profileTransformer = $profileTransformer;
     }
 
+    public function isPhoneExists( $phone )
+    {
+        return User::where('phone',$phone)->first() ? true : false;
+    }
+
 
     public function profile( Request $request )
     {
@@ -60,7 +65,7 @@ class UserController extends Controller
 
             'notes'     => 'required',
 
-            'country_id' => 'required',
+            'countries_id' => 'required',
 
             'type'      => 'required',
 
@@ -114,7 +119,7 @@ class UserController extends Controller
 
         $user->type        = $request->type;
 
-        $user->country_id  = $request->country_id;
+        $user->countries_id  = $request->countries_id;
  
         $user->facebook    = $request->facebook;
 
@@ -299,7 +304,7 @@ class UserController extends Controller
 
     public function isEmailExists( $email , $user_id )
     {
-        return User::where([['id','<>',$user_id] ,['user_email' ,$email]])->first() ?  true : false ;
+        return User::where([['id','<>',$user_id] ,['email' ,$email]])->first() ?  true : false ;
     }
 
 
