@@ -87,11 +87,11 @@ class UserController extends CoreController
     public function onStore()
     {
         return $this->v([
-            'name'       => 'required|max:255',
-            'address'    => 'max:255',
+            'name'       => 'required|string|max:50|min:2',
             'email'      => 'required|email|max:255|unique:users',
-            'phone'      => 'required|max:255|unique:users',
-            'password'   => 'required|min:6',
+            'phone'      => 'required|unique:users',
+            'notes'      => 'required',
+            'password'   => 'required|string|max:25|min:8',
             'image'      => 'image',
         ]);
     }
@@ -104,10 +104,10 @@ class UserController extends CoreController
     {
        return $this->v([
             'name'       => 'required|max:255',
-            'address'    => 'max:255',
             'email'      => 'required|email|max:255|unique:users,email,'.request()->route('user'),
-            'phone'      => 'required|max:255|unique:users,phone,'.request()->route('user'),
-            'password'   => 'min:6',
+            'phone'      => 'required|unique:users,phone,'.request()->route('user'),
+            'notes'      => 'required',
+            'password'   => 'required|string|max:25|min:8',
             'image'      => 'image',
         ]);
     }
