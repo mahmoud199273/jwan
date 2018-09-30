@@ -20,8 +20,8 @@
 
 	
 	<div class="form-group m-form__group row{{ $errors->has('flag') ? ' has-error' : '' }}">
-	    {!! Form::label('name_en', __('lang.code')) !!}
-	    {!! Form::text('flag', null, ['class' => 'form-control', 'required' => 'required']) !!}
+	    {!! Form::label('name_en', __('lang.flag')) !!}
+	    {!! Form::file('flag', null, ['class' => 'form-control', 'required' => 'required']) !!}
 	    <small class="text-danger">{{ $errors->first('flag') }}</small>
 	</div>
 
