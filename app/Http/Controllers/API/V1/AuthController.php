@@ -549,7 +549,7 @@ class AuthController extends Controller
       {
           $type = 0;
       }
-      elseif(strpos($request->server("REQUEST_URI"), '/influncer/login'))
+      elseif(strpos($request->server("REQUEST_URI"), '/influncer/login'))ا
       {
           $type = 1;
       }
@@ -582,7 +582,7 @@ class AuthController extends Controller
 
         }
 
-    }
+    }ه
 
 
 
