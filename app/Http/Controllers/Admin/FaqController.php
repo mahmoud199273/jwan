@@ -2,56 +2,144 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Faq;
+use App\Http\Requests\Admin\Faq\EditFaqRequest;
+use App\Http\Requests\Admin\Faq\StoreFaqRequest;
+use App\Faq;
+use Illuminate\Http\Request;
 
-class FaqController extends CoreController
+
+class faqController extends Controller
 {
-    function __construct(Faq $model)
-    {
-        $this->model = $model;
-        $this->show_columns_html = ['id', 'question_ar','category'];
-        $this->show_columns_select = ['id', 'question_ar','category_name'];
 
-        $this->viewComposers();
-        parent::__construct();
+    function __construct(){
+        $this->middleware('admin');
     }
-
     /**
-     * Before go inside @store method
-     * @return avoid
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function onStore()
+    public function index()
     {
-        return $this->v([
-            'question_ar'  => 'required|max:255',
-            'question_en'  => 'required|max:255',
-            'answer_ar'    => 'required',
-            'answer_en'    => 'required',
-            'category_id'=>'required'
-        ]);
+        $faqs = Faq::latest()->paginate(10);
+        return view('admin.faqs.index',compact('faqs'));
+    }
+
+    public function search( Request $request )
+    {
+        $query =  $request->q;
+        
+        if ( $query == "") {
+            return redirect()->back();
+        }else{
+             $faqs   = Faq::where('question', 'LIKE', '%' . $query. '%' )
+                                     ->orWhere( 'answer', 'LIKE', '%' . $query. '%' )
+                                     ->paginate(10);
+            $faqs->appends( ['q' => $request->q] );
+            if (count ( $faqs ) > 0){
+                return view('admin.faqs.index',[ 'faqs' => $faqs ])->withQuery($query);
+            }else{
+                return view('admin.faqs.index',[ 'faqs'=>null ,'message' => __('admin.no_result') ]);
+            }
+        }
     }
 
     /**
-        * Before go inside @update method
-        * @return avoid
-    */
-   public function onUpdate()
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-       return $this->v([
-            'question_ar'  => 'required|max:255',
-            'question_en'  => 'required|max:255',
-            'answer_ar'    => 'required',
-            'answer_en'    => 'required',
-            'category_id'=>'required'
-        ]);
+        return view('admin.faqs.create');
     }
 
-    public function viewComposers()
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreFaqRequest $request)
     {
-        $categories_list = $this->model->getCategoryList();
-        return view()->share(compact('categories_list'));
+        $request->persist();
+        return redirect()->back()->with('status' , __('admin.created') );
+
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $faq = Faq::find($id);
+        return view('admin.faqs.show',compact('faq'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $faq = Faq::find($id);
+        return view('admin.faqs.edit',compact('faq'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(EditfaqRequest $request, $id)
+    {
+        $request->persist($id);
+        return redirect()->back()->with('status' , __('admin.updated') );
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            Faq::find($id)->delete();
+            return response(['msg' => 'deleted', 'status' => 'success']);
+        }
+    }
+
+
+    public function activate( Request $request)
+    {
+        if ( $request->ajax() ) {
+            $faq = Faq::find( $request->id );
+            $faq->is_active = '1';
+            $faq->save();
+            return response(['msg' => 'activated', 'status' => 'success']);
+        }
+
+        
+    }
+
+    public function ban( Request $request )
+    {
+        $faq =  Faq::find( $request->id );
+        if ( $request->ajax() ) {
+            $faq->is_active = '0';
+            $faq->save();
+            return response(['msg' => 'banned', 'status' => 'success']);
+        }
+
+    }
 }

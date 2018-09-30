@@ -2,66 +2,141 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Countries\StoreCountryRequest;
+use App\Http\Requests\Admin\Countries\EditCountryRequest;
 use App\Models\Admin\Country;
+use Illuminate\Http\Request;
 
-class CountryController extends CoreController
+
+class CountryController extends Controller
 {
-    function __construct(Country $model)
-    {
-        $this->model = $model;
-        $this->show_columns_html = ['id', 'name_ar', 'name'];
-        $this->show_columns_select = ['id', 'name_ar', 'name'];
 
-        $activation = ['1' => __('lang.active'), '0' => __('lang.in-active')];
-        view()->share(compact('activation'));
-        parent::__construct();
+    function __construct(){
+        //$this->middleware('admin');
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        
+        $countries = Country::latest()->paginate(10);
+        return view('admin.countries.index',compact('countries'));
     }
 
-    /**
-     * Form Builder
-     * @return Array
-     */
 
-
-    public function Activate($id) {
-        $row = $this->model->find($id);
-        if($row->activation != 1) {
-            $update = $this->model->find($id)->update(['activation' => '1']);
-            return $this->returnMessage($update, 4);
+     public function search( Request $request )
+    {
+        $query =  $request->q;
+        if ( $query == "") {
+            return redirect()->back();
+        }else{
+             $countries   = Country::where('name', 'LIKE', '%' . $query. '%' )
+                                     ->paginate(10);
+            $countries->appends( ['q' => $request->q] );
+            if (count ( $countries ) > 0){
+                return view('admin.countries.index',[ 'countries' => $countries ])->withQuery($query);
+            }else{
+                return view('admin.countries.index',[ 'countries'=> null ,'message' => __('admin.no_result') ]);
+            }
         }
-        else
-            $update = $this->model->find($id)->update(['activation' => '0']);
-            return $this->returnMessage($update, 5);
     }
-    
+
     /**
-     * Before go inside @store method
-     * @return avoid
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function onStore()
+    public function create()
     {
-        return $this->v([
-            'name_ar' => 'required|max:255',
-            'name'  => 'required|max:255',
-            'code'  => 'required|max:255',
-            'flag'  => 'image',
-        ]);
+        return view('admin.countries.create');
     }
 
     /**
-    * Before go inside @update method
-    * @return avoid
-    */
-   public function onUpdate()
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreCountryRequest $request)
     {
+        $request->persist();
+        return redirect()->back()->with('status' , __('admin.created') );
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $country = Country::find($id);
+        return view('admin.countries.show',compact('country'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+<<<<<<< HEAD
+        $country = Country::find($id);
+        return view('admin.countries.edit',compact('country'));
+=======
         return $this->v([
             'name_ar' => 'required|max:255',
             'name'  => 'required|max:255',
             'code'  => 'required|max:255',
             'flag'  => 'image',
         ]);
+>>>>>>> 57a21f079cc8787a516b8b971b392ed25d58305d
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(EditCountryRequest $request, $id)
+    {
+<<<<<<< HEAD
+        $request->persist($id);
+        return redirect()->back()->with('status' , __('admin.updated') );
+=======
+        return $this->v([
+            'name_ar' => 'required|max:255',
+            'name'  => 'required|max:255',
+            'code'  => 'required|max:255',
+            'flag'  => 'image',
+        ]);
+>>>>>>> 57a21f079cc8787a516b8b971b392ed25d58305d
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            Country::find($id)->delete();
+            return response(['msg' => 'deleted', 'status' => 'success']);
+        }
+    }
+
+
+  
 }
