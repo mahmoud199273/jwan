@@ -46,7 +46,7 @@ class CountryController extends CoreController
             'name_ar' => 'required|max:255',
             'name'  => 'required|max:255',
             'code'  => 'required|max:255',
-            'flag'  => 'required|max:255',
+            'flag'  => 'image',
         ]);
     }
 
@@ -60,7 +60,7 @@ class CountryController extends CoreController
             'name_ar' => 'required|max:255',
             'name'  => 'required|max:255',
             'code'  => 'required|max:255',
-            'flag'  => 'required|max:255',
+            'flag'  => 'image',
         ]);
     }
 
