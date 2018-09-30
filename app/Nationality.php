@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Nathionality extends Model
+class Nationality extends Model
 {
 
     public function user()

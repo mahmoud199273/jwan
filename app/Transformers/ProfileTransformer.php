@@ -33,26 +33,26 @@ class ProfileTransformer extends Transformer
 
             'type'          => (boolean) $user->type,
 
-            'minimumRate'   => $user->minimumRate,
+            'minimum_rate'   => $user->minimum_rate,
 
             'facebook'     => $user->facebook,
-            'facebook_follwers' => $user->facebook_follwers,
+            'facebook_followers' => $user->facebook_followers,
 
             'twitter'     => $user->twitter,
-            'twitter_follwers' => $user->twitter_follwers,
+            'twitter_followers' => $user->twitter_followers,
 
-            'instgrame'     => $user->instgrame,
-            'instgrame_follwers' => $user->instgrame_follwers,
+            'instagram'     => $user->instagram,
+            'instagram_followers' => $user->instagram_followers,
 
 
             'snapchat'     => $user->snapchat,
-            'snapchat_follwers' => $user->snapchat_follwers,
+            'snapchat_followers' => $user->snapchat_followers,
 
             'linkedin'     => $user->linkedin,
-            'linkedin_follwers' => $user->linkedin_follwers,
+            'linkedin_followers' => $user->linkedin_followers,
 
             'youtube'   => $user->youtube,
-            'youtube_follwers' => $user->youtube_follwers,
+            'youtube_followers' => $user->youtube_followers,
 
             'categories' => $user->categories ,
 
@@ -84,23 +84,23 @@ class ProfileTransformer extends Transformer
             'type'          => (boolean) $influncer->type,
 
             'facebook'     => $influncer->facebook,
-            'facebook_follwers' => $influncer->facebook_follwers,
+            'facebook_followers' => $influncer->facebook_followers,
 
             'twitter'     => $influncer->twitter,
-            'twitter_follwers' => $influncer->twitter_follwers,
+            'twitter_followers' => $influncer->twitter_followers,
 
-            'instgrame'     => $influncer->instgrame,
-            'instgrame_follwers' => $influncer->instgrame_follwers,
+            'instagram'     => $influncer->instagram,
+            'instagram_followers' => $influncer->instagram_followers,
 
 
             'snapchat'     => $influncer->snapchat,
-            'snapchat_follwers' => $influncer->snapchat_follwers,
+            'snapchat_followers' => $influncer->snapchat_followers,
 
             'linkedin'     => $influncer->linkedin,
-            'linkedin_follwers' => $influncer->linkedin_follwers,
+            'linkedin_followers' => $influncer->linkedin_followers,
 
             'youtube'   => $influncer->youtube,
-            'youtube_follwers' => $influncer->youtube_follwers
+            'youtube_followers' => $influncer->youtube_followers
 
         ];
     }*/

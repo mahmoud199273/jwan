@@ -8,7 +8,7 @@ use App\Models\Admin\User;
 use App\Models\Admin\Country;
 use App\Models\Admin\Area;
 use App\Models\Admin\Category;
-use App\Models\Admin\Nathionalities;
+use App\Models\Admin\nationalities;
 
 
 class UserController extends CoreController
@@ -55,7 +55,7 @@ class UserController extends CoreController
         $countries = Country::pluck('name_ar', 'id');
         $categories = Category::pluck('name_ar', 'id');
         $areas    = Area::pluck('name_ar', 'id');
-        $nationality    = Nathionalities::pluck('name_ar', 'id');
+        $nationality    = nationalities::pluck('name_ar', 'id');
         $activation = ['1' => __('lang.active'), '0' => __('lang.in-active')];
         $gender = ['1' => __('lang.male'), '0' => __('lang.female')];
         $account_manger = ['1' => __('lang.Business manager'), '0' => __('lang.Personal')];
@@ -69,7 +69,7 @@ class UserController extends CoreController
         $countries = Country::pluck('name_ar', 'id');
         $categories = Category::pluck('name_ar', 'id');
         $areas    = Area::pluck('name_ar', 'id');
-        $nationality    = Nathionalities::pluck('name_ar', 'id');
+        $nationality    = nationalities::pluck('name_ar', 'id');
         $activation = ['1' => __('lang.active'), '0' => __('lang.in-active')];
         $gender = ['1' => __('lang.male'), '0' => __('lang.female')];
         $account_manger = ['1' => __('lang.Business manager'), '0' => __('lang.Personal')];

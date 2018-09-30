@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Nathionalities;
+use App\Models\Admin\nationalities;
 
 class NatoinalityController extends CoreController
 {
-    function __construct(nathionalities $model)
+    function __construct(nationalities $model)
     {
         $this->model = $model;
         $this->show_columns_html = ['id', 'name_ar', 'name'];

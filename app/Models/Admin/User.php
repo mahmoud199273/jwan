@@ -11,7 +11,7 @@ class User extends Authenticatable
 
     # type == 1 ? user
     protected $fillable = [
-        'name', 'email','phone', 'password','image','type','is_active','nationality_id','account_manger','countries_id','areas_id','categories_id','gender','video','facebook','facebook_follwers','twitter','twitter_follwers','instgrame','instgrame_follwers','snapchat','snapchat_follwers','linkedin','linkedin_follwers','youtube','youtube_follwers','notes'
+        'name', 'email','phone', 'password','image','type','is_active','nationality_id','account_manger','countries_id','areas_id','categories_id','gender','video','facebook','facebook_followers','twitter','twitter_followers','instagram','instagram_followers','snapchat','snapchat_followers','linkedin','linkedin_followers','youtube','youtube_followers','notes'
     ];
 
     protected $attributes = [
