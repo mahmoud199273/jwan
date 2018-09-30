@@ -1,0 +1,8 @@
+.m-aside-left--fixed .m-aside-left {
+	left: 0 !important
+}
+@media (min-width: 993px) {
+	.m-aside-left--fixed .m-aside-left {
+		left: 0 !important
+	}
+}

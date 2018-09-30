@@ -4,8 +4,8 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\API\V1\BaseController as BaseController;
-use App\Transformers\NathionalitiesTransformer;
-use App\Nathionality;
+use App\Transformers\nationalitiesTransformer;
+use App\nationality;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -14,24 +14,24 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 
-class NathionalitiesController extends BaseController  
+class nationalitiesController extends BaseController  
 {
 
-        protected $nathionalitiesTransformer;
+        protected $nationalitiesTransformer;
 
-        function __construct(Request $request, NathionalitiesTransformer $nathionalitiesTransformer ){
+        function __construct(Request $request, nationalitiesTransformer $nationalitiesTransformer ){
         App::setlocale($request->lang);
         // $this->middleware('jwt.auth');
-        $this->nathionalitiesTransformer = $nathionalitiesTransformer;
+        $this->nationalitiesTransformer = $nationalitiesTransformer;
     }
 
 
 public function index()
 {
     # code...
-    $nathionalities = $this->nathionalitiesTransformer->transformCollection(Nathionality::all());
+    $nationalities = $this->nationalitiesTransformer->transformCollection(nationality::all());
 
-    return $this->sendResponse($nathionalities, 'nathionalities read succesfully',200);
+    return $this->sendResponse($nationalities, 'nationalities read succesfully',200);
 }
 
 

@@ -33,6 +33,9 @@ Route::middleware('jwt.auth')->get('/users', function (Request $request) {
 
 Route::group(['prefix' => 'v1/{lang}'], function() {
 
+// App Meta Data
+
+Route::get('app/data', 'API\V1\AppController@index');
 
   // Users Routes
 
@@ -44,13 +47,15 @@ Route::post('/check','API\V1\AuthController@checkData');
 
 Route::post('file/upload','API\V1\FileController@fileUpload');
 
-Route::post('/register', 'API\V1\AuthController@register');
+Route::post('user/register', 'API\V1\AuthController@register');
 
-Route::post('/login', 'API\V1\AuthController@login');
+Route::post('user/login', 'API\V1\AuthController@login');
 
-Route::post('/logout', 'API\V1\AuthController@logout');
+Route::post('user/logout', 'API\V1\AuthController@logout');
 
 Route::post('/refresh/token','API\V1\AuthController@refreshToken');
+
+
 
 //Route::post('/reset/password', 'API\V1\ResetPasswordController@resetPassword');
 
@@ -67,6 +72,10 @@ Route::post('user/update/password'	, 'API\V1\UserController@updatePassword');
 
 Route::post('influncer/register', 'API\V1\AuthController@registerInfluncer');
 
+Route::post('influncer/login', 'API\V1\AuthController@login');
+
+Route::post('influncer/logout', 'API\V1\AuthController@logout');
+
 
 Route::get('influncer/profile', 'API\V1\UserController@profile');
 
@@ -80,7 +89,7 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::resource('categories', 'API\V1\CategoriesController');
 
- Route::get('/nathionalities','API\V1\NathionalitiesController@index');
+ Route::get('/nationalities','API\V1\nationalitiesController@index');
 
 
 

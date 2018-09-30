@@ -24,7 +24,7 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'name', 'email','phone', 'password','image','type','is_active','country_id','gender','video','facebook','facebook_follwers','twitter','twitter_follwers','instgrame','instgrame_follwers','snapchat','snapchat_follwers','linkedin','linkedin_follwers','youtube','youtube_follwers','notes'
+        'name', 'email','phone', 'password','image','type','is_active','country_id','gender','video','facebook','facebook_followers','twitter','twitter_followers','instagram','instagram_followers','snapchat','snapchat_followers','linkedin','linkedin_followers','youtube','youtube_followers','notes'
     ];
 
     /**
@@ -58,10 +58,10 @@ class User extends Authenticatable
     }
 
 
-    public function nathionality()
+    public function nationality()
     {
 
-        return $this->hasone('App\Nathionality', 'nathionality_id', 'id');
+        return $this->hasone('App\nationality', 'nationality_id', 'id');
         
     }
 

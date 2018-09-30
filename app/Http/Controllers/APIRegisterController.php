@@ -51,28 +51,28 @@ class APIRegisterController extends Controller
 
             $user->facebook = $request->facebook;
 
-            $user->facebook_follwers = $request->facebook_follwers;
+            $user->facebook_followers = $request->facebook_followers;
 
             $user->twitter= $request->twitter;
 
 
-            $user->twitter_follwers = $request->twitter_follwers;
+            $user->twitter_followers = $request->twitter_followers;
 
-            $user->instgrame = $request->instgrame;
+            $user->instagram = $request->instagram;
 
-            $user->instgrame_follwers = $request->instgrame_follwers;
+            $user->instagram_followers = $request->instagram_followers;
 
             $user->snapchat = $request->snapchat;
 
-            $user->snapchat_follwers = $request->snapchat_follwers;
+            $user->snapchat_followers = $request->snapchat_followers;
 
             $user->linkedin = $request->linkedin;
 
-            $user->linkedin_follwers = $request->linkedin_follwers;
+            $user->linkedin_followers = $request->linkedin_followers;
 
             $user->youtube = $request->youtube;
 
-            $user->youtube_follwers = $request->youtube_follwers;
+            $user->youtube_followers = $request->youtube_followers;
             $user->notes = $request->notes;
             $user->save();
        // \Mobily::send(966555555555, 'Your Message Here');
@@ -161,28 +161,28 @@ class APIRegisterController extends Controller
 
             $user->facebook = $request->facebook;
 
-            $user->facebook_follwers = $request->facebook_follwers;
+            $user->facebook_followers = $request->facebook_followers;
 
             $user->twitter= $request->twitter;
 
 
-            $user->twitter_follwers = $request->twitter_follwers;
+            $user->twitter_followers = $request->twitter_followers;
 
-            $user->instgrame = $request->instgrame;
+            $user->instagram = $request->instagram;
 
-            $user->instgrame_follwers = $request->instgrame_follwers;
+            $user->instagram_followers = $request->instagram_followers;
 
             $user->snapchat = $request->snapchat;
 
-            $user->snapchat_follwers = $request->snapchat_follwers;
+            $user->snapchat_followers = $request->snapchat_followers;
 
             $user->linkedin = $request->linkedin;
 
-            $user->linkedin_follwers = $request->linkedin_follwers;
+            $user->linkedin_followers = $request->linkedin_followers;
 
             $user->youtube = $request->youtube;
 
-            $user->youtube_follwers = $request->youtube_follwers;
+            $user->youtube_followers = $request->youtube_followers;
             $user->notes = $request->notes;
             $user->save();
        // \Mobily::send(966555555555, 'Your Message Here');
