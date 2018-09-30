@@ -2494,5 +2494,6 @@ you didn't register with our support packages you can",
 'Government'=>' قطاع حكومى / قطاع شبه حكومي ',
 'Private sector'=>' قطاع خاص ',
 'Account manager'=>' مدير حساب',
+'flag'=>' علم الدولة ',
 /* m.abdelrahman  */
 ];
