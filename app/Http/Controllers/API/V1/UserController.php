@@ -6,6 +6,9 @@ use App\Http\Controllers\API\V1\BaseController as Controller;
 //use App\Notification;
 use App\Transformers\ProfileTransformer;
 use App\User;
+use App\UserCategory;
+use App\UserCountry;
+use App\UserArea;
 //use App\UserPlayerId;
 use Hash;
 use Illuminate\Http\Request;
@@ -149,7 +152,9 @@ class UserController extends Controller
 
     	$validator = Validator::make( $request->all(), [
             'name'     => 'required|string|max:50|min:2',
-            'email'	   => 'nullable|string|max:30|min:2',
+            'email'	   => 'required|string|max:30|min:2',
+
+             'password'      => 'required|string|max:25|min:8',
             
 
             'image'         => 'required',
@@ -204,7 +209,7 @@ class UserController extends Controller
 
         
         if ($validator->fails()) {
-            // return $this->setStatusCode(422)->respondWithError($validator->messages());
+             return $this->setStatusCode(422)->respondWithError($validator->messages());
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
         }
 
@@ -212,10 +217,23 @@ class UserController extends Controller
 
         $user = User::find( $user->id );
 
-            $user->phone        =  $request->phone; 
+            if ( $request->email )   {
 
-            $user->email        =  $request->email; 
+            if ($this->isEmailExists($request->email, $user->id)) {
+                return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
+            }
+            $user->email   = $request->email;
+         }
+
+         if ( $request->phone )   {
+
+            if ($this->isPhoneExists($request->phone, $user->id)) {
+                return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+            }
+            $user->phone   = $request->phone;
+         }
             
+            $user->password     =  bcrypt($request->password);  
             $user->image        = $request->image;
 
             $user->name         =  $request->name;
@@ -256,12 +274,15 @@ class UserController extends Controller
             $user->youtube             = $request->youtube;
 
             $user->youtube_follwers   = $request->youtube_follwers;
-        $user->save();
+
+            $user->is_active    =  '1'; 
+            $user->save();
+           
 
         $categories_id  =$request->categories_id;    
 
             foreach ($categories_id  as $id) {
-                UserCategory::create([
+                UserCategory::firstOrCreate([
 
                 'user_id'       => $user->id,
 
@@ -270,36 +291,14 @@ class UserController extends Controller
 
                       ]);
             }
-            $countries_id  =$request->countries_id;    
 
-            foreach ($countries_id  as $id) {
-                UserCountry::create([
 
-                'user_id'       => $user->id,
-
-                'country_id' => $id,
-            
-
-                      ]);
-            }
-
-            $areas_id  =$request->areas_id;    
-
-            foreach ($areas_id  as $id) {
-                UserArea::create([
-
-                'user_id'       => $user->id,
-
-                'area_id' => $id,
-            
-
-                      ]);
-            }
 
         return $this->respondWithSuccess(trans('api_msgs.profile_updated'));
 
 
     }
+
 
 
     public function isEmailExists( $email , $user_id )

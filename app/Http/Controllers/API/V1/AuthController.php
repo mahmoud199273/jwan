@@ -294,7 +294,7 @@ class AuthController extends Controller
 
             'gender'        => 'required',
 
-            'nationality_id'   => 'required',
+            'nationality_id'  => 'required',
 
             'notes'          => 'required',
 

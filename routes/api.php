@@ -71,6 +71,9 @@ Route::post('influncer/register', 'API\V1\AuthController@registerInfluncer');
 Route::get('influncer/profile', 'API\V1\UserController@profile');
 
 
+Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerProfile');
+
+
  Route::resource('countries', 'API\V1\CountryController');
 
  Route::resource('areas', 'API\V1\AreasController');
