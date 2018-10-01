@@ -24,6 +24,14 @@ class EditUserRequest extends BaseRequest
             'image'         => 'mimes:jpg,png,jpeg|max:2048',
             'email'         => ['required','email', Rule::unique('users')->ignore($this->id, 'id')],
             'password'      => 'nullable|string|min:6',
+            'notes'     => 'required',
+            'type'      => 'required',
+            'facebook'      => 'nullable',
+            'twitter'      => 'nullable',
+            'instagram'      => 'nullable',
+            'snapchat'      => 'nullable',
+            'linkedin'      => 'nullable',
+            'youtube'      => 'nullable'
 
         ];
     }

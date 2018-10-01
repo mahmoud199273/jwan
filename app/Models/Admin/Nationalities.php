@@ -4,10 +4,10 @@ namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Model;
 
-class nationalities extends Model
+class Nationalities extends Model
 {
 
-    protected $table = 'nathionalities';
+    protected $table = 'nationalities';
 
     protected $fillable = ['name_ar','name'];
 

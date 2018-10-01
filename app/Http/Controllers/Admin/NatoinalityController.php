@@ -3,19 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-<<<<<<< HEAD
 use App\Http\Requests\Admin\Nathionalities\StoreNathionalityRequest;
 use App\Http\Requests\Admin\Nathionalities\EditNathionalityRequest;
-use App\Models\Admin\Nathionalities;
+use App\Models\Admin\Nationalities;
 use Illuminate\Http\Request;
-=======
-use App\Models\Admin\nationalities;
->>>>>>> 57a21f079cc8787a516b8b971b392ed25d58305d
 
 
 class NatoinalityController extends Controller
 {
-<<<<<<< HEAD
 
     function __construct(){
         //$this->middleware('admin');
@@ -26,12 +21,9 @@ class NatoinalityController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-=======
-    function __construct(nationalities $model)
->>>>>>> 57a21f079cc8787a516b8b971b392ed25d58305d
     {
         
-        $rows = Nathionalities::latest()->paginate(10);
+        $rows = Nationalities::latest()->paginate(10);
         return view('admin.natoinalities.index',compact('rows'));
     }
 
@@ -42,7 +34,7 @@ class NatoinalityController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $rows   = Nathionalities::where('name', 'LIKE', '%' . $query. '%' )
+             $rows   = Nationalities::where('name', 'LIKE', '%' . $query. '%' )
                                      ->paginate(10);
             $rows->appends( ['q' => $request->q] );
             if (count ( $rows ) > 0){
@@ -84,7 +76,7 @@ class NatoinalityController extends Controller
      */
     public function show($id)
     {
-        $row = Nathionalities::find($id);
+        $row = Nationalities::find($id);
         return view('admin.natoinalities.show',compact('row'));
     }
 
@@ -96,7 +88,7 @@ class NatoinalityController extends Controller
      */
     public function edit($id)
     {
-        $row = Nathionalities::find($id);
+        $row = Nationalities::find($id);
         return view('admin.natoinalities.edit',compact('row'));
     }
 
@@ -122,7 +114,7 @@ class NatoinalityController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
-            Nathionalities::find($id)->delete();
+            Nationalities::find($id)->delete();
             return response(['msg' => 'deleted', 'status' => 'success']);
         }
     }

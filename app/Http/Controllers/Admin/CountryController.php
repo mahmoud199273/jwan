@@ -88,17 +88,8 @@ class CountryController extends Controller
      */
     public function edit($id)
     {
-<<<<<<< HEAD
         $country = Country::find($id);
         return view('admin.countries.edit',compact('country'));
-=======
-        return $this->v([
-            'name_ar' => 'required|max:255',
-            'name'  => 'required|max:255',
-            'code'  => 'required|max:255',
-            'flag'  => 'image',
-        ]);
->>>>>>> 57a21f079cc8787a516b8b971b392ed25d58305d
     }
 
     /**
@@ -110,17 +101,8 @@ class CountryController extends Controller
      */
     public function update(EditCountryRequest $request, $id)
     {
-<<<<<<< HEAD
         $request->persist($id);
         return redirect()->back()->with('status' , __('admin.updated') );
-=======
-        return $this->v([
-            'name_ar' => 'required|max:255',
-            'name'  => 'required|max:255',
-            'code'  => 'required|max:255',
-            'flag'  => 'image',
-        ]);
->>>>>>> 57a21f079cc8787a516b8b971b392ed25d58305d
     }
 
     /**

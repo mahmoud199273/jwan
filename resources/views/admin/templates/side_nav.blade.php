@@ -14,14 +14,14 @@
 				<span class="m-menu__link-text">{{ __('admin.dashboard') }}</span>
 			</a>
 		</li>
-{{--  
+
 		<li class="m-menu__item" aria-haspopup="true" >
-			<a  href="{{url('admin/user')}}" class="m-menu__link ">
+			<a  href="{{url('admin/users')}}" class="m-menu__link ">
 				<span class="m-menu__item-here"></span>
 				<i class="m-menu__link-icon flaticon-avatar"></i>
 				<span class="m-menu__link-text">{{ __('admin.users') }}</span>
 			</a>
-		</li>  --}}
+		</li>
 
 
 		<li class="m-menu__item" aria-haspopup="true" >

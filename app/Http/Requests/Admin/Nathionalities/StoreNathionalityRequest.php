@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\Nathionalities;
 
-use App\Models\Admin\Nathionalities;
+use App\Models\Admin\Nationalities;
 use App\Http\Requests\Admin\BaseRequest;
 
 
@@ -24,7 +24,7 @@ class StoreNathionalityRequest extends BaseRequest
 
     public function persist()
     {
-        Nathionalities::create($this->request->all());
+        Nationalities::create($this->request->all());
     }
 
 

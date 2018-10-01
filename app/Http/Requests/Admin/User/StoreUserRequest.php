@@ -23,7 +23,15 @@ class StoreUserRequest extends BaseRequest
             'image'         => 'mimes:jpg,png,jpeg|max:2048',
             'email'         => 'required|string|email|unique:users,email',
             'password'      => 'required|string|min:6',
-
+            //'gender'     => 'required',
+            'notes'     => 'required',
+            'type'      => 'required',
+            'facebook'      => 'nullable',
+            'twitter'      => 'nullable',
+            'instagram'      => 'nullable',
+            'snapchat'      => 'nullable',
+            'linkedin'      => 'nullable',
+            'youtube'      => 'nullable'
         ];
     }
 
@@ -33,7 +41,7 @@ class StoreUserRequest extends BaseRequest
             $image = $this->uploadImage($this->image);
             $this->offsetSet('image', $image);
         }
-        $this->offsetSet('type', 'user');
+        //$this->offsetSet('type', 'users');
 
         User::create($this->request->all());
     }

@@ -81,18 +81,35 @@
                     {!! $errors->first('email', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
-             <div class="form-group m-form__group row {{ $errors->has('city_id') ? 'has-danger' : ''}}">
-                <label for="city_id" class="col-2 col-form-label">{{ __('admin.city') }}</label>
+             <div class="form-group m-form__group row {{ $errors->has('countries_id') ? 'has-danger' : ''}}">
+                <label for="city_id" class="col-2 col-form-label">{{ __('admin.country') }}</label>
                  <div class="col-9">
-                <select name="city_id"  class="form-control m-input" disabled="">
-                    @if($cities)
-                        @foreach ($cities as $city)
-                            <option value="{{ $city->id }}" {{ $user->city_id == $city->id? "selected" : "" }}> {{ $city->name }}</option>
+                <select name="countries_id"  class="form-control m-input" disabled="">
+                    @if($countries)
+                        @foreach ($countries as $country)
+                            <option value="{{ $country->id }}" {{ $user->countries_id == $country->id? "selected" : "" }}> {{ $country->name_ar }}</option>
                         @endforeach
                     @endif
                 </select>
-                    {!! $errors->first('city_id', '<span class="form-control-feedback">:message</span>') !!}
+                    {!! $errors->first('countries_id', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
+            </div>
+
+
+            
+            <div class="form-group m-form__group row {{ $errors->has('type') ? 'has-danger' : ''}}" disabled="">
+                    <label for="countries_id" class="col-2 col-form-label">{{ __('admin.Type') }}</label>
+                     <div class="col-9">
+                    <select name="type"  class="form-control m-input">
+                       <option value="0" {{ $user->type == 0? "selected" : "" }} > 
+                           {{ __('admin.Government') }} </option>
+                       <option value="1" {{ $user->type == 1? "selected" : "" }}>
+                            {{ __('admin.Private sector') }} </option>
+                       <option value="2" {{ $user->type == 2? "selected" : "" }} >
+                            {{ __('admin.Personal') }} </option>
+                    </select>
+                        {!! $errors->first('type', '<span class="form-control-feedback">:message</span>') !!}
+                    </div>
             </div>
 
             <div class="form-group m-form__group row {{ $errors->has('image') ? 'has-danger' : ''}}">
@@ -103,6 +120,83 @@
                 </div>
             </div>
 
+            
+            <div class="form-group m-form__group row {{ $errors->has('notes') ? 'has-danger' : ''}}">
+                    <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.notes') }}</label>
+                    <div class="col-9">
+                        <textarea class="form-control m-input" placeholder="{{ __('admin.notes') }}" name="notes" disabled="">{{ $user->notes }}</textarea>
+                        {!! $errors->first('notes', '<span class="form-control-feedback">:message</span>') !!}
+                    </div>
+            </div>
+            
+
+
+            <div class="form-group m-form__group row {{ $errors->has('is_active') ? 'has-danger' : ''}}">
+                    <label for="is_active" class="col-2 col-form-label">{{ __('admin.status') }}</label>
+                     <div class="col-9">
+                    <select name="is_active"  class="form-control m-input" disabled="">
+                       <option value="1" {{ $user->is_active == 1? "selected" : "" }} > {{ __('admin.active') }} </option>
+                       <option value="0" {{ $user->is_active == 0? "selected" : "" }} > {{ __('admin.in-active') }} </option>
+                    </select>
+                        {!! $errors->first('is_active', '<span class="form-control-feedback">:message</span>') !!}
+                    </div>
+                </div>
+    
+                <div class="form-group m-form__group row {{ $errors->has('facebook') ? 'has-danger' : ''}}">
+                    <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.facebook') }}</label>
+                    <div class="col-9">
+                        <input type="text" name="facebook" 
+                                    class="form-control m-input" placeholder="{{ __('admin.facebook') }}" value="{{ $user->facebook }}" disabled="">
+                        {!! $errors->first('facebook', '<span class="form-control-feedback">:message</span>') !!}
+                    </div>
+                </div>
+    
+                <div class="form-group m-form__group row {{ $errors->has('twitter') ? 'has-danger' : ''}}">
+                    <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.twitter') }}</label>
+                    <div class="col-9">
+                        <input type="text" name="twitter" 
+                                    class="form-control m-input" placeholder="{{ __('admin.twitter') }}" value="{{ $user->twitter }}" disabled="">
+                        {!! $errors->first('twitter', '<span class="form-control-feedback">:message</span>') !!}
+                    </div>
+                </div>
+    
+                <div class="form-group m-form__group row {{ $errors->has('instagram') ? 'has-danger' : ''}}">
+                    <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.instagram') }}</label>
+                    <div class="col-9">
+                        <input type="text" name="instagram" 
+                                    class="form-control m-input" placeholder="{{ __('admin.instagram') }}" value="{{ $user->instagram }}" disabled="">
+                        {!! $errors->first('instagram', '<span class="form-control-feedback">:message</span>') !!}
+                    </div>
+                </div>
+    
+                <div class="form-group m-form__group row {{ $errors->has('snapchat') ? 'has-danger' : ''}}">
+                    <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.snapchat') }}</label>
+                    <div class="col-9">
+                        <input type="text" name="snapchat" 
+                                    class="form-control m-input" placeholder="{{ __('admin.snapchat') }}" value="{{ $user->snapchat }}" disabled="">
+                        {!! $errors->first('snapchat', '<span class="form-control-feedback">:message</span>') !!}
+                    </div>
+                </div>
+    
+                <div class="form-group m-form__group row {{ $errors->has('linkedin') ? 'has-danger' : ''}}">
+                    <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.linkedin') }}</label>
+                    <div class="col-9">
+                        <input type="text" name="linkedin" 
+                                    class="form-control m-input" placeholder="{{ __('admin.linkedin') }}" value="{{ $user->linkedin }}" disabled="">
+                        {!! $errors->first('linkedin', '<span class="form-control-feedback">:message</span>') !!}
+                    </div>
+                </div>
+    
+                <div class="form-group m-form__group row {{ $errors->has('youtube') ? 'has-danger' : ''}}">
+                    <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.youtube') }}</label>
+                    <div class="col-9">
+                        <input type="text" name="youtube" 
+                                    class="form-control m-input" placeholder="{{ __('admin.youtube') }}" value="{{ $user->youtube }}" disabled="">
+                        {!! $errors->first('youtube', '<span class="form-control-feedback">:message</span>') !!}
+                    </div>
+                </div>
+    
+
         </div>
         <div class="m-portlet__foot m-portlet__foot--fit">
             <div class="m-form__actions m-form__actions--solid">
@@ -110,7 +204,7 @@
                     <div class="col-3">
                     </div>
                     <div class="col-9">
-                        <a type="reset" href="{{ config('app.admin_url') }}/users" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
+                        <a type="reset" href="{{url('admin/users')}}" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
                     </div>
                 </div>
             </div>

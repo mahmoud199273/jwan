@@ -145,6 +145,26 @@ return [
     'items'                         => 'عنصر',
     'searched_for'                  => 'قمت بالبحث عن',
     'cancel_search'                 => 'الغاء البحث',
-    'term'                          => 'الشرط' 
+    'term'                          => 'الشرط',
+    /* m.abdelrahman  */
+    'Business manager'=>'مدير اعمال',
+    'Personal'=>' حساب شخصى ',
+    'Government'=>' قطاع حكومى / قطاع شبه حكومي ',
+    'Private sector'=>' قطاع خاص ',
+    'Account manager'=>' مدير حساب',
+    'Type'=>' نوع الحساب ',
+    'flag'=>' علم الدولة ',
+    'in-active' => 'غير مفعل',
+    'active'     => 'مفعل',
+    'male'     => 'ذكر',
+    'female'     => 'أنثى',
+    'notes'     => 'ملاحطات',
+    'facebook'     => 'facebook',
+    'twitter'     => 'twitter',
+    'instagram'     => 'instagram',
+    'snapchat'     => 'snapchat',
+    'linkedin'     => 'linkedin',
+    'youtube'     => 'youtube',
+    /* m.abdelrahman  */ 
 
 ];

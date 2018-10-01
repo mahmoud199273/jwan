@@ -106,7 +106,7 @@
 		<script src="{{asset('admin/assets/demo/default/custom/components/base/sweetalert2.js')}}" type="text/javascript"></script>
 
 
-		<script type="text/javascript"> base_url = "{{ config('app.url') }}"; </script>
+		<script type="text/javascript"> base_url = "{{url('admin')}}"; </script>
 
 		<!--begin::Page Snippets --> 
 		<script src="{{asset('admin/assets/app/js/dashboard.js')}}" type="text/javascript"></script>
@@ -191,7 +191,7 @@
 		}).then((result) => {
 		  if (result.value) {
 		           $.ajax({
-                        url: '{{ config('app.admin_url') }}/{{ isset($route)? $route : "" }}/ban',
+                        url: '{{url("admin")}}/{{ isset($route)? $route : "" }}/ban',
                         type: 'POST',
                         data: {'_method':'post','_token': $('meta[name="csrf-token"]').attr('content'),'id':id },
                         success: function( msg ) {
@@ -230,7 +230,7 @@
 		}).then((result) => {
 		  if (result.value) {
 		           $.ajax({
-                        url: '{{ config('app.admin_url') }}/{{ isset($route)? $route : "" }}/activate',
+                        url: '{{url("admin")}}/{{ isset($route)? $route : "" }}/activate',
                         type: 'POST',
                         data: {'_method':'post','_token': $('meta[name="csrf-token"]').attr('content'),'id':id },
                         success: function( msg ) {
@@ -267,7 +267,7 @@
 		}).then((result) => {
 		  if (result.value) {
 		           $.ajax({
-                        url: '{{ config('app.admin_url') }}/{{ isset($route)? $route : "" }}/approve',
+                        url: '{{url("admin")}}/{{ isset($route)? $route : "" }}/approve',
                         type: 'POST',
                         data: {'_method':'post','_token': $('meta[name="csrf-token"]').attr('content'),'id':id },
                         success: function( msg ) {
@@ -304,7 +304,7 @@
 		}).then((result) => {
 		  if (result.value) {
 		           $.ajax({
-                        url: '{{ config('app.admin_url') }}/{{ isset($route)? $route : "" }}/reject',
+                        url: '{{url("admin")}}/{{ isset($route)? $route : "" }}/reject',
                         type: 'POST',
                         data: {'_method':'post','_token': $('meta[name="csrf-token"]').attr('content'),'id':id },
                         success: function( msg ) {

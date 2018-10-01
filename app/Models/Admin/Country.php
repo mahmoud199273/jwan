@@ -16,10 +16,6 @@ class Country extends Model
         'flag'=>'img/default-profile-picture.png',
     ] ;
 
-    protected $attributes = [
-        'flag'=>'img/default-profile-picture.png',
-    ] ;
-
     // public function cities()
     // {
     //     return $this->hasMany(City::class);

@@ -2,27 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\City;
+use App\Country;
 use App\Http\Controllers\Controller;
-<<<<<<< HEAD
 use App\Http\Requests\Admin\User\EditUserRequest;
 use App\Http\Requests\Admin\User\StoreUserRequest;
 use App\User;
 use Illuminate\Http\Request;
-=======
-use App\Models\Admin\User;
-use App\Models\Admin\Country;
-use App\Models\Admin\Area;
-use App\Models\Admin\Category;
-use App\Models\Admin\nationalities;
->>>>>>> 57a21f079cc8787a516b8b971b392ed25d58305d
 
 
 class UserController extends Controller
 {
 
     function __construct(){
-        $this->middleware('admin');
+        //$this->middleware('admin');
     }
     /**
      * Display a listing of the resource.
@@ -31,7 +23,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('type','user')->latest()->paginate(10);
+        $users = User::latest()->paginate(10);
         return view('admin.users.index',compact('users'));
     }
 
@@ -63,9 +55,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        $cities =  City::all();
+        $countries =  COuntry::all();
 
-        return view('admin.users.create',compact('cities'));
+        return view('admin.users.create',compact('countries'));
     }
 
     /**
@@ -76,22 +68,9 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-<<<<<<< HEAD
         $request->persist();
         return redirect()->back()->with('status' , __('admin.created') );
 
-=======
-        $countries = Country::pluck('name_ar', 'id');
-        $categories = Category::pluck('name_ar', 'id');
-        $areas    = Area::pluck('name_ar', 'id');
-        $nationality    = nationalities::pluck('name_ar', 'id');
-        $activation = ['1' => __('lang.active'), '0' => __('lang.in-active')];
-        $gender = ['1' => __('lang.male'), '0' => __('lang.female')];
-        $account_manger = ['1' => __('lang.Business manager'), '0' => __('lang.Personal')];
-        $type = ['2' => __('lang.Government'),'1' => __('lang.Private sector'), '0' => __('lang.Personal')];
-        
-        view()->share(compact('countries','categories', 'areas','nationality','activation','gender','account_manger','type'));
->>>>>>> 57a21f079cc8787a516b8b971b392ed25d58305d
     }
 
     /**
@@ -102,22 +81,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-<<<<<<< HEAD
         $user = User::find($id);
-        $cities =  City::all();
-        return view('admin.users.show',compact('user','cities'));
-=======
-        $countries = Country::pluck('name_ar', 'id');
-        $categories = Category::pluck('name_ar', 'id');
-        $areas    = Area::pluck('name_ar', 'id');
-        $nationality    = nationalities::pluck('name_ar', 'id');
-        $activation = ['1' => __('lang.active'), '0' => __('lang.in-active')];
-        $gender = ['1' => __('lang.male'), '0' => __('lang.female')];
-        $account_manger = ['1' => __('lang.Business manager'), '0' => __('lang.Personal')];
-        $type = ['2' => __('lang.Government'),'1' => __('lang.Private sector'), '0' => __('lang.Personal')];
-        
-        view()->share(compact('countries','categories', 'areas','nationality','activation','gender','account_manger','type'));
->>>>>>> 57a21f079cc8787a516b8b971b392ed25d58305d
+        $countries =  Country::all();
+        return view('admin.users.show',compact('user','countries'));
     }
 
     /**
@@ -129,9 +95,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $cities =  City::all();
+        $countries =  Country::all();
 
-        return view('admin.users.edit',compact('user','cities'));
+        return view('admin.users.edit',compact('user','countries'));
     }
 
     /**
@@ -143,19 +109,8 @@ class UserController extends Controller
      */
     public function update(EditUserRequest $request, $id)
     {
-<<<<<<< HEAD
         $request->persist($id);
         return redirect()->back()->with('status' , __('admin.updated') );
-=======
-        return $this->v([
-            'name'       => 'required|string|max:50|min:2',
-            'email'      => 'required|email|max:255|unique:users',
-            'phone'      => 'required|unique:users',
-            'notes'      => 'required',
-            'password'   => 'required|string|max:25|min:8',
-            'image'      => 'image',
-        ]);
->>>>>>> 57a21f079cc8787a516b8b971b392ed25d58305d
     }
 
     /**
@@ -166,21 +121,10 @@ class UserController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-<<<<<<< HEAD
         if ($request->ajax()) {
             User::find($id)->delete();
             return response(['msg' => 'deleted', 'status' => 'success']);
         }
-=======
-       return $this->v([
-            'name'       => 'required|max:255',
-            'email'      => 'required|email|max:255|unique:users,email,'.request()->route('user'),
-            'phone'      => 'required|unique:users,phone,'.request()->route('user'),
-            'notes'      => 'required',
-            'password'   => 'required|string|max:25|min:8',
-            'image'      => 'image',
-        ]);
->>>>>>> 57a21f079cc8787a516b8b971b392ed25d58305d
     }
 
 

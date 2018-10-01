@@ -42,6 +42,9 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::resource('area','AreaController');
 		Route::resource('category','CategoryController');
 		Route::resource('natoinality','NatoinalityController');
-		Route::resource('user','UserController');
+		Route::resource('users','UserController');
+		Route::post('/users/activate'       , 'UserController@activate');
+        Route::post('/users/ban'            , 'UserController@ban');
+
 	});
 });

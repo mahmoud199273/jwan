@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
 
+    protected $table = 'users';
+
     # type == 1 ? user
     protected $fillable = [
         'name', 'email','phone', 'password','image','type','is_active','nationality_id','account_manger','countries_id','areas_id','categories_id','gender','video','facebook','facebook_followers','twitter','twitter_followers','instagram','instagram_followers','snapchat','snapchat_followers','linkedin','linkedin_followers','youtube','youtube_followers','notes'
