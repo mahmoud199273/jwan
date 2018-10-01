@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
 
             $table->string('name')->nullable();
 
-            $table->enum('gender',[0,1])->nullable(); // male OR female
+            $table->enum('gender',[0,1,2])->nullable(); // male OR female OR general
 
             
 
@@ -39,6 +39,11 @@ class CreateUsersTable extends Migration
             $table->enum('type',[0,1,2])->nullable(); //government OR personal OR company
 
             $table->enum('is_active',[0,1])->nullable();
+
+            $table->enum('account_type',[0,1]);
+
+            // 0 = user  1 = influncer
+
 
             $table->string('minimumRate')->nullable();
 

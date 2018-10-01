@@ -60,15 +60,27 @@ Route::get('user/profile', 'API\V1\UserController@profile');
 
 Route::post('user/update/profile', 'API\V1\UserController@updateProfile');
 
+
+
 Route::post('user/update/password'	, 'API\V1\UserController@updatePassword');
 
 
 //Influncer Routes
 
+Route::post('influncer/login', 'API\V1\AuthController@login');
+
 Route::post('influncer/register', 'API\V1\AuthController@registerInfluncer');
 
 
-Route::get('influncer/profile', 'API\V1\UserController@profile');
+Route::get('influncer/profile', 'API\V1\UserController@influncerProfile');
+
+Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerProfile');
+
+
+
+Route::post('influncer/update/password'	, 'API\V1\UserController@updateInfluncerPassword');
+
+Route::post('influncer/update/followers','API\V1\UserController@updateFollowers');
 
 
  Route::resource('countries', 'API\V1\CountryController');

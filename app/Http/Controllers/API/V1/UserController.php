@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\API\V1\BaseController as Controller;
 //use App\Notification;
 use App\Transformers\ProfileTransformer;
+use App\Transformers\InfluncerTransformer;
 use App\User;
 //use App\UserPlayerId;
 use Hash;
@@ -18,19 +19,20 @@ class UserController extends Controller
 {
 
 	protected $profileTransformer;
+    protected $influncerTransformer;
 
-    function __construct(Request $request, ProfileTransformer $profileTransformer ){
+    function __construct(Request $request, ProfileTransformer $profileTransformer,InfluncerTransformer $influncerTransformer  ){
         App::setlocale($request->lang);
     	$this->middleware('jwt.auth');
-    	$this->profileTransformer = $profileTransformer;
+        $this->profileTransformer = $profileTransformer;
+    	$this->influncerTransformer = $influncerTransformer;
     }
 
 
     public function profile( Request $request )
     {
 
-
-    	$user =  $this->getAuthenticatedUser();
+        $user =  $this->getAuthenticatedUser();
 
     	return $this->respond(['data' => $this->profileTransformer->transform($user) ]);
     }
@@ -40,7 +42,7 @@ class UserController extends Controller
     public function influncerProfile( Request $request )
     {
         $influncer =  $this->getAuthenticatedUser();
-        return $this->respond(['data' => $this->profileTransformer->transform($influncer) ]);
+        return $this->respond(['data' => $this->influncerTransformer->transform($influncer) ]);
     }
 
 
@@ -60,7 +62,7 @@ class UserController extends Controller
 
             'notes'     => 'required',
 
-            'country_id' => 'required',
+            'countries_id' => 'required',
 
             'type'      => 'required',
 
@@ -114,7 +116,7 @@ class UserController extends Controller
 
         $user->type        = $request->type;
 
-        $user->country_id  = $request->country_id;
+        $user->countries_id  = $request->countries_id;
  
         $user->facebook    = $request->facebook;
 
@@ -144,7 +146,7 @@ class UserController extends Controller
 
     	$validator = Validator::make( $request->all(), [
             'name'     => 'required|string|max:50|min:2',
-            'email'	   => 'nullable|string|max:30|min:2',
+            'email'	   => 'required|string|max:30|min:2',
             
 
             'image'         => 'required',
@@ -159,47 +161,15 @@ class UserController extends Controller
 
             'account_manger' => 'required',
 
-            
-
             'minimumRate'   =>  'required',
 
-            'facebook'      => 'nullable',
-
-            'facebook_follwers' => 'nullable',
-
-            'twitter' => 'nullable',
-
-            'twitter_follwers' => 'nullable',
-
-            'instgrame' => 'nullable',
-
-            'instgrame_follwers' => 'nullable',
-
-            'snapchat' => 'nullable',
-
-            'snapchat_follwers' => 'nullable',
-
-            'linkedin' => 'nullable',
-
-            'linkedin_follwers' => 'nullable',
-
-            'youtube'       => 'nullable',
-
-            'youtube_follwers' => 'nullable',
-
-            'categories_id'      => 'required',
-
-            'countries_id'    => 'required',
-
-            'areas_id'      => 'required'
-
-
+     
 
         ]);
 
         
         if ($validator->fails()) {
-            // return $this->setStatusCode(422)->respondWithError($validator->messages());
+            return $this->setStatusCode(422)->respondWithError($validator->messages());
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
         }
 
@@ -228,34 +198,12 @@ class UserController extends Controller
 
             $user->minimumRate      =$request->minimumRate;
 
-            $user->facebook          = $request->facebook;
+            $user->save();
 
-            $user->facebook_follwers  = $request->facebook_follwers;
-
-            $user->twitter            = $request->twitter;
-
-            $user->twitter_follwers   = $request->twitter_follwers;
-
-            $user->instgrame           = $request->instgrame;
-
-            $user->instgrame_follwers  =$request->instgrame_follwers;
-
-            $user->snapchat            = $request->snapchat;
-
-            $user->snapchat_follwers   = $request->snapchat_follwers;
-
-            $user->linkedin             = $request->linkedin;
-
-            $user->linkedin_follwers   = $request->linkedin_follwers;
-
-            $user->youtube             = $request->youtube;
-
-            $user->youtube_follwers   = $request->youtube_follwers;
-        $user->save();
-
-        $categories_id  =$request->categories_id;    
-
+        /*$categories_id  =$request->categories_id;    
+            //dd($categories_id);
             foreach ($categories_id  as $id) {
+                
                 UserCategory::create([
 
                 'user_id'       => $user->id,
@@ -289,21 +237,127 @@ class UserController extends Controller
             
 
                       ]);
-            }
+            }*/
 
         return $this->respondWithSuccess(trans('api_msgs.profile_updated'));
 
 
     }
 
+    public function updateFollowers(Request $request)
+    {
+        $user =  $this->getAuthenticatedUser();
+
+        $validator = Validator::make( $request->all(), [
+
+            'facebook'      => 'required',
+
+            'facebook_follwers' => 'required',
+
+            'twitter' => 'required',
+
+            'twitter_follwers' => 'required',
+
+            'instgrame' => 'required',
+
+            'instgrame_follwers' => 'required',
+
+            'snapchat' => 'required',
+
+            'snapchat_follwers' => 'required',
+
+            'linkedin' => 'required',
+
+            'linkedin_follwers' => 'required',
+
+            'youtube'       => 'required',
+
+            'youtube_follwers' => 'required'
+
+            
+
+
+
+        ]);
+
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError($validator->messages());
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
+        }
+
+            $user = User::find( $user->id );
+
+            $user->facebook          = $request->facebook;
+
+            $user->facebook_follwers  = $request->facebook_follwers;
+
+            $user->twitter            = $request->twitter;
+
+            $user->twitter_follwers   = $request->twitter_follwers;
+
+            $user->instgrame           = $request->instgrame;
+
+            $user->instgrame_follwers  =$request->instgrame_follwers;
+
+            $user->snapchat            = $request->snapchat;
+
+            $user->snapchat_follwers   = $request->snapchat_follwers;
+
+            $user->linkedin             = $request->linkedin;
+
+            $user->linkedin_follwers   = $request->linkedin_follwers;
+
+            $user->youtube             = $request->youtube;
+
+            $user->youtube_follwers   = $request->youtube_follwers;
+        $user->save();
+        return $this->respondWithSuccess(trans('api_msgs.profile_updated'));
+        
+    }
+
 
     public function isEmailExists( $email , $user_id )
     {
-        return User::where([['id','<>',$user_id] ,['user_email' ,$email]])->first() ?  true : false ;
+        return User::where([['id','<>',$user_id] ,['email' ,$email]])->first() ?  true : false ;
+    }
+
+    public function isPhoneExists( $phone )
+    {
+        return User::where('phone',$phone)->first() ? true : false;
     }
 
 
     public function updatePassword( Request $request )
+    {
+        $user =  $this->getAuthenticatedUser();
+
+        $validator = Validator::make( $request->all(), [
+            'old_password'  => 'required',
+            'new_password'  => 'required|string|max:25|min:8'
+        ]);
+
+        
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError('paramters failed validation');
+        }
+        if ($this->isCorrectOldPassword( $user->id , $request->old_password )  ) {
+
+            $user = User::find( $user->id );
+            $user->password     =  bcrypt($request->new_password);
+            $user->save();
+            return $this->respondWithSuccess(trans('api_msgs.password_updated'));
+
+
+        }else{
+
+            return $this->respondWithError(trans('api_msgs.wrong_password'));
+
+        }
+
+    }
+
+
+    public function updateInfluncerPassword( Request $request )
     {
         $user =  $this->getAuthenticatedUser();
 

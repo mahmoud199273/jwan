@@ -178,27 +178,27 @@ class AuthController extends Controller
 
             'facebook'      => 'nullable',
 
-            'facebook_follwers' => 'nullable',
+            
 
             'twitter' => 'nullable',
 
-            'twitter_follwers' => 'nullable',
+            
 
             'instgrame' => 'nullable',
 
-            'instgrame_follwers' => 'nullable',
+            
 
             'snapchat' => 'nullable',
 
-            'snapchat_follwers' => 'nullable',
+            
 
             'linkedin' => 'nullable',
 
-            'linkedin_follwers' => 'nullable',
+            
 
-            'youtube'       => 'nullable',
+            'youtube'       => 'nullable'
 
-            'youtube_follwers' => 'nullable'
+            
 
 
 
@@ -212,7 +212,7 @@ class AuthController extends Controller
         
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
-            // return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
         }
 
         
@@ -237,31 +237,25 @@ class AuthController extends Controller
 
             $user->facebook          = $request->facebook;
 
-            $user->facebook_follwers  = $request->facebook_follwers;
 
             $user->twitter            = $request->twitter;
 
-            $user->twitter_follwers   = $request->twitter_follwers;
-
             $user->instgrame           = $request->instgrame;
 
-            $user->instgrame_follwers  =$request->instgrame_follwers;
 
             $user->snapchat            = $request->snapchat;
 
-            $user->snapchat_follwers   = $request->snapchat_follwers;
 
             $user->linkedin             = $request->linkedin;
 
-            $user->linkedin_follwers   = $request->linkedin_follwers;
 
             $user->youtube             = $request->youtube;
 
-            $user->youtube_follwers   = $request->youtube_follwers;
 
             $user->countries_id    = $request->countries_id;
 
-            $user->is_active    =  '1'; 
+            $user->is_active        =  '1'; 
+            $user->account_type     =  '0';
 			$user->save();
 
            // $this->createVerificationCode( arTOen($request->phone) );
@@ -413,6 +407,7 @@ class AuthController extends Controller
             
 
             $user->is_active    =  '1'; 
+            $user->account_type     =  '0';
             $user->save();
 
            $categories_id  =$request->categories_id;    
@@ -516,18 +511,18 @@ class AuthController extends Controller
 
 
 
-   /* public function login( Request $request )
+    /*public function login( Request $request )
     {
     	$validator = Validator::make( $request->all(), [
-            'phone'         => 'required',
+            
             'email'			=> 'required',
-            'password'		=> 'required',
+            'password'		=> 'required'
         ]);
         
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('parameters failed validation');
         }
-        $credentails =  $request->only('phone','email' ,'password');
+        $credentails =  $request->only('email' ,'password');
 
         if ( !$this->isActiveAccount( $credentails ) ) {
 
@@ -535,7 +530,7 @@ class AuthController extends Controller
 
         }else{
 
-			return $this->generateToken( $request->only('phone','email' ,'password') );
+			return $this->generateToken( $request->only('email' ,'password') );
 
         }
     		

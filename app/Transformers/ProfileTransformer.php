@@ -19,46 +19,42 @@ class ProfileTransformer extends Transformer
         return [
             'id'            => (int) $user->id,
             'name'          => $user->name,
+            'rate'          => 3,
             
             'email'         => $user->email,
             'phone'         => $user->phone,
             'image'         => ($user->image) ?config('app.url').$user->image : null,
             //'is_instructor' => (boolean) $user->is_instructor,
             'notes'         => $user->notes,
-            'gender'        =>(boolean)$user->gender,
+            'number_of_coins' => 300,
+            "number_of_offers" => 12,
+            "number_of_influnceres" => 20,
 
-            'nationality_id'   =>(int) $user->nationality_id,
-
-            'account_manger' => (boolean) $user->account_manger,
 
             'type'          => (boolean) $user->type,
 
-            'minimumRate'   => $user->minimumRate,
-
             'facebook'     => $user->facebook,
-            'facebook_follwers' => $user->facebook_follwers,
+            
 
             'twitter'     => $user->twitter,
-            'twitter_follwers' => $user->twitter_follwers,
+            
 
             'instgrame'     => $user->instgrame,
-            'instgrame_follwers' => $user->instgrame_follwers,
+            
 
 
             'snapchat'     => $user->snapchat,
-            'snapchat_follwers' => $user->snapchat_follwers,
+            
 
             'linkedin'     => $user->linkedin,
-            'linkedin_follwers' => $user->linkedin_follwers,
+            
 
             'youtube'   => $user->youtube,
-            'youtube_follwers' => $user->youtube_follwers,
+            
 
-            'categories' => $user->categories ,
 
-            'countries' => $user->countries,
+            'countries_id' => $user->countries_id,
 
-            'areas' =>$user->areas,
 
         ];
     }
