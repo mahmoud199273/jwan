@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
 
             $table->string('name')->nullable();
 
-            $table->enum('gender',[0,1,2])->nullable(); // male OR female OR general
+            $table->enum('gender',[0,1,2])->nullable(); // male OR female OR general 
 
             
 

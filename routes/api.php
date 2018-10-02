@@ -64,6 +64,8 @@ Route::post('user/update/profile', 'API\V1\UserController@updateProfile');
 
 Route::post('user/update/password'	, 'API\V1\UserController@updatePassword');
 
+Route::post('user/send/complanit', 'API\V1\ComplaintsController@store');
+
 
 //Influncer Routes
 
@@ -81,6 +83,8 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 Route::post('influncer/update/password'	, 'API\V1\UserController@updateInfluncerPassword');
 
 Route::post('influncer/update/followers','API\V1\UserController@updateFollowers');
+
+Route::post('influncer/send/complanit', 'API\V1\ComplaintsController@store');
 
 
  Route::resource('countries', 'API\V1\CountryController');

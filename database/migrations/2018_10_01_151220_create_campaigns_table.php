@@ -1,0 +1,65 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateCampaignsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('campaigns', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
+
+            $table->integer('user_id')->unsigned()->nullable();
+             
+             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+             $table->enum('facebook',[0,1]);
+
+             $table->enum('twitter',[0,1]);
+
+             $table->enum('snapchat',[0,1]);
+
+             $table->enum('youtube',[0,1]);
+
+             $table->enum('instgrame',[0,1]);
+
+             $table->enum('male',[0,1]);
+
+             $table->enum('female',[0,1]);
+
+             $table->enum('general',[0,1]);
+
+             $table->longText('description');
+
+             $table->longText('scenario');
+
+             $table->integer('maximum_rate');
+
+             $table->dateTime('created_date');
+
+             $table->dateTime('updated_date');
+
+             $table->enum('capaign_status',[0,1,2,3]);
+
+             $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('campaigns');
+    }
+}

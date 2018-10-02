@@ -23,7 +23,7 @@ class User extends Authenticatable
             }
 
 
-    protected $fillable = [
+         protected $fillable = [
         'name', 'email','phone', 'password','image','type','is_active','country_id','gender','video','facebook','facebook_follwers','twitter','twitter_follwers','instgrame','instgrame_follwers','snapchat','snapchat_follwers','linkedin','linkedin_follwers','youtube','youtube_follwers','notes'
     ];
 
@@ -64,6 +64,13 @@ class User extends Authenticatable
         return $this->hasone('App\Nathionality', 'nathionality_id', 'id');
         
     }
+
+     public function complaint()
+            {
+               return $this->hasMany('App\Complaint');
+            }
+
+    
 
 
 }
