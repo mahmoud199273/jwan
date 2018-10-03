@@ -15,4 +15,9 @@ class Area extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function campaign()
+    {
+        return $this->hasMany(Campaign::class);
+    }
 }

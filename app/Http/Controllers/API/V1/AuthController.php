@@ -669,9 +669,9 @@ class AuthController extends Controller
            // 'player_id'     => 'required',
         //]);
         
-       // if ($validator->fails()) {
-         //   return $this->setStatusCode(422)->respondWithError('parameters failed validation');
-       // }
+      /* if ($validator->fails()) {
+           return $this->setStatusCode(422)->respondWithError('parameters failed validation');
+         }*/
         
 
         $current_token  = JWTAuth::getToken();

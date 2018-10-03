@@ -95,6 +95,16 @@ Route::post('influncer/send/complanit', 'API\V1\ComplaintsController@store');
 
  Route::get('/nathionalities','API\V1\NathionalitiesController@index');
 
+ // start Camapign routes 
+
+ Route::post('/user/add/camapign','API\V1\CampignsContrller@store');
+
+ Route::get('/user/camapigns','API\V1\CampignsContrller@index');
+
+ Route::get('/camapign/{id}','API\V1\CampignsContrller@show');
+
+ Route::post('/camapign/update'	, 'API\V1\CampignsContrller@update');
+
 
 
 

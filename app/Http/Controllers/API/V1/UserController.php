@@ -62,8 +62,6 @@ class UserController extends Controller
 
             'notes'     => 'required',
 
-            'countries_id' => 'required',
-
             'type'      => 'required',
 
             'facebook'      => 'nullable',
@@ -94,29 +92,18 @@ class UserController extends Controller
 
         $user->name      =  $request->name;
         
-        if ( $request->email )   {
+       
+        $user->email   = $request->email;
+        
 
-            if ($this->isEmailExists($request->email, $user->id)) {
-                return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
-            }
-            $user->email   = $request->email;
-         }
+        $user->phone   = $request->phone;
 
-         if ( $request->phone )   {
-
-            if ($this->isPhoneExists($request->phone, $user->id)) {
-                return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
-            }
-            $user->phone   = $request->phone;
-         }
 
         $user->image   =  $request->image;
 
         $user->notes       = $request->notes;
 
         $user->type        = $request->type;
-
-        $user->countries_id  = $request->countries_id;
  
         $user->facebook    = $request->facebook;
 
@@ -155,13 +142,13 @@ class UserController extends Controller
 
             'gender'        => 'required',
 
-            'nationality_id' => 'required',
+            
 
             'notes'          => 'required',
 
-            'account_manger' => 'required',
+            'account_manger' => 'required'
 
-            'minimumRate'   =>  'required',
+            
 
      
 
@@ -185,18 +172,11 @@ class UserController extends Controller
 
             $user->name         =  $request->name;
 
-            $user->gender       =    $request->gender;
+            $user->gender        =    $request->gender;
 
-            $user->nationality_id    = $request->nationality_id;
+            $user->notes         = $request->notes;
 
-
-            $user->notes             = $request->notes;
-
-            $user->account_manger      = $request->account_manger;
-
-            
-
-            $user->minimumRate      =$request->minimumRate;
+            $user->account_manger  = $request->account_manger;
 
             $user->save();
 
