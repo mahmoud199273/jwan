@@ -16,8 +16,14 @@ class Area extends Model
         return $this->hasMany(User::class);
     }
 
+
     public function campaign()
     {
         return $this->hasMany(Campaign::class);
     }
+
+    protected $hidden = [
+        'created_at', 'updated_at',
+    ];
+
 }

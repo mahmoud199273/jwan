@@ -31,7 +31,7 @@ class ProfileTransformer extends Transformer
             "number_of_influnceres" => 20,
 
 
-            'type'          => (boolean) $user->type,
+            'type'          =>  $user->type,
 
             'facebook'     => $user->facebook,
             
@@ -51,8 +51,6 @@ class ProfileTransformer extends Transformer
 
             'youtube'   => $user->youtube,
             
-
-
             'countries_id' => $user->countries_id,
 
 
@@ -80,23 +78,23 @@ class ProfileTransformer extends Transformer
             'type'          => (boolean) $influncer->type,
 
             'facebook'     => $influncer->facebook,
-            'facebook_follwers' => $influncer->facebook_follwers,
+            'facebook_followers' => $influncer->facebook_followers,
 
             'twitter'     => $influncer->twitter,
-            'twitter_follwers' => $influncer->twitter_follwers,
+            'twitter_followers' => $influncer->twitter_followers,
 
-            'instgrame'     => $influncer->instgrame,
-            'instgrame_follwers' => $influncer->instgrame_follwers,
+            'instagram'     => $influncer->instagram,
+            'instagram_followers' => $influncer->instagram_followers,
 
 
             'snapchat'     => $influncer->snapchat,
-            'snapchat_follwers' => $influncer->snapchat_follwers,
+            'snapchat_followers' => $influncer->snapchat_followers,
 
             'linkedin'     => $influncer->linkedin,
-            'linkedin_follwers' => $influncer->linkedin_follwers,
+            'linkedin_followers' => $influncer->linkedin_followers,
 
             'youtube'   => $influncer->youtube,
-            'youtube_follwers' => $influncer->youtube_follwers
+            'youtube_followers' => $influncer->youtube_followers
 
         ];
     }*/

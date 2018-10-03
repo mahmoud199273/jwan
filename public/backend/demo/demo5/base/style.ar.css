@@ -1,0 +1,102 @@
+@import url(//fonts.googleapis.com/earlyaccess/notokufiarabic.css);
+
+ p, h1, h2, h3, h4, h5, h6, span, div {
+    font-family: 'Noto Kufi Arabic' !important;
+    direction: rtl !important;
+ }
+
+ button{
+    font-family: 'Noto Kufi Arabic';
+ }
+ .la {
+    font: normal normal normal 16px/1 "LineAwesome" !important;
+ }
+.m-datatable__table {
+    direction: rtl;
+    text-align: right;
+}
+.m-subheader {
+    float: right;
+}
+.m-subheader .m-subheader__title {
+    text-align: right;
+}
+.m-topbar__user-profile .m-dropdown__wrapper{
+    text-align: right;
+}
+.m-portlet__head-tools{
+    float: right;
+}
+form {
+    text-align: right;
+    direction: rtl;
+}
+.m-portlet__head-title{
+    float: right
+}
+.toast-top-right, .toast, .toast-success {
+    text-align: right;
+}
+﻿.toast-close-button {
+    float: left;
+}
+#toast-container > .toast-success {
+    background-position: 262px;
+    padding-right: 50px;
+}
+.btn-outline-accent.m-btn--air, .btn-accent.m-btn--air, .m-btn--gradient-from-accent.m-btn--air {
+    direction: rtl
+}
+.m-btn--icon > span > span {
+    padding-right: 0.5em;
+}
+.m-aside-left--fixed .m-aside-left {
+    right: 0 !important
+}
+.toast-top-right {
+    top: 12px;
+    left: 12px;
+}
+
+@media (min-width: 993px) {
+    .m-aside-left--fixed .m-aside-left {
+        right: 0 !important
+    }
+}
+.m-grid__item.m-grid__item--fluid.m-grid.m-grid--ver-desktop.m-grid--desktop.m-body {
+    padding-left:0px;
+    padding-right:150px;
+}
+.m-grid__item.m-footer {
+    margin-left: 0px !important;
+    margin-right: 150px;
+}
+.m-stack.m-stack--desktop {
+    direction: rtl;
+}
+.m-menu__hor-arrow.la.la-angle-down, .m-menu__link-badge {
+    padding-right: 5px
+}
+.m-badge {
+    margin-right: 5px
+}
+.m-header-menu .m-menu__nav.m-menu__nav--submenu-arrow > .m-menu__item.m-menu__item--submenu.m-menu__item--hover > .m-menu__submenu {
+    direction: rtl;
+    text-align: right;
+}
+.btn-focus {
+    color: #fff;
+    background-color: #00d2b8;
+    border-color: #8b8ffd;
+}
+ .btn-focus:hover {
+    background-color: #8b8ffd;
+    border-color: #00d2b8;
+}
+.dashboard-bread {
+    padding: 0px 10px;
+}
+.m-portlet__body {
+    direction: rtl;
+    text-align: right;
+}

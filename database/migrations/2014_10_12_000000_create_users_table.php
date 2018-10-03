@@ -47,25 +47,23 @@ class CreateUsersTable extends Migration
 
             $table->string('minimumRate')->nullable();
 
-            
-
             $table->string('facebook')->nullable();
-            $table->integer('facebook_follwers')->nullable();
+            $table->integer('facebook_followers')->nullable();
 
             $table->string('twitter')->nullable();
-            $table->integer('twitter_follwers')->nullable();
+            $table->integer('twitter_followers')->nullable();
 
-            $table->string('instgrame')->nullable();
-            $table->integer('instgrame_follwers')->nullable();
+            $table->string('instagram')->nullable();
+            $table->integer('instagram_followers')->nullable();
 
             $table->string('snapchat')->nullable();
-            $table->integer('snapchat_follwers')->nullable();
+            $table->integer('snapchat_followers')->nullable();
 
             $table->string('linkedin')->nullable();
-            $table->integer('linkedin_follwers')->nullable();
+            $table->integer('linkedin_followers')->nullable();
 
             $table->string('youtube')->nullable();
-            $table->integer('youtube_follwers')->nullable();
+            $table->integer('youtube_followers')->nullable();
 
             
 

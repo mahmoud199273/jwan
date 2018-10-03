@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API\V1;
- 
+
 use App\Http\Controllers\API\V1\BaseController as Controller;
 use App\User;
 use App\UserCategory;
@@ -22,7 +22,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
-  
+
 
   	function __construct( Request $request ){
 
@@ -38,7 +38,7 @@ class AuthController extends Controller
 		$validator = Validator::make( $request->all(), [
             'phone'  => 'required|max:16|min:9',
         ]);
-        
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_phone'));
         }
@@ -47,10 +47,10 @@ class AuthController extends Controller
         if ($this->isPhoneExists( $request->phone )) {
            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
         }
-        
-        //create verfication code 
+
+        //create verfication code
         $this->createVerificationCode( arTOen($request->phone) );
-        
+
 
         return $this->respondCreated(trans('api_msgs.code_sent'));
 	}*/
@@ -81,7 +81,7 @@ class AuthController extends Controller
         $current_time   = Carbon::now();
         $created_at     = $current_time->toDateTimeString();
         $expired_at     = $current_time->addHours(24)->toDateTimeString();
-        DB::table('verify_phone_codes')->insert([         
+        DB::table('verify_phone_codes')->insert([
 		         'phone'         => $phone ,
                    'code'          => $verify_code ,
 		         'created_at'    => $created_at,
@@ -107,13 +107,13 @@ class AuthController extends Controller
 
 
     /*
-    *public function verifyCode( Request $request ) 
+    *public function verifyCode( Request $request )
     {
 
     	$validator = Validator::make( $request->all(), [
             'code'                  => 'required|max:4|min:4',
         ]);
-        
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('parameters faild validation');
         }
@@ -145,7 +145,7 @@ class AuthController extends Controller
 
         }else{
         	$code->verified = '1';
-            $code->save(); 
+            $code->save();
             $user->is_active = '1';
             $user->save();
             return $this->respond(['token' => $token ]);
@@ -161,10 +161,10 @@ class AuthController extends Controller
     	$validator = Validator::make( $request->all(), [
 
             'email'         => 'required',
-        
+
             'phone'			=> 'required|max:14|min:9',
-            
-            'countries_id'    => 'required',
+
+            'countries_id'  => 'required',
 
             'password'		=> 'required|string|max:25|min:8',
 
@@ -176,29 +176,18 @@ class AuthController extends Controller
 
             'type'          => 'required',
 
-            'facebook'      => 'nullable',
+            'facebook'      => 'nullable',   
 
+            'twitter' => 'nullable',   
+
+
+            'instagram' => 'nullable',
             
-
-            'twitter' => 'nullable',
-
-            
-
-            'instgrame' => 'nullable',
-
-            
-
             'snapchat' => 'nullable',
-
-            
 
             'linkedin' => 'nullable',
 
-            
-
             'youtube'       => 'nullable'
-
-            
 
 
 
@@ -208,23 +197,23 @@ class AuthController extends Controller
            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
         }
 
-        
-        
+
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
         }
 
-        
+
 
 
 			$user = new User();
-             
-                
-            $user->phone        =  $request->phone; 
 
-            $user->email        =  $request->email; 
-            
+
+            $user->phone        =  $request->phone;
+
+            $user->email        =  $request->email;
+
             $user->password     =  bcrypt($request->password);
 
             $user->image       = $request->image;
@@ -236,7 +225,6 @@ class AuthController extends Controller
             $user->type              = $request->type;
 
             $user->facebook          = $request->facebook;
-
 
             $user->twitter            = $request->twitter;
 
@@ -251,9 +239,6 @@ class AuthController extends Controller
 
             $user->youtube             = $request->youtube;
 
-
-            $user->countries_id    = $request->countries_id;
-
             $user->is_active        =  '1'; 
             $user->account_type     =  '0';
 			$user->save();
@@ -261,14 +246,12 @@ class AuthController extends Controller
            // $this->createVerificationCode( arTOen($request->phone) );
 
             $token = JWTAuth::fromUser($user);
-        
+
             return Response::json( compact('token'));
 
             //return $this->respondCreated(trans('api_msgs.success'));
-			
 
 
-    	
     }
 
     public function registerInfluncer( Request $request )
@@ -277,9 +260,9 @@ class AuthController extends Controller
         $validator = Validator::make( $request->all(), [
 
             'email'         => 'required|unique:users,email',
-        
+
             'phone'         => 'required|max:14|min:9',
-            
+
             'password'      => 'required|string|max:25|min:8',
 
             'image'         => 'required',
@@ -288,39 +271,39 @@ class AuthController extends Controller
 
             'gender'        => 'required',
 
-            'nationality_id'   => 'required',
+            'nationality_id'  => 'required',
 
             'notes'          => 'required',
 
             'account_manger' => 'required',
 
-            
 
-            'minimumRate'   =>  'required',
+
+            'minimum_rate'   =>  'required',
 
             'facebook'      => 'nullable',
 
-            'facebook_follwers' => 'nullable',
+            'facebook_followers' => 'nullable',
 
             'twitter' => 'nullable',
 
-            'twitter_follwers' => 'nullable',
+            'twitter_followers' => 'nullable',
 
-            'instgrame' => 'nullable',
+            'instagram' => 'nullable',
 
-            'instgrame_follwers' => 'nullable',
+            'instagram_followers' => 'nullable',
 
             'snapchat' => 'nullable',
 
-            'snapchat_follwers' => 'nullable',
+            'snapchat_followers' => 'nullable',
 
             'linkedin' => 'nullable',
 
-            'linkedin_follwers' => 'nullable',
+            'linkedin_followers' => 'nullable',
 
             'youtube'       => 'nullable',
 
-            'youtube_follwers' => 'nullable',
+            'youtube_followers' => 'nullable',
 
             'categories_id'      => 'required',
 
@@ -328,7 +311,7 @@ class AuthController extends Controller
 
             'areas_id'      => 'required'
 
-            
+
 
 
 
@@ -337,22 +320,22 @@ class AuthController extends Controller
         if ($this->isPhoneExists( $request->phone )) {
            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
         }
-        
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
          return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
         }
 
-        
+
 
 
             $user = new User();
-             
-                
-            $user->phone        =  $request->phone; 
 
-            $user->email        =  $request->email; 
-            
+
+            $user->phone        =  $request->phone;
+
+            $user->email        =  $request->email;
+
             $user->password     =  bcrypt($request->password);
 
             $user->image       = $request->image;
@@ -368,49 +351,49 @@ class AuthController extends Controller
 
             $user->account_manger      = $request->account_manger;
 
-            
 
-            $user->minimumRate      =$request->minimumRate;
+
+            $user->minimum_rate      =$request->minimum_rate;
 
             $user->facebook          = $request->facebook;
 
-            $user->facebook_follwers  = $request->facebook_follwers;
+            $user->facebook_followers  = $request->facebook_followers;
 
             $user->twitter            = $request->twitter;
 
-            $user->twitter_follwers   = $request->twitter_follwers;
+            $user->twitter_followers   = $request->twitter_followers;
 
-            $user->instgrame           = $request->instgrame;
+            $user->instagram           = $request->instagram;
 
-            $user->instgrame_follwers  =$request->instgrame_follwers;
+            $user->instagram_followers  =$request->instagram_followers;
 
             $user->snapchat            = $request->snapchat;
 
-            $user->snapchat_follwers   = $request->snapchat_follwers;
+            $user->snapchat_followers   = $request->snapchat_followers;
 
             $user->linkedin             = $request->linkedin;
 
-            $user->linkedin_follwers   = $request->linkedin_follwers;
+            $user->linkedin_followers   = $request->linkedin_followers;
 
             $user->youtube             = $request->youtube;
 
-            $user->youtube_follwers   = $request->youtube_follwers;
+            $user->youtube_followers   = $request->youtube_followers;
+
+            $user->account_type = 1;
 
            // $user->categories_id  =$request->categories_id;
-          
-
-
-        
 
 
 
-            
+
+
+
 
             $user->is_active    =  '1'; 
-            $user->account_type     =  '0';
+            
             $user->save();
 
-           $categories_id  =$request->categories_id;    
+           $categories_id  =$request->categories_id;
 
             foreach ($categories_id  as $id) {
                 UserCategory::create([
@@ -418,11 +401,11 @@ class AuthController extends Controller
                 'user_id'       => $user->id,
 
                 'categories_id' => $id,
-            
+
 
                       ]);
             }
-            $countries_id  =$request->countries_id;    
+            $countries_id  =$request->countries_id;
 
             foreach ($countries_id  as $id) {
                 UserCountry::create([
@@ -430,12 +413,12 @@ class AuthController extends Controller
                 'user_id'       => $user->id,
 
                 'country_id' => $id,
-            
+
 
                       ]);
             }
 
-            $areas_id  =$request->areas_id;    
+            $areas_id  =$request->areas_id;
 
             foreach ($areas_id  as $id) {
                 UserArea::create([
@@ -443,26 +426,21 @@ class AuthController extends Controller
                 'user_id'       => $user->id,
 
                 'area_id' => $id,
-            
+
 
                       ]);
             }
-
-                 
-
-        
-        
 
 
            // $this->createVerificationCode( arTOen($request->phone) );
 
             $token = JWTAuth::fromUser($user);
-        
+
             return Response::json( compact('token'));
-            
 
 
-        
+
+
     }
 
 
@@ -471,7 +449,7 @@ class AuthController extends Controller
         $validator = Validator::make( $request->all(), [
             'email'         => 'required|email|unique:users'
         ]);
-        
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
         }
@@ -486,7 +464,7 @@ class AuthController extends Controller
         $validator = Validator::make( $request->all(), [
             'phone'         => 'required|unique:users'
         ]);
-        
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
         }
@@ -501,7 +479,7 @@ class AuthController extends Controller
             'phone'         => 'required|unique:users',
             'email'         => 'required|unique:users'
         ]);
-        
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.data_exists'));
         }
@@ -518,7 +496,7 @@ class AuthController extends Controller
             'email'			=> 'required',
             'password'		=> 'required'
         ]);
-        
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('parameters failed validation');
         }
@@ -533,27 +511,37 @@ class AuthController extends Controller
 			return $this->generateToken( $request->only('email' ,'password') );
 
         }
-    		
+
     }*/
 
 
     public function login(Request $request){
+      if(strpos($request->server("REQUEST_URI"), '/user/login'))
+      {
+          $type = 0;
+      }
+      elseif(strpos($request->server("REQUEST_URI"), '/influncer/login'))
+      {
+          $type = 1;
+      }
+      else {
+        return $this->setStatusCode(422)->respondWithError('user type not exising');
+      }
         $validator = Validator::make($request -> all(),[
          'email' => 'required',
-         'password'=> 'required'
+         'password'=> 'required',
         ]);
-
         /*if ($validator -> fails()) {
             # code...
             return response()->json($validator->errors());
-            
+
         }*/
 
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('parameters failed validation');
         }
 
-       
+
         $credentials = $request->only('email','password');
          if ( !$this->isActiveAccount( $credentials ) ) {
 
@@ -564,7 +552,7 @@ class AuthController extends Controller
             return $this->generateToken( $request->only('email' ,'password') );
 
         }
-        
+
     }
 
 
@@ -596,13 +584,13 @@ class AuthController extends Controller
 
     public function uploadProfileImage( $image )
     {
-    		$imagePath = "";      
-            $image_name = time().time().'_profile.'.$image->getClientOriginalExtension();  
+    		$imagePath = "";
+            $image_name = time().time().'_profile.'.$image->getClientOriginalExtension();
             $imageDir   = base_path() .'/public/assets/images/profile';
-            $upload_img = $image->move($imageDir,$image_name); 
+            $upload_img = $image->move($imageDir,$image_name);
             $imagePath  = '/public/assets/images/profile/'.$image_name;
 
-            return $imagePath;   
+            return $imagePath;
     }
 
 
@@ -615,7 +603,7 @@ class AuthController extends Controller
 
                    return $this->respondUnauthorized( trans('api_msgs.check_credentials') );
             }
-            
+
         } catch (JWTException $e) {
 
             return $this->setStatusCode(500)->respondWithError('can not create token');
@@ -633,7 +621,7 @@ class AuthController extends Controller
     {
 
         $current_token  = JWTAuth::getToken();
-       
+
 
         if ( !$current_token ) {
             return $this->setStatusCode(422)->respondWithError('parameters faild validation');
@@ -646,9 +634,9 @@ class AuthController extends Controller
         } catch (JWTException $e) {
 
             return $this->respondForbidden('token_invalid');
-            
+
         }
-        
+
         $user = JWTAuth::toUser($token);
 
         if ($user->is_active == '0') {
@@ -660,7 +648,7 @@ class AuthController extends Controller
     }
 
 
-   
+
     public function logout(Request $request)
     {
         $user = $this->getAuthenticatedUser();
@@ -669,10 +657,16 @@ class AuthController extends Controller
            // 'player_id'     => 'required',
         //]);
         
-      /* if ($validator->fails()) {
+       if ($validator->fails()) {
            return $this->setStatusCode(422)->respondWithError('parameters failed validation');
-         }*/
+         }
         
+
+       // if ($validator->fails()) {
+         //   return $this->setStatusCode(422)->respondWithError('parameters failed validation');
+       // }
+
+
 
         $current_token  = JWTAuth::getToken();
 
@@ -687,7 +681,7 @@ class AuthController extends Controller
     }
 
 
-    /*  public function logout(Request $request) 
+    /*  public function logout(Request $request)
     {
         // Get JWT Token from the request header key "Authorization"
        // $token = $request->header('Authorization');
@@ -695,41 +689,17 @@ class AuthController extends Controller
         try {
             JWTAuth::invalidate($token);
             return response()->json([
-                'status' => 'success', 
+                'status' => 'success',
                 'message'=> "User successfully logged out."
-            ]); 
+            ]);
         } catch (JWTException $e) {
             // something went wrong whilst attempting to encode the token
             return response()->json([
-              'status' => 'error', 
+              'status' => 'error',
               'message' => 'Failed to logout, please try again.'
             ], 500);
         }
     }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

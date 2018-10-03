@@ -53,6 +53,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'admin_url' => env('APP_URL', 'http://localhost')."/admin",
 
     /*
     |--------------------------------------------------------------------------
@@ -159,6 +160,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
         //abdullahobaid\mobilywslaraval\MobilywsProvider::class,
         //Tymon\JWTAuth\Providers\LaravelServiceProviders::class,
         //Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
@@ -212,6 +214,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
         //'Mobily'    => abdullahobaid\mobilywslaraval\Mobily::class,
         'JWTAuth'=>'Tymon\JWTAuth\Facades\JWTAuth',
         'JWTFactory'=>'Tymon\JWTAuth\Facades\JWTFactory',

@@ -28,17 +28,61 @@ class FileController extends Controller
             return $this->respondWithError('parameters failed validation');
         }
         $file = $request->file;
-        $filePath = "";      
-        $file_name = time().time().uniqid().'.'.$file->getClientOriginalExtension();  
+        $filePath = "";
+        $file_name = time().time().uniqid().'.'.$file->getClientOriginalExtension();
         $fileDir   = base_path() .'/public/assets/uploads/';
-        $upload_file = $file->move($fileDir,$file_name); 
-        $filePath  = '/public/assets/uploads/'.$file_name;
-
-        return $this->respond(['path' => $filePath]);   
+        if(in_array($file->getClientOriginalExtension(), ['jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff']))
+        {
+          $upload_file = $file->move($fileDir,$file_name);
+          $filePath  = '/public/assets/uploads/'.$file_name;
+          return $this->respond(['path' => $filePath]);
+        }
+        else {
+          return $this->respondWithError('extention is not valid');
+        }
     }
 
 
+    public function fileAsDataUpload( Request $request )
+    {
+        $key  = 'classes@123';
 
+         $validator = Validator::make( $request->all() , [
+            'file'      => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+        }
+
+        if ($key != $request->key ) {
+            return $this->respondWithError('parameters failed validation');
+        }
+        $file = $request->file;
+
+        if(strlen($file)>0)
+        {
+            list($extension, $file) = explode(';', $file);
+            $extension = explode("/", $extension);
+            $extension = $extension[1];
+            list(, $file)      = explode(',', $file);
+            $file = base64_decode($file);
+            $filename = time().time().uniqid();
+            if(in_array($extension, ['jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff']))
+            {
+              $fileDir   = base_path() .'/public/assets/uploads/';
+              file_put_contents($fileDir."$filename.$extension", $file);
+              $filePath  = "/public/assets/uploads/$filename.$extension";
+              return $this->respond(['path' => $filePath]);
+            }
+            else {
+              return $this->respondWithError('extention is not valid');
+            }
+        }
+        else {
+          return $this->respondWithError('file data is empty');
+        }
+    }
 
 
 

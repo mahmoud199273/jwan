@@ -163,9 +163,9 @@ class CampignsContrller extends Controller
 
             'maximum_rate'      => 'required',
 
-            'created_date'      => 'required',
+            //'created_date'      => 'required',
 
-            'updated_date'      => 'required',
+            //'updated_date'      => 'required',
 
             'capaign_status'    => 'required',
 
@@ -285,7 +285,7 @@ class CampignsContrller extends Controller
     }
 
 
-    public function update( Request $request )
+   /* public function update( Request $request )
     {
         $user =  $this->getAuthenticatedUser();
 
@@ -367,7 +367,7 @@ class CampignsContrller extends Controller
 
         return $this->respondWithSuccess(trans('api_msgs.updated'));
 
-    }
+    }*/
 
 
 

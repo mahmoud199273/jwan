@@ -58,10 +58,10 @@ class User extends Authenticatable
     }
 
 
-    public function nathionality()
+    public function nationality()
     {
 
-        return $this->hasone('App\Nathionality', 'nathionality_id', 'id');
+        return $this->hasone('App\nationality', 'nationality_id', 'id');
         
     }
 

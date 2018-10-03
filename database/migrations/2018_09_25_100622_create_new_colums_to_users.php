@@ -19,7 +19,7 @@ class CreateNewColumsToUsers extends Migration
 
              $table->integer('nationality_id')->after('gender')->unsigned()->nullable();
              
-             $table->foreign('nationality_id')->references('id')->on('nathionalities')->onUpdate('set null')->onDelete('set null');
+             $table->foreign('nationality_id')->references('id')->on('nationalities')->onUpdate('set null')->onDelete('set null');
 
 
 

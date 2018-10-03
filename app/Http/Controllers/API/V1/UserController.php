@@ -18,14 +18,14 @@ use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
 
-	protected $profileTransformer;
+    protected $profileTransformer;
     protected $influncerTransformer;
 
     function __construct(Request $request, ProfileTransformer $profileTransformer,InfluncerTransformer $influncerTransformer  ){
         App::setlocale($request->lang);
-    	$this->middleware('jwt.auth');
+        $this->middleware('jwt.auth');
         $this->profileTransformer = $profileTransformer;
-    	$this->influncerTransformer = $influncerTransformer;
+        $this->influncerTransformer = $influncerTransformer;
     }
 
 
@@ -34,7 +34,7 @@ class UserController extends Controller
 
         $user =  $this->getAuthenticatedUser();
 
-    	return $this->respond(['data' => $this->profileTransformer->transform($user) ]);
+        return $this->respond(['data' => $this->profileTransformer->transform($user) ]);
     }
 
 
@@ -49,6 +49,8 @@ class UserController extends Controller
 
     public function updateProfile( Request $request )
     {
+
+
         $user =  $this->getAuthenticatedUser();
 
         $validator = Validator::make( $request->all(), [
@@ -99,11 +101,15 @@ class UserController extends Controller
         $user->phone   = $request->phone;
 
 
-        $user->image   =  $request->image;
+        $user->email        =  $request->email; 
+        if (substr( $request->image, 0, 4 ) !== "http") {
+            $user->image        = $request->image;
+        }
+
+
 
         $user->notes       = $request->notes;
 
-        $user->type        = $request->type;
  
         $user->facebook    = $request->facebook;
 
@@ -129,11 +135,13 @@ class UserController extends Controller
 
     public function updateInfluncerProfile(Request $request )
     {
-    	$user =  $this->getAuthenticatedUser();
+        $user =  $this->getAuthenticatedUser();
 
-    	$validator = Validator::make( $request->all(), [
+        $validator = Validator::make( $request->all(), [
             'name'     => 'required|string|max:50|min:2',
-            'email'	   => 'required|string|max:30|min:2',
+            'email'    => 'required|string',
+
+            'phone'   => 'required|string',
             
 
             'image'         => 'required',
@@ -167,8 +175,11 @@ class UserController extends Controller
             $user->phone        =  $request->phone; 
 
             $user->email        =  $request->email; 
-            
-            $user->image        = $request->image;
+            if (substr( $request->image, 0, 4 ) !== "http") {
+                $user->image        = $request->image;
+            }
+
+
 
             $user->name         =  $request->name;
 
@@ -301,9 +312,10 @@ class UserController extends Controller
         return User::where([['id','<>',$user_id] ,['email' ,$email]])->first() ?  true : false ;
     }
 
-    public function isPhoneExists( $phone )
+    public function isPhoneExists( $phone , $user_id )
     {
-        return User::where('phone',$phone)->first() ? true : false;
+        return User::where([['id','<>',$user_id] ,['phone' ,$phone]])->first() ?  true : false ;
+        
     }
 
 
@@ -378,7 +390,7 @@ class UserController extends Controller
 
     public function uploadProfileImage( $image )
     {
-		$imagePath = "";      
+        $imagePath = "";      
         $image_name = time().time().'_profile.'.$image->getClientOriginalExtension();  
         $imageDir   = base_path() .'/public/assets/images/profile';
         $upload_img = $image->move($imageDir,$image_name); 

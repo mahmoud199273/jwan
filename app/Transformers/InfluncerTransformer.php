@@ -28,14 +28,14 @@ class InfluncerTransformer extends Transformer
             'phone'         => $user->phone,
             'image'         => ($user->image) ?config('app.url').$user->image : null,
             'notes'         => $user->notes,
-            'gender'        =>(boolean)$user->gender,
+            'gender'        =>$user->gender,
 
             'nationality_id'   =>(int) $user->nationality_id,
 
 
-            'account_manger' => (boolean) $user->account_manger,
+            'account_manger' =>  $user->account_manger,
 
-            'type'          => (boolean) $user->type,
+            'type'          =>  $user->type,
 
             'minimum_rate'   => $user->minimum_rate,
 
@@ -58,7 +58,7 @@ class InfluncerTransformer extends Transformer
             'youtube'   => $user->youtube,
             'youtube_followers' => $user->youtube_followers,
 
-            'account_type' =>(boolean) $user->account_type,
+            'account_type' => $user->account_type,
 
             'categories' => $user->categories ,
 

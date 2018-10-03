@@ -1,0 +1,85 @@
+.box-title {
+	font-size: 20px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+.m-portlet__head-text {
+	vertical-align: middle;
+}
+.user-image {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    -webkit-box-shadow: 0px 11px 34px -6px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 11px 34px -6px rgba(0,0,0,0.75);
+	box-shadow: 0px 11px 34px -6px rgba(0,0,0,0.75);
+    margin-bottom: 20px;
+}
+.hotel-images {
+    border-radius: 20%;
+    height: 200px;
+    width: 200px;
+    -webkit-box-shadow: 0px 11px 34px -6px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 11px 34px -6px rgba(0,0,0,0.75);
+    box-shadow: 0px 11px 34px -6px rgba(0,0,0,0.75);
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+.reservation-button {
+    background: #2d2e3d !important;
+    color: #fff !important;
+    font-weight: bold;
+    height: 40px;
+    line-height: 20px;
+}
+.img_preview {
+    cursor: pointer;
+}
+.action-btn {
+    width: 122px
+}
+.m-topbar .m-topbar__nav.m-nav > .m-nav__item > .m-nav__link .m-topbar__userpic img {
+    max-width: 40px !important;
+    height: 40px;
+}
+.m-card-user .m-card-user__pic img {
+    max-width: 40px !important;
+    height: 40px;
+}
+.m-aside-menu .m-menu__nav > .m-menu__item.m-menu__item--active > .m-menu__link .m-menu__link-icon {
+    color: #00b1ca !important;
+}
+.btn-accent {
+    color: #fff;
+    background-color: #00b1ca;
+    border-color: #00b1ca;
+    float: left
+}
+.m-badge.m-badge--accent {
+    background-color: #00b1ca;
+}
+.select2-m_select2_1-result-uwhz-1 {
+    text-align: right;
+}
+.select2-selection__arrow {
+    display: none !important;
+}
+.section-title {
+    margin-right: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
