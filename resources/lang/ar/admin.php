@@ -165,6 +165,18 @@ return [
     'snapchat'     => 'snapchat',
     'linkedin'     => 'linkedin',
     'youtube'     => 'youtube',
+    'instgrame'     => 'instagram',
+    'influencers'     => ' المعلنين ',
+    'influencer'     => ' معلن ',
+    'gender'     => ' الجنس ',
+    'campaigns'     => ' حملات ',
+    'campaign'     => ' حملة ',
+    'campaign_date'     => ' تاريخ الحملة ',
+    'scenario'     => ' سيناريو ',
+    'yes'     => ' نعم ',
+    'no'     => ' لا ',
+    'general'     => ' عام ',
+    'maximum_rate'     => ' الحد الأقصى للتقيم ',
     /* m.abdelrahman  */ 
 
 ];

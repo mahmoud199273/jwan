@@ -1,8 +1,8 @@
-@extends('admin.layouts.index_layout' , ['title' => __('admin.users') ,'route' => 'users'])
+@extends('admin.layouts.index_layout' , ['title' => __('admin.influencers') ,'route' => 'influencers'])
 
 @section('content')
 <div class="row">
-    <form class="m-form" action="{{url('admin/users/search')}}" method="get" id="search_form">
+    <form class="m-form" action="{{url('admin/influencers/search')}}" method="get" id="search_form">
         <div class="form-group m-form__group row ">
             <label for="q" class="col-1 col-form-label"></label>
             <div class="col-6">
@@ -48,13 +48,13 @@
                                 <i class="flaticon-avatar"></i>
                             </span>
                             <h3 class="m-portlet__head-text">
-                                {{ __('admin.users') }}  
+                                {{ __('admin.influencers') }}  
                             </h3>
                         </div>
                     </div>
                     <div class="m-portlet__head-tools">
 
-                        <a href="{{url('admin/users/create')}}" class="btn btn-brand m-btn m-btn--icon m-btn--wide m-btn--md m--margin-right-10">
+                        <a href="{{url('admin/influencers/create')}}" class="btn btn-brand m-btn m-btn--icon m-btn--wide m-btn--md m--margin-right-10">
                             <span>
                                 <i class="la la-plus"></i>
                                 <span>{{ __('admin.add') }}</span>
@@ -91,7 +91,7 @@
                                     "<i class='fa fa-times m--font-danger'></i>" !!}</td>
                                     <td>
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <a type="button" href="{{url('admin/users')}}/{{ $user->id }}" class="m-btn m-btn m-btn--square btn btn-secondary">
+                                            <a type="button" href="{{url('admin/influencers')}}/{{ $user->id }}" class="m-btn m-btn m-btn--square btn btn-secondary">
                                                 <i class="fa fa-eye m--font-primary"></i>
                                             </a>
                                             @if($user->is_active)
@@ -106,7 +106,7 @@
                                             </a>
                                             @endif
                                             <a type="button" 
-                                            href="{{url('admin/users')}}/{{ $user->id }}/edit" 
+                                            href="{{url('admin/influencers')}}/{{ $user->id }}/edit" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             <i class="fa fa-edit m--font-info"></i>
                                         </a>
@@ -158,7 +158,7 @@
 <br>
 @if(isset($query ) or isset($message))
 <div>
-    <a href="{{url('admin/users')}}" class="btn btn-danger m-btn m-btn--icon m-btn--wide">
+    <a href="{{url('admin/influencers')}}" class="btn btn-danger m-btn m-btn--icon m-btn--wide">
         <span>
             <i class="la la-warning"></i>
             <span>{{ __('admin.cancel_search') }}</span>

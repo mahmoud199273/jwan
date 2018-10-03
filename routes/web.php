@@ -44,7 +44,11 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::resource('natoinality','NatoinalityController');
 		Route::resource('users','UserController');
 		Route::post('/users/activate'       , 'UserController@activate');
-        Route::post('/users/ban'            , 'UserController@ban');
-
+		Route::post('/users/ban'            , 'UserController@ban');
+		
+		Route::resource('influencers','InfluencerController');
+		Route::resource('complaints','ComplaintsController');
+		Route::resource('campaigns','CampaignsController');
+		
 	});
 });
