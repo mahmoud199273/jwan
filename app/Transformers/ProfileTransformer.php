@@ -3,6 +3,7 @@
 namespace App\Transformers;
 
 use App\Transformers\BaseTransformer as Transformer;
+use App\UserCountry;    
 
 class ProfileTransformer extends Transformer
 {
@@ -51,7 +52,7 @@ class ProfileTransformer extends Transformer
 
             'youtube'   => $user->youtube,
             
-            'countries_id' => $user->countries_id,
+            'countries' => UserCountry::where('user_id',$user->id)->first()->country
 
 
         ];

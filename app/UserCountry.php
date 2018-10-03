@@ -11,6 +11,6 @@ class UserCountry extends Model
   
    public function country()
    {
-   	 return $this->belongsToMany('App\Country','country_id','id');
+   	 return $this->belongsTo('App\Country','country_id','id');
    }
 }

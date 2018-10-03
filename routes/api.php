@@ -105,7 +105,7 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::resource('categories', 'API\V1\CategoriesController');
 
- Route::get('/nationalities','API\V1\nationalitiesController@index');
+ Route::get('/nationalities','API\V1\NathionalitiesController@index');
 
  // start Camapign routes 
 

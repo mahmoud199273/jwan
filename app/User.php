@@ -50,6 +50,8 @@ class User extends Authenticatable
                 'user_id', 'country_id');
     }
 
+    
+
     public function areas()
     {
 
