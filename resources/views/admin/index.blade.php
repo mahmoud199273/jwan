@@ -1,10 +1,9 @@
-@extends('admin.layouts.app')
+@extends('admin.layouts.index')
 
 
 @section('title',trans('lang.dashboard'))
 
-@section('breadcrumb')
-@stop
+
 
 @section('content')
 	<div class="clearfix"></div>
