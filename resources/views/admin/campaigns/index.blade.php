@@ -1,4 +1,4 @@
-@extends('admin.layouts.index_layout' , ['title' => __('admin.contact_us') ,'route' => 'complaints'])
+@extends('admin.layouts.index_layout' , ['title' => __('admin.campaigns') ,'route' => 'campaigns'])
 
 @section('content')
 
@@ -20,7 +20,7 @@
                                 <i class="la la-envelope"></i>
                             </span>
                             <h3 class="m-portlet__head-text">
-                                {{ __('admin.contact_us') }}  
+                                {{ __('admin.campaigns') }}  
                             </h3>
                         </div>
                     </div>
@@ -41,26 +41,26 @@
                                 <tr>
                                     <th><b>{{ __('admin.title') }}</b></th>
                                     <th><b>{{ __('admin.name') }}</b></th>
-                                    <th><b>{{ __('admin.sent_at') }}</b></th>
+                                    <th><b>{{ __('admin.campaign_date') }}</b></th>
                                     <th><b>{{ __('admin.control') }}</b></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if($complaints)
-                                @foreach ($complaints as $complaint)
+                                @if($campaigns)
+                                @foreach ($campaigns as $campaign)
                                 <tr>
-                                    <th scope="row">{{ $complaint->title }}</th>
-                                    <th scope="row">{{ $complaint->user->name }}</th>
-                                    <th scope="row">{{ $complaint->created_at }}</th>
+                                    <th scope="row">{{ $campaign->title }}</th>
+                                    <th scope="row">{{ $campaign->user->name }}</th>
+                                    <th scope="row">{{ $campaign->created_at }}</th>
                                     <td>
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
                                             <a type="button" 
-                                            href="{{url('admin/complaints')}}/{{ $complaint->id }}" 
+                                            href="{{url('admin/campaigns')}}/{{ $campaign->id }}" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             <i class="fa fa-eye m--font-info"></i>
                                         </a>
 
-                                        <a type="button"  data-id = "{{ $complaint->id }}" 
+                                        <a type="button"  data-id = "{{ $campaign->id }}" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary _remove">
                                             <i class="flaticon-delete-1 m--font-danger"></i>
                                         </a>
@@ -86,8 +86,8 @@
 
 <div class="container">
     <div class="text-center">
-       @if($complaints)
-       {{ $complaints->links() }}
+       @if($campaigns)
+       {{ $campaigns->links() }}
        @endif
    </div>
 </div>

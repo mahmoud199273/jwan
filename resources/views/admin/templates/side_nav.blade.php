@@ -23,6 +23,14 @@
 			</a>
 		</li>
 
+		<li class="m-menu__item" aria-haspopup="true" >
+			<a  href="{{url('admin/influencers')}}" class="m-menu__link ">
+				<span class="m-menu__item-here"></span>
+				<i class="m-menu__link-icon flaticon-avatar"></i>
+				<span class="m-menu__link-text">{{ __('admin.influencers') }}</span>
+			</a>
+		</li>
+
 
 		<li class="m-menu__item" aria-haspopup="true" >
 				<a  href="{{url('admin/country')}}" class="m-menu__link ">
@@ -53,6 +61,22 @@
 					<span class="m-menu__item-here"></span>
 					<i class="m-menu__link-icon fa fa-map"></i>
 					<span class="m-menu__link-text">{{ __('admin.categories') }}</span>
+				</a>
+		</li>
+
+		<li class="m-menu__item" aria-haspopup="true" >
+				<a  href="{{url('admin/complaints')}}" class="m-menu__link ">
+					<span class="m-menu__item-here"></span>
+					<i class="m-menu__link-icon fa fa-map"></i>
+					<span class="m-menu__link-text">{{ __('admin.contact_us') }}</span>
+				</a>
+		</li>
+
+		<li class="m-menu__item" aria-haspopup="true" >
+				<a  href="{{url('admin/campaigns')}}" class="m-menu__link ">
+					<span class="m-menu__item-here"></span>
+					<i class="m-menu__link-icon fa fa-map"></i>
+					<span class="m-menu__link-text">{{ __('admin.campaigns') }}</span>
 				</a>
 		</li>
 
