@@ -273,9 +273,9 @@ class AuthController extends Controller
         $validator = Validator::make( $request->all(), [
 
             'email'         => 'required|unique:users,email',
-
+        
             'phone'         => 'required|max:14|min:9',
-
+            
             'password'      => 'required|string|max:25|min:8',
 
             'image'         => 'required',
@@ -284,39 +284,39 @@ class AuthController extends Controller
 
             'gender'        => 'required',
 
-            'nationality_id'  => 'required',
+            'nationality_id'   => 'required',
 
             'notes'          => 'required',
 
             'account_manger' => 'required',
 
+            
 
-
-            'minimum_rate'   =>  'required',
+            'minimumRate'   =>  'required',
 
             'facebook'      => 'nullable',
 
-            'facebook_followers' => 'nullable',
+            'facebook_follwers' => 'nullable',
 
             'twitter' => 'nullable',
 
-            'twitter_followers' => 'nullable',
+            'twitter_follwers' => 'nullable',
 
-            'instagram' => 'nullable',
+            'instgrame' => 'nullable',
 
-            'instagram_followers' => 'nullable',
+            'instgrame_follwers' => 'nullable',
 
             'snapchat' => 'nullable',
 
-            'snapchat_followers' => 'nullable',
+            'snapchat_follwers' => 'nullable',
 
             'linkedin' => 'nullable',
 
-            'linkedin_followers' => 'nullable',
+            'linkedin_follwers' => 'nullable',
 
             'youtube'       => 'nullable',
 
-            'youtube_followers' => 'nullable',
+            'youtube_follwers' => 'nullable',
 
             'categories_id'      => 'required',
 
@@ -345,10 +345,10 @@ class AuthController extends Controller
             $user = new User();
 
 
-            $user->phone        =  $request->phone;
+            $user->phone        =  $request->phone; 
 
-            $user->email        =  $request->email;
-
+            $user->email        =  $request->email; 
+            
             $user->password     =  bcrypt($request->password);
 
             $user->image       = $request->image;
@@ -364,33 +364,33 @@ class AuthController extends Controller
 
             $user->account_manger      = $request->account_manger;
 
+            
 
-
-            $user->minimum_rate      =$request->minimum_rate;
+            $user->minimumRate      =$request->minimumRate;
 
             $user->facebook          = $request->facebook;
 
-            $user->facebook_followers  = $request->facebook_followers;
+            $user->facebook_follwers  = $request->facebook_follwers;
 
             $user->twitter            = $request->twitter;
 
-            $user->twitter_followers   = $request->twitter_followers;
+            $user->twitter_follwers   = $request->twitter_follwers;
 
-            $user->instagram           = $request->instagram;
+            $user->instgrame           = $request->instgrame;
 
-            $user->instagram_followers  =$request->instagram_followers;
+            $user->instgrame_follwers  =$request->instgrame_follwers;
 
             $user->snapchat            = $request->snapchat;
 
-            $user->snapchat_followers   = $request->snapchat_followers;
+            $user->snapchat_follwers   = $request->snapchat_follwers;
 
             $user->linkedin             = $request->linkedin;
 
-            $user->linkedin_followers   = $request->linkedin_followers;
+            $user->linkedin_follwers   = $request->linkedin_follwers;
 
             $user->youtube             = $request->youtube;
 
-            $user->youtube_followers   = $request->youtube_followers;
+            $user->youtube_follwers   = $request->youtube_follwers;
 
             $user->account_type = 1;
 
