@@ -51,7 +51,7 @@ Route::post('user/register', 'API\V1\AuthController@register');
 
 Route::post('user/login', 'API\V1\AuthController@login');
 
-Route::post('user/logout', 'API\V1\AuthController@logout');
+Route::post('/logout', 'API\V1\AuthController@logout');
 
 Route::post('/refresh/token','API\V1\AuthController@refreshToken');
 
@@ -80,7 +80,7 @@ Route::post('influncer/register', 'API\V1\AuthController@registerInfluncer');
 
 Route::post('influncer/login', 'API\V1\AuthController@login');
 
-Route::post('influncer/logout', 'API\V1\AuthController@logout');
+//Route::post('influncer/logout', 'API\V1\AuthController@logout');
 
 
 Route::get('influncer/profile', 'API\V1\UserController@influncerProfile');

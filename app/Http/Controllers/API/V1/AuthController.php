@@ -245,16 +245,15 @@ class AuthController extends Controller
 
             $countries_id  =$request->countries_id;
 
-            foreach ($countries_id  as $id) {
                 UserCountry::create([
 
                 'user_id'       => $user->id,
 
-                'country_id' => $id,
+                'country_id' => $countries_id,
 
 
                       ]);
-            }
+            
 
            // $this->createVerificationCode( arTOen($request->phone) );
 
@@ -670,9 +669,9 @@ class AuthController extends Controller
            // 'player_id'     => 'required',
         //]);
         
-       if ($validator->fails()) {
+       /*if ($validator->fails()) {
            return $this->setStatusCode(422)->respondWithError('parameters failed validation');
-         }
+         }*/
         
 
        // if ($validator->fails()) {

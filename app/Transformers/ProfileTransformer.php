@@ -35,7 +35,7 @@ class ProfileTransformer extends Transformer
             "number_of_influnceres" => 20,
 
 
-            'type'          =>  $user->type,
+            'type'          => (int) $user->type,
 
             'facebook'     => $user->facebook,
             
