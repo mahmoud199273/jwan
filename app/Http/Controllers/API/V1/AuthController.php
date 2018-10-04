@@ -178,7 +178,7 @@ class AuthController extends Controller
 
             'facebook'      => 'nullable',   
 
-            'twitter' => 'nullable',   
+            'twitter'    => 'nullable',   
 
 
             'instagram' => 'nullable',
@@ -243,18 +243,7 @@ class AuthController extends Controller
             $user->account_type     =  '0';
 			$user->save();
 
-            $countries_id  =$request->countries_id;
-
-            foreach ($countries_id  as $id) {
-                UserCountry::create([
-
-                'user_id'       => $user->id,
-
-                'country_id' => $id,
-
-
-                      ]);
-            }
+            $user->countries_id  =$request->countries_id;
 
            // $this->createVerificationCode( arTOen($request->phone) );
 
