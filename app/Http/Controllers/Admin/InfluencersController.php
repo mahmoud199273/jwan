@@ -10,11 +10,11 @@ use App\User;
 use Illuminate\Http\Request;
 
 
-class InfluencerController extends Controller
+class InfluencersController extends Controller
 {
 
     function __construct(){
-        //$this->middleware('admin');
+        $this->middleware('admin');
     }
     /**
      * Display a listing of the resource.
@@ -23,7 +23,7 @@ class InfluencerController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->paginate(10);
+        $users = User::where('account_type','1')->latest()->paginate(10);
         return view('admin.influencers.index',compact('users'));
     }
 

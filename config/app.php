@@ -52,8 +52,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
-    'admin_url' => env('APP_URL', 'http://localhost')."/admin",
+    'url' => env('APP_URL', 'http://127.0.0.1:8000'),
+    'admin_url' => env('APP_URL', 'http://127.0.0.1:8000')."/admin",
+    'admin_login_url' => env('APP_URL', 'http://127.0.0.1:8000')."/admin/login",
 
     /*
     |--------------------------------------------------------------------------

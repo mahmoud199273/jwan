@@ -10,11 +10,11 @@ use App\User;
 use Illuminate\Http\Request;
 
 
-class UserController extends Controller
+class UsersController extends Controller
 {
 
     function __construct(){
-        //$this->middleware('admin');
+        $this->middleware('admin');
     }
     /**
      * Display a listing of the resource.
@@ -23,7 +23,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->paginate(10);
+        $users = User::where('account_type','0')->latest()->paginate(10);
         return view('admin.users.index',compact('users'));
     }
 

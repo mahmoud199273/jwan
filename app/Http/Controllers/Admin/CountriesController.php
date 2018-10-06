@@ -9,11 +9,11 @@ use App\Models\Admin\Country;
 use Illuminate\Http\Request;
 
 
-class CountryController extends Controller
+class CountriesController extends Controller
 {
 
     function __construct(){
-        //$this->middleware('admin');
+        $this->middleware('admin');
     }
     /**
      * Display a listing of the resource.

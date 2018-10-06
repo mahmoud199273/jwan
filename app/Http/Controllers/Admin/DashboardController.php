@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Ad;
 use App\Http\Controllers\Controller;
 use App\Subscription;
 use App\User;

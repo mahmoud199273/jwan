@@ -36,6 +36,7 @@
     <form class="m-form" action="{{url('admin/users')}}/{{ $user->id }}" method="post" enctype="multipart/form-data">
        
               {{ csrf_field() }}
+              <input type="hidden" name="account_type" value="0" />
                 {{ method_field('PATCH') }}
                 <input type="hidden" name="id" value="{{ $user->id }}">
         <div class="m-portlet__body">
