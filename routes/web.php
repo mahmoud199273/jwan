@@ -36,7 +36,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 //	Route::group(['middleware'=>['admin.auth'],'namespace'=>'Admin'],function(){
 	Route::group(['namespace'=>'Admin'],function(){
 
-<<<<<<< HEAD
+
 		//Route::get('/test',"TestController@index");
 
 		Route::get('/admin',function(){
@@ -55,7 +55,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		//Route::get('/users','UsersController@index');
 		Route::post('/users/activate'       , 'UserController@activate');
 		Route::post('/users/ban'            , 'UserController@ban');
-=======
+
 		Route::group(['prefix' => '/auth'], function() {
             Route::post('/login', 'AuthController@login');
         });
@@ -81,7 +81,6 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::resource('users','UsersController');
 		Route::post('/users/activate'       , 'UsersControllers@activate');
 		Route::post('/users/ban'            , 'UsersControllers@ban');
->>>>>>> 05e032cc8f73596f709af7065e1e5b03daf17e34
 		
 		Route::resource('influencers','InfluencersController');
 
