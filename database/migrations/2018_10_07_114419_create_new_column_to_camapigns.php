@@ -15,7 +15,7 @@ class CreateNewColumnToCamapigns extends Migration
     {
         Schema::table('campaigns', function($table) {
 
-             $table->dateTime('end_at');
+             $table->dateTime('end_at')->nullable();
 
              $table->dropColumn('created_date');
 
