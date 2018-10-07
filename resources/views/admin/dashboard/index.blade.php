@@ -27,8 +27,8 @@
 						<div class="m-portlet__body">
 							<div class="m-widget26">
 								<div class="m-widget26__number">
-									{{ $offices }}
-									<h3>  <small>عدد المكاتب </small> <i class="fa fa-home"></i></h3>
+									{{ $influencers }}
+									<h3>  <small> عدد المعلنين   </small> <i class="fa fa-home"></i></h3>
 								</div>
 								<div class="m-widget26__chart" style="height:90px; width: 220px;">
 									<canvas id="m_chart_quick_stats_2"></canvas>
@@ -42,8 +42,8 @@
 						<div class="m-portlet__body">
 							<div class="m-widget26">
 								<div class="m-widget26__number">
-									{{ $subscriptions }}
-									<h3> <small>عدد الاشتراكات</small> <i class="fa fa-money-check-alt"></i></h3>
+									{{ $campaigns }}
+									<h3> <small>عدد الحملات</small> <i class="fa fa-money-check-alt"></i></h3>
 								</div>
 								<div class="m-widget26__chart" style="height:90px; width: 220px;">
 									<canvas id="m_chart_quick_stats_3"></canvas>
@@ -56,17 +56,11 @@
 						<div class="m-portlet__body">
 							<div class="m-widget26">
 								<div class="m-widget26__number">
-									{{ $ads }}
-									<h3><small>عدد الاعلانات العادية</small> <i class="fa fa-bullhorn"></i></h3>
+									{{ $complaints }}
+									<h3><small> عدد الشكاوى او الاقتراحات  </small> <i class="fa fa-bullhorn"></i></h3>
 								</div>
 
-								<div class="m-widget26__number">
-									{{ $featured_ads }}
-									<h3><small>عدد الاعلانات  المميزة</small> <i class="fa fa-money-bill-wave"></i></h3>
-								</div>
-								<div class="m-widget26__chart" style="height:90px; width: 220px;">
-									<canvas id="m_chart_quick_stats_4"></canvas>
-								</div>
+								
 							</div>
 						</div>
 					</div>

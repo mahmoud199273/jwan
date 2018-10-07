@@ -18,7 +18,6 @@ class ProfileTransformer extends Transformer
     public function transform($user ) : array
     {
 
-        $user_country = UserCountry::where('user_id',$user->id)->first();
         // dd($user_country);
         return [
             'id'            => (int) $user->id,

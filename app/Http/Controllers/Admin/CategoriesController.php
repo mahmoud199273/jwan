@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Areas\StoreAreaRequest;
-use App\Http\Requests\Admin\Areas\EditAreaRequest;
-use App\Models\Admin\Area;
-use App\Models\Admin\Country;
+use App\Http\Requests\Admin\Categories\StoreCategoryRequest;
+use App\Http\Requests\Admin\Categories\EditCategoryRequest;
+use App\Models\Admin\Category;
 use Illuminate\Http\Request;
 
 
-class AreaController extends Controller
+class CategoriesController extends Controller
 {
 
     function __construct(){
-        //$this->middleware('admin');
+        $this->middleware('admin');
     }
     /**
      * Display a listing of the resource.
@@ -24,8 +23,8 @@ class AreaController extends Controller
     public function index()
     {
         
-        $areas = Area::latest()->paginate(10);
-        return view('admin.areas.index',compact('areas'));
+        $categories = Category::latest()->paginate(10);
+        return view('admin.categories.index',compact('categories'));
     }
 
 
@@ -35,13 +34,13 @@ class AreaController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $areas   = Area::where('name', 'LIKE', '%' . $query. '%' )
+             $rows   = Category::where('name', 'LIKE', '%' . $query. '%' )
                                      ->paginate(10);
-            $areas->appends( ['q' => $request->q] );
-            if (count ( $areas ) > 0){
-                return view('admin.areas.index',[ 'areas' => $areas ])->withQuery($query);
+            $rows->appends( ['q' => $request->q] );
+            if (count ( $rows ) > 0){
+                return view('admin.categories.index',[ 'rows' => $rows ])->withQuery($query);
             }else{
-                return view('admin.areas.index',[ 'areas'=> null ,'message' => __('admin.no_result') ]);
+                return view('admin.categories.index',[ 'rows'=> null ,'message' => __('admin.no_result') ]);
             }
         }
     }
@@ -53,8 +52,7 @@ class AreaController extends Controller
      */
     public function create()
     {
-        $countries =  Country::all();
-        return view('admin.areas.create',compact('countries'));
+        return view('admin.categories.create');
     }
 
     /**
@@ -63,7 +61,7 @@ class AreaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAreaRequest $request)
+    public function store(StoreCategoryRequest $request)
     {
         $request->persist();
         return redirect()->back()->with('status' , __('admin.created') );
@@ -78,9 +76,8 @@ class AreaController extends Controller
      */
     public function show($id)
     {
-        $area = Area::find($id);
-        $countries =  Country::all();
-        return view('admin.areas.show',compact('area','countries'));
+        $category = Category::find($id);
+        return view('admin.categories.show',compact('category'));
     }
 
     /**
@@ -91,9 +88,8 @@ class AreaController extends Controller
      */
     public function edit($id)
     {
-        $area = Area::find($id);
-        $countries =  Country::all();
-        return view('admin.areas.edit',compact('area','countries'));
+        $category = Category::find($id);
+        return view('admin.categories.edit',compact('category'));
     }
 
     /**
@@ -103,7 +99,7 @@ class AreaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditAreaRequest $request, $id)
+    public function update(EditCategoryRequest $request, $id)
     {
         $request->persist($id);
         return redirect()->back()->with('status' , __('admin.updated') );
@@ -118,7 +114,7 @@ class AreaController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
-            Area::find($id)->delete();
+            Category::find($id)->delete();
             return response(['msg' => 'deleted', 'status' => 'success']);
         }
     }

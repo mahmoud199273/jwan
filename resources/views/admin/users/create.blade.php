@@ -36,6 +36,7 @@
     <form class="m-form" action="{{url('admin/users')}}" method="post" enctype="multipart/form-data">
        
             {{ csrf_field() }}
+            <input type="hidden" name="account_type" value="0" />
         <div class="m-portlet__body">
 
         @if($errors->any())

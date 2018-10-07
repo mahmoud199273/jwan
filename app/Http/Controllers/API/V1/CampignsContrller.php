@@ -24,7 +24,7 @@ class CampignsContrller extends Controller
 
     function __construct(Request $request, CampaignsTransformer $campaignsTransformer){
         App::setlocale($request->lang);
-    	$this->middleware('jwt.auth')->only(['store','index','edit','update']);
+    	$this->middleware('jwt.auth')->only(['store','index','edit','update','updateStatus']);
         $this->campaignsTransformer   = $campaignsTransformer;
     }
 
@@ -213,9 +213,9 @@ class CampignsContrller extends Controller
 
         $campaign->maximum_rate            = $request->maximum_rate;
 
-        $campaign->created_date            = $request->created_date;
+        //$campaign->created_date            = $request->created_date;
 
-        $campaign->updated_date            = $request->updated_date;
+        //$campaign->updated_date            = $request->updated_date;
 
         $campaign->capaign_status            = $request->capaign_status;
 
@@ -247,7 +247,7 @@ class CampignsContrller extends Controller
 
                 'campaign_id'       => $campaign->id,
 
-                'category_id' => $id,
+                'category_id' => $id
             
 
                       ]);
@@ -259,7 +259,7 @@ class CampignsContrller extends Controller
 
                 'campaign_id'       => $campaign->id,
 
-                'country_id' => $id,
+                'country_id' => $id
             
 
                       ]);
@@ -272,7 +272,7 @@ class CampignsContrller extends Controller
 
                 'campaign_id'       => $campaign->id,
 
-                'area_id' => $id,
+                'area_id' => $id
             
 
                       ]);
@@ -369,6 +369,35 @@ class CampignsContrller extends Controller
 
     }*/
 
+    public function updateStatus( Request $request )
+    {
+        $user =  $this->getAuthenticatedUser();
+
+        $validator = Validator::make( $request->all(), [
+            'id'                => 'required|exists:campaigns,id',
+
+            'capaign_status'    => 'required'
+
+            
+        ]);
+
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError($validator->messages());
+            return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+        }
+
+        $campaign = Campaign::find( $request->id );
+
+        $campaign->capaign_status = $request->capaign_status;
+
+        $campaign->save();
+
+
+        return $this->respondWithSuccess(trans('api_msgs.updated'));
+
+    }
+
+
 
 
 
@@ -385,7 +414,7 @@ class CampignsContrller extends Controller
             return $this->setStatusCode(422)->respondWithError('parameters faild validation');
         }
 
-        Campaign::where([['id', $request->id],['user_id', $instructor->id]])->delete();
+        Campaign::where([['id', $request->id],['user_id', $user->id]])->delete();
 
         return $this->respondWithSuccess(trans('api_msgs.deleted'));
 

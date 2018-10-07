@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Country;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\User\EditUserRequest;
-use App\Http\Requests\Admin\User\StoreUserRequest;
-use App\User;
+//use App\Http\Controllers\Controller;
+//use App\Http\Requests\Admin\User\EditUserRequest;
+//use App\Http\Requests\Admin\User\StoreUserRequest;
+//use App\User;
+//use Illuminate\Http\Request;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\User;
 
 
 class UserController extends Controller
@@ -21,10 +24,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //public function index()
+    //{
+      //  return " here ";
+        //$users = User::latest()->paginate(10);
+        //return view('admin.users.index',compact('users'));
+    //}
+
     public function index()
     {
-        $users = User::latest()->paginate(10);
-        return view('admin.users.index',compact('users'));
+        return " hiii ";
     }
 
        public function search( Request $request )

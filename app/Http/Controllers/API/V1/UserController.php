@@ -405,7 +405,7 @@ class UserController extends Controller
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function updatePlayerId( Request $request )
+   /* public function updatePlayerId( Request $request )
     {
         $user =  $this->getAuthenticatedUser();
 
@@ -421,7 +421,7 @@ class UserController extends Controller
 
         return $this->respondWithSuccess('sucess');
 
-    }
+    }*/
 
 
 

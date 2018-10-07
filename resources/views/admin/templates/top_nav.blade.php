@@ -2,7 +2,7 @@
 <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
 
 	@php 
-		//$admin = Auth::guard('admin')->user();
+		$admin = Auth::guard('admin')->user();
 	@endphp
 
 
@@ -24,10 +24,10 @@
 								</div>
 								<div class="m-card-user__details">
 									<span class="m-card-user__name m--font-weight-500">
-										{{--  {{ $admin->name }}  --}}
+										 {{ $admin->name }} 
 									</span>
 									<a href="" class="m-card-user__email m--font-weight-300 m-link">
-										{{--  {{ $admin->email }}  --}}
+										 {{ $admin->email }} 
 									</a>
 								</div>
 							</div>

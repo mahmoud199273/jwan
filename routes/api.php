@@ -71,6 +71,8 @@ Route::post('user/update/password'	, 'API\V1\UserController@updatePassword');
 
 Route::post('user/send/complanit', 'API\V1\ComplaintsController@store');
 
+Route::get('user/notifications','API\V1\UserController@getNotifications');
+
 
 //Influncer Routes
 
@@ -114,8 +116,13 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
  Route::get('/user/camapigns','API\V1\CampignsContrller@index');
 
  Route::get('/camapign/{id}','API\V1\CampignsContrller@show');
+ Route::post('/camapign/update/status','API\V1\CampignsContrller@updateStatus');
 
- //Route::post('/camapign/update'	, 'API\V1\CampignsContrller@update');
+ Route::post('/camapign/delete','API\V1\CampignsContrller@destroy');
+
+
+
+ //	Route::post('/camapign/update'	, 'API\V1\CampignsContrller@update');
 
 
 

@@ -33,7 +33,7 @@
     </div>
 
     <!--begin::Form-->
-    <form class="m-form" action="{{ config('app.admin_url') }}/admin/profile/edit" method="post" >
+    <form class="m-form" action="{{ config('app.admin_url') }}/profile/edit" method="post" >
        
               {{ csrf_field() }}
         <div class="m-portlet__body">

@@ -16,6 +16,14 @@
 		</li>
 
 		<li class="m-menu__item" aria-haspopup="true" >
+				<a  href="{{url('admin/profile')}}" class="m-menu__link ">
+					<span class="m-menu__item-here"></span>
+					<i class="m-nav__link-icon flaticon-profile-1"></i>
+					<span class="m-menu__link-text">{{ __('admin.profile') }}</span>
+				</a>
+		</li>
+
+		<li class="m-menu__item" aria-haspopup="true" >
 			<a  href="{{url('admin/users')}}" class="m-menu__link ">
 				<span class="m-menu__item-here"></span>
 				<i class="m-menu__link-icon flaticon-avatar"></i>

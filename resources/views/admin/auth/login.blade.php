@@ -23,8 +23,8 @@
 	<!--end::Web font -->
 
 	<!--begin::Base Styles -->
-	<link href="{{ config('app.url') }}/public/admin/assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />
-	<link href="{{ config('app.url') }}/public/admin/assets/demo/default/base/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
+	<link href="{{asset('admin/assets/vendors/base/vendors.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{asset('admin/assets/demo/default/base/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
 
 	<!--end::Base Styles -->
 	<link rel="shortcut icon" href="{{ config('app.url') }}/public/favicon.ico" />
@@ -42,7 +42,7 @@
 				<div class="m-login__container">
 					<div class="m-login__logo">
 						<a href="#">
-							<img src="{{ config('app.url') }}/public/logo.png">
+							<img src="{{asset('logo.png')}}">
 						</a>
 					</div>
 					<div class="m-login__signin">
@@ -80,8 +80,8 @@
 	<!-- end:: Page -->
 
 	<!--begin::Base Scripts -->
-	<script src="{{ config('app.url') }}/public/admin/assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
-	<script src="{{ config('app.url') }}/public/admin/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
+	<script src="{{asset('admin/assets/vendors/base/vendors.bundle.js')}}" type="text/javascript"></script>
+	<script src="{{asset('admin/assets/demo/default/base/scripts.bundle.js')}}" type="text/javascript"></script>
 
 	<!--end::Base Scripts -->
 

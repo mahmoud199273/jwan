@@ -19,7 +19,7 @@ class Campaign extends Model
 
 
          return $this->belongsToMany('App\Category', 'campaign_categories', 
-                'campaign_id', 'categories_id');
+                'campaign_id', 'category_id');
 
     	}
 

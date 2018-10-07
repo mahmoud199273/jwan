@@ -33,9 +33,9 @@ class InfluncerTransformer extends Transformer
             'nationality_id'   =>(int) $user->nationality_id,
 
 
-            'account_manger' =>  $user->account_manger,
+            'account_manger' => (int) $user->account_manger,
 
-            'type'          =>  $user->type,
+            'type'          => (int) $user->type,
 
             'minimum_rate'   => $user->minimum_rate,
 
@@ -58,7 +58,7 @@ class InfluncerTransformer extends Transformer
             'youtube'   => $user->youtube,
             'youtube_followers' => $user->youtube_followers,
 
-            'account_type' => $user->account_type,
+            'account_type' =>(int) $user->account_type,
 
             'categories' => $user->categories ,
 
