@@ -10,11 +10,11 @@ use App\User;
 use Illuminate\Http\Request;
 
 
-class InfluencerController extends Controller
+class UsersController extends Controller
 {
 
     function __construct(){
-        //$this->middleware('admin');
+        $this->middleware('admin');
     }
     /**
      * Display a listing of the resource.
@@ -23,8 +23,8 @@ class InfluencerController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->paginate(10);
-        return view('admin.influencers.index',compact('users'));
+        $users = User::where('account_type','0')->latest()->paginate(10);
+        return view('admin.users.index',compact('users'));
     }
 
        public function search( Request $request )
@@ -39,9 +39,9 @@ class InfluencerController extends Controller
                                      ->paginate(10);
             $users->appends( ['q' => $request->q] );
             if (count ( $users ) > 0){
-                return view('admin.influencers.index',[ 'users' => $users ])->withQuery($query);
+                return view('admin.users.index',[ 'users' => $users ])->withQuery($query);
             }else{
-                return view('admin.influencers.index',[ 'users'=>null ,'message' => __('admin.no_result') ]);
+                return view('admin.users.index',[ 'users'=>null ,'message' => __('admin.no_result') ]);
             }
         }
     }
@@ -57,7 +57,7 @@ class InfluencerController extends Controller
     {
         $countries =  COuntry::all();
 
-        return view('admin.influencers.create',compact('countries'));
+        return view('admin.users.create',compact('countries'));
     }
 
     /**
@@ -83,7 +83,7 @@ class InfluencerController extends Controller
     {
         $user = User::find($id);
         $countries =  Country::all();
-        return view('admin.influencers.show',compact('user','countries'));
+        return view('admin.users.show',compact('user','countries'));
     }
 
     /**
@@ -97,7 +97,7 @@ class InfluencerController extends Controller
         $user = User::find($id);
         $countries =  Country::all();
 
-        return view('admin.influencers.edit',compact('user','countries'));
+        return view('admin.users.edit',compact('user','countries'));
     }
 
     /**

@@ -36,6 +36,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 //	Route::group(['middleware'=>['admin.auth'],'namespace'=>'Admin'],function(){
 	Route::group(['namespace'=>'Admin'],function(){
 
+<<<<<<< HEAD
 		//Route::get('/test',"TestController@index");
 
 		Route::get('/admin',function(){
@@ -54,8 +55,36 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		//Route::get('/users','UsersController@index');
 		Route::post('/users/activate'       , 'UserController@activate');
 		Route::post('/users/ban'            , 'UserController@ban');
+=======
+		Route::group(['prefix' => '/auth'], function() {
+            Route::post('/login', 'AuthController@login');
+        });
+
+		Route::get('/'		                , 'AuthController@loginIndex');
+        Route::get('/login'                 , 'AuthController@loginIndex');
+        Route::get('/logout'          , 'AuthController@logout');
+        Route::get('/profile'         , 'AuthController@profile');
+		Route::post('/profile/edit'	, 'AuthController@updateProfile');
+
+		Route::get('/dashboard' , 'DashboardController@index');
 		
-		Route::resource('influencers','InfluencerController');
+		
+		Route::get('/admin', 'DashboardController@index');
+		//Route::get('profile','ProfileController@getIndex');
+		//Route::post('profile','ProfileController@postIndex');
+
+		Route::resource('country','CountriesController');
+		//Route::post('country/activate/{id}', 'CountryController@activate');
+		Route::resource('area','AreasController');
+		Route::resource('category','CategoriesController');
+		Route::resource('natoinality','NatoinalitiesController');
+		Route::resource('users','UsersController');
+		Route::post('/users/activate'       , 'UsersControllers@activate');
+		Route::post('/users/ban'            , 'UsersControllers@ban');
+>>>>>>> 05e032cc8f73596f709af7065e1e5b03daf17e34
+		
+		Route::resource('influencers','InfluencersController');
+
 		Route::resource('complaints','ComplaintsController');
 		Route::resource('campaigns','CampaignsController');
 		

@@ -3,17 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Nathionalities\StoreNathionalityRequest;
-use App\Http\Requests\Admin\Nathionalities\EditNathionalityRequest;
-use App\Models\Admin\Nationalities;
+use App\Http\Requests\Admin\Areas\StoreAreaRequest;
+use App\Http\Requests\Admin\Areas\EditAreaRequest;
+use App\Models\Admin\Area;
+use App\Models\Admin\Country;
 use Illuminate\Http\Request;
 
 
-class NatoinalityController extends Controller
+class AreasController extends Controller
 {
 
     function __construct(){
-        //$this->middleware('admin');
+        $this->middleware('admin');
     }
     /**
      * Display a listing of the resource.
@@ -23,8 +24,8 @@ class NatoinalityController extends Controller
     public function index()
     {
         
-        $rows = Nationalities::latest()->paginate(10);
-        return view('admin.natoinalities.index',compact('rows'));
+        $areas = Area::latest()->paginate(10);
+        return view('admin.areas.index',compact('areas'));
     }
 
 
@@ -34,13 +35,13 @@ class NatoinalityController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $rows   = Nationalities::where('name', 'LIKE', '%' . $query. '%' )
+             $areas   = Area::where('name', 'LIKE', '%' . $query. '%' )
                                      ->paginate(10);
-            $rows->appends( ['q' => $request->q] );
-            if (count ( $rows ) > 0){
-                return view('admin.natoinalities.index',[ 'rows' => $rows ])->withQuery($query);
+            $areas->appends( ['q' => $request->q] );
+            if (count ( $areas ) > 0){
+                return view('admin.areas.index',[ 'areas' => $areas ])->withQuery($query);
             }else{
-                return view('admin.natoinalities.index',[ 'rows'=> null ,'message' => __('admin.no_result') ]);
+                return view('admin.areas.index',[ 'areas'=> null ,'message' => __('admin.no_result') ]);
             }
         }
     }
@@ -52,7 +53,8 @@ class NatoinalityController extends Controller
      */
     public function create()
     {
-        return view('admin.natoinalities.create');
+        $countries =  Country::all();
+        return view('admin.areas.create',compact('countries'));
     }
 
     /**
@@ -61,7 +63,7 @@ class NatoinalityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreNathionalityRequest $request)
+    public function store(StoreAreaRequest $request)
     {
         $request->persist();
         return redirect()->back()->with('status' , __('admin.created') );
@@ -76,8 +78,9 @@ class NatoinalityController extends Controller
      */
     public function show($id)
     {
-        $row = Nationalities::find($id);
-        return view('admin.natoinalities.show',compact('row'));
+        $area = Area::find($id);
+        $countries =  Country::all();
+        return view('admin.areas.show',compact('area','countries'));
     }
 
     /**
@@ -88,8 +91,9 @@ class NatoinalityController extends Controller
      */
     public function edit($id)
     {
-        $row = Nationalities::find($id);
-        return view('admin.natoinalities.edit',compact('row'));
+        $area = Area::find($id);
+        $countries =  Country::all();
+        return view('admin.areas.edit',compact('area','countries'));
     }
 
     /**
@@ -99,7 +103,7 @@ class NatoinalityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditNathionalityRequest $request, $id)
+    public function update(EditAreaRequest $request, $id)
     {
         $request->persist($id);
         return redirect()->back()->with('status' , __('admin.updated') );
@@ -114,7 +118,7 @@ class NatoinalityController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
-            Nationalities::find($id)->delete();
+            Area::find($id)->delete();
             return response(['msg' => 'deleted', 'status' => 'success']);
         }
     }

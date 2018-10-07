@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Categories\StoreCategoryRequest;
-use App\Http\Requests\Admin\Categories\EditCategoryRequest;
-use App\Models\Admin\Category;
+use App\Http\Requests\Admin\Nathionalities\StoreNathionalityRequest;
+use App\Http\Requests\Admin\Nathionalities\EditNathionalityRequest;
+use App\Models\Admin\Nationalities;
 use Illuminate\Http\Request;
 
 
-class CategoryController extends Controller
+class NatoinalitiesController extends Controller
 {
 
     function __construct(){
-        //$this->middleware('admin');
+        $this->middleware('admin');
     }
     /**
      * Display a listing of the resource.
@@ -23,8 +23,8 @@ class CategoryController extends Controller
     public function index()
     {
         
-        $categories = Category::latest()->paginate(10);
-        return view('admin.categories.index',compact('categories'));
+        $rows = Nationalities::latest()->paginate(10);
+        return view('admin.natoinalities.index',compact('rows'));
     }
 
 
@@ -34,13 +34,13 @@ class CategoryController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $rows   = Category::where('name', 'LIKE', '%' . $query. '%' )
+             $rows   = Nationalities::where('name', 'LIKE', '%' . $query. '%' )
                                      ->paginate(10);
             $rows->appends( ['q' => $request->q] );
             if (count ( $rows ) > 0){
-                return view('admin.categories.index',[ 'rows' => $rows ])->withQuery($query);
+                return view('admin.natoinalities.index',[ 'rows' => $rows ])->withQuery($query);
             }else{
-                return view('admin.categories.index',[ 'rows'=> null ,'message' => __('admin.no_result') ]);
+                return view('admin.natoinalities.index',[ 'rows'=> null ,'message' => __('admin.no_result') ]);
             }
         }
     }
@@ -52,7 +52,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view('admin.natoinalities.create');
     }
 
     /**
@@ -61,7 +61,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreNathionalityRequest $request)
     {
         $request->persist();
         return redirect()->back()->with('status' , __('admin.created') );
@@ -76,8 +76,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Category::find($id);
-        return view('admin.categories.show',compact('category'));
+        $row = Nationalities::find($id);
+        return view('admin.natoinalities.show',compact('row'));
     }
 
     /**
@@ -88,8 +88,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id);
-        return view('admin.categories.edit',compact('category'));
+        $row = Nationalities::find($id);
+        return view('admin.natoinalities.edit',compact('row'));
     }
 
     /**
@@ -99,7 +99,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditCategoryRequest $request, $id)
+    public function update(EditNathionalityRequest $request, $id)
     {
         $request->persist($id);
         return redirect()->back()->with('status' , __('admin.updated') );
@@ -114,7 +114,7 @@ class CategoryController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
-            Category::find($id)->delete();
+            Nationalities::find($id)->delete();
             return response(['msg' => 'deleted', 'status' => 'success']);
         }
     }
