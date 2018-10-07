@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Country;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\User\EditUserRequest;
-use App\Http\Requests\Admin\User\StoreUserRequest;
-use App\User;
+use App\Http\Requests\Admin\Countries\StoreCountryRequest;
+use App\Http\Requests\Admin\Countries\EditCountryRequest;
+use App\Models\Admin\Country;
 use Illuminate\Http\Request;
 
 
-class UserController extends Controller
+class CountriesController extends Controller
 {
 
     function __construct(){
@@ -23,30 +22,28 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->paginate(10);
-        return view('admin.users.index',compact('users'));
+        
+        $countries = Country::latest()->paginate(10);
+        return view('admin.countries.index',compact('countries'));
     }
 
-       public function search( Request $request )
+
+     public function search( Request $request )
     {
         $query =  $request->q;
-        
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $users   = User::where([['name', 'LIKE', '%' . $query. '%'],['type','user']] )
-                                     ->orWhere([['phone', 'LIKE', '%' . $query. '%'],['type','user']] )
+             $countries   = Country::where('name', 'LIKE', '%' . $query. '%' )
                                      ->paginate(10);
-            $users->appends( ['q' => $request->q] );
-            if (count ( $users ) > 0){
-                return view('admin.users.index',[ 'users' => $users ])->withQuery($query);
+            $countries->appends( ['q' => $request->q] );
+            if (count ( $countries ) > 0){
+                return view('admin.countries.index',[ 'countries' => $countries ])->withQuery($query);
             }else{
-                return view('admin.users.index',[ 'users'=>null ,'message' => __('admin.no_result') ]);
+                return view('admin.countries.index',[ 'countries'=> null ,'message' => __('admin.no_result') ]);
             }
         }
     }
-
- 
 
     /**
      * Show the form for creating a new resource.
@@ -55,9 +52,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $countries =  COuntry::all();
-
-        return view('admin.users.create',compact('countries'));
+        return view('admin.countries.create');
     }
 
     /**
@@ -66,7 +61,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreCountryRequest $request)
     {
         $request->persist();
         return redirect()->back()->with('status' , __('admin.created') );
@@ -81,9 +76,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        $countries =  Country::all();
-        return view('admin.users.show',compact('user','countries'));
+        $country = Country::find($id);
+        return view('admin.countries.show',compact('country'));
     }
 
     /**
@@ -94,10 +88,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        $countries =  Country::all();
-
-        return view('admin.users.edit',compact('user','countries'));
+        $country = Country::find($id);
+        return view('admin.countries.edit',compact('country'));
     }
 
     /**
@@ -107,7 +99,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditUserRequest $request, $id)
+    public function update(EditCountryRequest $request, $id)
     {
         $request->persist($id);
         return redirect()->back()->with('status' , __('admin.updated') );
@@ -122,32 +114,11 @@ class UserController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
-            User::find($id)->delete();
+            Country::find($id)->delete();
             return response(['msg' => 'deleted', 'status' => 'success']);
         }
     }
 
 
-    public function activate( Request $request)
-    {
-        if ( $request->ajax() ) {
-            $user = User::find( $request->id );
-            $user->is_active = '1';
-            $user->save();
-            return response(['msg' => 'activated', 'status' => 'success']);
-        }
-
-        
-    }
-
-    public function ban( Request $request )
-    {
-        $user =  User::find( $request->id );
-        if ( $request->ajax() ) {
-            $user->is_active = '0';
-            $user->save();
-            return response(['msg' => 'banned', 'status' => 'success']);
-        }
-
-    }
+  
 }

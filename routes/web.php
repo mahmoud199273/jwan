@@ -16,6 +16,8 @@ if (!defined('ADMIN_PATH')) {
 	define('ADMIN_PATH', 'admin');
 }
 
+Route::get('/test',"TestController@index");
+
 Route::group(['prefix'=>ADMIN_PATH],function(){
 
 	// Route::group(['namespace'=>'Auth\Admin'], function(){
@@ -33,16 +35,23 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 
 //	Route::group(['middleware'=>['admin.auth'],'namespace'=>'Admin'],function(){
 	Route::group(['namespace'=>'Admin'],function(){
-		Route::get('/admin', 'DashboardController@index');
+
+		//Route::get('/test',"TestController@index");
+
+		Route::get('/admin',function(){
+			return " admin` ";
+		});
+		//Route::get('/admin', 'DashboardController@index');
 		Route::get('profile','ProfileController@getIndex');
 		Route::post('profile','ProfileController@postIndex');
 
-		Route::resource('country','CountryController');
+		Route::resource('country','CountriesController');
 		//Route::post('country/activate/{id}', 'CountryController@activate');
 		Route::resource('area','AreaController');
 		Route::resource('category','CategoryController');
 		Route::resource('natoinality','NatoinalityController');
 		Route::resource('users','UserController');
+		//Route::get('/users','UsersController@index');
 		Route::post('/users/activate'       , 'UserController@activate');
 		Route::post('/users/ban'            , 'UserController@ban');
 		

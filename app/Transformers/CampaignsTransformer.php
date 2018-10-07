@@ -42,7 +42,13 @@ class CampaignsTransformer extends Transformer
 
             'updated_date'      => $campaign->updated_date,
 
-            'campaign_status'   => (int) $campaign->capaign_status
+            'campaign_status'   => (int) $campaign->capaign_status,
+
+            'categories' => $campaign->categories ,
+
+            'countries' => $campaign->countries,
+
+            'areas' =>$campaign->areas,
             
 
         ];

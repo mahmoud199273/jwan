@@ -16,11 +16,13 @@ class FileController extends Controller
     {
         $key  = 'signify@123';
 
+
          $validator = Validator::make( $request->all() , [
             'file'      => 'required',
         ]);
 
         if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError($validator->messages());
             return $this->setStatusCode(422)->respondWithError('parameters faild validation');
         }
 
@@ -31,7 +33,7 @@ class FileController extends Controller
         $filePath = "";
         $file_name = time().time().uniqid().'.'.$file->getClientOriginalExtension();
         $fileDir   = base_path() .'/public/assets/uploads/';
-        if(in_array($file->getClientOriginalExtension(), ['jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff']))
+        if(in_array($file->getClientOriginalExtension(), ['jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff','webm','mkv','flv','flv','vob','ogg','ogg','ogv','gif','wmv','mp4','m4p','m4p','m4v','mpg','3gp']))
         {
           $upload_file = $file->move($fileDir,$file_name);
           $filePath  = '/public/assets/uploads/'.$file_name;
@@ -45,7 +47,7 @@ class FileController extends Controller
 
     public function fileAsDataUpload( Request $request )
     {
-        $key  = 'classes@123';
+        $key  = 'signify@123';
 
          $validator = Validator::make( $request->all() , [
             'file'      => 'required',
@@ -68,7 +70,7 @@ class FileController extends Controller
             list(, $file)      = explode(',', $file);
             $file = base64_decode($file);
             $filename = time().time().uniqid();
-            if(in_array($extension, ['jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff']))
+            if(in_array($extension, ['jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff','webm','mkv','flv','flv','vob','ogg','ogg','ogv','gif','wmv','mp4','m4p','m4p','m4v','mpg','3gp']))
             {
               $fileDir   = base_path() .'/public/assets/uploads/';
               file_put_contents($fileDir."$filename.$extension", $file);

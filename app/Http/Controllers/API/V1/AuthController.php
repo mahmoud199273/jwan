@@ -161,12 +161,12 @@ class AuthController extends Controller
     	$validator = Validator::make( $request->all(), [
 
             'email'         => 'required',
+        
+            'phone'         => 'required|max:14|min:9',
+            
+            'countries_id'    => 'required',
 
-            'phone'			=> 'required|max:14|min:9',
-
-            'countries_id'  => 'required',
-
-            'password'		=> 'required|string|max:25|min:8',
+            'password'      => 'required|string|max:25|min:8',
 
             'image'         => 'required',
 
@@ -176,16 +176,25 @@ class AuthController extends Controller
 
             'type'          => 'required',
 
-            'facebook'      => 'nullable',   
+            'facebook'      => 'nullable',
 
-            'twitter'    => 'nullable',   
-
-
-            'instagram' => 'nullable',
             
+
+            'twitter' => 'nullable',
+
+            
+
+            'instgrame' => 'nullable',
+
+            
+
             'snapchat' => 'nullable',
 
+            
+
             'linkedin' => 'nullable',
+
+            
 
             'youtube'       => 'nullable'
 
@@ -210,10 +219,10 @@ class AuthController extends Controller
 			$user = new User();
 
 
-            $user->phone        =  $request->phone;
+           $user->phone        =  $request->phone; 
 
-            $user->email        =  $request->email;
-
+            $user->email        =  $request->email; 
+            
             $user->password     =  bcrypt($request->password);
 
             $user->image       = $request->image;
@@ -225,6 +234,7 @@ class AuthController extends Controller
             $user->type              = $request->type;
 
             $user->facebook          = $request->facebook;
+
 
             $user->twitter            = $request->twitter;
 
@@ -239,9 +249,12 @@ class AuthController extends Controller
 
             $user->youtube             = $request->youtube;
 
+
+        
+
             $user->is_active        =  '1'; 
             $user->account_type     =  '0';
-			$user->save();
+            $user->save();
 
             $countries_id  =$request->countries_id;
 
