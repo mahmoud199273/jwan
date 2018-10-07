@@ -111,7 +111,7 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  // start Camapign routes 
 
- Route::post('/user/add/camapign','API\V1\CampignsContrller@store');
+ Route::post('/user/add/campaign','API\V1\CampignsContrller@store');
 
  Route::get('/user/camapigns','API\V1\CampignsContrller@index');
 
