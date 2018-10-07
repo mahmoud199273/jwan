@@ -167,7 +167,7 @@ class CampignsContrller extends Controller
 
             //'updated_date'      => 'required',
 
-            'capaign_status'    => 'required',
+            //'capaign_status'    => 'required',
 
             'files_arr'         => 'required',
 
@@ -217,7 +217,7 @@ class CampignsContrller extends Controller
 
         //$campaign->updated_date            = $request->updated_date;
 
-        $campaign->capaign_status            = $request->capaign_status;
+        //$campaign->capaign_status            = $request->capaign_status;
 
         $campaign->user_id          = $user->id;
 
