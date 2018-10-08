@@ -33,7 +33,7 @@ class CampignsContrller extends Controller
 
    /* public function allCategories( Request $request )
     {
-        return $this->respond( ['data' => $this->categoryTransformer->transformCollection(Category::where('is_active','1')->get())]);   
+        return $this->respond( ['data' => $this->categoryTransformer->transformCollection(Category::where('is_active','1')->get())]);
     }
 
 
@@ -55,7 +55,7 @@ class CampignsContrller extends Controller
 
         $courses = $this->courseTransformer->transformCollection(collect($pagination->items()));
 
-        return $this->respondWithPagination($pagination ,['data' =>  $courses]);    
+        return $this->respondWithPagination($pagination ,['data' =>  $courses]);
     }
 
 
@@ -83,7 +83,7 @@ class CampignsContrller extends Controller
 	                                            ['courses.is_active', '1'] ,
 	                                            ['courses.name', 'LIKE', '%'.$q .'%']
 	                                        ])
-	                                        ->orWhere([ 
+	                                        ->orWhere([
 	                                        	['courses.is_active', '1'] ,
 	                                            ['users.name', 'LIKE', '%'.$q .'%']
 	                                        ])
@@ -101,7 +101,7 @@ class CampignsContrller extends Controller
     	}
 
     	$courses =  $this->courseTransformer->transformCollection(collect($pagination->items()));
- 	
+
     	return $this->respondWithPagination( $pagination, [ 'data' =>  $courses ]);
     }*/
 
@@ -179,7 +179,7 @@ class CampignsContrller extends Controller
 
             'areas_id'      => 'required'
 
-            
+
 
         ]);
 
@@ -225,10 +225,10 @@ class CampignsContrller extends Controller
 
         $campaign->save();
 
-        $files  =$request->files_arr;  
+        $files  =$request->files_arr;
 
             foreach ($files  as $file) {
-                //dd($file['file']); 
+                //dd($file['file']);
                 Attachment::create([
 
                 'campaign_id'       => $campaign->id,
@@ -237,12 +237,12 @@ class CampignsContrller extends Controller
 
                 'file_type'          => $file['type']
 
-            
+
 
                       ]);
             }
 
-             $categories_id  =$request->categories_id;    
+             $categories_id  =$request->categories_id;
 
             foreach ($categories_id  as $id) {
                 CampaignCategory::create([
@@ -250,11 +250,11 @@ class CampignsContrller extends Controller
                 'campaign_id'       => $campaign->id,
 
                 'category_id' => $id
-            
+
 
                       ]);
             }
-            $countries_id  =$request->countries_id;    
+            $countries_id  =$request->countries_id;
 
             foreach ($countries_id  as $id) {
                 CampaignCountry::create([
@@ -262,12 +262,12 @@ class CampignsContrller extends Controller
                 'campaign_id'       => $campaign->id,
 
                 'country_id' => $id
-            
+
 
                       ]);
             }
 
-            $areas_id  =$request->areas_id;    
+            $areas_id  =$request->areas_id;
 
             foreach ($areas_id  as $id) {
                 CampaignArea::create([
@@ -275,7 +275,7 @@ class CampignsContrller extends Controller
                 'campaign_id'       => $campaign->id,
 
                 'area_id' => $id
-            
+
 
                       ]);
             }
@@ -324,7 +324,7 @@ class CampignsContrller extends Controller
 
             'capaign_status'    => 'required'
 
-            
+
         ]);
 
         if ($validator->fails()) {
@@ -371,7 +371,7 @@ class CampignsContrller extends Controller
 
     }*/
 
-    /* public function extendCampaign( Request $request )
+    public function extendCampaign( Request $request )
     {
         //$user =  $this->getAuthenticatedUser();
 
@@ -386,17 +386,14 @@ class CampignsContrller extends Controller
         $validator = Validator::make( $request->all(), [
             'id'                => 'required|exists:campaigns,id',
 
-            
-
-            
         ]);
 
 
 
 
         $campaign = Campaign::find( $request->id );
-        $created_at =  Carbon::parse($campaign->created_at);
-        $end_date = $created_at->addDays($amount);
+        $end_date =  Carbon::parse($campaign->end_date);
+        $end_date = $end_date->addDays($amount);
 
         $campaign->end_at = $end_date;
 
@@ -405,7 +402,7 @@ class CampignsContrller extends Controller
 
         return $this->respondWithSuccess(trans('api_msgs.approved'));
 
-    }*/
+    }
 
 
 
@@ -420,14 +417,14 @@ class CampignsContrller extends Controller
 
         if($campaigns->capaign_status == 0){
 
-            
+
         }*/
         /*$validator = Validator::make( $request->all(), [
             'id'                => 'required|exists:campaigns,id',
 
             'capaign_status'    => 'required'
 
-            
+
         ]);
 
         if ($validator->fails()) {
@@ -494,10 +491,10 @@ class CampignsContrller extends Controller
         Notification::create(['user_id' => $course->instructor_id ,'message' => 'يوجد تعليق جديد علي كورس '.$course->name ]);
         sendNotification('يوجد تعليق جديد علي كورس '.$course->name , $player_ids ,['data' => ['course_id' =>  $course->id]]);
         return $this->respondWithSuccess('success');
-        
+
     }*/
 
- 
+
 
 
 
