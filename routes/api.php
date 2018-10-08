@@ -115,11 +115,13 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::get('/user/camapigns','API\V1\CampignsContrller@index');
 
- Route::get('/campaigns','API\V1\CampignsContrller@allCampaigns');
+ Route::get('/influncer/campaigns','API\V1\CampignsContrller@allCampaigns');
 
 
  Route::get('/camapign/{id}','API\V1\CampignsContrller@show');
+
  Route::post('/approve/campaign','API\V1\CampignsContrller@approveCampaign');
+
  Route::post('/extend/campaign','API\V1\CampignsContrller@extendCampaign');
 
  Route::post('/camapign/delete','API\V1\CampignsContrller@destroy');
@@ -127,6 +129,11 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
 
  //	Route::post('/camapign/update'	, 'API\V1\CampignsContrller@update');
+
+ /* influncer camapign routes */
+
+ Route::post('/influncer/campaign/status','API\V1\CampignsContrller@status');
+
 
 
 

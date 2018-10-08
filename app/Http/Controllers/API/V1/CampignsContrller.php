@@ -10,6 +10,7 @@ use App\Attachment;
 use App\CampaignArea;
 use App\CampaignCategory;
 use App\CampaignCountry;
+use App\InfluncerCampaign;
 use App\Setting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -26,14 +27,14 @@ class CampignsContrller extends Controller
 
     function __construct(Request $request, CampaignsTransformer $campaignsTransformer){
         App::setlocale($request->lang);
-    	$this->middleware('jwt.auth')->only(['store','index','edit','update','updateStatus']);
+    	$this->middleware('jwt.auth');
         $this->campaignsTransformer   = $campaignsTransformer;
     }
 
 
     public function allCampaigns( Request $request )
     {
-
+        $user =  $this->getAuthenticatedUser();
         return $this->respond( ['data' => $this->campaignsTransformer->transformCollection(Campaign::where('capaign_status','1')->get())]);   
     }
 
@@ -120,17 +121,18 @@ class CampignsContrller extends Controller
     }
 
     public function index(Request $request)
-{
+    {
     # code...
+        $user =  $this->getAuthenticatedUser();
 
-    if ( $request->limit ) {
-            $this->setPagination($request->limit);
-        }
+        if ( $request->limit ) {
+                $this->setPagination($request->limit);
+            }
 
-    $campaigns = $this->campaignsTransformer->transformCollection(Campaign::all());
+        $campaigns = $this->campaignsTransformer->transformCollection(Campaign::all());
 
-    return $this->sendResponse($campaigns, 'campaigns read succesfully',200);
-}
+        return $this->sendResponse($campaigns, 'campaigns read succesfully',200);
+    }
 
 
 
@@ -389,6 +391,11 @@ class CampignsContrller extends Controller
 
         ]);
 
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError($validator->messages());
+            return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+        }
+
 
 
 
@@ -401,7 +408,7 @@ class CampignsContrller extends Controller
         $campaign->save();
 
 
-        return $this->respondWithSuccess(trans('api_msgs.approved'));
+        return $this->respondWithSuccess(trans('api_msgs.extended'));
 
     }
 
@@ -409,17 +416,69 @@ class CampignsContrller extends Controller
 
 
 
-    /*
-    *** public function approveCampaign( Request $request )
+     public function approveCampaign( Request $request )
     {
         //$user =  $this->getAuthenticatedUser();
-
-        /*$campaigns = DB::table('campaigns')->get();
-
-        if($campaigns->capaign_status == 0){
+        $validator = Validator::make( $request->all(), [
+            'id'                => 'required|exists:campaigns,id'
 
 
-        }*/
+        ]);
+
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError($validator->messages());
+            return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+        }
+
+        //$campaigns = DB::table('campaigns')->first();
+
+        
+        $campaign = Campaign::find( $request->id );
+
+        if($campaign->capaign_status == '0'){
+
+            $campaign->capaign_status = '1';
+            
+            $campaign->save();
+        }
+
+        return $this->respondWithSuccess(trans('api_msgs.updated'));
+    }
+
+
+
+         public function status(Request $request)
+
+        {
+            $user =  $this->getAuthenticatedUser();
+
+            $validator = Validator::make( $request->all(), [
+            'campaign_id'                => 'required',
+            'status'                     => 'required'
+
+            ]);
+
+            if ($validator->fails()) {
+                return $this->setStatusCode(422)->respondWithError($validator->messages());
+                return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+            }
+
+            $influncercamapign = new InfluncerCampaign;
+
+            $influncercamapign->campaign_id    = $request->campaign_id;
+
+            $influncercamapign->status         = $request->status;
+
+            $influncercamapign->user_id        = $user->id;
+
+            $influncercamapign->save();
+
+            return $this->respondWithSuccess(trans('api_msgs.set status successfully'));
+
+            
+        }
+
+         
         /*$validator = Validator::make( $request->all(), [
             'id'                => 'required|exists:campaigns,id',
 
@@ -440,9 +499,9 @@ class CampignsContrller extends Controller
         $campaign->save();
 
 
-        return $this->respondWithSuccess(trans('api_msgs.updated'));
+        return $this->respondWithSuccess(trans('api_msgs.updated'));*/
 
-    }*/
+    
 
 
 
