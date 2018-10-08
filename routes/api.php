@@ -115,6 +115,9 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::get('/user/camapigns','API\V1\CampignsContrller@index');
 
+ Route::get('/campaigns','API\V1\CampignsContrller@allCampaigns');
+
+
  Route::get('/camapign/{id}','API\V1\CampignsContrller@show');
  Route::post('/approve/campaign','API\V1\CampignsContrller@approveCampaign');
  Route::post('/extend/campaign','API\V1\CampignsContrller@extendCampaign');

@@ -31,13 +31,13 @@ class CampignsContrller extends Controller
     }
 
 
-   /* public function allCategories( Request $request )
+    public function allCampaigns( Request $request )
     {
-        return $this->respond( ['data' => $this->categoryTransformer->transformCollection(Category::where('is_active','1')->get())]);   
+        return $this->respond( ['data' => $this->campaignsTransformer->transformCollection(Campaign::where('capaign_status','1')->get())]);   
     }
 
 
-    public function coursesByCategoryId(Request $request , $id)
+   /* public function coursesByCategoryId(Request $request , $id)
     {
         $validator = Validator::make( ['id' =>  $request->id ], [
             'id'    => 'required|exists:categories,id',
