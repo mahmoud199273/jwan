@@ -38,9 +38,9 @@ class CampaignsTransformer extends Transformer
 
             'maximum_rate'      => $campaign->maximum_rate,
 
-            'created_date'      => $campaign->created_date,
+            'created_date'      => $campaign->created_at,
 
-            'updated_date'      => $campaign->updated_date,
+            'updated_date'      => $campaign->updated_at,
 
             'campaign_status'   => (int) $campaign->capaign_status,
 

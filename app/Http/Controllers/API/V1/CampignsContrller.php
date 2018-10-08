@@ -10,6 +10,8 @@ use App\Attachment;
 use App\CampaignArea;
 use App\CampaignCategory;
 use App\CampaignCountry;
+use App\Setting;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -369,11 +371,58 @@ class CampignsContrller extends Controller
 
     }*/
 
-    public function updateStatus( Request $request )
+    /* public function extendCampaign( Request $request )
     {
-        $user =  $this->getAuthenticatedUser();
+        //$user =  $this->getAuthenticatedUser();
+
+        $settings = DB::table('settings')->first();
+
+        //$settings = Setting::find('campaign_period');
+
+       // $settings = Setting::latest()->get();
+
+        $amount = $settings->campaign_period;
 
         $validator = Validator::make( $request->all(), [
+            'id'                => 'required|exists:campaigns,id',
+
+            
+
+            
+        ]);
+
+
+
+
+        $campaign = Campaign::find( $request->id );
+        $created_at =  Carbon::parse($campaign->created_at);
+        $end_date = $created_at->addDays($amount);
+
+        $campaign->end_at = $end_date;
+
+        $campaign->save();
+
+
+        return $this->respondWithSuccess(trans('api_msgs.approved'));
+
+    }*/
+
+
+
+
+
+    /*
+    *** public function approveCampaign( Request $request )
+    {
+        //$user =  $this->getAuthenticatedUser();
+
+        /*$campaigns = DB::table('campaigns')->get();
+
+        if($campaigns->capaign_status == 0){
+
+            
+        }*/
+        /*$validator = Validator::make( $request->all(), [
             'id'                => 'required|exists:campaigns,id',
 
             'capaign_status'    => 'required'
@@ -395,7 +444,7 @@ class CampignsContrller extends Controller
 
         return $this->respondWithSuccess(trans('api_msgs.updated'));
 
-    }
+    }*/
 
 
 
