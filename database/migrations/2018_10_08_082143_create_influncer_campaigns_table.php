@@ -24,7 +24,7 @@ class CreateInfluncerCampaignsTable extends Migration
                  
             $table->foreign('campaign_id')->references('id')->on('campaigns')->onDelete('cascade');
 
-            $table->enum('type',[0,1]);
+            $table->enum('status',[0,1]);
 
             // 0 = skip    1= favorite 
 
