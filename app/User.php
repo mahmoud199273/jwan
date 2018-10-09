@@ -72,6 +72,11 @@ class User extends Authenticatable
                return $this->hasMany('App\Complaint');
             }
 
+      public function campaign()
+            {
+               return $this->hasMany('App\Campaign');
+            }
+
     
 
 

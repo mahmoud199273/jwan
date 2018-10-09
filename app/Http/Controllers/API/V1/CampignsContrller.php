@@ -478,6 +478,50 @@ class CampignsContrller extends Controller
             
         }
 
+
+        public function skipped(Request $request)
+
+        {
+            $user =  $this->getAuthenticatedUser();
+
+            $skipped = DB::table('influncer_campaigns')
+                     ->where('status', '=', '0')
+                     ->pluck('campaign_id')->toArray();
+
+            $campaign = DB::table('campaigns')
+                     ->whereIn('id',  $skipped)
+                     ->get();
+
+            //dd($campaign);
+
+            $camapigns =  $this->campaignsTransformer->transformCollection(collect($campaign->all()));
+    
+         return $this->respondWithPagination( $campaign, [ 'data' =>  $camapigns]);
+
+            
+        }
+
+        public function favorite(Request $request)
+
+        {
+            $user =  $this->getAuthenticatedUser();
+
+            $favorite = DB::table('influncer_campaigns')
+                     ->where('status', '<>', '0')
+                     ->pluck('campaign_id')->toArray();
+
+            $campaign = DB::table('campaigns')
+                     ->whereIn('id',  $favorite)
+                     ->get();
+
+            //dd($campaign);
+
+          $camapigns =  $this->campaignsTransformer->transformCollection(collect($campaign->items()));
+    
+        return $this->respondWithPagination( $campaign, [ 'data' =>  $camapigns]);
+
+            
+        }
          
         /*$validator = Validator::make( $request->all(), [
             'id'                => 'required|exists:campaigns,id',

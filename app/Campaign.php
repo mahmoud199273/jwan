@@ -41,4 +41,10 @@ class Campaign extends Model
                 'campaign_id', 'area_id');
     	}
 
+        public function users()
+        {
+
+         return $this->belongsTo('App\User');
+        }
+
 }
