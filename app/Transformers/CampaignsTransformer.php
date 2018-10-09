@@ -30,21 +30,21 @@ class CampaignsTransformer extends Transformer
 
             //'image'             => config('app.url').User::find($user->image) : null,
 
-        	'facebook'          => (boolean) $campaign->facebook,
+        	'facebook'          => (int) $campaign->facebook,
 
-        	'twitter'          	=> (boolean) $campaign->twitter,
+        	'twitter'          	=> (int) $campaign->twitter,
 
-            'snapchat'          => (boolean) $campaign->snapchat,
+            'snapchat'          => (int) $campaign->snapchat,
 
-            'youtube'          	=> (boolean) $campaign->youtube,
+            'youtube'          	=> (int) $campaign->youtube,
 
-            'instgrame'      	=> (boolean) $campaign->instgrame,
+            'instgrame'      	=> (int) $campaign->instgrame,
 
-            'male'          	=> (boolean) $campaign->male,
+            'male'          	=> (int) $campaign->male,
 
-            'female'          	=> (boolean) $campaign->female,
+            'female'          	=> (int) $campaign->female,
 
-            'general'          	=> (boolean) $campaign->general,
+            'general'          	=> (int) $campaign->general,
 
             'description'       => $campaign->description,
 
