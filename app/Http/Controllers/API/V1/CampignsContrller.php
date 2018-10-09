@@ -35,7 +35,8 @@ class CampignsContrller extends Controller
     public function allCampaigns( Request $request )
     {
         $user =  $this->getAuthenticatedUser();
-        return $this->respond( ['data' => $this->campaignsTransformer->transformCollection(Campaign::where('capaign_status','1')->get())]);   
+        $campaigns = Campaign::where('capaign_status','1')->get();
+        return $this->sendResponse( ['data' => $this->campaignsTransformer->transformCollection($campaigns)],'read succefully',200);   
     }
 
 
@@ -116,7 +117,7 @@ class CampignsContrller extends Controller
             'id'    => 'required|exists:campaigns,id',
         ]);
         return $validator->fails() ? $this->setStatusCode(422)->respondWithError('parameters faild validation') :
-                                        $this->respond(['data' =>  $this->campaignsTransformer->transform(Campaign::find($request->id))]);
+                                        $this->sendResponse(['data' =>  $this->campaignsTransformer->transform(Campaign::find($request->id))],'read succefully',200);
 
     }
 
@@ -487,16 +488,25 @@ class CampignsContrller extends Controller
             $skipped = DB::table('influncer_campaigns')
                      ->where('status', '=', '0')
                      ->pluck('campaign_id')->toArray();
+            //dd($skipped);
 
             $campaign = DB::table('campaigns')
                      ->whereIn('id',  $skipped)
                      ->get();
 
-            //dd($campaign);
+           //dd($campaign);
 
-            $camapigns =  $this->campaignsTransformer->transformCollection(collect($campaign->all()));
+            //$result =  $this->campaignsTransformer->transformCollection(collect($campaign->items()));
     
-         return $this->respondWithPagination( $campaign, [ 'data' =>  $camapigns]);
+         //return $this->respondWithPagination($campaign,[ 'data' =>  $campaignsTransformer]);
+
+        //return $this->respond( ['data' => $this->campaignsTransformer->transformCollection(Campaign::where('capaign_status','1')->get())]);
+
+        //return $this->respond($campaign ,['data' =>  $result]);
+
+         $result = $this->campaignsTransformer->transformCollection($campaign);
+
+        return $this->sendResponse(['data' =>  $result],'readed successfully',200); 
 
             
         }
@@ -507,18 +517,23 @@ class CampignsContrller extends Controller
             $user =  $this->getAuthenticatedUser();
 
             $favorite = DB::table('influncer_campaigns')
-                     ->where('status', '<>', '0')
+                     ->where('status', '=','1')
                      ->pluck('campaign_id')->toArray();
+            //dd($favorite);
 
-            $campaign = DB::table('campaigns')
+            $campaign = DB::table('campaigns')  
                      ->whereIn('id',  $favorite)
                      ->get();
 
             //dd($campaign);
 
-          $camapigns =  $this->campaignsTransformer->transformCollection(collect($campaign->items()));
+          //$campaigns =  $this->campaignsTransformer->transformCollection(collect($campaigns->items()));
     
-        return $this->respondWithPagination( $campaign, [ 'data' =>  $camapigns]);
+        //return $this->respondWithPagination([ 'data' =>  $campaigns]);
+
+        $results = $this->campaignsTransformer->transformCollection($campaign);
+
+        return $this->sendResponse(['data' =>  $results],'readed successfully',200); 
 
             
         }

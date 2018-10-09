@@ -118,7 +118,7 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
  Route::get('/influncer/campaigns','API\V1\CampignsContrller@allCampaigns');
 
 
- Route::get('/camapign/{id}','API\V1\CampignsContrller@show');
+ Route::get('/campaign/{id}','API\V1\CampignsContrller@show');
 
  Route::post('/approve/campaign','API\V1\CampignsContrller@approveCampaign');
 
@@ -136,7 +136,7 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::get('skipped/campaign','API\V1\CampignsContrller@skipped');
 
- Route::get('favorite/campaign','API\V1\CampignsContrller@skipped');
+ Route::get('favorite/campaign','API\V1\CampignsContrller@favorite');
 
 
 
