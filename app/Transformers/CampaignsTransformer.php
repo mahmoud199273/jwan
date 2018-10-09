@@ -1,8 +1,12 @@
 <?php
 
 namespace App\Transformers;
-
+use App\User;
+use App\Campaign;
 use App\Transformers\BaseTransformer as Transformer;
+use App\Transformers\InfluncerTransformer;
+
+
 
 class CampaignsTransformer extends Transformer
 {
@@ -14,7 +18,15 @@ class CampaignsTransformer extends Transformer
 
         	'title'          	=> $campaign->title,
 
-        	'user_id'          	=> (int)$campaign->user_id,
+            'user_id'           => (int) $campaign->user_id,
+
+            //'image'         => $camapign->($user->image) ?config('app.url').$user->image : null,
+
+            'rate'              => 3,
+
+        	
+
+            //'image'             => config('app.url').User::find($user->image) : null,
 
         	'facebook'          => (boolean) $campaign->facebook,
 
@@ -46,11 +58,11 @@ class CampaignsTransformer extends Transformer
 
             'campaign_status'   => (int) $campaign->capaign_status,
 
-            'categories' => $campaign->categories ,
+            'categories' => $campaign->categories,
 
             'countries' => $campaign->countries,
 
-            'areas' =>$campaign->areas,
+            'areas' =>$campaign->areas
             
 
         ];

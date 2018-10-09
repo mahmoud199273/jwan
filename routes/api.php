@@ -134,6 +134,9 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::post('/influncer/campaign/status','API\V1\CampignsContrller@status');
 
+ Route::get('skipped/campaign','API\V1\CampignsContrller@skipped');
+
+ Route::get('favorite/campaign','API\V1\CampignsContrller@skipped');
 
 
 
