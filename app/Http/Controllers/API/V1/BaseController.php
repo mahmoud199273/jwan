@@ -41,12 +41,12 @@ class BaseController extends Controller
         
     }
 
-    public function transformCollection(Collection $items ) : Collection
-    {
-        return $items->map(function ( $item ){
-            return $this->transform($item  );
-        });
-    }
+    // public function transformCollection(Collection $items ) : Collection
+    // {
+    //     return $items->map(function ( $item ){
+    //         return $this->transform($item  );
+    //     });
+    // }
 
     /**
      * The default pagination size.

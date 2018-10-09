@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Transformers;
-use App\User;
 use App\Campaign;
 use App\Transformers\BaseTransformer as Transformer;
 use App\Transformers\InfluncerTransformer;
@@ -12,17 +11,20 @@ class CampaignsTransformer extends Transformer
 {
 	public function transform($campaign  ) : array
     {
+        $campaign = Campaign::find($campaign->id);
 
         return [
         	'id'       			=> (int) $campaign->id,
 
         	'title'          	=> $campaign->title,
 
-            'user_id'           => (int) $campaign->user_id,
+            'user'           => isset($campaign->user) ? $campaign->user :null ,
 
             //'image'         => $camapign->($user->image) ?config('app.url').$user->image : null,
 
             'rate'              => 3,
+
+            'file'     => isset($campaign->attachments) ? $campaign->attachments : null,
 
         	
 
@@ -58,11 +60,11 @@ class CampaignsTransformer extends Transformer
 
             'campaign_status'   => (int) $campaign->capaign_status,
 
-            'categories' => $campaign->categories,
+            'categories' => isset($campaign->categories) ? $campaign->categories : null,
 
-            'countries' => $campaign->countries,
+             'countries' => isset($campaign->countries) ? $campaign->countries : null,
 
-            'areas' =>$campaign->areas
+            'areas' => isset($campaign->areas) ? $campaign->areas : null
             
 
         ];
