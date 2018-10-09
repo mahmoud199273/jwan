@@ -61,7 +61,8 @@ return [
     'have_stairs'                  => 'درج داخلي',
     'property_type'                 => 'نوع العقار',
     'address'                       => 'العنوان',
-    'description'                   => 'الوصف',
+    'description'                   => ' الوصف بالانجليزية ',
+    'description_ar'                => ' الوصف بالعربية ',
     'contract_image'                => 'صورة الصك العقار',
     'property_images'               => 'صور العقار',
     'city'                          => 'المدينة',
@@ -177,6 +178,7 @@ return [
     'no'     => ' لا ',
     'general'     => ' عام ',
     'maximum_rate'     => ' الحد الأقصى للتقيم ',
+    'pages'     => ' الصفحات ',
     /* m.abdelrahman  */ 
 
 ];
