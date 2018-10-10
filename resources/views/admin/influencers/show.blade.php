@@ -98,14 +98,7 @@
                     </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('image') ? 'has-danger' : ''}}">
-                <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.image') }}</label>
-                <div class="col-3">
-                    <img src="{{ config('app.url') }}/{{ $user->image }}" 
-                        alt="{{ $user->name }}" width="150" height="150" max-width="150" max-height="150" class="form-control m-input">
-                </div>
-            </div>
-
+            
             
             <div class="form-group m-form__group row {{ $errors->has('notes') ? 'has-danger' : ''}}">
                     <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.notes') }}</label>
@@ -139,6 +132,14 @@
                         {!! $errors->first('is_active', '<span class="form-control-feedback">:message</span>') !!}
                     </div>
             </div>
+    
+            <div class="form-group m-form__group row {{ $errors->has('image') ? 'has-danger' : ''}}">
+                    <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.image') }}</label>
+                    <div class="col-3">
+                        <img src="{{url('/assets/uploads')}}/{{ $user->image }}" 
+                            alt="{{ $user->name }}" width="150" height="150" max-width="150" max-height="150" class="form-control m-input">
+                    </div>
+                </div>
     
     
     

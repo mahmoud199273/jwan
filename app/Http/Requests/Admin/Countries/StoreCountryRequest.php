@@ -20,7 +20,7 @@ class StoreCountryRequest extends BaseRequest
             'name_ar'                        => 'required|string',
             'name'                           => 'required|string',
             'code'                           => 'required|string',
-            'flag'                           => 'image',
+            'flag'                           => 'required',
         ];
     }
 

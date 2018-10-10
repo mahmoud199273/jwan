@@ -84,7 +84,29 @@
             <div class="form-group m-form__group row {{ $errors->has('flag') ? 'has-danger' : ''}}">
                     <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.flag') }}</label>
                     <div class="col-9">
-                        <input type="file" name="flag" class="form-control m-input" placeholder="{{ __('admin.flag') }}">
+                            <input type="hidden" name="flag" id="file" class="form-control m-input" placeholder="{{ __('admin.flag') }}" value="{{ $country->flag }}">
+                            {{--   upload image div   --}}
+                            <div class="container">
+                                    <div class="row" style="padding-top:10px;">
+                                      <div class="col-xs-2">
+                                        <button id="uploadBtn" class="btn btn-large btn-primary"> اختر ملف </button>
+                                      </div>
+                                      <div class="col-xs-10">
+                                    <div id="progressOuter" class="progress progress-striped active" style="display:none;">
+                                      <div id="progressBar" class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                      </div>
+                                    </div>
+                                      </div>
+                                    </div>
+                                    <div class="row" style="padding-top:10px;">
+                                      <div class="col-xs-10">
+                                        <div id="msgBox">
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <img src="{{url('/assets/uploads')}}/{{ $country->flag }}" id="image_file" width="100" height="100" >
+                                </div>
+                                {{--   upload image div   --}}
                         {!! $errors->first('flag', '<span class="form-control-feedback">:message</span>') !!}
                     </div>
             </div>

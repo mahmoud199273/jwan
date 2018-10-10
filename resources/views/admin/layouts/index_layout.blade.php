@@ -110,6 +110,7 @@
 
 		<!--begin::Page Snippets --> 
 		<script src="{{asset('admin/assets/app/js/dashboard.js')}}" type="text/javascript"></script>
+		<script src="{{asset('admin/SimpleAjaxUploader.min.js')}}" type="text/javascript"></script>
 		<!--end::Page Snippets -->  
 		<script src="{{asset('frontend/assets/js/plugins/imageuploadify.min.js')}}"></script>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
@@ -337,6 +338,65 @@
 
 
 </script>
+
+<script>
+	window.onload = function() {
+	
+		var btn = document.getElementById('uploadBtn'),
+				progressBar = document.getElementById('progressBar'),
+				progressOuter = document.getElementById('progressOuter'),
+				msgBox = document.getElementById('msgBox');
+	
+		var uploader = new ss.SimpleUpload({
+					button: btn,
+					url: '{{asset("admin/extras/file_upload.php")}}',
+					name: 'uploadfile',
+					multipart: true,
+					hoverClass: 'hover',
+					focusClass: 'focus',
+					responseType: 'json',
+					startXHR: function() {
+							progressOuter.style.display = 'block'; // make progress bar visible
+							this.setProgressBar( progressBar );
+					},
+					onSubmit: function() {
+							msgBox.innerHTML = ''; // empty the message box
+							btn.innerHTML = 'جارى الرفع...'; // change button text to "Uploading..."
+						},
+					onComplete: function( filename, response ) {
+							btn.innerHTML = 'اختر ملف اخر';
+							progressOuter.style.display = 'none'; // hide progress bar when upload is completed
+	
+							if ( !response ) {
+									msgBox.innerHTML = ' هناك خطأ فى الرفع حاول مرة اخرى ';
+									return;
+							}
+	
+							if ( response.success === true ) {
+									msgBox.innerHTML = '<strong>' + filename + '</strong>' + ' تم رفع الملف بنجاح .';
+									$("#file").val(response.newFileName);
+									var image_url = "{{url('/assets/uploads')}}/"+response.newFileName;
+									console.log(image_url);
+									$("#image_file").css("display","block");
+									$("#image_file").attr("src",image_url);
+	
+							} else {
+									if ( response.msg )  {
+											msgBox.innerHTML = escapeTags( response.msg );
+	
+									} else {
+											msgBox.innerHTML = 'هناك خطأ فى الرفع حاول مرة اخرى.';
+									}
+							}
+						},
+					onError: function() {
+							progressOuter.style.display = 'none';
+							msgBox.innerHTML = 'هناك مشكلة فى الرفع';
+						}
+		});
+	};
+	</script>
+
 
 	</body>
 	<!-- end::Body -->
