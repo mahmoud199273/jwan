@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\API\V1\BaseController as BaseController;
 use App\Transformers\NathionalitiesTransformer;
-use App\Nationality;
+use App\Nathionality;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -29,7 +29,7 @@ class NathionalitiesController extends BaseController
 public function index()
 {
     # code...
-    $nathionalities = $this->nathionalitiesTransformer->transformCollection(Nationality::all());
+    $nathionalities = $this->nathionalitiesTransformer->transformCollection(Nathionality::all());
 
     return $this->sendResponse($nathionalities, 'nathionalities read succesfully',200);
 }
