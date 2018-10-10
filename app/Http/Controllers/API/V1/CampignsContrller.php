@@ -32,6 +32,55 @@ class CampignsContrller extends Controller
     }
 
 
+    /*public function allCampaigns( Request $request )
+    {
+        $user =  $this->getAuthenticatedUser();
+
+        $orderBy = 'created_at';
+
+        $campaigns = DB::table('campaigns')
+
+            ->join('campaign_countries', 'campaigns.id', '=', 'campaign_countries.campaign_id')
+
+            ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id')
+
+            ->join('campaign_areas', 'campaigns.id', '=', 'campaign_areas.campaign_id')
+
+
+            ->join('users', 'users.id', '=', 'campaigns.user_id')
+
+            ->join('user_countries', 'users.id', '=', 'user_countries.user_id')
+
+            ->join('user_categories', 'users.id', '=', 'user_categories.user_id')
+
+            ->join('user_areas', 'users.id', '=', 'user_areas.user_id')
+
+            ->select('campaigns.*')
+
+            ->where([
+                ['campaign_countries.country_id','=','user_countries.country_id'],
+
+                ['campaign_categories.category_id','=','user_countries.categories_id'],
+
+                ['campaign_areas.area_id','=','user_areas.area_id'],
+
+                ['capaign_status','1']
+
+
+                ])
+
+            ->groupBy('campaigns.id')
+
+            ->orderBy($orderBy,'DESC')
+
+            ->get();
+            dd($campaigns);
+
+
+        Campaign::where('capaign_status','1')->get();
+        return $this->sendResponse( $this->campaignsTransformer->transformCollection($campaigns),'read succefully',200);   
+    }*/
+
     public function allCampaigns( Request $request )
     {
         $user =  $this->getAuthenticatedUser();

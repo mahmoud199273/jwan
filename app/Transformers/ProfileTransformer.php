@@ -54,7 +54,8 @@ class ProfileTransformer extends Transformer
 
             'youtube'   => $user->youtube,
             
-            'country' => UserCountry::where('user_id',$user->id)->first()->country
+           //'country' => isset(UserCountry::where('user_id',$user->id)->first()->country) ? UserCountry::where('user_id',$user->id)->first()->country : null,
+            'countries' => isset($user->countries) ? $user->countries : null ,
 
 
         ];
