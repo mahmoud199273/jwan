@@ -32,7 +32,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 	// 	Route::post('password/reset', 'ResetPasswordController@reset');
 	// });
 
-
+ 
 //	Route::group(['middleware'=>['admin.auth'],'namespace'=>'Admin'],function(){
 	Route::group(['namespace'=>'Admin'],function(){
 
@@ -48,7 +48,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 
 		Route::resource('country','CountriesController');
 		//Route::post('country/activate/{id}', 'CountryController@activate');
-		Route::resource('area','AreaController');
+		Route::resource('area','AreasController');
 		Route::resource('category','CategoryController');
 		Route::resource('natoinality','NatoinalityController');
 		Route::resource('users','UserController');

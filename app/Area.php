@@ -25,5 +25,8 @@ class Area extends Model
     protected $hidden = [
         'created_at', 'updated_at',
     ];
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
 }

@@ -33,7 +33,7 @@ class FileController extends Controller
         $filePath = "";
         $file_name = time().time().uniqid().'.'.$file->getClientOriginalExtension();
         $fileDir   = base_path() .'/public/assets/uploads/';
-        if(in_array($file->getClientOriginalExtension(), ['jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff','heic','webm','mkv','flv','flv','vob','ogg','ogg','ogv','gif','wmv','mp4','m4p','m4p','m4v','mpg','3gp','pdf']))
+        if(in_array($file->getClientOriginalExtension(), ['jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff','heic','HEIC','webm','mkv','flv','flv','vob','ogg','ogg','ogv','gif','wmv','mp4','m4p','m4p','m4v','mpg','3gp','pdf']))
         {
           $upload_file = $file->move($fileDir,$file_name);
           $filePath  = '/public/assets/uploads/'.$file_name;
@@ -70,7 +70,7 @@ class FileController extends Controller
             list(, $file)      = explode(',', $file);
             $file = base64_decode($file);
             $filename = time().time().uniqid();
-            if(in_array($extension, ['jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff','webm','mkv','flv','flv','vob','ogg','ogg','ogv','gif','wmv','mp4','m4p','m4p','m4v','mpg','3gp']))
+            if(in_array($extension, ['jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff','heic','HEIC','webm','mkv','flv','flv','vob','ogg','ogg','ogv','gif','wmv','mp4','m4p','m4p','m4v','mpg','3gp']))
             {
               $fileDir   = base_path() .'/public/assets/uploads/';
               file_put_contents($fileDir."$filename.$extension", $file);

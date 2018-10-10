@@ -69,7 +69,7 @@ class CampaignsTransformer extends Transformer
 
         ];
     }
-
+ 
 
 
 

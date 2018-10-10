@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Campaign extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
       		public function attachments()
             {

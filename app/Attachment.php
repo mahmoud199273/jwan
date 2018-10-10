@@ -12,4 +12,7 @@ class Attachment extends Model
             {
                return $this->belongsTo('App\Campaign');
             }
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 }
