@@ -15,6 +15,8 @@ class User extends Authenticatable
      *
      * @var array
      */
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
         
 
             public function area()

@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class CampaignArea extends Model
 {
+	
+	use SoftDeletes;
+    protected $dates = ['deleted_at'];
+
    	protected $table = 'campaign_areas';
 	protected $fillable = ['campaign_id','area_id'];
   

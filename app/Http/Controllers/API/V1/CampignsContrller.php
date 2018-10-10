@@ -32,7 +32,7 @@ class CampignsContrller extends Controller
     }
 
 
-    /*public function allCampaigns( Request $request )
+    public function allCampaigns( Request $request )
     {
         $user =  $this->getAuthenticatedUser();
 
@@ -47,31 +47,31 @@ class CampignsContrller extends Controller
             ->join('campaign_areas', 'campaigns.id', '=', 'campaign_areas.campaign_id')
 
 
-            ->join('users', 'users.id', '=', 'campaigns.user_id')
+            // ->join('users', 'users.id', '=', 'campaigns.user_id')
 
-            ->join('user_countries', 'users.id', '=', 'user_countries.user_id')
+            ->join('user_countries', 'campaign_countries.country_id', '=', 'user_countries.country_id')
 
-            ->join('user_categories', 'users.id', '=', 'user_categories.user_id')
+            ->join('user_categories', 'campaign_categories.category_id', '=', 'user_categories.categories_id')
 
-            ->join('user_areas', 'users.id', '=', 'user_areas.user_id')
+            ->join('user_areas', 'campaign_areas.area_id', '=', 'user_areas.area_id')
 
             ->select('campaigns.*')
 
-            ->where([
-                ['campaign_countries.country_id','=','user_countries.country_id'],
+            // ->where([
+            //     ['campaign_countries.country_id','=','user_countries.country_id'],
 
-                ['campaign_categories.category_id','=','user_countries.categories_id'],
+            //     ['campaign_categories.category_id','=','user_countries.categories_id'],
 
-                ['campaign_areas.area_id','=','user_areas.area_id'],
+            //     ['campaign_areas.area_id','=','user_areas.area_id'],
 
-                ['capaign_status','1']
+            //     ['capaign_status','1']
 
 
-                ])
+            //     ])
 
             ->groupBy('campaigns.id')
 
-            ->orderBy($orderBy,'DESC')
+            // ->orderBy($orderBy,'DESC')
 
             ->get();
             dd($campaigns);
@@ -79,14 +79,14 @@ class CampignsContrller extends Controller
 
         Campaign::where('capaign_status','1')->get();
         return $this->sendResponse( $this->campaignsTransformer->transformCollection($campaigns),'read succefully',200);   
-    }*/
-
-    public function allCampaigns( Request $request )
-    {
-        $user =  $this->getAuthenticatedUser();
-        $campaigns = Campaign::where('capaign_status','1')->get();
-        return $this->sendResponse( $this->campaignsTransformer->transformCollection($campaigns),'read succefully',200);   
     }
+
+    // public function allCampaigns( Request $request )
+    // {
+    //     $user =  $this->getAuthenticatedUser();
+    //     $campaigns = Campaign::where('capaign_status','1')->get();
+    //     return $this->sendResponse( $this->campaignsTransformer->transformCollection($campaigns),'read succefully',200);   
+    // }
 
 
    /* public function coursesByCategoryId(Request $request , $id)

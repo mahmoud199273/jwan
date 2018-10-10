@@ -1,4 +1,4 @@
-@extends('admin.layouts.index')
+@extends('admin.layouts.index_layout')
 
 
 @section('title',trans('lang.dashboard'))

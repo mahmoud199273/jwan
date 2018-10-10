@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Nationalities extends Model
 {
 
-    protected $table = 'nationalities';
+    protected $table = 'nathionalities';
 
     protected $fillable = ['name_ar','name'];
 

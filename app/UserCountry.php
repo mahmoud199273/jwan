@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserCountry extends Model
 {
+	use SoftDeletes;
+    protected $dates = ['deleted_at'];
     protected $table = 'user_countries';
 	protected $fillable = ['user_id','country_id'];
   

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Admin extends Authenticatable
 {
+    use SoftDeletes;
     protected $table = 'admins';
 
     protected $fillable = ['name','email','password'];
@@ -25,5 +26,7 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $dates = ['deleted_at'];
 
 }
