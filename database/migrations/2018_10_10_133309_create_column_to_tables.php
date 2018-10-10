@@ -108,10 +108,7 @@ class CreateColumnToTables extends Migration
 
          });
 
-          Schema::table('influncer_campaigns', function ( $table) {
-            $table->softDeletes();
-
-         });
+          
 
           
     }

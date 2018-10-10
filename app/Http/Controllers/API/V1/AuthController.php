@@ -334,7 +334,7 @@ class AuthController extends Controller
 
             'countries_id'    => 'required',
 
-            'areas_id'      => 'required'
+            'areas_id'      => 'nullable'
 
 
 
