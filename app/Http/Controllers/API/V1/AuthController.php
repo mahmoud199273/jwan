@@ -444,6 +444,7 @@ class AuthController extends Controller
             }
 
             $areas_id  =$request->areas_id;
+            if($areas_id !== null){
 
             foreach ($areas_id  as $id) {
                 UserArea::create([
@@ -455,6 +456,7 @@ class AuthController extends Controller
 
                       ]);
             }
+        }
 
 
            // $this->createVerificationCode( arTOen($request->phone) );
