@@ -21,7 +21,7 @@ class EditUserRequest extends BaseRequest
         return [
             'name'          => 'required|string',
             'phone'         => ['required', Rule::unique('users')->ignore($this->id, 'id')],
-            'image'         => 'mimes:jpg,png,jpeg|max:2048',
+            'image'         => 'required',
             'email'         => ['required','email', Rule::unique('users')->ignore($this->id, 'id')],
             'password'      => 'required|string|min:6',
             'notes'         => 'required',
@@ -38,10 +38,10 @@ class EditUserRequest extends BaseRequest
 
     public function persist($id)
     {
-        if ($this->image) {
-            $image = $this->uploadImage($this->image);
-            $this->offsetSet('image', $image);
-        }
+        // if ($this->image) {
+        //     $image = $this->uploadImage($this->image);
+        //     $this->offsetSet('image', $image);
+        // }
 
         User::find($id)->Update($this->request->all());
     }

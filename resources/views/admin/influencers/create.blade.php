@@ -110,16 +110,6 @@
                 </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('image') ? 'has-danger' : ''}}">
-                <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.image') }}</label>
-                <div class="col-9">
-                    <input type="file" name="image" class="form-control m-input" placeholder="{{ __('admin.image') }}">
-                    {!! $errors->first('image', '<span class="form-control-feedback">:message</span>') !!}
-                </div>
-            </div>
-
-
-            
             <div class="form-group m-form__group row {{ $errors->has('is_active') ? 'has-danger' : ''}}">
                 <label for="is_active" class="col-2 col-form-label">{{ __('admin.status') }}</label>
                  <div class="col-9">
@@ -145,6 +135,36 @@
                 </div>
             </div>
 
+            <div class="form-group m-form__group row {{ $errors->has('image') ? 'has-danger' : ''}}">
+                    <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.image') }}</label>
+                    <div class="col-9">
+                            <input type="hidden" name="image" id="file" class="form-control m-input" placeholder="{{ __('admin.image') }}">
+                            {{--   upload image div   --}}
+                            <div class="container">
+                                    <div class="row" style="padding-top:10px;">
+                                      <div class="col-xs-2">
+                                        <button id="uploadBtn" class="btn btn-large btn-primary"> اختر ملف </button>
+                                      </div>
+                                      <div class="col-xs-10">
+                                    <div id="progressOuter" class="progress progress-striped active" style="display:none;">
+                                      <div id="progressBar" class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                      </div>
+                                    </div>
+                                      </div>
+                                    </div>
+                                    <div class="row" style="padding-top:10px;">
+                                      <div class="col-xs-10">
+                                        <div id="msgBox">
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <img src="" id="image_file" width="100" height="100" style="display:none;">
+                                </div>
+      
+                                {{--   upload image div   --}}
+                        {!! $errors->first('image', '<span class="form-control-feedback">:message</span>') !!}
+                    </div>
+            </div>
 
 
 
