@@ -84,7 +84,7 @@
             <div class="form-group m-form__group row {{ $errors->has('flag') ? 'has-danger' : ''}}">
                     <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.flag') }}</label>
                     <div class="col-9">
-                        <img src="{{url('/')}}/{{ $country->flag }}" width="400" height="400" class="form-control">
+                        <img src="{{url('/assets/uploads')}}/{{ $country->flag }}" width="400" height="400" class="form-control">
                     </div>
             </div>
 

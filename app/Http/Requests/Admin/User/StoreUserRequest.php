@@ -20,7 +20,7 @@ class StoreUserRequest extends BaseRequest
         return [
             'name'          => 'required|string',
             'phone'         => 'required|unique:users,phone',
-            'image'         => 'mimes:jpg,png,jpeg|max:2048',
+            'image'         => 'required',
             'email'         => 'required|string|email|unique:users,email',
             'password'      => 'required|string|min:6',
             //'gender'     => 'required',
@@ -37,10 +37,10 @@ class StoreUserRequest extends BaseRequest
 
     public function persist()
     {
-        if ($this->image) {
-            $image = $this->uploadImage($this->image);
-            $this->offsetSet('image', $image);
-        }
+        // if ($this->image) {
+        //     $image = $this->uploadImage($this->image);
+        //     $this->offsetSet('image', $image);
+        // }
         //$this->offsetSet('type', 'users');
 
         User::create($this->request->all());

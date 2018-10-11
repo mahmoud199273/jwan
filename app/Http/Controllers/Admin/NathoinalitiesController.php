@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Nathionalities\StoreNathionalityRequest;
 use App\Http\Requests\Admin\Nathionalities\EditNathionalityRequest;
-use App\Models\Admin\Nationalities;
+use App\Models\Admin\Nathionalities;
 use Illuminate\Http\Request;
 
 
-class NatoinalitiesController extends Controller
+class NathoinalitiesController extends Controller
 {
 
     function __construct(){
@@ -23,7 +23,7 @@ class NatoinalitiesController extends Controller
     public function index()
     {
         
-        $rows = Nationalities::latest()->paginate(10);
+        $rows = Nathionalities::latest()->paginate(10);
         return view('admin.natoinalities.index',compact('rows'));
     }
 
@@ -34,7 +34,7 @@ class NatoinalitiesController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $rows   = Nationalities::where('name', 'LIKE', '%' . $query. '%' )
+             $rows   = Nathionalities::where('name', 'LIKE', '%' . $query. '%' )
                                      ->paginate(10);
             $rows->appends( ['q' => $request->q] );
             if (count ( $rows ) > 0){
@@ -76,7 +76,7 @@ class NatoinalitiesController extends Controller
      */
     public function show($id)
     {
-        $row = Nationalities::find($id);
+        $row = Nathionalities::find($id);
         return view('admin.natoinalities.show',compact('row'));
     }
 
@@ -88,7 +88,7 @@ class NatoinalitiesController extends Controller
      */
     public function edit($id)
     {
-        $row = Nationalities::find($id);
+        $row = Nathionalities::find($id);
         return view('admin.natoinalities.edit',compact('row'));
     }
 
