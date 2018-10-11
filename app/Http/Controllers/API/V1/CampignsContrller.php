@@ -32,7 +32,7 @@ class CampignsContrller extends Controller
     }
 
 
-    public function allCampaigns( Request $request )
+   /* public function allCampaigns( Request $request )
     {
         $user =  $this->getAuthenticatedUser();
 
@@ -79,14 +79,14 @@ class CampignsContrller extends Controller
 
         Campaign::where('capaign_status','1')->get();
         return $this->sendResponse( $this->campaignsTransformer->transformCollection($campaigns),'read succefully',200);   
-    }
+    }*/
 
-    // public function allCampaigns( Request $request )
-    // {
-    //     $user =  $this->getAuthenticatedUser();
-    //     $campaigns = Campaign::where('capaign_status','1')->get();
-    //     return $this->sendResponse( $this->campaignsTransformer->transformCollection($campaigns),'read succefully',200);   
-    // }
+     public function allCampaigns( Request $request )
+     {
+         $user =  $this->getAuthenticatedUser();
+         $campaigns = Campaign::where('capaign_status','1')->get();
+         return $this->sendResponse( $this->campaignsTransformer->transformCollection($campaigns),'read succefully',200);   
+     }
 
 
    /* public function coursesByCategoryId(Request $request , $id)
