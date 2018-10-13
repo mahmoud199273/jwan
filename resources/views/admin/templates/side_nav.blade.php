@@ -89,11 +89,19 @@
 		</li>
 
 		<li class="m-menu__item" aria-haspopup="true" >
-				<a  href="{{url('admin/pages')}}" class="m-menu__link ">
+				<a  href="{{url('admin/bank')}}" class="m-menu__link ">
 					<span class="m-menu__item-here"></span>
 					<i class="m-menu__link-icon fa fa-map"></i>
-					<span class="m-menu__link-text">{{ __('admin.pages') }}</span>
+					<span class="m-menu__link-text">{{ __('admin.bank_accounts') }}</span>
 				</a>
+		</li>
+
+		<li class="m-menu__item" aria-haspopup="true" >
+			<a  href="{{url('admin/pages')}}" class="m-menu__link ">
+				<span class="m-menu__item-here"></span>
+				<i class="m-menu__link-icon fa fa-map"></i>
+				<span class="m-menu__link-text">{{ __('admin.pages') }}</span>
+			</a>
 		</li>
 
 		{{--  <li class="m-menu__item {{ isActiveTap('districts') }}" aria-haspopup="true" >

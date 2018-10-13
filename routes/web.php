@@ -87,6 +87,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::resource('complaints','ComplaintsController');
 		Route::resource('campaigns','CampaignsController');
 		Route::resource('pages','PagesController');
+		Route::resource('bank','BankAccountsController');
 		
 	});
 });

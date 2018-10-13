@@ -179,6 +179,10 @@ return [
     'general'     => ' عام ',
     'maximum_rate'     => ' الحد الأقصى للتقيم ',
     'pages'     => ' الصفحات ',
+    'bank_accounts'     => ' الحسابات البنكية ',
+    'bank_account'     => ' الحساب البنكى  ',
+    'account_number'     => '  رقم الحساب ',
+    'logo'     => '  شعار  ',
     /* m.abdelrahman  */ 
 
 ];
