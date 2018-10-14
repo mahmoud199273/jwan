@@ -140,7 +140,7 @@
 		  target: document.getElementById('rtl-container')
 		}).then((result) => {
 		  if (result.value) {
-		           $.ajax({
+			       $.ajax({
                         url: '{{url("admin")}}/{{ isset($route)? $route : "" }}/'+ id,
                         type: 'POST',
                         data: {'_method':'delete','_token': $('meta[name="csrf-token"]').attr('content') },
