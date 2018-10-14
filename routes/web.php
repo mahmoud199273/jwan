@@ -50,9 +50,14 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		//Route::post('country/activate/{id}', 'CountryController@activate');
 		Route::resource('area','AreasController');
 		Route::resource('category','CategoryController');
-		Route::resource('natoinality','NathoinalitiesController');
+
+		//Route::resource('natoinality','NathoinalityController');
+
+		//Route::get('nathoinality','TestController@index');
+
 		Route::resource('users','UserController');
 		//Route::get('/users','UsersController@index');
+
 		Route::post('/users/activate'       , 'UserController@activate');
 		Route::post('/users/ban'            , 'UserController@ban');
 
@@ -77,7 +82,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		//Route::post('country/activate/{id}', 'CountryController@activate');
 		Route::resource('area','AreasController');
 		Route::resource('category','CategoriesController');
-		Route::resource('natoinality','NatoinalitiesController');
+		 Route::resource('natoinality','NatoinalitiesController');
 		Route::resource('users','UsersController');
 		Route::post('/users/activate'       , 'UsersControllers@activate');
 		Route::post('/users/ban'            , 'UsersControllers@ban');
