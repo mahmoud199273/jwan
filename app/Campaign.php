@@ -51,4 +51,10 @@ class Campaign extends Model
          return $this->belongsTo('App\User','user_id','id');
         }
 
+        public function offers()
+        {
+ 
+         return $this->hasMany('App\Offer','campaign_id','id');
+        }
+
 }

@@ -79,6 +79,10 @@ class User extends Authenticatable
             {
                return $this->hasMany('App\Campaign');
             }
+    public function offers()
+            {
+               return $this->hasMany('App\Offer','user_id','id');
+            }
 
     
 

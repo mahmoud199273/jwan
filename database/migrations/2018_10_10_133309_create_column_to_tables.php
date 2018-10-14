@@ -88,10 +88,6 @@ class CreateColumnToTables extends Migration
 
          });
 
-          Schema::table('nathionalities', function ( $table) {
-            $table->softDeletes();
-
-         });
 
           Schema::table('notifications', function ( $table) {
             $table->softDeletes();

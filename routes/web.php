@@ -50,7 +50,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		//Route::post('country/activate/{id}', 'CountryController@activate');
 		Route::resource('area','AreasController');
 		Route::resource('category','CategoryController');
-		Route::resource('natoinality','NatoinalityController');
+		Route::resource('natoinality','NathoinalitiesController');
 		Route::resource('users','UserController');
 		//Route::get('/users','UsersController@index');
 		Route::post('/users/activate'       , 'UserController@activate');
