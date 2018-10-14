@@ -3,7 +3,7 @@
 return [
  
     'admin_panel'                   => 'لوحة  التحكم',
-    'masioom'                       => 'مسيوم',
+    'masioom'                       => 'Signify',
     'sign_in'		             => 'الدخول',
     'email'			              => 'البريد الإلكتروني',
     'password'		                => 'كلمة المرور',
@@ -179,6 +179,10 @@ return [
     'general'     => ' عام ',
     'maximum_rate'     => ' الحد الأقصى للتقيم ',
     'pages'     => ' الصفحات ',
+    'bank_accounts'     => ' الحسابات البنكية ',
+    'bank_account'     => ' الحساب البنكى  ',
+    'account_number'     => '  رقم الحساب ',
+    'logo'     => '  شعار  ',
     /* m.abdelrahman  */ 
 
 ];

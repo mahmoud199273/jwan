@@ -32,7 +32,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 	// 	Route::post('password/reset', 'ResetPasswordController@reset');
 	// });
 
- 
+
 //	Route::group(['middleware'=>['admin.auth'],'namespace'=>'Admin'],function(){
 	Route::group(['namespace'=>'Admin'],function(){
 
@@ -67,8 +67,8 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::post('/profile/edit'	, 'AuthController@updateProfile');
 
 		Route::get('/dashboard' , 'DashboardController@index');
-		
-		
+
+
 		Route::get('/admin', 'DashboardController@index');
 		//Route::get('profile','ProfileController@getIndex');
 		//Route::post('profile','ProfileController@postIndex');
@@ -81,12 +81,12 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::resource('users','UsersController');
 		Route::post('/users/activate'       , 'UsersControllers@activate');
 		Route::post('/users/ban'            , 'UsersControllers@ban');
-		
+
 		Route::resource('influencers','InfluencersController');
 
 		Route::resource('complaints','ComplaintsController');
 		Route::resource('campaigns','CampaignsController');
 		Route::resource('pages','PagesController');
-		
+
 	});
 });
