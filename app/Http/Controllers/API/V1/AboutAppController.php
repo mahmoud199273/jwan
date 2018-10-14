@@ -84,12 +84,12 @@ class AboutAppController extends Controller
         ContactUs::create(['subject' =>  $request->subject, 'message' => $request->message, 'user_id' => $user->id]);
         $emailcontent = array ('subject' => $request->subject,'msg' => $request->message);
 
-        @Mail::send('contact_us_email', $emailcontent, function($message) use ($request) {
-            $message->from('a.atef@smaat.co' , 'Signify App')
-                        ->sender('a.atef@smaat.co', 'Signify App')
-                        ->to('a.atef@smaat.co','Signify App')
-                        ->subject('شكوى - تواصل - '.$request->subject);
-        });
+        // @Mail::send('contact_us_email', $emailcontent, function($message) use ($request) {
+        //     $message->from('a.atef@smaat.co' , 'Signify App')
+        //                 ->sender('a.atef@smaat.co', 'Signify App')
+        //                 ->to('a.atef@smaat.co','Signify App')
+        //                 ->subject('شكوى - تواصل - '.$request->subject);
+        // });
 
         return $this->respondWithSuccess(__('api_msgs.msg_sent'));
     }
