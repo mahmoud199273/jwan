@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Nathionalities\StoreNathionalityRequest;
 use App\Http\Requests\Admin\Nathionalities\EditNathionalityRequest;
-use App\Nathionalities;
+use App\Nathionality;
 use Illuminate\Http\Request;
 
 
-class NathoinalitiesController extends Controller
+class NatoinalitiesController extends Controller
 {
 
     function __construct(){
@@ -23,7 +23,7 @@ class NathoinalitiesController extends Controller
     public function index()
     {
         
-        $rows = Nathionalities::latest()->paginate(10);
+        $rows = Nathionality::latest()->paginate(10);
         return view('admin.natoinalities.index',compact('rows'));
     }
 
@@ -34,7 +34,7 @@ class NathoinalitiesController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $rows   = Nathionalities::where('name', 'LIKE', '%' . $query. '%' )
+             $rows   = Nathionality::where('name', 'LIKE', '%' . $query. '%' )
                                      ->paginate(10);
             $rows->appends( ['q' => $request->q] );
             if (count ( $rows ) > 0){
@@ -76,7 +76,7 @@ class NathoinalitiesController extends Controller
      */
     public function show($id)
     {
-        $row = Nathionalities::find($id);
+        $row = Nathionality::find($id);
         return view('admin.natoinalities.show',compact('row'));
     }
 
@@ -88,7 +88,7 @@ class NathoinalitiesController extends Controller
      */
     public function edit($id)
     {
-        $row = Nathionalities::find($id);
+        $row = Nathionality::find($id);
         return view('admin.natoinalities.edit',compact('row'));
     }
 
@@ -114,7 +114,7 @@ class NathoinalitiesController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
-            Nationalities::find($id)->delete();
+            Nathionality::find($id)->delete();
             return response(['msg' => 'deleted', 'status' => 'success']);
         }
     }
