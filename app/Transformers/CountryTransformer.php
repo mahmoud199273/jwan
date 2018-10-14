@@ -9,7 +9,7 @@ class CountryTransformer extends Transformer
 
 
 
-	public function transform($country  ) : array
+	public function transform($country) : array
     {
         return [
             'id'            => (int) $country->id,

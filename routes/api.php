@@ -57,8 +57,13 @@ Route::post('/refresh/token','API\V1\AuthController@refreshToken');
 
 
 
-//Route::post('/reset/password', 'API\V1\ResetPasswordController@resetPassword');
+Route::post('user/send/reset/code'		, 'Api\V1\ResetPasswordController@sendCode');
+Route::post('user/verify/reset/code'	, 'Api\V1\ResetPasswordController@verifyCode');
+Route::post('user/reset/password'		, 'Api\V1\ResetPasswordController@resetPassword');
 
+Route::post('influncer/send/reset/code'		, 'Api\V1\ResetPasswordController@sendCode');
+Route::post('influncer/verify/reset/code'	, 'Api\V1\ResetPasswordController@verifyCode');
+Route::post('influncer/reset/password'		, 'Api\V1\ResetPasswordController@resetPassword');
 
 
 Route::get('user/profile', 'API\V1\UserController@profile');
@@ -109,7 +114,7 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::get('/nathionalities','API\V1\NathionalitiesController@index');
 
- // start Camapign routes 
+ // start Camapign routes
 
  Route::post('/user/add/campaign','API\V1\CampignsContrller@store');
 
@@ -139,6 +144,14 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
  Route::get('favorite/campaign','API\V1\CampignsContrller@favorite');
 
 
+
+
+
+/* about the app - license agreement */
+Route::get('/about/app' 				, 'Api\V1\AboutAppController@index') ;
+Route::get('user/privacy/policy' 		, 'Api\V1\AboutAppController@privacyPolicy') ;
+Route::get('influncer/privacy/policy' 	, 'Api\V1\AboutAppController@influncerPrivacyPolicy') ;
+Route::post('contact'					, 'Api\V1\AboutAppController@contactUs');
 
 
 });

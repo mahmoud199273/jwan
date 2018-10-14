@@ -3,7 +3,7 @@
 return [
  
     'admin_panel'                   => 'لوحة  التحكم',
-    'masioom'                       => 'مسيوم',
+    'masioom'                       => 'Signify',
     'sign_in'		             => 'الدخول',
     'email'			              => 'البريد الإلكتروني',
     'password'		                => 'كلمة المرور',

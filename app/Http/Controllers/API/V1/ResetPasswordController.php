@@ -17,7 +17,7 @@ class ResetPasswordController extends Controller
     function __construct( Request $request ){
         App::setlocale($request->lang);
     }
-    
+
 
 
     public function sendCode( Request $request )
@@ -25,14 +25,14 @@ class ResetPasswordController extends Controller
         $validator = Validator::make( $request->all(), [
             'phone'                  => 'required|max:14|min:9|exists:users',
         ]);
-        
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_phone'));
         }
 
-        //create reset password code 
+        //create reset password code
         $this->createToken( $request->phone );
-        
+
         return $this->respondCreated(trans('api_msgs.code_sent'));
     }
 
@@ -42,7 +42,7 @@ class ResetPasswordController extends Controller
         $current_time   = Carbon::now();
         $created_at     = $current_time->toDateTimeString();
         $expired_at     = $current_time->addHours(1)->toDateTimeString();
-        DB::table('phone_forget_password')->insert([         
+        DB::table('phone_forget_password')->insert([
                    'phone'         => $phone ,
                    'token'         => $token ,
                    'created_at'    => $created_at,
@@ -50,7 +50,7 @@ class ResetPasswordController extends Controller
                                                 ]);
         //send message to mobile
         @sendSMS($this->formatPhone($phone) , __('api_msgs.reset_pass_code').$token );
-        
+
     }
 
     public function formatPhone( $phone )
@@ -104,14 +104,14 @@ class ResetPasswordController extends Controller
 
 
 
-    public function resetPassword( Request $request ) 
+    public function resetPassword( Request $request )
     {
 
         $validator = Validator::make( $request->all(), [
             'code'                  => 'required|max:4|min:4',
             'password'              => 'required|string|max:25|min:8'
         ]);
-        
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('parameters faild validation');
         }
@@ -133,7 +133,7 @@ class ResetPasswordController extends Controller
         }else{
             ResetPassword::where([ [ 'token', $request->code ],[ 'used', '0'] ])->update(['used' => '1']);
 
-            //update the password 
+            //update the password
            $this->updatePassword( $code->phone , $request->password );
 
             return $this->respondWithSuccess(trans('api_msgs.reset_sccuess'));
