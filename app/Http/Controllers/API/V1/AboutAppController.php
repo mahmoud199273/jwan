@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\API\V1;
 
 use App\AboutApp;
 use App\ContactUs;
-use App\Http\Controllers\Api\V1\BaseController as Controller;
+use App\Http\Controllers\API\V1\BaseController as Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
