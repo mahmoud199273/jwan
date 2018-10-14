@@ -81,7 +81,7 @@ class CampignsContrller extends Controller
         return $this->sendResponse( $this->campaignsTransformer->transformCollection($campaigns),'read succefully',200);   
     }*/
 
-     public function allCampaigns( Request $request )
+     public function index( Request $request )
      {
          $user =  $this->getAuthenticatedUser();
          $campaigns = Campaign::where('capaign_status','1')->get();
@@ -170,7 +170,7 @@ class CampignsContrller extends Controller
 
     }
 
-    public function index(Request $request)
+    public function allCampaigns(Request $request)
     {
     # code...
         $user =  $this->getAuthenticatedUser();
@@ -179,7 +179,11 @@ class CampignsContrller extends Controller
                 $this->setPagination($request->limit);
             }
 
-        $campaigns = $this->campaignsTransformer->transformCollection(Campaign::all());
+        $campaign_ids = InfluncerCampaign::where('user_id',$user->id)->pluck('campaign_id')->toArray();
+
+        $data = Campaign::where('id' ,$user->id)->whereNotIn('id',$campaign_ids)->get();
+
+        $campaigns = $this->campaignsTransformer->transformCollection($data);
 
         return $this->sendResponse($campaigns, 'campaigns read succesfully',200);
     }
@@ -371,11 +375,8 @@ class CampignsContrller extends Controller
 
             'maximum_rate'      => 'required',
 
-            'created_date'      => 'required',
+            
 
-            'updated_date'      => 'required',
-
-            'capaign_status'    => 'required'
 
 
         ]);
@@ -411,9 +412,6 @@ class CampignsContrller extends Controller
 
         $campaign->maximum_rate     = $request->maximum_rate;
 
-        $campaign->created_date     = $request->created_date;
-
-        $campaign->updated_date     = $request->updated_date;
 
         $campaign->user_id          = $user->id;
 

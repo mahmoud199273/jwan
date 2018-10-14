@@ -49,6 +49,8 @@ class CreateCampaignsTable extends Migration
 
              $table->enum('capaign_status',[0,1,2,3]);
 
+             
+
              $table->timestamps();
         });
     }

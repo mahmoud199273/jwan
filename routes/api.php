@@ -143,6 +143,21 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::get('favorite/campaign','API\V1\CampignsContrller@favorite');
 
+ /* influncer offers route */
+
+ Route::post('/influncer/create/offer','API\V1\OffersController@store');
+
+ //Route::post('/user/accept/offer','API\V1\OffersController@acceptOffer');
+
+Route::post('/offer/user/status','API\V1\OffersController@offerStatus');
+
+Route::get('/user/campaign/offers/{campaign_id}','API\V1\OffersController@index');
+
+
+Route::get('/influncer/offers','API\V1\OffersController@allOffers');
+
+Route::get('/offer/{id}','API\V1\OffersController@show');
+
 
 
 
