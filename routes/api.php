@@ -57,13 +57,13 @@ Route::post('/refresh/token','API\V1\AuthController@refreshToken');
 
 
 
-Route::post('user/send/reset/code'		, 'Api\V1\ResetPasswordController@sendCode');
-Route::post('user/verify/reset/code'	, 'Api\V1\ResetPasswordController@verifyCode');
-Route::post('user/reset/password'		, 'Api\V1\ResetPasswordController@resetPassword');
+Route::post('user/send/reset/code'		, 'API\V1\ResetPasswordController@sendCode');
+Route::post('user/verify/reset/code'	, 'API\V1\ResetPasswordController@verifyCode');
+Route::post('user/reset/password'		, 'API\V1\ResetPasswordController@resetPassword');
 
-Route::post('influncer/send/reset/code'		, 'Api\V1\ResetPasswordController@sendCode');
-Route::post('influncer/verify/reset/code'	, 'Api\V1\ResetPasswordController@verifyCode');
-Route::post('influncer/reset/password'		, 'Api\V1\ResetPasswordController@resetPassword');
+Route::post('influncer/send/reset/code'		, 'API\V1\ResetPasswordController@sendCode');
+Route::post('influncer/verify/reset/code'	, 'API\V1\ResetPasswordController@verifyCode');
+Route::post('influncer/reset/password'		, 'API\V1\ResetPasswordController@resetPassword');
 
 
 Route::get('user/profile', 'API\V1\UserController@profile');
