@@ -148,10 +148,10 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
 
 /* about the app - license agreement */
-Route::get('/about/app' 				, 'Api\V1\AboutAppController@index') ;
-Route::get('user/privacy/policy' 		, 'Api\V1\AboutAppController@privacyPolicy') ;
-Route::get('influncer/privacy/policy' 	, 'Api\V1\AboutAppController@influncerPrivacyPolicy') ;
-Route::post('contact'					, 'Api\V1\AboutAppController@contactUs');
+Route::get('/about/app' 				, 'API\V1\AboutAppController@index') ;
+Route::get('user/privacy/policy' 		, 'API\V1\AboutAppController@privacyPolicy') ;
+Route::get('influncer/privacy/policy' 	, 'API\V1\AboutAppController@influncerPrivacyPolicy') ;
+Route::post('contact'					, 'API\V1\AboutAppController@contactUs');
 
 
 });
