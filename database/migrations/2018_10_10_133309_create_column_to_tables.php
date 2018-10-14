@@ -13,7 +13,7 @@ class CreateColumnToTables extends Migration
      */
     public function up()
     {
-        Schema::table('users', function ( $table) {
+        /*Schema::table('users', function ( $table) {
             $table->softDeletes();
 
          });
@@ -89,20 +89,10 @@ class CreateColumnToTables extends Migration
          });
 
 
-          Schema::table('notifications', function ( $table) {
-            $table->softDeletes();
-
-         });
-
-          Schema::table('settings', function ( $table) {
-            $table->softDeletes();
-
-         });
-
           Schema::table('pages', function ( $table) {
             $table->softDeletes();
 
-         });
+         });*/
 
           
 
