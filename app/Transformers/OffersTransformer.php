@@ -16,13 +16,13 @@ class OffersTransformer extends Transformer
         return [
         	'id'       			=> (int) $offer->id,
 
-            'influncer'         => (int) $offer->influncer_id,
+            'influncer'         => isset( $offer->influncer) ? $offer->influncer :null,
 
             'user'              => isset($offer->user) ? $offer->user :null ,
 
-            'campaign'           => isset($offer->campaign) ? $offer->campaign :null ,
+            'campaign'          => isset($offer->campaign) ? $offer->campaign :null ,
 
-            'cost'          => $offer->scost,
+            'cost'              => $offer->cost,
 
             'description'       => $offer->description,
 

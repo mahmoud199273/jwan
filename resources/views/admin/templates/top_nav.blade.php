@@ -17,10 +17,11 @@
 				<div class="m-dropdown__wrapper">
 					<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
 					<div class="m-dropdown__inner">
+					
 						<div class="m-dropdown__header m--align-center" style="background: url({{ config('app.url') }}/public/admin/assets/app/media/img/misc/user_profile_bg.jpg); background-size: cover;">
 							<div class="m-card-user m-card-user--skin-dark">
 								<div class="m-card-user__pic">
-									<img src="{{ config('app.url') }}/public/admin/assets/app/media/img/users/user3.png" alt=""/>
+									<img src="{{asset('/public/admin/assets/app/media/img/users/user3.png')}}" alt=""/>
 								</div>
 								<div class="m-card-user__details">
 									<span class="m-card-user__name m--font-weight-500">

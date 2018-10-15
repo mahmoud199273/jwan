@@ -199,36 +199,5 @@ class OffersController extends Controller
     }
 
 
-   /* public function rateCampaign( Request $request )
-    {
-
-        $user =  $this->getAuthenticatedUser();
-
-        $validator = Validator::make( $request->all(), [
-            'id'    => 'required|exists:campaigns,id',
-            'rate'  => 'required|max:5|min:1'
-        ]);
-
-        if ($validator->fails()) {
-            return $this->setStatusCode(422)->respondWithError('parameters faild validation');
-        }
-
-        $rate = CampaignRate::firstOrNew(['user_id' => $user->id ,'campaign_id' => $request->id ]);
-        $rate->rate     =  $request->rate;
-        $rate->comment  =  $request->comment;
-        $rate->save();
-
-        $course =  Campaign::find($request->id);
-        //$player_ids = $this->getUserPlayerIds($course->instructor_id);
-        //Notification::create(['user_id' => $course->instructor_id ,'message' => 'يوجد تعليق جديد علي كورس '.$course->name ]);
-        //sendNotification('يوجد تعليق جديد علي كورس '.$course->name , $player_ids ,['data' => ['course_id' =>  $course->id]]);
-        return $this->respondWithSuccess('success');
-
-    }*/
-
-
-
-
-
 
 }

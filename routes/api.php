@@ -156,17 +156,17 @@ Route::get('/user/campaign/offers/{campaign_id}','API\V1\OffersController@index'
 
 Route::get('/influncer/offers','API\V1\OffersController@allOffers');
 
-Route::get('/offer/{id}','API\V1\OffersController@show');
+Route::get('/influncer/offer/{id}','API\V1\OffersController@show');
 
 
 
 
 
 /* about the app - license agreement */
-Route::get('/about/app' 				, 'API\V1\AboutAppController@index') ;
-Route::get('user/privacy/policy' 		, 'API\V1\AboutAppController@privacyPolicy') ;
+Route::get('/about/app', 'API\V1\AboutAppController@index') ;
+Route::get('user/privacy/policy', 'API\V1\AboutAppController@privacyPolicy') ;
 Route::get('influncer/privacy/policy' 	, 'API\V1\AboutAppController@influncerPrivacyPolicy') ;
-Route::post('contact'					, 'API\V1\AboutAppController@contactUs');
+Route::post('contact', 'API\V1\AboutAppController@contactUs');
 
 
 });

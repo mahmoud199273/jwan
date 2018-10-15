@@ -18,13 +18,13 @@ class CampaignsTransformer extends Transformer
 
         	'title'          	=> $campaign->title,
 
-            'user'           => isset($campaign->user) ? $campaign->user :null ,
+            'user'              => isset($campaign->user) ? $campaign->user :null ,
 
             //'image'         => $camapign->($user->image) ?config('app.url').$user->image : null,
 
             'rate'              => 3,
 
-            'file'     => isset($campaign->attachments) ? $campaign->attachments : null,
+            'file'              => isset($campaign->attachments) ? $campaign->attachments : null,
 
         	
 

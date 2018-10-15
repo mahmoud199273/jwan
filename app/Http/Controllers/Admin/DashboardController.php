@@ -12,12 +12,14 @@ class DashboardController extends Controller
 {
     function __construct()
     {
+
         $this->middleware('admin');
     }
 
 
     public function index()
     {
+
     	$users  		= User::where('account_type','0')->count();
     	$influencers 	= User::where('account_type','1')->count();
         $campaigns      = Campaign::count();

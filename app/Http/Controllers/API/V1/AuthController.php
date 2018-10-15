@@ -281,6 +281,7 @@ class AuthController extends Controller
 
     public function registerInfluncer( Request $request )
     {
+        
 
         $validator = Validator::make( $request->all(), [
 
@@ -404,10 +405,9 @@ class AuthController extends Controller
 
             $user->youtube_follwers   = $request->youtube_follwers;
 
-            $user->account_type = 1;
+            $user->account_type = '1';
 
            // $user->categories_id  =$request->categories_id;
-
 
 
 
@@ -545,11 +545,11 @@ class AuthController extends Controller
     public function login(Request $request){
       if(strpos($request->server("REQUEST_URI"), '/user/login'))
       {
-          $type = 0;
+          $account_type = 0;
       }
       elseif(strpos($request->server("REQUEST_URI"), '/influncer/login'))
       {
-          $type = 1;
+          $account_type = 1;
       }
       else {
         return $this->setStatusCode(422)->respondWithError('user type not exising');

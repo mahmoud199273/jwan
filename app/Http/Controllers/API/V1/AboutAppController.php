@@ -31,6 +31,8 @@ class AboutAppController extends Controller
         $about_arr['google']    = $about ? $about->google_link : "http://google.com";
         $about_arr['instagram'] = $about ? $about->insta_link : "http://instagram.com";
 
+        $about_arr['snapchat'] = $about ? $about->snap_link : "http://snapchat.com";
+
         return $this->respond([
             'data' => $about_arr,
         ]);
