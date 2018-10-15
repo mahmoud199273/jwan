@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use DB;
 
 class UserController extends Controller
 {
@@ -27,6 +28,8 @@ class UserController extends Controller
         $this->profileTransformer = $profileTransformer;
         $this->influncerTransformer = $influncerTransformer;
     }
+
+  
 
 
     public function profile( Request $request )
@@ -84,6 +87,9 @@ class UserController extends Controller
             
         ]);
 
+        if ($this->isPhoneExists( $request->phone ,$user->id)) {
+           return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+        }
         
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
@@ -98,9 +104,11 @@ class UserController extends Controller
         
        
         $user->email   = $request->email;
-        
 
-        $user->phone   = $request->phone;
+        
+        if ($user->phone  != $request->phone) {
+            $user->phone   = $request->phone;
+        }
 
 
         $user->email        =  $request->email; 
@@ -167,17 +175,24 @@ class UserController extends Controller
 
         ]);
 
+       
+
         
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
+        $user = User::find( $user->id );
+        }
+         if ($this->isPhoneExists( $request->phone ,$user->id)) {
+           return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
         }
 
        
+            if ($user->phone != $request->phone) {
+                # code...
+                $user->phone        =  $request->phone; 
+            }
 
-        $user = User::find( $user->id );
-
-            $user->phone        =  $request->phone; 
 
             $user->email        =  $request->email; 
             if (substr( $request->image, 0, 4 ) !== "http") {
@@ -321,7 +336,7 @@ class UserController extends Controller
 
     public function isPhoneExists( $phone , $user_id )
     {
-        return User::where([['id','<>',$user_id] ,['phone' ,$phone]])->first() ?  true : false ;
+        return DB::table('users')->where([['id','<>',$user_id] ,['phone' ,$phone]])->first() ?  true : false ;
         
     }
 

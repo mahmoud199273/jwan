@@ -32,54 +32,12 @@ class CampignsContrller extends Controller
     }
 
 
-   /* public function allCampaigns( Request $request )
-    {
-        $user =  $this->getAuthenticatedUser();
-
-        $orderBy = 'created_at';
-
-        $campaigns = DB::table('campaigns')
-
-            ->join('campaign_countries', 'campaigns.id', '=', 'campaign_countries.campaign_id')
-
-            ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id')
-
-            ->join('campaign_areas', 'campaigns.id', '=', 'campaign_areas.campaign_id')
 
 
-            // ->join('users', 'users.id', '=', 'campaigns.user_id')
-
-            ->join('user_countries', 'campaign_countries.country_id', '=', 'user_countries.country_id')
-
-            ->join('user_categories', 'campaign_categories.category_id', '=', 'user_categories.categories_id')
-
-            ->join('user_areas', 'campaign_areas.area_id', '=', 'user_areas.area_id')
-
-            ->select('campaigns.*')
-
-            // ->where([
-            //     ['campaign_countries.country_id','=','user_countries.country_id'],
-
-            //     ['campaign_categories.category_id','=','user_countries.categories_id'],
-
-            //     ['campaign_areas.area_id','=','user_areas.area_id'],
-
-            //     ['capaign_status','1']
 
 
-            //     ])
-
-            ->groupBy('campaigns.id')
-
-            // ->orderBy($orderBy,'DESC')
-
-            ->get();
-            dd($campaigns);
 
 
-        Campaign::where('capaign_status','1')->get();
-        return $this->sendResponse( $this->campaignsTransformer->transformCollection($campaigns),'read succefully',200);   
-    }*/
 
      public function index( Request $request )
      {
@@ -89,74 +47,12 @@ class CampignsContrller extends Controller
      }
 
 
-   /* public function coursesByCategoryId(Request $request , $id)
-    {
-        $validator = Validator::make( ['id' =>  $request->id ], [
-            'id'    => 'required|exists:categories,id',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->setStatusCode(422)->respondWithError('parameters faild validation');
-        }
-
-        if ($request->limit) {
-            $this->setPagination($request->limit);
-        }
-
-        $pagination = Course::where('category_id' , $request->id)->paginate($this->getPagination());
-
-        $courses = $this->courseTransformer->transformCollection(collect($pagination->items()));
-
-        return $this->respondWithPagination($pagination ,['data' =>  $courses]);
-    }
 
 
-    public function getAllCourses( Request $request )
-    {
-    	if ( $request->limit ) {
-    		$this->setPagination($request->limit);
-    	}
 
-    	$orderBy = 'created_at';
 
-    	if ($request->sort == 'latest') {
-    		$orderBy = 'created_at';
-    	}elseif ($request->sort == 'rate') {
-    		$orderBy = 'rate';
-    	}
 
-    	if ($request->q) {
-    		$q = $request->q;
-
-	    	$pagination = Course::join('course_rates','course_rates.course_id','=','courses.id')
-	    								   ->join('users','courses.instructor_id','=','users.id')
-	    	                               ->select('courses.*','users.name',DB::raw('SUM(course_rates.rate) as rate'))
-	                                        ->where([
-	                                            ['courses.is_active', '1'] ,
-	                                            ['courses.name', 'LIKE', '%'.$q .'%']
-	                                        ])
-	                                        ->orWhere([
-	                                        	['courses.is_active', '1'] ,
-	                                            ['users.name', 'LIKE', '%'.$q .'%']
-	                                        ])
-	    	                               ->groupBy('courses.id')
-	    	                               ->orderBy($orderBy,'DESC')
-	    	                               ->paginate($this->getPagination());
-    	}else{
-    		$pagination = Course::join('course_rates','course_rates.course_id','=','courses.id')
-	    								   ->join('users','courses.instructor_id','=','users.id')
-	    	                               ->select('courses.*','users.name',DB::raw('SUM(course_rates.rate) as rate'))
-	    	                               ->groupBy('courses.id')
-	    	                               ->orderBy($orderBy,'DESC')
-	    	                               ->paginate($this->getPagination());
-
-    	}
-
-    	$courses =  $this->courseTransformer->transformCollection(collect($pagination->items()));
-
-    	return $this->respondWithPagination( $pagination, [ 'data' =>  $courses ]);
-    }*/
-
+   
 
 
     public function show( Request $request , $id )
