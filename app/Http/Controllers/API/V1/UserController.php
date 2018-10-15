@@ -66,6 +66,8 @@ class UserController extends Controller
 
             'type'      => 'required',
 
+            'country_id' => 'required',
+
             'facebook'      => 'nullable',
 
             'twitter'      => 'nullable',
@@ -110,6 +112,8 @@ class UserController extends Controller
 
         $user->notes       = $request->notes;
 
+        $user->countries_id = $request->country_id;
+
  
         $user->facebook    = $request->facebook;
 
@@ -150,6 +154,7 @@ class UserController extends Controller
 
             'gender'        => 'required',
 
+            'country_id'   => 'required',
             
 
             'notes'          => 'required',
@@ -186,6 +191,8 @@ class UserController extends Controller
             $user->gender        =    $request->gender;
 
             $user->notes         = $request->notes;
+            
+            $user->countries_id = $request->country_id;
 
             $user->account_manger  = $request->account_manger;
 

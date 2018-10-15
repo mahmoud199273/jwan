@@ -164,7 +164,7 @@ class AuthController extends Controller
         
             'phone'         => 'required|max:14|min:9',
             
-            'countries_id'    => 'required',
+            'country_id'    => 'required',
 
             'password'      => 'required|string|max:25|min:8',
 
@@ -249,23 +249,14 @@ class AuthController extends Controller
 
             $user->youtube             = $request->youtube;
 
+            $user->countries_id        = $request->country_id;
+
 
         
 
             $user->is_active        =  '1'; 
             $user->account_type     =  '0';
             $user->save();
-
-            $countries_id  =$request->countries_id;
-
-                UserCountry::create([
-
-                'user_id'       => $user->id,
-
-                'country_id' => $countries_id,
-
-
-                      ]);
             
 
            // $this->createVerificationCode( arTOen($request->phone) );
@@ -296,6 +287,8 @@ class AuthController extends Controller
             'name'          => 'required',
 
             'gender'        => 'required',
+
+            'country_id'    => 'required',
 
             'nationality_id'   => 'required',
 
@@ -369,6 +362,8 @@ class AuthController extends Controller
             $user->name         =  $request->name;
 
             $user->gender      =    $request->gender;
+
+            $user->countries_id = $request->country_id;
 
             $user->nationality_id       = $request->nationality_id;
 

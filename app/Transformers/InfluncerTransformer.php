@@ -3,6 +3,7 @@
 namespace App\Transformers;
 
 use App\Transformers\BaseTransformer as Transformer;
+use App\Country;
 
 class InfluncerTransformer extends Transformer
 {
@@ -26,9 +27,11 @@ class InfluncerTransformer extends Transformer
             "wallet" => 20,
             'email'         => $user->email,
             'phone'         => $user->phone,
+            'country' => Country::find($user->countries_id),
             'image'         => ($user->image) ?config('app.url').$user->image : null,
             'notes'         => $user->notes,
             'gender'        =>$user->gender,
+
 
             'nationality_id'   =>(int) $user->nationality_id,
 
