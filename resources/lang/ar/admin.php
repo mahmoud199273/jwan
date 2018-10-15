@@ -10,6 +10,7 @@ return [
     'to'			                 => 'الى',
     'dashboard'                     => 'الرئيسية',
     'users'                         => 'المستخدمين',
+    'user'                         => 'مستخدم',
     'add'                           => 'إضافة',
     'edit'                          => 'تعديل',
     'name'                          => 'الإسم',
@@ -63,6 +64,7 @@ return [
     'address'                       => 'العنوان',
     'description'                   => ' الوصف بالانجليزية ',
     'description_ar'                => ' الوصف بالعربية ',
+    'desc'                => ' الوصف  ',
     'contract_image'                => 'صورة الصك العقار',
     'property_images'               => 'صور العقار',
     'city'                          => 'المدينة',
@@ -183,6 +185,11 @@ return [
     'bank_account'     => ' الحساب البنكى  ',
     'account_number'     => '  رقم الحساب ',
     'logo'     => '  شعار  ',
+    'offers'     => '  العروض  ',
+    'offer'     => '  العرض  ',
+    'influencer_name'     => '  اسم المعلن  ',
+    'user_name'     => '  اسم المستخدم  ',
+    'cost'     => '  التكلفة   ',
     /* m.abdelrahman  */ 
 
 ];

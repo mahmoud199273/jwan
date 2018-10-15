@@ -59,6 +59,11 @@
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             <i class="fa fa-eye m--font-info"></i>
                                         </a>
+                                         <a type="button" 
+                                            href="{{url('admin/offers')}}/{{ $campaign->id }}" 
+                                            class="m-btn m-btn m-btn--square btn btn-secondary">
+                                            {{ __('admin.offers') }}
+                                        </a>
 
                                         <a type="button"  data-id = "{{ $campaign->id }}" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary _remove">
