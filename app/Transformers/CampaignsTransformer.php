@@ -2,6 +2,7 @@
 
 namespace App\Transformers;
 use App\Campaign;
+use App\Offer;
 use App\Transformers\BaseTransformer as Transformer;
 use App\Transformers\InfluncerTransformer;
 
@@ -25,6 +26,7 @@ class CampaignsTransformer extends Transformer
             'rate'              => 3,
 
             'file'              => isset($campaign->attachments) ? $campaign->attachments : null,
+            'number_of_offers'  =>  Offer::where('campaign_id',$campaign->id)->count(),
 
         	
 
@@ -62,7 +64,7 @@ class CampaignsTransformer extends Transformer
 
             'categories' => isset($campaign->categories) ? $campaign->categories : null,
 
-             'countries' => isset($campaign->countries) ? $campaign->countries : null,
+            'countries' => isset($campaign->countries) ? $campaign->countries : null,
 
             'areas' => isset($campaign->areas) ? $campaign->areas : null
             

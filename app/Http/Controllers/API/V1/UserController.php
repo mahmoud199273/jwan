@@ -45,6 +45,11 @@ class UserController extends Controller
         return $this->respond(['data' => $this->influncerTransformer->transform($influncer) ]);
     }
 
+    public function isPhoneExists( $phone )
+    {
+        return User::where('phone',$phone)->first() ? true : false;
+    }
+
 
 
     public function updateProfile( Request $request )
@@ -167,6 +172,10 @@ class UserController extends Controller
 
         ]);
 
+         if ($this->isPhoneExists( $request->phone )) {
+           return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+        }
+
         
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
@@ -174,7 +183,7 @@ class UserController extends Controller
         }
 
        
-
+ 
         $user = User::find( $user->id );
 
             $user->phone        =  $request->phone; 
