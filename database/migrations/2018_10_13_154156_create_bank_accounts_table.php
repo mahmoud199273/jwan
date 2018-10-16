@@ -21,6 +21,7 @@ class CreateBankAccountsTable extends Migration
             $table->longtext('desc_ar');
             $table->string('logo');
             $table->string('account_number');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
