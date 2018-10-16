@@ -34,6 +34,15 @@ class CreateOffersTable extends Migration
             $table->longText('description');
 
             $table->enum('status',[0,1,2,3,4,5,6,7]);
+             // 0 new - offer added by influencer
+             // 1 accepted - by user
+             // 2 refused - by user
+             // 3 pay - by user
+             // 4 in progress - by influencer
+             // 5 proof submitted - by influencer
+             // 6 proof accepted - by user
+             // 7 finish/done
+
 
             $table->softDeletes();
 
