@@ -180,23 +180,23 @@ class AuthController extends Controller
 
             
 
-            'twitter' => 'nullable',
+            'twitter' => 'nullable|url',
 
             
 
-            'instgrame' => 'nullable',
+            'instgrame' => 'nullable|url',
 
             
 
-            'snapchat' => 'nullable',
+            'snapchat' => 'nullable|url',
 
             
 
-            'linkedin' => 'nullable',
+            'linkedin' => 'nullable|url',
 
             
 
-            'youtube'       => 'nullable'
+            'youtube'       => 'nullable|url'
 
 
 
