@@ -190,6 +190,14 @@ return [
     'influencer_name'     => '  اسم المعلن  ',
     'user_name'     => '  اسم المستخدم  ',
     'cost'     => '  التكلفة   ',
+    'new_offer'     => '  عرض جديد   ',
+    'accepted'     => '  عرض مقبول   ',
+    'refused'     => '  عرض مرفوض   ',
+    'pay'     => '  مدفوع   ',
+    'in_progress'     => '  جارى العمل   ',
+    'proof_submitted'     => '  دليل التقدم   ',
+    'proof_accepted'     => '  دليل الموافقة   ',
+    'done'     => '  انتهى   ',
     /* m.abdelrahman  */ 
 
 ];

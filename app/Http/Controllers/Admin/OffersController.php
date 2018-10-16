@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Offer;
+use App\User;
+use App\Campaign;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Offer\EditOfferRequest;
 use Illuminate\Http\Request;
 
 
@@ -72,7 +75,11 @@ class OffersController extends Controller
      */
     public function edit($id)
     {
-        
+        $offer = Offer::find($id);
+        $users =  User::where('account_type','0')->get();
+        $influncers =  User::where('account_type','1')->get();
+        $campaigns =  Campaign::all();
+        return view('admin.offers.edit',compact('offer','users','influncers','campaigns'));
     }
 
     /**
@@ -82,9 +89,10 @@ class OffersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(EditOfferRequest $request, $id)
     {
-        
+        $request->persist($id);
+        return redirect()->back()->with('status' , __('admin.updated') );
     }
 
     /**
@@ -95,7 +103,10 @@ class OffersController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        
+        if ($request->ajax()) {
+            Offer::find($id)->delete();
+            return response(['msg' => 'deleted', 'status' => 'success']);
+        }
     }
 
 

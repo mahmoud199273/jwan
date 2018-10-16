@@ -68,6 +68,7 @@
                                     <th><b>{{ __('admin.user') }}</b></th>
                                     <th><b>{{ __('admin.campaign') }}</b></th>
                                     <th><b>{{ __('admin.cost') }}</b></th>
+                                    <th><b>{{ __('admin.status') }}</b></th>
                                     <th><b>{{ __('admin.control') }}</b></th>
                                 </tr>
                             </thead>
@@ -79,6 +80,25 @@
                                     <th scope="row">{{ $row->user->name }}</th>
                                     <th scope="row">{{ $row->campaign->title }}</th>
                                     <th scope="row">{{ $row->cost }}</th>
+                                    <th scope="row">
+                                        @if ($row->status == 0)
+                                            {{  __('admin.new_offer') }}
+                                        @elseif ($row->status == 1)
+                                            {{ __('admin.accepted') }}
+                                        @elseif ($row->status == 2)
+                                            {{ __('admin.refused') }}   
+                                        @elseif ($row->status == 3)
+                                            {{ __('admin.pay') }}
+                                        @elseif ($row->status == 4)
+                                            {{ __('admin.in_progress') }}
+                                        @elseif ($row->status == 5)
+                                            {{ __('admin.proof_submitted') }}
+                                        @elseif ($row->status == 6)
+                                            {{ __('admin.proof_accepted') }}
+                                        @else
+                                            {{ __('admin.done') }}
+                                        @endif
+                                    </th>
                                     <td>
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
                                             <a type="button" 
@@ -86,6 +106,15 @@
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             <i class="fa fa-eye m--font-primary"></i>
                                         </a>
+                                        <a type="button" 
+                                            href="{{url('admin/offers')}}/{{ $row->id }}/edit" 
+                                            class="m-btn m-btn m-btn--square btn btn-secondary">
+                                            <i class="fa fa-edit m--font-info"></i>
+                                        </a>
+                                        <a type="button"  data-id = "{{ $row->id }}" 
+                                                class="m-btn m-btn m-btn--square btn btn-secondary _remove">
+                                                <i class="flaticon-delete-1 m--font-danger"></i>
+                                            </a>
                                     </div>
                                 </td>
                             </tr>

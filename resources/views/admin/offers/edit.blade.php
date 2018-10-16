@@ -33,8 +33,9 @@
     </div>
 
     <!--begin::Form-->
-    <form class="m-form" action="{{ config('app.admin_url') }}/cities/{{ $offer->id }}" method="post" enctype="multipart/form-data">
-       
+    <form class="m-form" action="{{url('admin/offers')}}/{{ $offer->id }}" method="post" enctype="multipart/form-data">
+        {{ csrf_field() }}
+            {{ method_field('PATCH') }}
         <div class="m-portlet__body">
 
         @if($errors->any())
@@ -52,55 +53,73 @@
             </div>
         @endif
 
-            <div class="form-group m-form__group row {{ $errors->has('name_ar') ? 'has-danger' : ''}}">
+            <div class="form-group m-form__group row {{ $errors->has('influncer_id') ? 'has-danger' : ''}}">
                 <label for="name" class="col-1 col-form-label">{{ __('admin.influencer_name') }}</label>
                 <div class="col-9">
-                    <input type="text" name="name_ar" class="form-control m-input" 
-                            placeholder="{{ __('admin.influencer_name') }}" value="{{ $offer->influncer->name }}" disabled="">
-                    {!! $errors->first('name_ar', '<span class="form-control-feedback">:message</span>') !!}
+                    <select name="influncer_id"  class="form-control">
+                        @if($influncers)
+                            @foreach ($influncers as $influncer)
+                                <option value="{{ $influncer->id }}" {{ ($influncer->id ==  $offer->influncer_id)? "selected" : "" }}> 
+                                    {{ $influncer->name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                    {!! $errors->first('influncer_id', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
+            <div class="form-group m-form__group row {{ $errors->has('user_id') ? 'has-danger' : ''}}">
                 <label for="name" class="col-1 col-form-label">{{ __('admin.user_name') }}</label>
                 <div class="col-9">
-                    <input type="text" name="name" class="form-control m-input" 
-                            placeholder="{{ __('admin.user_name') }}" value="{{ $offer->user->name }}" disabled="">
-                    {!! $errors->first('name', '<span class="form-control-feedback">:message</span>') !!}
+                        <select name="user_id"  class="form-control">
+                                @if($users)
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}" {{ ($user->id ==  $offer->user_id)? "selected" : "" }}> 
+                                            {{ $user->name }}</option>
+                                    @endforeach
+                                @endif
+                        </select>
+                    {!! $errors->first('user_id', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
            
-            <div class="form-group m-form__group row {{ $errors->has('code') ? 'has-danger' : ''}}">
+            <div class="form-group m-form__group row {{ $errors->has('campaign_id') ? 'has-danger' : ''}}">
                 <label for="name" class="col-1 col-form-label">{{ __('admin.campaign') }}</label>
                 <div class="col-9">
-                    <input type="text" name="code" class="form-control m-input" 
-                            placeholder="{{ __('admin.campaign') }}" value="{{ $offer->campaign->title }}" disabled="">
-                    {!! $errors->first('code', '<span class="form-control-feedback">:message</span>') !!}
+                        <select name="campaign_id"  class="form-control">
+                                @if($campaigns)
+                                    @foreach ($campaigns as $campaign)
+                                        <option value="{{ $campaign->id }}" {{ ($campaign->id ==  $offer->campaign_id)? "selected" : "" }}> 
+                                            {{ $campaign->title }}</option>
+                                    @endforeach
+                                @endif
+                        </select>
+                    {!! $errors->first('campaign_id', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
            
-            <div class="form-group m-form__group row {{ $errors->has('code') ? 'has-danger' : ''}}">
+            <div class="form-group m-form__group row {{ $errors->has('cost') ? 'has-danger' : ''}}">
                 <label for="name" class="col-1 col-form-label">{{ __('admin.cost') }}</label>
                 <div class="col-9">
-                    <input type="text" name="code" class="form-control m-input" 
-                            placeholder="{{ __('admin.cost') }}" value="{{ $offer->cost }}" disabled="">
-                    {!! $errors->first('code', '<span class="form-control-feedback">:message</span>') !!}
+                    <input type="text" name="cost" class="form-control m-input" 
+                            placeholder="{{ __('admin.cost') }}" value="{{ $offer->cost }}" >
+                    {!! $errors->first('cost', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
            
-            <div class="form-group m-form__group row {{ $errors->has('desc') ? 'has-danger' : ''}}">
+            <div class="form-group m-form__group row {{ $errors->has('description') ? 'has-danger' : ''}}">
                 <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.description') }}</label>
                 <div class="col-9">
-                    <textarea class="form-control m-input" placeholder="{{ __('admin.desc') }}" name="desc" disabled>{{ $offer->description }}</textarea>
-                    {!! $errors->first('desc', '<span class="form-control-feedback">:message</span>') !!}
+                    <textarea class="form-control m-input" placeholder="{{ __('admin.description') }}" name="description" >{{ $offer->description }}</textarea>
+                    {!! $errors->first('description', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
             {{--  0,1,2,3,4,5,6,7  --}}
-            <div class="form-group m-form__group row {{ $errors->has('status') ? 'has-danger' : ''}}" disabled="">
+            <div class="form-group m-form__group row {{ $errors->has('status') ? 'has-danger' : ''}}">
                 <label for="countries_id" class="col-2 col-form-label">{{ __('admin.status') }}</label>
                  <div class="col-9">
-                <select name="status"  class="form-control m-input" disabled>
+                <select name="status"  class="form-control m-input">
                    <option value="0" {{ $offer->status == 0? "selected" : "" }} > 
                        {{  __('admin.new_offer') }} </option>
                    <option value="1" {{ $offer->status == 1? "selected" : "" }} > 
@@ -126,7 +145,7 @@
                    </option>
                    
                 </select>
-                    {!! $errors->first('type', '<span class="form-control-feedback">:message</span>') !!}
+                    {!! $errors->first('status', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
         </div>
 
@@ -144,6 +163,7 @@
                     <div class="col-3">
                     </div>
                     <div class="col-9">
+                            <button type="submit" class="btn btn-brand">{{ __('admin.save') }}</button>
                         <a type="reset" href="{{url('admin/offers')}}" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
                     </div>
                 </div>
