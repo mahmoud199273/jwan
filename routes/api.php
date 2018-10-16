@@ -57,9 +57,9 @@ Route::post('/refresh/token','API\V1\AuthController@refreshToken');
 
 
 
-Route::post('user/send/reset/code'		, 'API\V1\ResetPasswordController@sendCode');
-Route::post('user/verify/reset/code'	, 'API\V1\ResetPasswordController@verifyCode');
-Route::post('user/reset/password'		, 'API\V1\ResetPasswordController@resetPassword');
+Route::post('user/send/reset/code'	, 'API\V1\ResetPasswordController@sendCode');
+Route::post('user/verify/reset/code', 'API\V1\ResetPasswordController@verifyCode');
+Route::post('user/reset/password'	, 'API\V1\ResetPasswordController@resetPassword');
 
 Route::post('influncer/send/reset/code', 'API\V1\ResetPasswordController@sendCode');
 Route::post('influncer/verify/reset/code', 'API\V1\ResetPasswordController@verifyCode');
@@ -68,9 +68,11 @@ Route::post('influncer/reset/password', 'API\V1\ResetPasswordController@resetPas
 
 Route::get('user/profile', 'API\V1\UserController@profile');
 
-Route::post('user/update/profile', 'API\V1\UserController@updateProfile');
+Route::post('user/update/channels', 'API\V1\UserController@userChannels');
 
 
+
+Route::post('user/update/password'	, 'API\V1\UserController@updatePassword');
 
 Route::post('user/update/password'	, 'API\V1\UserController@updatePassword');
 
@@ -118,9 +120,9 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::post('/user/add/campaign','API\V1\CampignsContrller@store');
 
- Route::get('/user/camapigns','API\V1\CampignsContrller@index');
+ Route::get('/user/camapigns','API\V1\CampignsContrller@allCampaigns');
 
- Route::get('/influncer/campaigns','API\V1\CampignsContrller@allCampaigns');
+ Route::get('/influncer/campaigns','API\V1\CampignsContrller@index');
 
 
  Route::get('/campaign/{id}','API\V1\CampignsContrller@show');
@@ -163,13 +165,13 @@ Route::get('/influncer/offer/{id}','API\V1\OffersController@show');
 
 
 /* about the app - license agreement */
-Route::get('/about/app', 'API\V1\AboutAppController@index') ;
+Route::get('/about/app','API\V1\AboutAppController@index') ;
 
-Route::get('user/privacy/policy', 'API\V1\AboutAppController@privacyPolicy');
+Route::get('user/privacy/policy','API\V1\AboutAppController@privacyPolicy');
 
 Route::get('influncer/privacy/policy','API\V1\AboutAppController@influncerPrivacyPolicy');
 
-Route::post('contact', 'API\V1\AboutAppController@contactUs');
+Route::post('contact','API\V1\AboutAppController@contactUs');
 
 
 });

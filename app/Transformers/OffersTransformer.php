@@ -2,6 +2,7 @@
 
 namespace App\Transformers;
 use App\Offer;
+use App\User;
 use App\Transformers\BaseTransformer as Transformer;
 use App\Transformers\InfluncerTransformer;
 
@@ -16,11 +17,17 @@ class OffersTransformer extends Transformer
         return [
         	'id'       			=> (int) $offer->id,
 
-            'influncer'         => isset( $offer->influncer) ? $offer->influncer :null,
+            //'influncer'         => isset( $offer->influncer) ? $offer->influncer :null,
 
-            'user'              => isset($offer->user) ? $offer->user :null ,
+            'influncer'         => User::select('id','name','image')
+                                ->where('id',$offer->influncer_id)
+                                ->get(),
 
-            'campaign'          => isset($offer->campaign) ? $offer->campaign :null ,
+            'influncer_rate'    => 3,
+
+            //'user'              => isset($offer->user) ? $offer->user :null ,
+
+            //'campaign'          => isset($offer->campaign) ? $offer->campaign :null ,
 
             'cost'              => $offer->cost,
 

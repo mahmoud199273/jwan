@@ -3,6 +3,8 @@
 namespace App\Transformers;
 use App\Campaign;
 use App\Offer;
+use App\user;
+use App\Attachment;
 use App\Transformers\BaseTransformer as Transformer;
 use App\Transformers\InfluncerTransformer;
 
@@ -17,20 +19,29 @@ class CampaignsTransformer extends Transformer
         return [
         	'id'       			=> (int) $campaign->id,
 
-        	'title'          	=> $campaign->title,
+            'title'             => $campaign->title,
 
-            'user'              => isset($campaign->user) ? $campaign->user :null ,
+            'user'              => isset($campaign->user) ? $campaign->user : null ,
+
+            //'user'         => User::select('id','name','image')
+                                //->where('id',$campaign->user_id)
+                                //->get()[0],
 
             //'image'         => $camapign->($user->image) ?config('app.url').$user->image : null,
 
             'rate'              => 3,
 
             'file'              => isset($campaign->attachments) ? $campaign->attachments : null,
+
             'number_of_offers'  =>  Offer::where('campaign_id',$campaign->id)->count(),
 
         	
 
-            //'image'             => config('app.url').User::find($user->image) : null,
+            //'file'             => Attachment::select,
+
+            'description'       => $campaign->description,
+
+            'scenario'          => $campaign->scenario,
 
         	'facebook'          => (int) $campaign->facebook,
 
@@ -48,9 +59,7 @@ class CampaignsTransformer extends Transformer
 
             'general'          	=> (int) $campaign->general,
 
-            'description'       => $campaign->description,
-
-            'scenario'      	=> $campaign->scenario,
+            
 
             'maximum_rate'      => $campaign->maximum_rate,
 

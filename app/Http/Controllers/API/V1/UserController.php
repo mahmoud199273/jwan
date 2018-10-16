@@ -145,6 +145,76 @@ class UserController extends Controller
 
     }
 
+    public function userChannels(Request $request)
+    {
+        $user =  $this->getAuthenticatedUser();
+
+        $validator = Validator::make( $request->all(), [
+
+            'facebook'      => 'nullable|url',
+
+
+            'twitter' => 'nullable|url',
+
+            
+
+            'instgrame' => 'nullable|url',
+
+            
+
+            'snapchat' => 'nullable|url',
+
+            
+
+            'linkedin' => 'nullable|url',
+
+            
+
+            'youtube'       => 'nullable|url',
+
+            
+
+            
+
+
+
+        ]);
+
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError($validator->messages());
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
+        }
+
+            $user = User::find( $user->id );
+
+            $user->facebook          = $request->facebook;
+
+            
+
+            $user->twitter            = $request->twitter;
+
+        
+
+            $user->instgrame           = $request->instgrame;
+
+        
+
+            $user->snapchat            = $request->snapchat;
+
+            
+
+            $user->linkedin             = $request->linkedin;
+
+           
+
+            $user->youtube             = $request->youtube;
+
+            
+        $user->save();
+        return $this->respondWithSuccess(trans('api_msgs.profile_updated'));
+        
+    }
+
     public function updateInfluncerProfile(Request $request )
     {
         $user =  $this->getAuthenticatedUser();
@@ -263,29 +333,29 @@ class UserController extends Controller
 
         $validator = Validator::make( $request->all(), [
 
-            'facebook'      => 'required',
+            'facebook'      => 'nullable|url',
 
-            'facebook_follwers' => 'required',
+            'facebook_follwers' => 'nullable',
 
-            'twitter' => 'required',
+            'twitter' => 'nullable|url',
 
-            'twitter_follwers' => 'required',
+            'twitter_follwers' => 'nullable',
 
-            'instgrame' => 'required',
+            'instgrame' => 'nullable|url',
 
-            'instgrame_follwers' => 'required',
+            'instgrame_follwers' => 'nullable',
 
-            'snapchat' => 'required',
+            'snapchat' => 'nullable|url',
 
-            'snapchat_follwers' => 'required',
+            'snapchat_follwers' => 'nullable',
 
-            'linkedin' => 'required',
+            'linkedin' => 'nullable|url',
 
-            'linkedin_follwers' => 'required',
+            'linkedin_follwers' => 'nullable',
 
-            'youtube'       => 'required',
+            'youtube'       => 'nullable|url',
 
-            'youtube_follwers' => 'required'
+            'youtube_follwers' => 'nullable'
 
             
 

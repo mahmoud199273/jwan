@@ -11,6 +11,8 @@ use App\CampaignArea;
 use App\CampaignCategory;
 use App\CampaignCountry;
 use App\InfluncerCampaign;
+use App\UserCategory;
+use App\UserCountry;
 use App\Setting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,6 +33,39 @@ class CampignsContrller extends Controller
         $this->campaignsTransformer   = $campaignsTransformer;
     }
 
+    public function index( Request $request )
+    {
+        $influncer =  $this->getAuthenticatedUser();
+
+        $orderBy = 'created_at';
+        $influncer_categories = UserCategory::where('user_id',$influncer->id)->pluck('categories_id')->toArray();
+
+        $influncer_countries = UserCountry::where('user_id',$influncer->id)->pluck('country_id')->toArray();
+        //dd($influncer_categories);
+
+        $campaigns = DB::table('campaigns')
+
+            ->join('campaign_countries', 'campaigns.id', '=', 'campaign_countries.campaign_id')
+
+            ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id')
+            ->whereIn('campaign_categories.category_id',$influncer_categories)
+            ->whereIn('campaign_countries.country_id',$influncer_countries)
+
+
+
+            ->select('campaigns.*')
+
+            ->where('campaigns.capaign_status','1')
+
+            ->groupBy('campaigns.id')
+
+            // ->orderBy($orderBy,'DESC')
+
+            ->get();
+
+
+        return $this->sendResponse( $this->campaignsTransformer->transformCollection($campaigns),'read succefully',200);   
+    }
 
 
 
@@ -39,12 +74,29 @@ class CampignsContrller extends Controller
 
 
 
-     public function index( Request $request )
+
+    /* public function index( Request $request )
      {
          $user =  $this->getAuthenticatedUser();
-         $campaigns = Campaign::where('capaign_status','1')->get();
-         return $this->sendResponse( $this->campaignsTransformer->transformCollection($campaigns),'read succefully',200);   
-     }
+
+         $campaign_ids = InfluncerCampaign::where('user_id',$user->id)->pluck('campaign_id')->toArray();
+         //dd($campaign_ids);
+
+        /* $campaigns = Campaign::where([
+            ['id','<>',$campaign_ids]
+            ,['capaign_status','1']
+            ])->get();*/
+
+         /* $campaigns = Campaign::where(
+            'capaign_status','1'
+            )->get();
+         dd($campaigns);
+
+          $data = Campaign::where('capaign_status','1')->whereNotIn('id',$campaign_ids)->get();
+          //dd($data);
+
+         return $this->sendResponse( $this->campaignsTransformer->transformCollection($data),'read succefully',200);   
+     }*/
 
 
 
@@ -75,9 +127,7 @@ class CampignsContrller extends Controller
                 $this->setPagination($request->limit);
             }
 
-        $campaign_ids = InfluncerCampaign::where('user_id',$user->id)->pluck('campaign_id')->toArray();
-
-        $data = Campaign::where('id' ,$user->id)->whereNotIn('id',$campaign_ids)->get();
+        $data = Campaign::where('user_id' ,$user->id)->get();
 
         $campaigns = $this->campaignsTransformer->transformCollection($data);
 
