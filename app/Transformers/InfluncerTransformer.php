@@ -43,23 +43,23 @@ class InfluncerTransformer extends Transformer
             'minimum_rate'   => $user->minimum_rate,
 
             'facebook'     => $user->facebook,
-            'facebook_followers' => $user->facebook_followers,
+            'facebook_followers' => $user->facebook_follwers,
 
             'twitter'     => $user->twitter,
-            'twitter_followers' => $user->twitter_followers,
+            'twitter_followers' => $user->twitter_follwers,
 
             'instagram'     => $user->instagram,
-            'instagram_followers' => $user->instagram_followers,
+            'instagram_followers' => $user->instagram_follwers,
 
 
             'snapchat'     => $user->snapchat,
-            'snapchat_followers' => $user->snapchat_followers,
+            'snapchat_followers' => $user->snapchat_follwers,
 
             'linkedin'     => $user->linkedin,
-            'linkedin_followers' => $user->linkedin_followers,
+            'linkedin_followers' => $user->linkedin_follwers,
 
             'youtube'   => $user->youtube,
-            'youtube_followers' => $user->youtube_followers,
+            'youtube_followers' => $user->youtube_follwers,
 
             'account_type' =>(int) $user->account_type,
 

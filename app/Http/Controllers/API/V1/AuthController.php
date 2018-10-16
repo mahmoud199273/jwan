@@ -300,27 +300,27 @@ class AuthController extends Controller
 
             'minimumRate'   =>  'required',
 
-            'facebook'      => 'nullable',
+            'facebook'      => 'nullable|url',
 
             'facebook_follwers' => 'nullable',
 
-            'twitter' => 'nullable',
+            'twitter' => 'nullable|url',
 
             'twitter_follwers' => 'nullable',
 
-            'instgrame' => 'nullable',
+            'instgrame' => 'nullable|url',
 
             'instgrame_follwers' => 'nullable',
 
-            'snapchat' => 'nullable',
+            'snapchat' => 'nullable|url',
 
             'snapchat_follwers' => 'nullable',
 
-            'linkedin' => 'nullable',
+            'linkedin' => 'nullable|url',
 
             'linkedin_follwers' => 'nullable',
 
-            'youtube'       => 'nullable',
+            'youtube'       => 'nullable|url',
 
             'youtube_follwers' => 'nullable',
 
@@ -374,9 +374,9 @@ class AuthController extends Controller
 
             
 
-            $user->minimumRate      =$request->minimumRate;
+            $user->minimumRate       = $request->minimumRate;
 
-            $user->facebook          = $request->facebook;
+             $user->facebook          = $request->facebook;
 
             $user->facebook_follwers  = $request->facebook_follwers;
 
