@@ -42,7 +42,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		// Route::get('/admin',function(){
 		// 	return " admin` ";
 		// });
-		//Route::get('/admin', 'DashboardController@index');
+		Route::get('/admin', 'DashboardController@index');
 		Route::get('profile','ProfileController@getIndex');
 		Route::post('profile','ProfileController@postIndex');
 
