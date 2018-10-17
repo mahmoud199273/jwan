@@ -68,6 +68,8 @@ Route::post('influncer/reset/password', 'API\V1\ResetPasswordController@resetPas
 
 Route::get('user/profile', 'API\V1\UserController@profile');
 
+Route::post('user/update/profile', 'API\V1\UserController@updateProfile');
+
 Route::post('user/update/channels', 'API\V1\UserController@userChannels');
 
 

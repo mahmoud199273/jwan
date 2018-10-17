@@ -69,19 +69,7 @@ class UserController extends Controller
 
             'type'      => 'required',
 
-            'country_id' => 'required',
-
-            'facebook'      => 'nullable',
-
-            'twitter'      => 'nullable',
-
-            'instgrame'      => 'nullable',
-
-            'snapchat'      => 'nullable',
-
-            'linkedin'      => 'nullable',
-
-            'youtube'      => 'nullable'
+            'country_id' => 'required'
 
             
             
@@ -122,21 +110,6 @@ class UserController extends Controller
 
         $user->countries_id = $request->country_id;
 
- 
-        $user->facebook    = $request->facebook;
-
-        $user->twitter     = $request->twitter;
-
-        $user->instgrame   = $request->instgrame;
-
-        $user->snapchat    = $request->snapchat;
-
-        $user->snapchat    = $request->snapchat;
-
-        $user->linkedin    = $request->linkedin;
-
-        $user->youtube    = $request->youtube;
-
 
         $user->save();
 
@@ -170,7 +143,7 @@ class UserController extends Controller
 
             
 
-            'youtube'       => 'nullable',
+            'youtube'     => 'nullable'
 
             
 
