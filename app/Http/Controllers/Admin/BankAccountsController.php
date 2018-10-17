@@ -18,7 +18,7 @@ class BankAccountsController extends Controller
     public function index()
     {
         //
-        $list = BankAccounts::latest()->paginate(10);
+        $list = BankAccounts::get()->latest()->paginate(10);
         return view('admin.bank_accounts.index',compact('list'));
     }
 
