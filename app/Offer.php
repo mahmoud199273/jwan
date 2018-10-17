@@ -11,6 +11,7 @@ class Offer extends Model
 
 	use SoftDeletes;
     protected $dates = ['deleted_at'];
+    protected $guarded = array();
 		
      public function campaign()
     {

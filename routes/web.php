@@ -93,9 +93,10 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::resource('campaigns','CampaignsController');
 		Route::resource('pages','PagesController');
 		Route::resource('bank','BankAccountsController');
-		Route::get('offers/{id}', 'OffersController@campaigns');
-		Route::get('offers', 'OffersController@index');
-		Route::get('offers/show/{id}', 'OffersController@show');
+		//Route::get('offers/{id}', 'OffersController@campaigns');
+		Route::resource('offers','OffersController');
+		// Route::get('offers', 'OffersController@index');
+		// Route::get('offers/show/{id}', 'OffersController@show');
 
 	});
 });
