@@ -48,8 +48,8 @@ class InfluncerTransformer extends Transformer
             'twitter'     => $user->twitter,
             'twitter_followers' => $user->twitter_follwers,
 
-            'instagram'     => $user->instagram,
-            'instagram_followers' => $user->instagram_follwers,
+            'instagram'     => $user->instgrame,
+            'instagram_followers' => $user->instgrame_follwers,
 
 
             'snapchat'     => $user->snapchat,
