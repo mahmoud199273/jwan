@@ -76,8 +76,8 @@
                                 @if($offers)
                                 @foreach ($offers as $row)
                                 <tr>
-                                    <th scope="row">{{ $row->influncer->name }}</th>
-                                    <th scope="row">{{ $row->user->name }}</th>
+                                    <th scope="row">{{ optional($row->influncer)->name}}</th>
+                                    <th scope="row">{{ optional($row->user)->name }}</th>
                                     <th scope="row">{{ $row->campaign->title }}</th>
                                     <th scope="row">{{ $row->cost }}</th>
                                     <th scope="row">

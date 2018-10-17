@@ -216,40 +216,40 @@ class AuthController extends Controller
 
 
 
-			$user = new User();
+		  $user = new User();
 
 
-           $user->phone        =  $request->phone; 
+           $user->phone         =  $request->phone; 
 
             $user->email        =  $request->email; 
             
             $user->password     =  bcrypt($request->password);
 
-            $user->image       = $request->image;
+            $user->image        = $request->image;
 
             $user->name         =  $request->name;
 
-            $user->notes             = $request->notes;
+            $user->notes        = $request->notes;
 
-            $user->type              = $request->type;
+            $user->type         = $request->type;
 
-            $user->facebook          = $request->facebook;
-
-
-            $user->twitter            = $request->twitter;
-
-            $user->instgrame           = $request->instgrame;
+            $user->facebook     = $request->facebook;
 
 
-            $user->snapchat            = $request->snapchat;
+            $user->twitter      = $request->twitter;
+
+            $user->instgrame    = $request->instgrame;
 
 
-            $user->linkedin             = $request->linkedin;
+            $user->snapchat     = $request->snapchat;
 
 
-            $user->youtube             = $request->youtube;
+            $user->linkedin     = $request->linkedin;
 
-            $user->countries_id        = $request->country_id;
+
+            $user->youtube      = $request->youtube;
+
+            $user->countries_id = $request->country_id;
 
 
         
@@ -358,6 +358,8 @@ class AuthController extends Controller
             $user->password     =  bcrypt($request->password);
 
             $user->image       = $request->image;
+
+
 
             $user->name         =  $request->name;
 
