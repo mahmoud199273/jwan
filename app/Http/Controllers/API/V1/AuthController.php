@@ -180,23 +180,23 @@ class AuthController extends Controller
 
             
 
-            'twitter' => 'nullable|url',
+            'twitter' => 'nullable',
 
             
 
-            'instgrame' => 'nullable|url',
+            'instgrame' => 'nullable',
 
             
 
-            'snapchat' => 'nullable|url',
+            'snapchat' => 'nullable',
 
             
 
-            'linkedin' => 'nullable|url',
+            'linkedin' => 'nullable',
 
             
 
-            'youtube'       => 'nullable|url'
+            'youtube'       => 'nullable'
 
 
 
@@ -300,27 +300,27 @@ class AuthController extends Controller
 
             'minimumRate'   =>  'required',
 
-            'facebook'      => 'nullable|url',
+            'facebook'      => 'nullable',
 
             'facebook_follwers' => 'nullable',
 
-            'twitter' => 'nullable|url',
+            'twitter' => 'nullable',
 
             'twitter_follwers' => 'nullable',
 
-            'instgrame' => 'nullable|url',
+            'instgrame' => 'nullable',
 
             'instgrame_follwers' => 'nullable',
 
-            'snapchat' => 'nullable|url',
+            'snapchat' => 'nullable',
 
             'snapchat_follwers' => 'nullable',
 
-            'linkedin' => 'nullable|url',
+            'linkedin' => 'nullable',
 
             'linkedin_follwers' => 'nullable',
 
-            'youtube'       => 'nullable|url',
+            'youtube'       => 'nullable',
 
             'youtube_follwers' => 'nullable',
 

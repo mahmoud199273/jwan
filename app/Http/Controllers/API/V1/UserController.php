@@ -151,26 +151,26 @@ class UserController extends Controller
 
         $validator = Validator::make( $request->all(), [
 
-            'facebook'      => 'nullable|url',
+            'facebook'      => 'nullable',
 
 
-            'twitter' => 'nullable|url',
-
-            
-
-            'instgrame' => 'nullable|url',
+            'twitter' => 'nullable',
 
             
 
-            'snapchat' => 'nullable|url',
+            'instgrame' => 'nullable',
 
             
 
-            'linkedin' => 'nullable|url',
+            'snapchat' => 'nullable',
 
             
 
-            'youtube'       => 'nullable|url',
+            'linkedin' => 'nullable',
+
+            
+
+            'youtube'       => 'nullable',
 
             
 
@@ -333,27 +333,27 @@ class UserController extends Controller
 
         $validator = Validator::make( $request->all(), [
 
-            'facebook'      => 'nullable|url',
+            'facebook'      => 'nullable',
 
             'facebook_follwers' => 'nullable',
 
-            'twitter' => 'nullable|url',
+            'twitter' => 'nullable',
 
             'twitter_follwers' => 'nullable',
 
-            'instgrame' => 'nullable|url',
+            'instgrame' => 'nullable',
 
             'instgrame_follwers' => 'nullable',
 
-            'snapchat' => 'nullable|url',
+            'snapchat' => 'nullable',
 
             'snapchat_follwers' => 'nullable',
 
-            'linkedin' => 'nullable|url',
+            'linkedin' => 'nullable',
 
             'linkedin_follwers' => 'nullable',
 
-            'youtube'       => 'nullable|url',
+            'youtube'       => 'nullable',
 
             'youtube_follwers' => 'nullable'
 
