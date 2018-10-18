@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Transformers;
+use App\Attachment;
 use App\Campaign;
 use App\Offer;
-use App\user;
-use App\Attachment;
 use App\Transformers\BaseTransformer as Transformer;
 use App\Transformers\InfluncerTransformer;
+use App\user;
+use Carbon\Carbon;
 
 
 
@@ -63,9 +64,9 @@ class CampaignsTransformer extends Transformer
 
             'maximum_rate'      => $campaign->maximum_rate,
 
-            'created_date'      => $campaign->created_at,
+            'created_date'      => Carbon::parse($campaign->created_at)->toDateTimeString(),
 
-            'updated_date'      => $campaign->updated_at,
+            'updated_date'      => Carbon::parse($campaign->updated_at)->toDateTimeString(),
 
             'ended_date'        => $campaign->end_at,
 
