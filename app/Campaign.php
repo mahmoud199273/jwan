@@ -10,7 +10,7 @@ class Campaign extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-
+    protected $guarded = array();
       		public function attachments()
             {
                return $this->hasMany('App\Attachment','campaign_id','id');

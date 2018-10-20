@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 //use App\Http\Requests\Admin\Complaints\StoreComplaintRequest;
-//use App\Http\Requests\Admin\Complaints\EditComplaintRequest;
-use App\Models\Admin\Campaign;
+use App\Http\Requests\Admin\Campaigns\EditCampaignsRequest;
+use App\Campaign;
+use App\User;
 use Illuminate\Http\Request;
 
 
@@ -77,6 +78,7 @@ class campaignsController extends Controller
     public function show($id)
     {
         $campaign = Campaign::find($id);
+        $users =  User::where('account_type','0')->get();
         return view('admin.campaigns.show',compact('campaign'));
     }
 
@@ -89,7 +91,8 @@ class campaignsController extends Controller
     public function edit($id)
     {
         $campaign = Campaign::find($id);
-        return view('admin.campaigns.edit',compact('campaign'));
+        $users =  User::where('account_type','0')->get();
+        return view('admin.campaigns.edit',compact('campaign','users'));
     }
 
     /**
@@ -99,11 +102,11 @@ class campaignsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function update(EditComplaintRequest $request, $id)
-    // {
-    //     $request->persist($id);
-    //     return redirect()->back()->with('status' , __('admin.updated') );
-    // }
+    public function update(EditCampaignsRequest $request, $id)
+    {
+        $request->persist($id);
+        return redirect()->back()->with('status' , __('admin.updated') );
+    }
 
     /**
      * Remove the specified resource from storage.
