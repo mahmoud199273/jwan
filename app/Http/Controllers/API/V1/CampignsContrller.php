@@ -372,7 +372,7 @@ class CampignsContrller extends Controller
     {
         //$user =  $this->getAuthenticatedUser();
 
-        $settings = DB::table('settings')->first();
+        $settings = Setting::first();
 
         //$settings = Setting::find('campaign_period');
 
