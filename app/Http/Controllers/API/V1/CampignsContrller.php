@@ -60,7 +60,7 @@ class CampignsContrller extends Controller
 
             ->where([['campaigns.capaign_status','1'],
 
-                ['id','<>',$campaign_ids]
+                ['campaigns.id','<>',$campaign_ids]
 
             ])
 
