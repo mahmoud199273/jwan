@@ -374,6 +374,7 @@ class CampignsContrller extends Controller
 
         $settings = Setting::first();
 
+
         $amount = $settings->campaign_period;
 
         $validator = Validator::make( $request->all(), [
@@ -453,15 +454,15 @@ class CampignsContrller extends Controller
                 return $this->setStatusCode(422)->respondWithError('parameters faild validation');
             }
 
-            $influncercamapign = new InfluncerCampaign;
+            $influncercampaign = new InfluncerCampaign;
 
-            $influncercamapign->campaign_id    = $request->campaign_id;
+            $influncercampaign->campaign_id    = $request->campaign_id;
 
-            $influncercamapign->status         = $request->status;
+            $influncercampaign->status         = $request->status;
 
-            $influncercamapign->user_id        = $user->id;
+            $influncercampaign->user_id        = $user->id;
 
-            $influncercamapign->save();
+            $influncercampaign->save();
 
             return $this->respondWithSuccess(trans('api_msgs.set status successfully'));
 
@@ -475,7 +476,9 @@ class CampignsContrller extends Controller
             $user =  $this->getAuthenticatedUser();
 
             $skipped = DB::table('influncer_campaigns')
-                     ->where('status', '=', '0')
+                     ->where([['status', '=', '0'],
+                        ['user_id',$user->id]
+                 ])
                      ->pluck('campaign_id')->toArray();
             //dd($skipped);
 
@@ -506,7 +509,9 @@ class CampignsContrller extends Controller
             $user =  $this->getAuthenticatedUser();
 
             $favorite = DB::table('influncer_campaigns')
-                     ->where('status', '=','1')
+                     ->where([['status', '=','1'],
+                        ['user_id',$user->id]
+                 ])
                      ->pluck('campaign_id')->toArray();
             //dd($favorite);
 
