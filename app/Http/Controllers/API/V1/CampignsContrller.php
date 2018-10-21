@@ -412,7 +412,7 @@ class CampignsContrller extends Controller
 
      public function approveCampaign( Request $request )
     {
-        //$user =  $this->getAuthenticatedUser();
+        $user =  $this->getAuthenticatedUser();
         $validator = Validator::make( $request->all(), [
             'id'                => 'required|exists:campaigns,id'
 
