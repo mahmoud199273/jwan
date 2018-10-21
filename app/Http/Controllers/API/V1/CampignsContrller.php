@@ -370,13 +370,9 @@ class CampignsContrller extends Controller
 
     public function extendCampaign( Request $request )
     {
-        //$user =  $this->getAuthenticatedUser();
+        $user =  $this->getAuthenticatedUser();
 
         $settings = Setting::first();
-
-        //$settings = Setting::find('campaign_period');
-
-       // $settings = Setting::latest()->get();
 
         $amount = $settings->campaign_period;
 
