@@ -28,64 +28,52 @@
                     <i class="la la-gear"></i>
                 </span>
                 <h3 class="m-portlet__head-text">
-                    {{ $campaign->title }}
+                    {{ __('admin.edit') }} | {{ $campaign->title }}
                 </h3>
             </div>
         </div>
     </div>
 
     <!--begin::Form-->
-    <form class="m-form" action="#" method="post" enctype="multipart/form-data">
+    <form class="m-form" action="{{url('admin/campaigns')}}/{{ $campaign->id }}" method="post" enctype="multipart/form-data">
+       
+        {{ csrf_field() }}
+        {{ method_field('PATCH') }}
        
         <div class="m-portlet__body">
 
    
+                <div class="form-group m-form__group row {{ $errors->has('user_id') ? 'has-danger' : ''}}">
+                        <label for="name" class="col-1 col-form-label">{{ __('admin.user_name') }}</label>
+                        <div class="col-9">
+                                <select name="user_id"  class="form-control">
+                                        @if($users)
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}" {{ ($user->id ==  $campaign->user_id)? "selected" : "" }}> 
+                                                    {{ $user->name }}</option>
+                                            @endforeach
+                                        @endif
+                                </select>
+                            {!! $errors->first('user_id', '<span class="form-control-feedback">:message</span>') !!}
+                        </div>
+                    </div>
+        
 
-            <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
-                <label for="name" class="col-1 col-form-label">{{ __('admin.name') }}</label>
-                <div class="col-9">
-                    <input type="text" name="name" class="form-control m-input" 
-                            placeholder="{{ __('admin.name') }}" value="{{ $campaign->user->name }}" disabled="">
-                    {!! $errors->first('name', '<span class="form-control-feedback">:message</span>') !!}
-                </div>
-            </div>
-   
-
-            <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
-                <label for="name" class="col-1 col-form-label">{{ __('admin.email') }}</label>
-                <div class="col-9">
-                    <input type="text" name="name" class="form-control m-input" 
-                            placeholder="{{ __('admin.email') }}" value="{{ $campaign->user->email }}" disabled="">
-                    {!! $errors->first('name', '<span class="form-control-feedback">:message</span>') !!}
-                </div>
-            </div>
-
-
-            <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
-                <label for="name" class="col-1 col-form-label">{{ __('admin.phone') }}</label>
-                <div class="col-9">
-                    <input type="text" name="name" class="form-control m-input" 
-                            placeholder="{{ __('admin.phone') }}" value="{{ $campaign->user->phone }}" disabled="">
-                    {!! $errors->first('name', '<span class="form-control-feedback">:message</span>') !!}
-                </div>
-            </div>
-
-
-            <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
+            <div class="form-group m-form__group row {{ $errors->has('title') ? 'has-danger' : ''}}">
                 <label for="name" class="col-1 col-form-label">{{ __('admin.title') }}</label>
                 <div class="col-9">
-                    <input type="text" name="name" class="form-control m-input" 
-                            placeholder="{{ __('admin.title') }}" value="{{ $campaign->title }}" disabled="">
-                    {!! $errors->first('name', '<span class="form-control-feedback">:message</span>') !!}
+                    <input type="text" name="title" class="form-control m-input" 
+                            placeholder="{{ __('admin.title') }}" value="{{ $campaign->title }}" >
+                    {!! $errors->first('title', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
             <div class="form-group m-form__group row {{ $errors->has('maximum_rate') ? 'has-danger' : ''}}">
                 <label for="name" class="col-1 col-form-label">{{ __('admin.maximum_rate') }}</label>
                 <div class="col-9">
-                    <input type="text" name="name" class="form-control m-input" 
-                            placeholder="{{ __('admin.maximum_rate') }}" value="{{ $campaign->maximum_rate }}" disabled="">
-                    {!! $errors->first('name', '<span class="form-control-feedback">:message</span>') !!}
+                    <input type="text" name="maximum_rate" class="form-control m-input" 
+                            placeholder="{{ __('admin.maximum_rate') }}" value="{{ $campaign->maximum_rate }}" >
+                    {!! $errors->first('maximum_rate', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
@@ -93,14 +81,17 @@
             <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
                 <label for="name" class="col-1 col-form-label"> {{ __('admin.description') }}  </label>
                 <div class="col-9">
-                    <textarea class="form-control m-input" disabled="">{{ $campaign->description }}</textarea>
+                    <textarea class="form-control m-input" placeholder="{{ __('admin.description') }}" name="description" >{{ $campaign->description }}</textarea>
+                    {!! $errors->first('description', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
             <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
                 <label for="name" class="col-1 col-form-label"> {{ __('admin.scenario') }}  </label>
                 <div class="col-9">
-                    <textarea class="form-control m-input" disabled="">{{ $campaign->scenario }}</textarea>
+                    
+                    <textarea class="form-control m-input" placeholder="{{ __('admin.scenario') }}" name="scenario" >{{ $campaign->scenario }}</textarea>
+                    {!! $errors->first('scenario', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
@@ -109,11 +100,11 @@
             <div class="form-group m-form__group row {{ $errors->has('facebook') ? 'has-danger' : ''}}">
                 <label for="is_active" class="col-2 col-form-label">{{ __('admin.facebook') }}</label>
                  <div class="col-9">
-                <select name="is_active"  class="form-control m-input" disabled="">
+                <select name="facebook"  class="form-control m-input" >
                    <option value="1" {{ $campaign->facebook == 1? "selected" : "" }} > {{ __('admin.yes') }} </option>
                    <option value="0" {{ $campaign->facebook == 0? "selected" : "" }} > {{ __('admin.no') }} </option>
                 </select>
-                    {!! $errors->first('is_active', '<span class="form-control-feedback">:message</span>') !!}
+                    {!! $errors->first('facebook', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
            
@@ -122,11 +113,11 @@
             <div class="form-group m-form__group row {{ $errors->has('twitter') ? 'has-danger' : ''}}">
                 <label for="is_active" class="col-2 col-form-label">{{ __('admin.twitter') }}</label>
                  <div class="col-9">
-                <select name="is_active"  class="form-control m-input" disabled="">
+                <select name="twitter"  class="form-control m-input" >
                    <option value="1" {{ $campaign->twitter == 1? "selected" : "" }} > {{ __('admin.yes') }} </option>
                    <option value="0" {{ $campaign->twitter == 0? "selected" : "" }} > {{ __('admin.no') }} </option>
                 </select>
-                    {!! $errors->first('is_active', '<span class="form-control-feedback">:message</span>') !!}
+                    {!! $errors->first('twitter', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
            
@@ -135,11 +126,11 @@
             <div class="form-group m-form__group row {{ $errors->has('snapchat') ? 'has-danger' : ''}}">
                 <label for="is_active" class="col-2 col-form-label">{{ __('admin.snapchat') }}</label>
                  <div class="col-9">
-                <select name="is_active"  class="form-control m-input" disabled="">
+                <select name="snapchat"  class="form-control m-input" >
                    <option value="1" {{ $campaign->snapchat == 1? "selected" : "" }} > {{ __('admin.yes') }} </option>
                    <option value="0" {{ $campaign->snapchat == 0? "selected" : "" }} > {{ __('admin.no') }} </option>
                 </select>
-                    {!! $errors->first('is_active', '<span class="form-control-feedback">:message</span>') !!}
+                    {!! $errors->first('snapchat', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
            
@@ -148,11 +139,11 @@
             <div class="form-group m-form__group row {{ $errors->has('youtube') ? 'has-danger' : ''}}">
                 <label for="is_active" class="col-2 col-form-label">{{ __('admin.youtube') }}</label>
                  <div class="col-9">
-                <select name="is_active"  class="form-control m-input" disabled="">
+                <select name="youtube"  class="form-control m-input" >
                    <option value="1" {{ $campaign->youtube == 1? "selected" : "" }} > {{ __('admin.yes') }} </option>
                    <option value="0" {{ $campaign->youtube == 0? "selected" : "" }} > {{ __('admin.no') }} </option>
                 </select>
-                    {!! $errors->first('is_active', '<span class="form-control-feedback">:message</span>') !!}
+                    {!! $errors->first('youtube', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
            
@@ -161,24 +152,24 @@
             <div class="form-group m-form__group row {{ $errors->has('instgrame') ? 'has-danger' : ''}}">
                 <label for="is_active" class="col-2 col-form-label">{{ __('admin.instgrame') }}</label>
                  <div class="col-9">
-                <select name="is_active"  class="form-control m-input" disabled="">
+                <select name="instgrame"  class="form-control m-input" >
                    <option value="1" {{ $campaign->instgrame == 1? "selected" : "" }} > {{ __('admin.yes') }} </option>
                    <option value="0" {{ $campaign->instgrame == 0? "selected" : "" }} > {{ __('admin.no') }} </option>
                 </select>
-                    {!! $errors->first('is_active', '<span class="form-control-feedback">:message</span>') !!}
+                    {!! $errors->first('instgrame', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
            
 
             
             <div class="form-group m-form__group row {{ $errors->has('male') ? 'has-danger' : ''}}">
-                <label for="is_active" class="col-2 col-form-label">{{ __('admin.male') }}</label>
+                <label for="male" class="col-2 col-form-label">{{ __('admin.male') }}</label>
                  <div class="col-9">
-                <select name="is_active"  class="form-control m-input" disabled="">
+                <select name="male"  class="form-control m-input" >
                    <option value="1" {{ $campaign->male == 1? "selected" : "" }} > {{ __('admin.yes') }} </option>
                    <option value="0" {{ $campaign->male == 0? "selected" : "" }} > {{ __('admin.no') }} </option>
                 </select>
-                    {!! $errors->first('is_active', '<span class="form-control-feedback">:message</span>') !!}
+                    {!! $errors->first('male', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
@@ -186,30 +177,30 @@
             <div class="form-group m-form__group row {{ $errors->has('female') ? 'has-danger' : ''}}">
                 <label for="is_active" class="col-2 col-form-label">{{ __('admin.female') }}</label>
                  <div class="col-9">
-                <select name="is_active"  class="form-control m-input" disabled="">
+                <select name="female"  class="form-control m-input" >
                    <option value="1" {{ $campaign->female == 1? "selected" : "" }} > {{ __('admin.yes') }} </option>
                    <option value="0" {{ $campaign->female == 0? "selected" : "" }} > {{ __('admin.no') }} </option>
                 </select>
-                    {!! $errors->first('is_active', '<span class="form-control-feedback">:message</span>') !!}
+                    {!! $errors->first('female', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
             
             <div class="form-group m-form__group row {{ $errors->has('general') ? 'has-danger' : ''}}">
-                <label for="is_active" class="col-2 col-form-label">{{ __('admin.general') }}</label>
+                <label for="general" class="col-2 col-form-label">{{ __('admin.general') }}</label>
                  <div class="col-9">
-                <select name="is_active"  class="form-control m-input" disabled="">
+                <select name="general"  class="form-control m-input" >
                    <option value="1" {{ $campaign->general == 1? "selected" : "" }} > {{ __('admin.yes') }} </option>
                    <option value="0" {{ $campaign->general == 0? "selected" : "" }} > {{ __('admin.no') }} </option>
                 </select>
-                    {!! $errors->first('is_active', '<span class="form-control-feedback">:message</span>') !!}
+                    {!! $errors->first('general', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
             <div class="form-group m-form__group row {{ $errors->has('capaign_status') ? 'has-danger' : ''}}">
-                <label for="is_active" class="col-2 col-form-label">{{ __('admin.capaign_status') }}</label>
+                <label for="is_active" class="col-2 col-form-label">{{ __('admin.status') }}</label>
                  <div class="col-9">
-                <select name="is_active"  class="form-control m-input" disabled="">
+                <select name="capaign_status"  class="form-control m-input" >
                    <option value="0" {{ $campaign->capaign_status == 0? "selected" : "" }} > 0</option>
                    <option value="1" {{ $campaign->capaign_status == 1? "selected" : "" }} > 1</option>
                    <option value="2" {{ $campaign->capaign_status == 2? "selected" : "" }} > 2</option>
@@ -230,6 +221,7 @@
                     <div class="col-3">
                     </div>
                     <div class="col-9">
+                        <button type="submit" class="btn btn-brand">{{ __('admin.save') }}</button>
                         <a type="reset" href="{{url('admin/campaigns')}}" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
                     </div>
                 </div>
