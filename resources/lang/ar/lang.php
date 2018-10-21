@@ -23,6 +23,8 @@ return
 'Number of sleeping rooms' => 'أعداد غرف النوم',
 'Number of living rooms' => 'أعداد غرق المعيشه',
 'Number of bath room' => 'أعداد غرف الاستحمام',
+'campaigns read succesfully' => 'تم قراءه الحمله بنجاح',
+'read succefully'  => 'تم القراءه بنجاح',
 
 
 'addedfailed'          => 'فشل في الاضافه',

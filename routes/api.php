@@ -122,7 +122,7 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::post('/user/add/campaign','API\V1\CampignsContrller@store');
 
- Route::get('/user/camapigns','API\V1\CampignsContrller@allCampaigns');
+ Route::get('/user/campaigns','API\V1\CampignsContrller@allCampaigns');
 
  Route::get('/influncer/campaigns','API\V1\CampignsContrller@index');
 

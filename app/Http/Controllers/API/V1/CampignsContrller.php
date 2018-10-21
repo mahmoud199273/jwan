@@ -71,7 +71,7 @@ class CampignsContrller extends Controller
             ->get();
 
 
-        return $this->sendResponse( $this->campaignsTransformer->transformCollection($campaigns),'read succefully',200);   
+        return $this->sendResponse( $this->campaignsTransformer->transformCollection($campaigns),trans('read succefully'),200);   
     }
 
 
@@ -121,7 +121,7 @@ class CampignsContrller extends Controller
             'id'    => 'required|exists:campaigns,id',
         ]);
         return $validator->fails() ? $this->setStatusCode(422)->respondWithError('parameters faild validation') :
-                                        $this->sendResponse( $this->campaignsTransformer->transform(Campaign::find($request->id)),'read succefully',200);
+                                        $this->sendResponse( $this->campaignsTransformer->transform(Campaign::find($request->id)),trans('read succefully'),200);
 
     }
 
@@ -138,7 +138,7 @@ class CampignsContrller extends Controller
 
         $campaigns = $this->campaignsTransformer->transformCollection($data);
 
-        return $this->sendResponse($campaigns, 'campaigns read succesfully',200);
+        return $this->sendResponse($campaigns, trans('campaigns read succesfully'),200);
     }
 
 

@@ -82,7 +82,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		//Route::post('country/activate/{id}', 'CountryController@activate');
 		Route::resource('area','AreasController');
 		Route::resource('category','CategoriesController');
-		 Route::resource('natoinality','NatoinalitiesController');
+		Route::resource('natoinality','NatoinalitiesController');
 		Route::resource('users','UsersController');
 		Route::post('/users/activate'       , 'UsersControllers@activate');
 		Route::post('/users/ban'            , 'UsersControllers@ban');

@@ -26,5 +26,6 @@ return[
       'subscribed'               => 'تم الاشتراك بنجاح',
       'type'                     => 'نوع الحساب',
       'type'                     => 'نوع الحساب',
+      'campaigns read succesfully' => 'تم قراءه الحمله بنجاح'
 
 ];
