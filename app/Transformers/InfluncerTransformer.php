@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use App\Transformers\BaseTransformer as Transformer;
 use App\Country;
+use App\Offer;
 
 class InfluncerTransformer extends Transformer
 {
@@ -23,11 +24,11 @@ class InfluncerTransformer extends Transformer
             'rate'          => 3,
 
             'number_of_coins' => 300,
-            "number_of_offers" => 12,
-            "wallet" => 20,
+            "number_of_offers" => Offer::where('influncer_id','=',$user->id)->count(),
+            "wallet"        => 20,
             'email'         => $user->email,
             'phone'         => $user->phone,
-            'country' => Country::find($user->countries_id),
+            'country'       => Country::find($user->countries_id),
             'image'         => ($user->image) ?config('app.url').$user->image : null,
             'notes'         => $user->notes,
             'gender'        =>$user->gender,
