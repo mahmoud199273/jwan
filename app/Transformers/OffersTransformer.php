@@ -27,7 +27,7 @@ class OffersTransformer extends Transformer
 
             //'user'              => isset($offer->user) ? $offer->user :null ,
 
-            //'campaign'          => isset($offer->campaign) ? $offer->campaign :null ,
+            'campaign'          => isset($offer->campaign) ? $offer->campaign :null ,
 
             'cost'              => $offer->cost,
 

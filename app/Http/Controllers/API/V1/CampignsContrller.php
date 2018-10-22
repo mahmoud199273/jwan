@@ -391,7 +391,7 @@ class CampignsContrller extends Controller
 
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
-            return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+            return $this->setStatusCode(422)->respondWithError(trans('parameters faild validation'));
         }
 
 
@@ -425,7 +425,7 @@ class CampignsContrller extends Controller
 
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
-            return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+            return $this->setStatusCode(422)->respondWithError(trans('parameters faild validation'));
         }
 
         //$campaigns = DB::table('campaigns')->first();
@@ -505,7 +505,7 @@ class CampignsContrller extends Controller
 
          $result = $this->campaignsTransformer->transformCollection($campaign);
 
-        return $this->sendResponse( $result,'readed successfully',200); 
+        return $this->sendResponse( $result,trans('readed successfully'),200); 
 
             
         }
@@ -534,7 +534,7 @@ class CampignsContrller extends Controller
 
         $results = $this->campaignsTransformer->transformCollection($campaign);
 
-        return $this->sendResponse( $results,'readed successfully',200); 
+        return $this->sendResponse( $results,trans('readed successfully'),200); 
 
             
         }
