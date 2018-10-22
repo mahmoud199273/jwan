@@ -33,12 +33,12 @@ class OffersController extends Controller
 
      public function allOffers( Request $request,User $user )
      {
-         $user =  $this->getAuthenticatedUser();
+         $influncer =  $this->getAuthenticatedUser();
 
 
 
 
-         $offers = Offer::where('influncer_id',$user->id)->get();
+         $offers = Offer::where('influncer_id',$influncer->id)->get();
 
         // dd($offers);
 
@@ -54,7 +54,7 @@ class OffersController extends Controller
 
 
 
-
+ 
 
 
 

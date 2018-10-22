@@ -46,32 +46,52 @@ class CampignsContrller extends Controller
         $influncer_countries = UserCountry::where('user_id',$influncer->id)->pluck('country_id')->toArray();
         //dd($influncer_categories);
 
-        $campaigns = DB::table('campaigns')
+            $campaigns = DB::table('campaigns')
 
             ->join('campaign_countries', 'campaigns.id', '=', 'campaign_countries.campaign_id')
 
-            ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id')
-            ->whereIn('campaign_categories.category_id',$influncer_categories)
-            ->whereIn('campaign_countries.country_id',$influncer_countries)
+            ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id');
+
+            if($influncer_categories){
+                $campaigns->whereIn('campaign_categories.category_id',$influncer_categories);
+
+            }
+
+            if($influncer_countries){
+                $campaigns->whereIn('campaign_countries.country_id',$influncer_countries);
+
+            }
+
+            
+
+            
 
 
 
-            ->select('campaigns.*')
+            $campaigns->select('campaigns.*');
 
-            ->where([['campaigns.capaign_status','1'],
+            if (!$campaign_ids) {
+                $campaigns->where('campaigns.capaign_status','1');
+            }
+            if ($campaign_ids) {
+                $campaigns->where([
+                    ['campaigns.capaign_status','1'],
+                    ['campaigns.id','<>',$campaign_ids]
+                ]);
+            }
+            
+            $campaigns->groupBy('campaigns.id')
 
-                ['campaigns.id','<>',$campaign_ids]
+             
+             
 
-            ])
+             ->orderBy($orderBy,'DESC');
 
-            ->groupBy('campaigns.id')
+            
+             $result = $campaigns->get();
+            //dd($campaigns);
 
-            // ->orderBy($orderBy,'DESC')
-
-            ->get();
-
-
-        return $this->sendResponse( $this->campaignsTransformer->transformCollection($campaigns),trans('read succefully'),200);   
+        return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('read succefully'),200);   
     }
 
 
