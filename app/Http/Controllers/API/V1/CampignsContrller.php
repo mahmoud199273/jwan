@@ -91,7 +91,7 @@ class CampignsContrller extends Controller
              $result = $campaigns->get();
             //dd($campaigns);
 
-        return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('read succefully'),200);   
+        return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('lang.read succefully'),200);   
     }
 
 
@@ -136,12 +136,12 @@ class CampignsContrller extends Controller
 
     public function show( Request $request , $id )
     {
-
         $validator = Validator::make( ['id' =>  $request->id ], [
             'id'    => 'required|exists:campaigns,id',
         ]);
         return $validator->fails() ? $this->setStatusCode(422)->respondWithError('parameters faild validation') :
-                                        $this->sendResponse( $this->campaignsTransformer->transform(Campaign::find($request->id)),trans('read succefully'),200);
+                                        $this->sendResponse( $this->campaignsTransformer->transform(Campaign::find($request->id)),
+                                            trans('lang.read succefully'),200);
 
     }
 
@@ -158,7 +158,7 @@ class CampignsContrller extends Controller
 
         $campaigns = $this->campaignsTransformer->transformCollection($data);
 
-        return $this->sendResponse($campaigns, trans('campaigns read succesfully'),200);
+        return $this->sendResponse($campaigns, trans('lang.campaigns read succesfully'),200);
     }
 
 
@@ -525,7 +525,7 @@ class CampignsContrller extends Controller
 
          $result = $this->campaignsTransformer->transformCollection($campaign);
 
-        return $this->sendResponse( $result,trans('readed successfully'),200); 
+        return $this->sendResponse( $result,trans('lang.readed successfully'),200); 
 
             
         }
@@ -554,7 +554,7 @@ class CampignsContrller extends Controller
 
         $results = $this->campaignsTransformer->transformCollection($campaign);
 
-        return $this->sendResponse( $results,trans('readed successfully'),200); 
+        return $this->sendResponse( $results,trans('lang.readed successfully'),200); 
 
             
         }

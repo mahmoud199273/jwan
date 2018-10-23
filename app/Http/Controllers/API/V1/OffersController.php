@@ -46,7 +46,7 @@ class OffersController extends Controller
 
 
 
-         return $this->sendResponse( $this->offersTransformer->transformCollection($offers),'read succefully',200);   
+         return $this->sendResponse( $this->offersTransformer->transformCollection($offers),trans('lang.read succefully'),200);   
      }
 
 
@@ -65,7 +65,7 @@ class OffersController extends Controller
             'id'    => 'required|exists:offers,id',
         ]);
         return $validator->fails() ? $this->setStatusCode(422)->respondWithError('parameters faild validation') :
-                                        $this->sendResponse( $this->offersTransformer->transform(Offer::find($request->id)),'read succefully',200);
+                                        $this->sendResponse( $this->offersTransformer->transform(Offer::find($request->id)),trans('lang.read succefully'),200);
 
     }
 
@@ -93,7 +93,7 @@ class OffersController extends Controller
 
         $offers = $this->offersTransformer->transformCollection($data);
 
-        return $this->sendResponse($offers, 'campaigns read succesfully',200);
+        return $this->sendResponse($offers, trans('lang.offers read succesfully'),200);
     }
 
 
@@ -165,7 +165,7 @@ class OffersController extends Controller
 
             $offer->save();
 
-            return $this->respondWithSuccess(trans('api_msgs.set status successfully'));
+            return $this->respondWithSuccess(trans('lang.set status successfully'));
 
             
         }

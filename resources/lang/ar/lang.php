@@ -25,6 +25,8 @@ return
 'Number of bath room' => 'أعداد غرف الاستحمام',
 'campaigns read succesfully' => 'تم قراءه الحمله بنجاح',
 'read succefully'  => 'تم القراءه بنجاح',
+'set status successfully' => 'تم تغير الحاله بنجاح',
+'offers read succesfully'  =>'تم قراءه العروض بنجاح',
 
 
 'addedfailed'          => 'فشل في الاضافه',

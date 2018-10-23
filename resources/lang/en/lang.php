@@ -1502,6 +1502,10 @@ you didn't register with our support packages you can",
 'Government'=>'Government/Semi government sector',
 'Private sector'=>'Private sector',
 'Account manager'=>' Account manager ',
+'campaigns read succesfully' => 'campaigns read succesfully',
+'read succefully'  => 'read succefully',
 'flag'=>' Flag ',
+'set status successfully' => 'set status successfully',
+'offers read succesfully'  => 'offers read succesfully'
 /* m.abdelrahman  */
 ];
