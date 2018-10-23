@@ -1506,6 +1506,6 @@ you didn't register with our support packages you can",
 'read succefully'  => 'read succefully',
 'flag'=>' Flag ',
 'set status successfully' => 'set status successfully',
-'offers read succesfully'  => 'offers read succesfully'
+'offers read succesfully'  => 'offers read succesfully',
 /* m.abdelrahman  */
 ];

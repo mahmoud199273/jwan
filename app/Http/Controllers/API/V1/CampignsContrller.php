@@ -33,6 +33,8 @@ class CampignsContrller extends Controller
         $this->campaignsTransformer   = $campaignsTransformer;
     }
 
+
+
     public function index( Request $request )
     {
         $influncer =  $this->getAuthenticatedUser();
@@ -43,10 +45,16 @@ class CampignsContrller extends Controller
         $orderBy = 'created_at';
         $influncer_categories = UserCategory::where('user_id',$influncer->id)->pluck('categories_id')->toArray();
 
+
+
         $influncer_countries = UserCountry::where('user_id',$influncer->id)->pluck('country_id')->toArray();
+
+
         //dd($influncer_categories);
 
             $campaigns = DB::table('campaigns')
+
+
 
             ->join('campaign_countries', 'campaigns.id', '=', 'campaign_countries.campaign_id')
 
@@ -63,24 +71,14 @@ class CampignsContrller extends Controller
             }
 
             
-
-            
-
-
-
             $campaigns->select('campaigns.*');
 
-            if (!$campaign_ids) {
-                $campaigns->where('campaigns.capaign_status','1');
-            }
+          
             if ($campaign_ids) {
-                $campaigns->where([
-                    ['campaigns.capaign_status','1'],
-                    ['campaigns.id','<>',$campaign_ids]
-                ]);
+                $campaigns->where('campaigns.id','<>',$campaign_ids);
             }
-            
-            $campaigns->groupBy('campaigns.id')
+            $campaigns->where('campaigns.capaign_status','1')
+            ->groupBy('campaigns.id')
 
              
              
