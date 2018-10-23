@@ -21,7 +21,7 @@ class OffersTransformer extends Transformer
 
             'influncer'         => User::select('id','name','image')
                                 ->where('id',$offer->influncer_id)
-                                ->get(),
+                                ->get()[0],
 
             'influncer_rate'    => 3,
 
