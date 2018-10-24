@@ -120,32 +120,32 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  // start Camapign routes
 
- Route::post('/user/add/campaign','API\V1\CampignsContrller@store');
+ Route::post('/user/add/campaign','API\V1\CampignsController@store');
 
- Route::get('/user/campaigns','API\V1\CampignsContrller@allCampaigns');
+ Route::get('/user/campaigns','API\V1\CampignsController@allCampaigns');
 
- Route::get('/influncer/campaigns','API\V1\CampignsContrller@index');
-
-
- Route::get('/campaign/{id}','API\V1\CampignsContrller@show');
-
- Route::post('/approve/campaign','API\V1\CampignsContrller@approveCampaign');
-
- Route::post('/extend/campaign','API\V1\CampignsContrller@extendCampaign');
-
- Route::post('/camapign/delete','API\V1\CampignsContrller@destroy');
+ Route::get('/influncer/campaigns','API\V1\CampignsController@index');
 
 
+ Route::get('/campaign/{id}','API\V1\CampignsController@show');
 
- //	Route::post('/camapign/update'	, 'API\V1\CampignsContrller@update');
+ Route::post('/approve/campaign','API\V1\CampignsController@approveCampaign');
+
+ Route::post('/extend/campaign','API\V1\CampignsController@extendCampaign');
+
+ Route::post('/camapign/delete','API\V1\CampignsController@destroy');
+
+
+
+ //	Route::post('/camapign/update'	, 'API\V1\CampignsController@update');
 
  /* influncer camapign routes */
 
- Route::post('/influncer/campaign/status','API\V1\CampignsContrller@status');
+ Route::post('/influncer/campaign/status','API\V1\CampignsController@status');
 
- Route::get('skipped/campaign','API\V1\CampignsContrller@skipped');
+ Route::get('skipped/campaign','API\V1\CampignsController@skipped');
 
- Route::get('favorite/campaign','API\V1\CampignsContrller@favorite');
+ Route::get('favorite/campaign','API\V1\CampignsController@favorite');
 
  /* influncer offers route */
 

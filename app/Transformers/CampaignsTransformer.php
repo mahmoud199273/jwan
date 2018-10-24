@@ -36,7 +36,7 @@ class CampaignsTransformer extends Transformer
 
             'number_of_offers'  =>  Offer::where('campaign_id',$campaign->id)->count(),
 
-        	
+
 
             //'file'             => Attachment::select,
 
@@ -60,7 +60,7 @@ class CampaignsTransformer extends Transformer
 
             'general'          	=> (int) $campaign->general,
 
-            
+
 
             'maximum_rate'      => $campaign->maximum_rate,
 
@@ -76,12 +76,14 @@ class CampaignsTransformer extends Transformer
 
             'countries' => isset($campaign->countries) ? $campaign->countries : null,
 
-            'areas' => isset($campaign->areas) ? $campaign->areas : null
-            
+            'areas' => isset($campaign->areas) ? $campaign->areas : null,
+						
+						'is_extened'	=> isset($campaign->is_extened) ? $campaign->is_extened : 0
+
 
         ];
     }
- 
+
 
 
 
