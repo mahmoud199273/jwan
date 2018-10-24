@@ -197,17 +197,17 @@
                 </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('capaign_status') ? 'has-danger' : ''}}">
+            <div class="form-group m-form__group row {{ $errors->has('status') ? 'has-danger' : ''}}">
                 <label for="is_active" class="col-2 col-form-label">{{ __('admin.status') }}</label>
                  <div class="col-9">
-                <select name="capaign_status"  class="form-control m-input" >
-                   <option value="0" {{ $campaign->capaign_status == 0? "selected" : "" }} > 0</option>
-                   <option value="1" {{ $campaign->capaign_status == 1? "selected" : "" }} > 1</option>
-                   <option value="2" {{ $campaign->capaign_status == 2? "selected" : "" }} > 2</option>
-                   <option value="3" {{ $campaign->capaign_status == 3? "selected" : "" }} > 3</option>
+                <select name="status"  class="form-control m-input" >
+                   <option value="0" {{ $campaign->status == 0? "selected" : "" }} > 0</option>
+                   <option value="1" {{ $campaign->status == 1? "selected" : "" }} > 1</option>
+                   <option value="2" {{ $campaign->status == 2? "selected" : "" }} > 2</option>
+                   <option value="3" {{ $campaign->status == 3? "selected" : "" }} > 3</option>
                    
                 </select>
-                    {!! $errors->first('capaign_status', '<span class="form-control-feedback">:message</span>') !!}
+                    {!! $errors->first('status', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
            

@@ -25,6 +25,8 @@ return[
    'answered'                  => 'Answered successfully',
    'subscribed'               => 'Subscribed successfully',
    'duplicate_email'          => 'email is duplicated',
+   'closed'             => 'Campaign has been closed',
+   'canceled'            => 'Campaign has been canceled',
 
 
 
@@ -32,7 +34,7 @@ return[
 
 
 
-  
+
 
 
 

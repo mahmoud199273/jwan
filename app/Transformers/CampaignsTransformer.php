@@ -70,14 +70,16 @@ class CampaignsTransformer extends Transformer
 
             'ended_date'        => $campaign->end_at,
 
-            'campaign_status'   => (int) $campaign->capaign_status,
+            'campaign_status'   => (int) $campaign->status,
+
+            'status'   => (int) $campaign->status,
 
             'categories' => isset($campaign->categories) ? $campaign->categories : null,
 
             'countries' => isset($campaign->countries) ? $campaign->countries : null,
 
             'areas' => isset($campaign->areas) ? $campaign->areas : null,
-						
+
 						'is_extened'	=> isset($campaign->is_extened) ? $campaign->is_extened : 0
 
 

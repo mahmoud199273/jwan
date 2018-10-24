@@ -77,7 +77,7 @@ class CampignsController extends Controller
             if ($campaign_ids) {
                 $campaigns->where('campaigns.id','<>',$campaign_ids);
             }
-            $campaigns->where('campaigns.capaign_status','1')
+            $campaigns->where('campaigns.status','1')
             ->groupBy('campaigns.id')
 
 
@@ -109,15 +109,15 @@ class CampignsController extends Controller
 
         /* $campaigns = Campaign::where([
             ['id','<>',$campaign_ids]
-            ,['capaign_status','1']
+            ,['status','1']
             ])->get();*/
 
          /* $campaigns = Campaign::where(
-            'capaign_status','1'
+            'status','1'
             )->get();
          dd($campaigns);
 
-          $data = Campaign::where('capaign_status','1')->whereNotIn('id',$campaign_ids)->get();
+          $data = Campaign::where('status','1')->whereNotIn('id',$campaign_ids)->get();
           //dd($data);
 
          return $this->sendResponse( $this->campaignsTransformer->transformCollection($data),'read succefully',200);
@@ -197,7 +197,7 @@ class CampignsController extends Controller
 
             //'updated_date'      => 'required',
 
-            //'capaign_status'    => 'required',
+            //'status'    => 'required',
 
             'files_arr'         => 'required',
 
@@ -247,7 +247,7 @@ class CampignsController extends Controller
 
         //$campaign->updated_date            = $request->updated_date;
 
-        //$campaign->capaign_status            = $request->capaign_status;
+        //$campaign->status            = $request->status;
 
         $campaign->user_id          = $user->id;
 
@@ -404,7 +404,6 @@ class CampignsController extends Controller
 
         $validator = Validator::make( $request->all(), [
             'id'                => 'required|exists:campaigns,id',
-
         ]);
 
         if ($validator->fails()) {
@@ -416,7 +415,11 @@ class CampignsController extends Controller
 
 
         $campaign = Campaign::find( $request->id );
-        if($campaign->is_extened==1)
+        if($campaign->user_id!=$user->id)
+        {
+          return $this->setStatusCode(422)->respondWithError('you dont own it');
+        }
+        elseif($campaign->is_extened==1)
         {
             return $this->setStatusCode(422)->respondWithError('Already extended before');
         }
@@ -433,6 +436,64 @@ class CampignsController extends Controller
         }
 
     }
+
+
+
+
+        public function closeCampaign( Request $request )
+        {
+            $user =  $this->getAuthenticatedUser();
+
+            $validator = Validator::make( $request->all(), [
+                'id'                => 'required|exists:campaigns,id',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->setStatusCode(422)->respondWithError($validator->messages());
+                return $this->setStatusCode(422)->respondWithError(trans('parameters faild validation'));
+            }
+            else {
+              $campaign = Campaign::find( $request->id );
+              if($campaign->user_id!=$user->id)
+              {
+                return $this->setStatusCode(422)->respondWithError('you dont own it');
+              }
+              else {
+                $campaign->status = 5;
+                $campaign->save();
+                return $this->respondWithSuccess(trans('api_msgs.closed'));
+              }
+            }
+
+        }
+
+
+
+            public function cancelCampaign( Request $request )
+            {
+                $user =  $this->getAuthenticatedUser();
+
+                $validator = Validator::make( $request->all(), [
+                    'id'                => 'required|exists:campaigns,id',
+                ]);
+
+                if ($validator->fails()) {
+                    return $this->setStatusCode(422)->respondWithError($validator->messages());
+                    return $this->setStatusCode(422)->respondWithError(trans('parameters faild validation'));
+                }
+                else {
+                  $campaign = Campaign::find( $request->id );
+                  if($campaign->user_id!=$user->id)
+                  {
+                    return $this->setStatusCode(422)->respondWithError('you dont own it');
+                  }
+                  else {
+                    $campaign->status = 6;
+                    $campaign->save();
+                    return $this->respondWithSuccess(trans('api_msgs.canceled'));
+                  }
+                }
+            }
 
 
 
@@ -457,9 +518,9 @@ class CampignsController extends Controller
 
         $campaign = Campaign::find( $request->id );
 
-        if($campaign->capaign_status == '0'){
+        if($campaign->status == '0'){
 
-            $campaign->capaign_status = '1';
+            $campaign->status = '1';
 
             $campaign->save();
         }
@@ -523,7 +584,7 @@ class CampignsController extends Controller
 
          //return $this->respondWithPagination($campaign,[ 'data' =>  $campaignsTransformer]);
 
-        //return $this->respond( ['data' => $this->campaignsTransformer->transformCollection(Campaign::where('capaign_status','1')->get())]);
+        //return $this->respond( ['data' => $this->campaignsTransformer->transformCollection(Campaign::where('status','1')->get())]);
 
         //return $this->respond($campaign ,['data' =>  $result]);
 
@@ -566,7 +627,7 @@ class CampignsController extends Controller
         /*$validator = Validator::make( $request->all(), [
             'id'                => 'required|exists:campaigns,id',
 
-            'capaign_status'    => 'required'
+            'status'    => 'required'
 
 
         ]);
@@ -578,7 +639,7 @@ class CampignsController extends Controller
 
         $campaign = Campaign::find( $request->id );
 
-        $campaign->capaign_status = $request->capaign_status;
+        $campaign->status = $request->status;
 
         $campaign->save();
 

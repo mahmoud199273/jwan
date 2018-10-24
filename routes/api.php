@@ -133,6 +133,9 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::post('/extend/campaign','API\V1\CampignsController@extendCampaign');
 
+ Route::post('/cancel/campaign','API\V1\CampignsController@cancelCampaign');
+ Route::post('/close/campaign','API\V1\CampignsController@closeCampaign');
+
  Route::post('/camapign/delete','API\V1\CampignsController@destroy');
 
 
