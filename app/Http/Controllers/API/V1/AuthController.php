@@ -168,7 +168,7 @@ class AuthController extends Controller
 
             'password'      => 'required|string|max:25|min:8',
 
-            'image'         => 'required',
+            'image'         => 'nullable',
 
             'name'          => 'required|string|max:25|min:2',
 
@@ -225,7 +225,14 @@ class AuthController extends Controller
             
             $user->password     =  bcrypt($request->password);
 
-            $user->image        = $request->image;
+             if(!$request->image){
+                $user->image  ='/public/assets/images/profile/main.png';
+
+            }else{
+                $user->image        = $request->image;
+
+            }
+
 
             $user->name         =  $request->name;
 
@@ -282,7 +289,7 @@ class AuthController extends Controller
             
             'password'      => 'required|string|max:25|min:8',
 
-            'image'         => 'required',
+            'image'         => 'nullable',
 
             'name'          => 'required',
 
@@ -357,13 +364,20 @@ class AuthController extends Controller
             
             $user->password     =  bcrypt($request->password);
 
-            $user->image       = $request->image;
+             if(!$request->image){
+                $user->image  ='/public/assets/images/profile/main.png';
+
+            }else{
+                $user->image        = $request->image;
+
+            }
+
 
 
 
             $user->name         =  $request->name;
 
-            $user->gender      =    (string) $request->gender;
+            $user->gender      =   $request->gender;
 
             $user->countries_id = $request->country_id;
 
@@ -372,7 +386,7 @@ class AuthController extends Controller
 
             $user->notes             = $request->notes;
 
-            $user->account_manger      = (string) $request->account_manger;
+            $user->account_manger      = $request->account_manger;
 
             
 

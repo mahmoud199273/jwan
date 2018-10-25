@@ -199,7 +199,7 @@ class CampignsController extends Controller
 
             //'status'    => 'required',
 
-            'files_arr'         => 'required',
+            'files_arr'         => 'nullable',
 
             'categories_id'     => 'required',
 
@@ -253,6 +253,17 @@ class CampignsController extends Controller
 
         $campaign->save();
 
+        if(!$request->files_arr){
+            Attachment::create([
+
+                'campaign_id'       => $campaign->id,
+
+                'file'              => '/public/assets/images/campaign/campaign.png'
+            ]);
+
+
+        }else{
+
         $files  =$request->files_arr;
 
             foreach ($files  as $file) {
@@ -261,7 +272,7 @@ class CampignsController extends Controller
 
                 'campaign_id'       => $campaign->id,
 
-                'file'              => $file['file']
+                'file'              => $file['file'] ?? ""
 
                 //'file_type'          => $file['type']
 
@@ -269,6 +280,7 @@ class CampignsController extends Controller
 
                       ]);
             }
+        }
 
              $categories_id  =$request->categories_id;
 
