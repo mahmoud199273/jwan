@@ -25,6 +25,14 @@ class OffersController extends Controller
         $this->offersTransformer   = $offersTransformer;
     }
 
+    public function influncerHasOffer($influncer_id,$campaign_id)
+    {
+         return Offer::where([
+            ['influncer_id',$influncer_id],
+            ['campaign_id',$campaign_id]
+            ])->first() ? true : false;
+    }
+
 
 
 
@@ -103,7 +111,7 @@ class OffersController extends Controller
 
     public function store( Request $request )
     {
-        $user =  $this->getAuthenticatedUser();
+        $influncer =  $this->getAuthenticatedUser();
 
         $validator = Validator::make( $request->all(), [
 
@@ -113,24 +121,36 @@ class OffersController extends Controller
 
             'description'      =>'required'    
 
-
+ 
 
         ]);
+
+        if($this->influncerHasOffer($influncer->id,$request->campaign_id)){
+
+            return $this->setStatusCode(422)->respondWithError('Already offerd before');
+
+        }
 
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
         }
 
+         
+
         $offer = new Offer;
 
+
         $offer->campaign_id     = $request->campaign_id;
+
+        
+        $offer->influncer_id     = $influncer->id;
+
+       
 
         $offer->cost            = $request->cost;
 
         $offer->description     = $request->description;
-        
-        $offer->influncer_id     = $user->id;
 
         $offer->save();
 
@@ -138,6 +158,8 @@ class OffersController extends Controller
         return $this->respondWithSuccess(trans('api_msgs.created'));
 
     }
+
+    
 
 
          public function offerStatus(Request $request)
