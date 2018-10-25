@@ -16,9 +16,9 @@ class CreateInfluncerCampaignsTable extends Migration
         Schema::create('influncer_campaigns', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('influncer_id')->unsigned()->nullable();
              
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('influncer_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->integer('campaign_id')->unsigned()->nullable();
                  

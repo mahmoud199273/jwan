@@ -25,7 +25,7 @@ class OffersTransformer extends Transformer
 
             'influncer_rate'    => 3,
 
-            //'user'              => isset($offer->user) ? $offer->user :null ,
+            'user'              => isset($offer->user) ? $offer->user :null ,
 
             'campaign'          => isset($offer->campaign) ? $offer->campaign :null ,
 

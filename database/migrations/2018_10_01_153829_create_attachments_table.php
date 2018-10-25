@@ -16,8 +16,8 @@ class CreateAttachmentsTable extends Migration
         Schema::create('attachments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('file');
-            $table->enum('file_type',[0,1]);
-            // 0 = image  1 = video
+            $table->enum('file_type',[0,1,2]);
+            // 0 = image  1 = video 2= pdf
 
             $table->integer('campaign_id')->unsigned()->nullable();
              

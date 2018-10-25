@@ -47,7 +47,18 @@ class CreateCampaignsTable extends Migration
 
              $table->dateTime('updated_date');
 
-             $table->enum('capaign_status',[0,1,2,3]);
+             $table->enum('campaign_status',[0,1,2,3,4,5,6,7,8,9]);
+
+            // 0 = new
+            // 1 = approved
+            // 2 = rejected
+            // 3 = in progress
+            // 4 = Pending proof
+            // 5 = Pending payment
+            // 6 = Confirmed
+            // 7 = finished
+            // 8 = canceled
+            // 9 = closed
 
              
 

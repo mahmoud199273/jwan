@@ -31,7 +31,7 @@ class InfluncerTransformer extends Transformer
             'country'       => Country::find($user->countries_id),
             'image'         => ($user->image) ?config('app.url').$user->image : null,
             'notes'         => $user->notes,
-            'gender'        =>$user->gender,
+            'gender'        => (int) $user->gender,
 
 
             'nationality_id'   =>(int) $user->nationality_id,
