@@ -138,6 +138,10 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::post('/camapign/delete','API\V1\CampignsController@destroy');
 
+  Route::post('/chat/add', 'API\V1\ChatController@store');
+
+  Route::post('/chat/index', 'API\V1\ChatController@index');
+
 
 
  //	Route::post('/camapign/update'	, 'API\V1\CampignsController@update');
