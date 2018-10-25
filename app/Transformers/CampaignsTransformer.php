@@ -15,6 +15,13 @@ class CampaignsTransformer extends Transformer
 {
 	public function transform($campaign  ) : array
     {
+
+			$status_array = array(0 => 'new',
+			1 => 'approved',
+			2 => 'rejected',
+			3 => 'finished',
+			4 => 'canceled',
+			5 => 'closed');
         $campaign = Campaign::find($campaign->id);
 
         return [
@@ -73,6 +80,7 @@ class CampaignsTransformer extends Transformer
             'campaign_status'   => (int) $campaign->status,
 
             'status'   => (int) $campaign->status,
+						'status_title'	=> $status_array[(int) $campaign->status],
 
             'categories' => isset($campaign->categories) ? $campaign->categories : null,
 

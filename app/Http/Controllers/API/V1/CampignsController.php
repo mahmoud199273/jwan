@@ -488,7 +488,7 @@ class CampignsController extends Controller
                     return $this->setStatusCode(422)->respondWithError('you dont own it');
                   }
                   else {
-                    $campaign->status = 6;
+                    $campaign->status = 4;
                     $campaign->save();
                     return $this->respondWithSuccess(trans('api_msgs.canceled'));
                   }
@@ -496,7 +496,18 @@ class CampignsController extends Controller
             }
 
 
-
+/*
+0 = new
+1 = approved
+2 = rejected
+3 = finished
+4 = canceled
+5 = closed
+// 3 = in progress
+// 4= Pending proof
+// 5= Pending payment
+// 6= Confirmed
+*/
 
 
      public function approveCampaign( Request $request )
