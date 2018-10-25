@@ -15,6 +15,13 @@ class CampaignsTransformer extends Transformer
 {
 	public function transform($campaign  ) : array
     {
+
+			$status_array = array(0 => 'new',
+			1 => 'approved',
+			2 => 'rejected',
+			3 => 'finished',
+			4 => 'canceled',
+			5 => 'closed');
         $campaign = Campaign::find($campaign->id);
 
         return [
@@ -36,7 +43,7 @@ class CampaignsTransformer extends Transformer
 
             'number_of_offers'  =>  Offer::where('campaign_id',$campaign->id)->count(),
 
-        	
+
 
             //'file'             => Attachment::select,
 
@@ -60,7 +67,7 @@ class CampaignsTransformer extends Transformer
 
             'general'          	=> (int) $campaign->general,
 
-            
+
 
             'maximum_rate'      => $campaign->maximum_rate,
 
@@ -70,18 +77,23 @@ class CampaignsTransformer extends Transformer
 
             'ended_date'        => $campaign->end_at,
 
-            'campaign_status'   => (int) $campaign->capaign_status,
+            'campaign_status'   => (int) $campaign->status,
+
+            'status'   => (int) $campaign->status,
+						'status_title'	=> $status_array[(int) $campaign->status],
 
             'categories' => isset($campaign->categories) ? $campaign->categories : null,
 
             'countries' => isset($campaign->countries) ? $campaign->countries : null,
 
-            'areas' => isset($campaign->areas) ? $campaign->areas : null
-            
+            'areas' => isset($campaign->areas) ? $campaign->areas : null,
+
+						'is_extened'	=> isset($campaign->is_extened) ? $campaign->is_extened : 0
+
 
         ];
     }
- 
+
 
 
 

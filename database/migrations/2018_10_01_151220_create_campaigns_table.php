@@ -47,6 +47,7 @@ class CreateCampaignsTable extends Migration
 
              $table->dateTime('updated_date');
 
+<<<<<<< HEAD
              $table->enum('campaign_status',[0,1,2,3,4,5,6,7,8,9]);
 
             // 0 = new
@@ -59,6 +60,9 @@ class CreateCampaignsTable extends Migration
             // 7 = finished
             // 8 = canceled
             // 9 = closed
+=======
+             $table->enum('status',[0,1,2,3]);
+>>>>>>> 5b44c1fa1f4280e42e5e057f218a6627ecbfe4ff
 
              
 

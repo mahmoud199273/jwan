@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class CampignsContrller extends Controller
+class CampignsController extends Controller
 {
 
     protected $campaignsTransformer;
@@ -70,26 +70,26 @@ class CampignsContrller extends Controller
 
             }
 
-            
+
             $campaigns->select('campaigns.*');
 
-          
+
             if ($campaign_ids) {
                 $campaigns->where('campaigns.id','<>',$campaign_ids);
             }
-            $campaigns->where('campaigns.capaign_status','1')
+            $campaigns->where('campaigns.status','1')
             ->groupBy('campaigns.id')
 
-             
-             
+
+
 
              ->orderBy($orderBy,'DESC');
 
-            
+
              $result = $campaigns->get();
             //dd($campaigns);
 
-        return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('lang.read succefully'),200);   
+        return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('lang.read succefully'),200);
     }
 
 
@@ -109,18 +109,18 @@ class CampignsContrller extends Controller
 
         /* $campaigns = Campaign::where([
             ['id','<>',$campaign_ids]
-            ,['capaign_status','1']
+            ,['status','1']
             ])->get();*/
 
          /* $campaigns = Campaign::where(
-            'capaign_status','1'
+            'status','1'
             )->get();
          dd($campaigns);
 
-          $data = Campaign::where('capaign_status','1')->whereNotIn('id',$campaign_ids)->get();
+          $data = Campaign::where('status','1')->whereNotIn('id',$campaign_ids)->get();
           //dd($data);
 
-         return $this->sendResponse( $this->campaignsTransformer->transformCollection($data),'read succefully',200);   
+         return $this->sendResponse( $this->campaignsTransformer->transformCollection($data),'read succefully',200);
      }*/
 
 
@@ -129,7 +129,7 @@ class CampignsContrller extends Controller
 
 
 
-   
+
 
 
     public function show( Request $request , $id )
@@ -197,7 +197,7 @@ class CampignsContrller extends Controller
 
             //'updated_date'      => 'required',
 
-            //'capaign_status'    => 'required',
+            //'status'    => 'required',
 
             'files_arr'         => 'required',
 
@@ -247,7 +247,7 @@ class CampignsContrller extends Controller
 
         //$campaign->updated_date            = $request->updated_date;
 
-        //$campaign->capaign_status            = $request->capaign_status;
+        //$campaign->status            = $request->status;
 
         $campaign->user_id          = $user->id;
 
@@ -346,7 +346,7 @@ class CampignsContrller extends Controller
 
             'maximum_rate'      => 'required',
 
-            
+
 
 
 
@@ -404,7 +404,6 @@ class CampignsContrller extends Controller
 
         $validator = Validator::make( $request->all(), [
             'id'                => 'required|exists:campaigns,id',
-
         ]);
 
         if ($validator->fails()) {
@@ -416,20 +415,99 @@ class CampignsContrller extends Controller
 
 
         $campaign = Campaign::find( $request->id );
-        $end_date =  Carbon::parse($campaign->end_at);
-        $end_date = $end_date->addDays($amount);
+        if($campaign->user_id!=$user->id)
+        {
+          return $this->setStatusCode(422)->respondWithError('you dont own it');
+        }
+        elseif($campaign->is_extened==1)
+        {
+            return $this->setStatusCode(422)->respondWithError('Already extended before');
+        }
+        else {
+          $end_date =  Carbon::parse($campaign->end_at);
+          $end_date = $end_date->addDays($amount);
+          $campaign->is_extened = 1;
+          $campaign->end_at = $end_date;
 
-        $campaign->end_at = $end_date;
-
-        $campaign->save();
+          $campaign->save();
 
 
-        return $this->respondWithSuccess(trans('api_msgs.extended'));
+          return $this->respondWithSuccess(trans('api_msgs.extended'));
+        }
 
     }
 
 
 
+
+        public function closeCampaign( Request $request )
+        {
+            $user =  $this->getAuthenticatedUser();
+
+            $validator = Validator::make( $request->all(), [
+                'id'                => 'required|exists:campaigns,id',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->setStatusCode(422)->respondWithError($validator->messages());
+                return $this->setStatusCode(422)->respondWithError(trans('parameters faild validation'));
+            }
+            else {
+              $campaign = Campaign::find( $request->id );
+              if($campaign->user_id!=$user->id)
+              {
+                return $this->setStatusCode(422)->respondWithError('you dont own it');
+              }
+              else {
+                $campaign->status = 5;
+                $campaign->save();
+                return $this->respondWithSuccess(trans('api_msgs.closed'));
+              }
+            }
+
+        }
+
+
+
+            public function cancelCampaign( Request $request )
+            {
+                $user =  $this->getAuthenticatedUser();
+
+                $validator = Validator::make( $request->all(), [
+                    'id'                => 'required|exists:campaigns,id',
+                ]);
+
+                if ($validator->fails()) {
+                    return $this->setStatusCode(422)->respondWithError($validator->messages());
+                    return $this->setStatusCode(422)->respondWithError(trans('parameters faild validation'));
+                }
+                else {
+                  $campaign = Campaign::find( $request->id );
+                  if($campaign->user_id!=$user->id)
+                  {
+                    return $this->setStatusCode(422)->respondWithError('you dont own it');
+                  }
+                  else {
+                    $campaign->status = 4;
+                    $campaign->save();
+                    return $this->respondWithSuccess(trans('api_msgs.canceled'));
+                  }
+                }
+            }
+
+
+/*
+0 = new
+1 = approved
+2 = rejected
+3 = finished
+4 = canceled
+5 = closed
+// 3 = in progress
+// 4= Pending proof
+// 5= Pending payment
+// 6= Confirmed
+*/
 
 
      public function approveCampaign( Request $request )
@@ -448,13 +526,13 @@ class CampignsContrller extends Controller
 
         //$campaigns = DB::table('campaigns')->first();
 
-        
+
         $campaign = Campaign::find( $request->id );
 
-        if($campaign->capaign_status == '0'){
+        if($campaign->status == '0'){
 
-            $campaign->capaign_status = '1';
-            
+            $campaign->status = '1';
+
             $campaign->save();
         }
 
@@ -491,7 +569,7 @@ class CampignsContrller extends Controller
 
             return $this->respondWithSuccess(trans('api_msgs.set status successfully'));
 
-            
+
         }
 
 
@@ -514,18 +592,18 @@ class CampignsContrller extends Controller
            //dd($campaign);
 
             //$result =  $this->campaignsTransformer->transformCollection(collect($campaign->items()));
-    
+
          //return $this->respondWithPagination($campaign,[ 'data' =>  $campaignsTransformer]);
 
-        //return $this->respond( ['data' => $this->campaignsTransformer->transformCollection(Campaign::where('capaign_status','1')->get())]);
+        //return $this->respond( ['data' => $this->campaignsTransformer->transformCollection(Campaign::where('status','1')->get())]);
 
         //return $this->respond($campaign ,['data' =>  $result]);
 
          $result = $this->campaignsTransformer->transformCollection($campaign);
 
-        return $this->sendResponse( $result,trans('lang.readed successfully'),200); 
+        return $this->sendResponse( $result,trans('lang.readed successfully'),200);
 
-            
+
         }
 
         public function favorite(Request $request)
@@ -540,27 +618,27 @@ class CampignsContrller extends Controller
                      ->pluck('campaign_id')->toArray();
             //dd($favorite);
 
-            $campaign = DB::table('campaigns')  
+            $campaign = DB::table('campaigns')
                      ->whereIn('id',  $favorite)
                      ->get();
 
             //dd($campaign);
 
           //$campaigns =  $this->campaignsTransformer->transformCollection(collect($campaigns->items()));
-    
+
         //return $this->respondWithPagination([ 'data' =>  $campaigns]);
 
         $results = $this->campaignsTransformer->transformCollection($campaign);
 
-        return $this->sendResponse( $results,trans('lang.readed successfully'),200); 
+        return $this->sendResponse( $results,trans('lang.readed successfully'),200);
 
-            
+
         }
-         
+
         /*$validator = Validator::make( $request->all(), [
             'id'                => 'required|exists:campaigns,id',
 
-            'capaign_status'    => 'required'
+            'status'    => 'required'
 
 
         ]);
@@ -572,14 +650,14 @@ class CampignsContrller extends Controller
 
         $campaign = Campaign::find( $request->id );
 
-        $campaign->capaign_status = $request->capaign_status;
+        $campaign->status = $request->status;
 
         $campaign->save();
 
 
         return $this->respondWithSuccess(trans('api_msgs.updated'));*/
 
-    
+
 
 
 
