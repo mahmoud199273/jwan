@@ -57,4 +57,12 @@ class Campaign extends Model
          return $this->hasMany('App\Offer','campaign_id','id');
         }
 
+
+    protected $casts = [
+        'is_extened' => 'string',
+
+        
+
+    ];
+
 }

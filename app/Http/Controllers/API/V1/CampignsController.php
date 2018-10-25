@@ -419,14 +419,14 @@ class CampignsController extends Controller
         {
           return $this->setStatusCode(422)->respondWithError('you dont own it');
         }
-        elseif($campaign->is_extened==1)
+        elseif($campaign->is_extened== '1')
         {
             return $this->setStatusCode(422)->respondWithError('Already extended before');
         }
         else {
           $end_date =  Carbon::parse($campaign->end_at);
           $end_date = $end_date->addDays($amount);
-          $campaign->is_extened = 1;
+          $campaign->is_extened = '1';
           $campaign->end_at = $end_date;
 
           $campaign->save();

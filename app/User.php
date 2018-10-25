@@ -84,6 +84,21 @@ class User extends Authenticatable
                return $this->hasMany('App\Offer','user_id','id');
             }
 
+    protected $casts = [
+        'gender' => 'string',
+
+        'account_manger' => 'string',
+
+        'account_type' => 'string',
+
+        'type' => 'string',
+
+        'is_active' => 'string',
+
+        'account_type' => 'string'
+
+    ];
+
     
 
 

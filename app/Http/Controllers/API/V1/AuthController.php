@@ -363,16 +363,16 @@ class AuthController extends Controller
 
             $user->name         =  $request->name;
 
-            $user->gender      =    $request->gender;
+            $user->gender      =    (string) $request->gender;
 
             $user->countries_id = $request->country_id;
 
-            $user->nationality_id       = $request->nationality_id;
+            $user->nationality_id   = $request->nationality_id;
 
 
             $user->notes             = $request->notes;
 
-            $user->account_manger      = $request->account_manger;
+            $user->account_manger      = (string) $request->account_manger;
 
             
 
