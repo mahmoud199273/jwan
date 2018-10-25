@@ -91,6 +91,7 @@ public function store(Request $request)
             // error you can't start this
             return $this->setStatusCode(422)->respondWithError('you cant start offer');
           }
+          dd($offer);
           $from_user_id = $user->id;
           $to_user_id = $offer->influcner_id;
         }
