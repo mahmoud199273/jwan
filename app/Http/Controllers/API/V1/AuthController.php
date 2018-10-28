@@ -102,6 +102,14 @@ class AuthController extends Controller
         return User::where('email',$email)->first() ? true : false;
     }*/
 
+    public function influncerHasOffer($influncer_id,$campaign_id)
+    {
+         return User::where([
+            ['influncer_id',$influncer_id],
+            ['campaign_id',$campaign_id]
+            ])->first() ? true : false;
+    }
+
 
 
 
@@ -526,6 +534,36 @@ class AuthController extends Controller
     }
 
 
+    /*public function login(Request $request){
+        $validator = Validator::make($request -> all(),[
+         'email' => 'required',
+         'password'=> 'required'
+        ]);
+
+        if ($validator -> fails()) {
+            # code...
+            return response()->json($validator->errors());
+            
+        }
+
+       
+        $credentials = $request->only('email','password');
+        try{
+            if (! $token = JWTAuth::attempt( $credentials) ) {
+                # code...
+                return response()->json( ['error'=> 'invalid email and password'],401);
+            }
+        }catch(JWTExceptiocredentialsn $e){
+
+          return response()->json( ['error'=> 'could not create token'],500);
+        }
+
+
+        return response()->json( compact('token'));
+        
+    }*/
+
+
 
     /*public function login( Request $request )
     {
@@ -552,21 +590,32 @@ class AuthController extends Controller
 
     }*/
 
+    public function checkLogin($email,$password,$account_type)
+    {
+        return User::where([
+            ['email',$email],
+            ['password',$password],
+            ['account_type',$account_type]
+            ])->first() ? true : false;
+    }
+
 
     public function login(Request $request){
       if(strpos($request->server("REQUEST_URI"), '/user/login'))
       {
-          $account_type = 0;
+          $account_type = '0';
+
+
       }
       elseif(strpos($request->server("REQUEST_URI"), '/influncer/login'))
       {
-          $account_type = 1;
+          $account_type = '1';
       }
       else {
         return $this->setStatusCode(422)->respondWithError('user type not exising');
       }
-        $validator = Validator::make($request -> all(),[
-         'email' => 'required',
+        $validator = Validator::make($request->all(),[
+         'email'   => 'required',
          'password'=> 'required',
         ]);
         /*if ($validator -> fails()) {
@@ -575,11 +624,33 @@ class AuthController extends Controller
 
         }*/
 
-        if ($validator->fails()) {
+
+
+          
+          /*if($this->checkLogin($request->email,$request->password,$account_type)){
+
+            return $this->setStatusCode(422)->respondWithError('this login are true you are a user');
+    }
+        
+        
+          if($this->checkLogin($request->email,$request->password,$account_type)){
+
+            return $this->setStatusCode(422)->respondWithError('this login are true you are a influncer');
+
+      }*/
+  
+      
+       // return $this->setStatusCode(422)->respondWithError('your login are false');
+       /* if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('parameters failed validation');
         }
+      
 
+        /*if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError('parameters failed validation');
+        }*/
 
+    
         $credentials = $request->only('email','password');
          if ( !$this->isActiveAccount( $credentials ) ) {
 
@@ -590,8 +661,10 @@ class AuthController extends Controller
             return $this->generateToken( $request->only('email' ,'password') );
 
         }
+    
 
     }
+
 
 
 
