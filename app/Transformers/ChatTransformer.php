@@ -26,7 +26,6 @@ class ChatTransformer extends Transformer
 						'type_title'	=> $type_array[(int)$chat->type],
 						'created_date'      => Carbon::parse($chat->created_at)->toDateTimeString(),
             'sent_time'     => Carbon::parse($chat->created_at)->format('M,d Y H:i'),
-						//'me'					=> User::where('id', $user->id)->get()->first()
         ];
     }
 }

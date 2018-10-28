@@ -1,34 +1,71 @@
 <?php
 
 
-function sendNotification($msg = 'new message', $msg_ar = 'رسالة جديدة', $player_id = null ,  $data = array() ){
-		$content = array(
-			"en" => $msg,
-			"ar" => $msg_ar
-			);
+    function sendNotification($account_type, $msg = 'new message', $player_id = null ,  $data = array())
+		{
+			if($account_type == 0) //user
+			{
+					$app_id = "2a3346f8-2d2b-4658-8577-d8e8f9903932";
+					$auth_key = "YjVhODBiYjMtMmZmZi00ZDc0LTgyZmYtMDNmM2U2YzY3MjVm";
+			}
+			elseif($account_type == 1)//influncer
+			{
+					$app_id = "b424f52b-e243-411c-81b0-b3cc568470b2";
+					$auth_key = "YTJiZDk1OGUtZmYxMy00ZWMyLWI1YTUtNDcxODVkNjQzNWJm";
+			}
+        $content = array(
+                         "en" => $msg,
+                         "ar" => $msg
+                         );
+        $fields = array(
+                        'app_id' => "$app_id",
+                        'include_player_ids' =>  $player_id,
+                        'data' => $data,
+                        'contents' => $content,
+                        'content_available' => true
+                        );
+        $fields = json_encode($fields);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json; charset=utf-8",
+                                                   "Authorization: Basic $auth_key"));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
+    }
 
-		$fields = array(
-			'app_id' => "9ba21795-7091-41ff-b1d1-b2768149d939",
-            'include_player_ids' =>  $player_id,
-            'data' => $data,
-			'contents' => $content,
-			'content_available' => true
-		);
-
-		$fields = json_encode($fields);
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
-												   'Authorization: Basic MGUwODRmMTUtY2ZhZS00ZjViLTg5ODQtZDNiNWQ0MGQ1ODdl '));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ch, CURLOPT_HEADER, FALSE);
-		curl_setopt($ch, CURLOPT_POST, TRUE);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-
-		$response = curl_exec($ch);
-		curl_close($ch);
-
-		return $response;
-	}
+    // function sendNotificationToAll($msg = '')
+    // {
+    //     $content = array(
+    //                      "en" => "$msg"
+    //                      );
+		//
+    //     $fields = array(
+    //                     'app_id' => "6af10f82-cf99-426b-9339-717a4a9ae988",
+    //                     'included_segments' => array('Active Users'),
+    //                     'data' => array("foo" => "bar"),
+    //                     'contents' => $content
+    //                     );
+		//
+    //     $fields = json_encode($fields);
+		//
+    //     $ch = curl_init();
+    //     curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+    //     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
+    //                                                'Authorization: Basic MDhjMThkZmUtNjIzNy00MDQxLTliZjMtNDA5YjJjZWVlNDVi'));
+    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    //     curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    //     curl_setopt($ch, CURLOPT_POST, TRUE);
+    //     curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+    //     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		//
+    //     $response = curl_exec($ch);
+    //     curl_close($ch);
+		//
+    //     return $response;
+    // }

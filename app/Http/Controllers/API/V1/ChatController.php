@@ -92,7 +92,7 @@ public function store(Request $request)
             return $this->setStatusCode(422)->respondWithError('you cant start offer');
           }
           $from_user_id = $user->id;
-          $to_user_id = $offer->influcner_id;
+          $to_user_id = $offer->influncer_id;
         }
         else {
           //influncer
@@ -108,8 +108,8 @@ public function store(Request $request)
             $offer->status = 1;
             $offer->save();
           }
-          $from_user_id = $campaign->user_id;
-          $to_user_id = $user->id;
+          $from_user_id = $user->id;
+          $to_user_id = $campaign->user_id;
         }
 
         $type = 1;
