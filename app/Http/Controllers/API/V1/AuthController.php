@@ -601,6 +601,7 @@ class AuthController extends Controller
 
 
     public function login(Request $request){
+
       if(strpos($request->server("REQUEST_URI"), '/user/login'))
       {
           $account_type = '0';
@@ -618,41 +619,10 @@ class AuthController extends Controller
          'email'   => 'required',
          'password'=> 'required',
         ]);
-        /*if ($validator -> fails()) {
-            # code...
-            return response()->json($validator->errors());
-
-        }*/
-
-
-
-          
-          /*if($this->checkLogin($request->email,$request->password,$account_type)){
-
-            return $this->setStatusCode(422)->respondWithError('this login are true you are a user');
-    }
         
-        
-          if($this->checkLogin($request->email,$request->password,$account_type)){
-
-            return $this->setStatusCode(422)->respondWithError('this login are true you are a influncer');
-
-      }*/
-  
-      
-       // return $this->setStatusCode(422)->respondWithError('your login are false');
-       /* if ($validator->fails()) {
-            return $this->setStatusCode(422)->respondWithError('parameters failed validation');
-        }
-      
-
-        /*if ($validator->fails()) {
-            return $this->setStatusCode(422)->respondWithError('parameters failed validation');
-        }*/
-
     
         $credentials = $request->only('email','password');
-         if ( !$this->isActiveAccount( $credentials ) ) {
+         if ( !$this->isActiveAccount( $credentials,$account_type ) ) {
 
             return $this->respondUnauthorized( trans('api_msgs.check_credentials') );
 
@@ -674,9 +644,9 @@ class AuthController extends Controller
 
 
 
-    public function isActiveAccount( array $credentails ) :bool
+    public function isActiveAccount( array $credentails, $type ) :bool
     {
-         if (! Auth::attempt(['email' => $credentails['email'] , 'password' => $credentails['password'] ,'is_active'=> '1' ])) {
+         if (! Auth::attempt(['email' => $credentails['email'] , 'password' => $credentails['password'] ,'is_active'=> '1' ,'account_type' => $type])) {
             // not active user
             return false;
 
