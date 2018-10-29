@@ -113,6 +113,13 @@ class OffersController extends Controller
     {
         $influncer =  $this->getAuthenticatedUser();
 
+        if($influncer->account_type == '0'){
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the rigtt to be here'));
+
+        
+
+        }
+
         $validator = Validator::make( $request->all(), [
 
             'campaign_id'      =>'required',

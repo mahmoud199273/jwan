@@ -166,6 +166,11 @@ class CampignsController extends Controller
     {
         $user =  $this->getAuthenticatedUser();
 
+        if($user->account_type == '1'){
+             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the rigtt to be here'));
+
+        }
+
         $validator = Validator::make( $request->all(), [
 
             'title'             => 'required',
@@ -272,7 +277,7 @@ class CampignsController extends Controller
 
                 'campaign_id'       => $campaign->id,
 
-                'file'              => $file['file'] ?? ""
+                'file'              => $file['file'] 
 
                 //'file_type'          => $file['type']
 

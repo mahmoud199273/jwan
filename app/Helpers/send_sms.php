@@ -1,6 +1,6 @@
 <?php 
 
-function sendSMS( $numbers , $msg = 'welcome to classes app')
+function sendSMS( $numbers , $msg = 'welcome to Signify app')
 {
 
 		$userAccount   = '966554554681';

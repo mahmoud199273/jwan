@@ -97,6 +97,11 @@ class AuthController extends Controller
         return User::where('phone',$phone)->first() ? true : false;
     }
 
+    public function isMailExists( $email )
+    {
+        return User::where('email',$email)->first() ? true : false;
+    }
+
     /*public function isEmailExists( $email )
     {
         return User::where('email',$email)->first() ? true : false;
@@ -212,6 +217,10 @@ class AuthController extends Controller
 
         if ($this->isPhoneExists( $request->phone )) {
            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+        }
+
+         if ($this->isMailExists( $request->email )) {
+           return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
         }
 
 
@@ -353,6 +362,10 @@ class AuthController extends Controller
 
         if ($this->isPhoneExists( $request->phone )) {
            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+        }
+
+         if ($this->isMailExists( $request->email )) {
+           return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
         }
 
         if ($validator->fails()) {
