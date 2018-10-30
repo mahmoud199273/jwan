@@ -94,6 +94,9 @@ Route::post('influncer/register', 'API\V1\AuthController@registerInfluncer');
 
 Route::post('influncer/login', 'API\V1\AuthController@login');
 
+
+Route::post('influncer/update/player_id'	, 'API\V1\UserController@updatePlayerId');
+
 //Route::post('influncer/logout', 'API\V1\AuthController@logout');
 
 
