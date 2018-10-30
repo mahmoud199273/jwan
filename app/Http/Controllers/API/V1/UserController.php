@@ -7,7 +7,7 @@ use App\Http\Controllers\API\V1\BaseController as Controller;
 use App\Transformers\ProfileTransformer;
 use App\Transformers\InfluncerTransformer;
 use App\User;
-//use App\UserPlayerId;
+use App\UserPlayerId;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -29,7 +29,7 @@ class UserController extends Controller
         $this->influncerTransformer = $influncerTransformer;
     }
 
-  
+
 
 
     public function profile( Request $request )
@@ -71,35 +71,35 @@ class UserController extends Controller
 
             'country_id' => 'required'
 
-            
-            
+
+
         ]);
 
         if ($this->isPhoneExists( $request->phone ,$user->id)) {
            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
         }
-        
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
         }
 
-       
+
 
         $user = User::find( $user->id );
 
         $user->name      =  $request->name;
-        
-       
+
+
         $user->email   = $request->email;
 
-        
+
         if ($user->phone  != $request->phone) {
             $user->phone   = $request->phone;
         }
 
 
-        $user->email        =  $request->email; 
+        $user->email        =  $request->email;
         if (substr( $request->image, 0, 4 ) !== "http") {
             $user->image        = $request->image;
         }
@@ -129,25 +129,25 @@ class UserController extends Controller
 
             'twitter' => 'nullable',
 
-            
+
 
             'instgrame' => 'nullable',
 
-            
+
 
             'snapchat' => 'nullable',
 
-            
+
 
             'linkedin' => 'nullable',
 
-            
+
 
             'youtube'     => 'nullable'
 
-            
 
-            
+
+
 
 
 
@@ -162,30 +162,30 @@ class UserController extends Controller
 
             $user->facebook          = $request->facebook;
 
-            
+
 
             $user->twitter            = $request->twitter;
 
-        
+
 
             $user->instgrame           = $request->instgrame;
 
-        
+
 
             $user->snapchat            = $request->snapchat;
 
-            
+
 
             $user->linkedin             = $request->linkedin;
 
-           
+
 
             $user->youtube             = $request->youtube;
 
-            
+
         $user->save();
         return $this->respondWithSuccess(trans('api_msgs.profile_updated'));
-        
+
     }
 
     public function updateInfluncerProfile(Request $request )
@@ -197,7 +197,7 @@ class UserController extends Controller
             'email'    => 'required|string',
 
             'phone'   => 'required|string',
-            
+
 
             'image'         => 'required',
 
@@ -206,21 +206,21 @@ class UserController extends Controller
             'gender'        => 'required',
 
             'country_id'   => 'required',
-            
+
 
             'notes'          => 'required',
 
             'account_manger' => 'required'
 
-            
 
-     
+
+
 
         ]);
 
-       
 
-        
+
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
@@ -230,14 +230,14 @@ class UserController extends Controller
            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
         }
 
-       
+
             if ($user->phone != $request->phone) {
                 # code...
-                $user->phone        =  $request->phone; 
+                $user->phone        =  $request->phone;
             }
 
 
-            $user->email        =  $request->email; 
+            $user->email        =  $request->email;
             if (substr( $request->image, 0, 4 ) !== "http") {
                 $user->image        = $request->image;
             }
@@ -249,27 +249,27 @@ class UserController extends Controller
             $user->gender        =    $request->gender;
 
             $user->notes         = $request->notes;
-            
+
             $user->countries_id = $request->country_id;
 
             $user->account_manger  = $request->account_manger;
 
             $user->save();
 
-        /*$categories_id  =$request->categories_id;    
+        /*$categories_id  =$request->categories_id;
             //dd($categories_id);
             foreach ($categories_id  as $id) {
-                
+
                 UserCategory::create([
 
                 'user_id'       => $user->id,
 
                 'categories_id' => $id,
-            
+
 
                       ]);
             }
-            $countries_id  =$request->countries_id;    
+            $countries_id  =$request->countries_id;
 
             foreach ($countries_id  as $id) {
                 UserCountry::create([
@@ -277,12 +277,12 @@ class UserController extends Controller
                 'user_id'       => $user->id,
 
                 'country_id' => $id,
-            
+
 
                       ]);
             }
 
-            $areas_id  =$request->areas_id;    
+            $areas_id  =$request->areas_id;
 
             foreach ($areas_id  as $id) {
                 UserArea::create([
@@ -290,7 +290,7 @@ class UserController extends Controller
                 'user_id'       => $user->id,
 
                 'area_id' => $id,
-            
+
 
                       ]);
             }*/
@@ -330,7 +330,7 @@ class UserController extends Controller
 
             'youtube_follwers' => 'nullable'
 
-            
+
 
 
 
@@ -368,7 +368,7 @@ class UserController extends Controller
             $user->youtube_follwers   = $request->youtube_follwers;
         $user->save();
         return $this->respondWithSuccess(trans('api_msgs.profile_updated'));
-        
+
     }
 
 
@@ -380,7 +380,7 @@ class UserController extends Controller
     public function isPhoneExists( $phone , $user_id )
     {
         return DB::table('users')->where([['id','<>',$user_id] ,['phone' ,$phone]])->first() ?  true : false ;
-        
+
     }
 
 
@@ -393,7 +393,7 @@ class UserController extends Controller
             'new_password'  => 'required|string|max:25|min:8'
         ]);
 
-        
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('paramters failed validation');
         }
@@ -423,7 +423,7 @@ class UserController extends Controller
             'new_password'  => 'required|string|max:25|min:8'
         ]);
 
-        
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('paramters failed validation');
         }
@@ -455,13 +455,13 @@ class UserController extends Controller
 
     public function uploadProfileImage( $image )
     {
-        $imagePath = "";      
-        $image_name = time().time().'_profile.'.$image->getClientOriginalExtension();  
+        $imagePath = "";
+        $image_name = time().time().'_profile.'.$image->getClientOriginalExtension();
         $imageDir   = base_path() .'/public/assets/images/profile';
-        $upload_img = $image->move($imageDir,$image_name); 
+        $upload_img = $image->move($imageDir,$image_name);
         $imagePath  = '/public/assets/images/profile/'.$image_name;
 
-        return $imagePath;   
+        return $imagePath;
     }
 
 
@@ -470,8 +470,8 @@ class UserController extends Controller
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-   /* public function updatePlayerId( Request $request )
-    {
+   public function updatePlayerId( Request $request )
+   {
         $user =  $this->getAuthenticatedUser();
 
         $validator = Validator::make( $request->all(), [
@@ -486,21 +486,21 @@ class UserController extends Controller
 
         return $this->respondWithSuccess('sucess');
 
-    }*/
+    }
 
 
 
     public function getNotifications( Request $request )
     {
         $user =  $this->getAuthenticatedUser();
-        
+
         $notifications =  Notification::where('user_id' , $user->id)->latest()->get();
 
         return $this->respond(['data' => $notifications ]);
     }
 
 
-    
+
 
 
 
