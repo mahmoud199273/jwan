@@ -174,6 +174,9 @@ Route::get('/influncer/offer/{id}','API\V1\OffersController@show');
 
 
 
+Route::get('/user/campaign/offer/approve/{id}','API\V1\OffersController@approve');
+
+
 
 
 /* about the app - license agreement */
