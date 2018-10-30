@@ -127,18 +127,17 @@ class OffersController extends Controller
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
         }
 
-
+        $campaign = Campaign::where('id', $request->campaign_id)->get()->first();
 
         $offer = new Offer;
         $offer->campaign_id     = $request->campaign_id;
+        $offer->user_id = $campaign->user_id;
         $offer->influncer_id     = $influncer->id;
         $offer->cost            = $request->cost;
         $offer->description     = $request->description;
         $offer->save();
 
         //$request->description
-        $campaign = Campaign::where('id', $request->campaign_id)->get();
-
 
         $chat = new Chat;
         $chat->from_user_id	= $influncer->id;
