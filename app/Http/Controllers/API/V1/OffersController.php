@@ -258,32 +258,32 @@ class OffersController extends Controller
 
 
 
-    public function offerStatus(Request $request)
-    {
-        $user =  $this->getAuthenticatedUser();
-
-        $validator = Validator::make( $request->all(), [
-        'id'                   => 'required|exists:offers,id',
-        'status'                     => 'required'
-
-        ]);
-
-        if ($validator->fails()) {
-            return $this->setStatusCode(422)->respondWithError($validator->messages());
-            return $this->setStatusCode(422)->respondWithError('parameters faild validation');
-        }
-
-        $offer = Offer::find($request->id);
-
-
-        $offer->status         = $request->status;
-
-        $offer->user_id        = $user->id;
-
-        $offer->save();
-
-        return $this->respondWithSuccess(trans('lang.set status successfully'));
-    }
+    // public function offerStatus(Request $request)
+    // {
+    //     $user =  $this->getAuthenticatedUser();
+    //
+    //     $validator = Validator::make( $request->all(), [
+    //     'id'                   => 'required|exists:offers,id',
+    //     'status'                     => 'required'
+    //
+    //     ]);
+    //
+    //     if ($validator->fails()) {
+    //         return $this->setStatusCode(422)->respondWithError($validator->messages());
+    //         return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+    //     }
+    //
+    //     $offer = Offer::find($request->id);
+    //
+    //
+    //     $offer->status         = $request->status;
+    //
+    //     $offer->user_id        = $user->id;
+    //
+    //     $offer->save();
+    //
+    //     return $this->respondWithSuccess(trans('lang.set status successfully'));
+    // }
 
 
 }
