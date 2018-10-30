@@ -181,21 +181,26 @@ class OffersController extends Controller
 
        $offer = Offer::find($request->id);
        $offer->cost            = $request->cost;
-       $offer->description     = $request->description;
+       if(strlen($request->description)!=0)
+       {
+         $offer->description     = $request->description;
+       }
        $offer->save();
 
        //$request->description
        $campaign = Campaign::where('id', $request->campaign_id)->get();
 
-
-       $chat = new Chat;
-       $chat->from_user_id	= $influncer->id;
-       $chat->to_user_id = $campaign->user_id;
-       $chat->offer_id = $offer->id;
-       $chat->campaign_id = $campaign->id;
-       $chat->content = $request->description;
-       $chat->type = 1;
-       $chat->save();
+       if(strlen($request->description)!=0)
+       {
+         $chat = new Chat;
+         $chat->from_user_id	= $influncer->id;
+         $chat->to_user_id = $campaign->user_id;
+         $chat->offer_id = $offer->id;
+         $chat->campaign_id = $campaign->id;
+         $chat->content = $request->description;
+         $chat->type = 1;
+         $chat->save();
+       }
 
 
 
