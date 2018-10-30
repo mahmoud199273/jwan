@@ -182,6 +182,7 @@ Route::get('/user/campaign/offer/pay/{id}','API\V1\OffersController@pay');
 
 
 Route::get('/influncer/campaign/offer/inprogress/{id}','API\V1\OffersController@inprogress');
+Route::get('/influncer/campaign/offer/proof/{id}','API\V1\OffersController@proof');
 
 
 

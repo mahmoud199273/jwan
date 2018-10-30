@@ -132,20 +132,35 @@ class OffersController extends Controller
 
 
 
-        public function inprogress(Request $request)
-        {
-            $user =  $this->getAuthenticatedUser();
-            // security check should be influncer and owner of request
-            $offer = Offer::where([['id',$request->id], ['status', "3"]])->get()->first();
-            if(!$offer){
-                return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not approved'));
-            }
-            $offer->status = "4";
-            $offer->save();
-            ///////////////////////////////////// payment success or redirect /////////////////////////////////////
-            //////////////////// new push /////////////////////////////////////
-            return $this->respondWithSuccess(trans('api_msgs.updated'));
-        }
+                public function inprogress(Request $request)
+                {
+                    $user =  $this->getAuthenticatedUser();
+                    // security check should be influncer and owner of request
+                    $offer = Offer::where([['id',$request->id], ['status', "3"]])->get()->first();
+                    if(!$offer){
+                        return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not approved'));
+                    }
+                    $offer->status = "4";
+                    $offer->save();
+                    ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+                    //////////////////// new push /////////////////////////////////////
+                    return $this->respondWithSuccess(trans('api_msgs.updated'));
+                }
+
+                public function proof(Request $request)
+                {
+                    $user =  $this->getAuthenticatedUser();
+                    // security check should be influncer and owner of request
+                    $offer = Offer::where([['id',$request->id], ['status', "4"]])->get()->first();
+                    if(!$offer){
+                        return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not being working on'));
+                    }
+                    $offer->status = "5";
+                    $offer->save();
+                    ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+                    //////////////////// new push /////////////////////////////////////
+                    return $this->respondWithSuccess(trans('api_msgs.updated'));
+                }
 
 
 
