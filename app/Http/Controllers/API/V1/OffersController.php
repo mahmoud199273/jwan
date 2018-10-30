@@ -146,6 +146,40 @@ class OffersController extends Controller
         }
 
 
+        public function finish(Request $request)
+        {
+        $user =  $this->getAuthenticatedUser();
+        // security check
+        $offer = Offer::where([['id',$request->id], ['status', "5"]])->get()->first();
+        if(!$offer){
+        return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not proofed'));
+        }
+        $offer->status = "7";
+        $offer->save();
+        ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+        //////////////////// new push /////////////////////////////////////
+        return $this->respondWithSuccess(trans('api_msgs.updated'));
+        }
+
+
+        public function user_cancel(Request $request)
+        {
+            $user =  $this->getAuthenticatedUser();
+            // security check should be influncer and owner of request
+            $offer = Offer::
+                            where([['id',$request->id], ['status', "1"]])
+                            ->orWhere([['id',$request->id], ['status', "3"]])
+                            ->get()->first();
+            if(!$offer){
+                return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or you not allowed now'));
+            }
+            $offer->status = "9";
+            $offer->save();
+            ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+            //////////////////// new push /////////////////////////////////////
+            return $this->respondWithSuccess(trans('api_msgs.updated'));
+        }
+
 
 
 
@@ -179,7 +213,24 @@ class OffersController extends Controller
                     return $this->respondWithSuccess(trans('api_msgs.updated'));
                 }
 
-
+                public function influncer_cancel(Request $request)
+                {
+                    $user =  $this->getAuthenticatedUser();
+                    // security check should be influncer and owner of request
+                    $offer = Offer::
+                                    where([['id',$request->id], ['status', "0"]])
+                                    ->orWhere([['id',$request->id], ['status', "1"]])
+                                    ->orWhere([['id',$request->id], ['status', "3"]])
+                                    ->get()->first();
+                    if(!$offer){
+                        return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or you not allowed now'));
+                    }
+                    $offer->status = "8";
+                    $offer->save();
+                    ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+                    //////////////////// new push /////////////////////////////////////
+                    return $this->respondWithSuccess(trans('api_msgs.updated'));
+                }
 
 
 
