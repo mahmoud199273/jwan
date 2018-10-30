@@ -220,7 +220,7 @@ class OffersController extends Controller
 
             $validator = Validator::make( $request->all(), [
             'id'                   => 'required|exists:offers,id',
-            'status'                     => 'required'
+            'status'               => 'required'
 
             ]);
 
