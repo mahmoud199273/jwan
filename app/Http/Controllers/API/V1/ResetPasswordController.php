@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -17,6 +18,47 @@ class ResetPasswordController extends Controller
     function __construct( Request $request ){
         App::setlocale($request->lang);
     }
+
+
+     public function sendMail( Request $request )
+    {
+      // atef comment //should also validate if data sent are email.
+        $validator = Validator::make( $request->all(), [
+            'email'                  => 'required|exists:users',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_email'));
+        }
+
+        //create reset password code
+        Password::sendResetLink(['email' => $request->email]);
+      
+        //Password::sendResetLink(['email' => $request->email]);
+
+        return $this->respondCreated(trans('api_msgs.Mail_sent'));
+    }
+
+
+
+
+
+    public function createMailToken( $email )
+    {
+        $token    = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
+        $current_time   = Carbon::now();
+        $created_at     = $current_time->toDateTimeString();
+        //$expired_at     = $current_time->addHours(1)->toDateTimeString();
+      
+        //send Mail to mobile
+
+    }
+
+
+
+
+
+
 
 
 
@@ -37,6 +79,10 @@ class ResetPasswordController extends Controller
         return $this->respondCreated(trans('api_msgs.code_sent'));
     }
 
+    
+
+
+
     public function createToken( $phone )
     {
         $token    = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
@@ -50,7 +96,7 @@ class ResetPasswordController extends Controller
                    'expired_at'    => $expired_at
                                                 ]);
         //send message to mobile
-        @sendSMS($this->formatPhone($phone) , __('api_msgs.reset_pass_code').$token );
+        @sendSMS($this->formatPhone($mail) , __('api_msgs.reset_pass_code').$token );
 
     }
 
