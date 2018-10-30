@@ -630,9 +630,15 @@ class AuthController extends Controller
       }
         $validator = Validator::make($request->all(),[
          'email'   => 'required',
-         'password'=> 'required',
+         'password'=> 'required'
         ]);
+        
+         if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError('parameters failed validation');
+        }
 
+        
+    
 
         $credentials = $request->only('email','password');
          if ( !$this->isActiveAccount( $credentials,$account_type ) ) {

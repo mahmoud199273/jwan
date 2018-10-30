@@ -2,9 +2,10 @@
 
 namespace App\Transformers;
 use App\Offer;
-use App\User;
 use App\Transformers\BaseTransformer as Transformer;
 use App\Transformers\InfluncerTransformer;
+use App\User;
+use Carbon\Carbon;
 
 
 
@@ -25,7 +26,7 @@ class OffersTransformer extends Transformer
 
             'influncer_rate'    => 3,
 
-            'user'              => isset($offer->user) ? $offer->user :null ,
+            'user'              => isset($offer->user) ? $offer->user : null,
 
             'campaign'          => isset($offer->campaign) ? $offer->campaign :null ,
 
@@ -36,9 +37,9 @@ class OffersTransformer extends Transformer
 
             'status'   => $offer->status,
 
-            'created_date'      => $offer->created_at,
+            'created_date'      => Carbon::parse($offer->created_at)->toDateTimeString(),
 
-            'updated_date'      => $offer->updated_at,
+            'updated_date'      => Carbon::parse($offer->updated_at)->toDateTimeString(),
             
 
         ];

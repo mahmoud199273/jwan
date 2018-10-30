@@ -27,5 +27,6 @@ class Offer extends Model
     {
         return $this->belongsTo('App\User','influncer_id','id');
     }
+    
 
 }
