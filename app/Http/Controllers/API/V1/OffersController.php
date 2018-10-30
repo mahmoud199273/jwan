@@ -6,6 +6,8 @@ use App\Http\Controllers\API\V1\BaseController as Controller;
 use App\Transformers\OffersTransformer;
 use App\User;
 use App\Offer;
+use App\Chat;
+use App\Campaign;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -42,19 +44,9 @@ class OffersController extends Controller
      public function allOffers( Request $request,User $user )
      {
          $influncer =  $this->getAuthenticatedUser();
-
-
-
-
          $offers = Offer::where('influncer_id',$influncer->id)->get();
-
         // dd($offers);
-
-
-
-
-
-         return $this->sendResponse( $this->offersTransformer->transformCollection($offers),trans('lang.read succefully'),200);   
+         return $this->sendResponse( $this->offersTransformer->transformCollection($offers),trans('lang.read succefully'),200);
      }
 
 
@@ -62,7 +54,7 @@ class OffersController extends Controller
 
 
 
- 
+
 
 
 
@@ -115,27 +107,19 @@ class OffersController extends Controller
 
         if($influncer->account_type == '0'){
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the rigtt to be here'));
-
-        
-
         }
 
         $validator = Validator::make( $request->all(), [
 
             'campaign_id'      =>'required',
 
-            'cost'             =>'required',
+            'cost'             =>'nullable',
 
-            'description'      =>'required'    
-
- 
-
+            'description'      =>'required'
         ]);
 
         if($this->influncerHasOffer($influncer->id,$request->campaign_id)){
-
             return $this->setStatusCode(422)->respondWithError('Already offerd before');
-
         }
 
         if ($validator->fails()) {
@@ -143,32 +127,90 @@ class OffersController extends Controller
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
         }
 
-         
+
 
         $offer = new Offer;
-
-
         $offer->campaign_id     = $request->campaign_id;
-
-        
         $offer->influncer_id     = $influncer->id;
-
         $offer->cost            = $request->cost;
-
         $offer->description     = $request->description;
-
         $offer->save();
 
+        //$request->description
+        $campaign = Campaign::where('id', $request->campaign_id)->get();
 
+
+        $chat = new Chat;
+        $chat->from_user_id	= $influncer->id;
+        $chat->to_user_id = $campaign->user_id;
+        $chat->offer_id = $offer->id;
+        $chat->campaign_id = $request->campaign_id;
+        $chat->content = $request->description;
+        $chat->type = 1;
+        $chat->save();
+
+        //////////////////////////////////// new push /////////////////////////////////////////////
         return $this->respondWithSuccess(trans('api_msgs.created'));
 
     }
 
-    
 
 
-         public function offerStatus(Request $request)
+    public function update( Request $request )
+    {
+       $influncer =  $this->getAuthenticatedUser();
 
+       if($influncer->account_type == '0'){
+           return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the rigtt to be here'));
+       }
+
+       $validator = Validator::make( $request->all(), [
+          'id'                => 'required|exists:offers,id',
+          'cost'             =>'required',
+       ]);
+
+       // if($this->influncerHasOffer($influncer->id,$request->campaign_id)){
+       //     return $this->setStatusCode(422)->respondWithError('Already offerd before');
+       // }
+
+       if ($validator->fails()) {
+           return $this->setStatusCode(422)->respondWithError($validator->messages());
+           return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
+       }
+
+
+
+       $offer = Offer::find($request->id);
+       $offer->cost            = $request->cost;
+       $offer->description     = $request->description;
+       $offer->save();
+
+       //$request->description
+       $campaign = Campaign::where('id', $request->campaign_id)->get();
+
+
+       $chat = new Chat;
+       $chat->from_user_id	= $influncer->id;
+       $chat->to_user_id = $campaign->user_id;
+       $chat->offer_id = $offer->id;
+       $chat->campaign_id = $campaign->id;
+       $chat->content = $request->description;
+       $chat->type = 1;
+       $chat->save();
+
+
+
+      //////////////////////////////////// new push //////////////////////////////////////////////////////
+
+       return $this->respondWithSuccess(trans('api_msgs.created'));
+
+
+       ///////////////////// zzzzzzzz //////
+
+     }
+
+
+        public function offerStatus(Request $request)
         {
             $user =  $this->getAuthenticatedUser();
 
@@ -193,18 +235,7 @@ class OffersController extends Controller
             $offer->save();
 
             return $this->respondWithSuccess(trans('lang.set status successfully'));
-
-            
         }
-
-
-        
-
-    
-
-
-
-
 
 
     public function destroy(Request $request )
@@ -225,6 +256,34 @@ class OffersController extends Controller
 
     }
 
+
+
+    public function offerStatus(Request $request)
+    {
+        $user =  $this->getAuthenticatedUser();
+
+        $validator = Validator::make( $request->all(), [
+        'id'                   => 'required|exists:offers,id',
+        'status'                     => 'required'
+
+        ]);
+
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError($validator->messages());
+            return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+        }
+
+        $offer = Offer::find($request->id);
+
+
+        $offer->status         = $request->status;
+
+        $offer->user_id        = $user->id;
+
+        $offer->save();
+
+        return $this->respondWithSuccess(trans('lang.set status successfully'));
+    }
 
 
 }

@@ -156,7 +156,8 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  /* influncer offers route */
 
- Route::post('/influncer/create/offer','API\V1\OffersController@store');
+  Route::post('/influncer/create/offer','API\V1\OffersController@store');
+  Route::post('/influncer/update/offer','API\V1\OffersController@update');
 
  //Route::post('/user/accept/offer','API\V1\OffersController@acceptOffer');
 
