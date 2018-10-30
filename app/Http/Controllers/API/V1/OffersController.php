@@ -113,6 +113,23 @@ class OffersController extends Controller
             return $this->respondWithSuccess(trans('api_msgs.updated'));
         }
 
+
+
+                public function reject(Request $request)
+                {
+                    $user =  $this->getAuthenticatedUser();
+                    // security check
+                    $offer = Offer::where([['id',$request->id], ['status', "0"]])->get()->first();
+                    if(!$offer){
+                        return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or approved before'));
+                    }
+                    $offer->status = "2";
+                    $offer->save();
+
+                    //////////////////// new push /////////////////////////////////////
+                    return $this->respondWithSuccess(trans('api_msgs.updated'));
+                }
+
         public function pay(Request $request)
         {
             $user =  $this->getAuthenticatedUser();
