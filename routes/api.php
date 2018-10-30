@@ -82,7 +82,6 @@ Route::post('user/send/complanit', 'API\V1\ComplaintsController@store');
 
 Route::post('user/update/player_id'	, 'API\V1\UserController@updatePlayerId');
 
-Route::post('influncer/update/player_id'	, 'API\V1\UserController@updatePlayerId');
 
 Route::get('user/notifications','API\V1\UserController@getNotifications');
 
