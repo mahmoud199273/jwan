@@ -27,6 +27,9 @@ class Offer extends Model
     {
         return $this->belongsTo('App\User','influncer_id','id');
     }
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
 
     protected $dates = [
         'created_at',
