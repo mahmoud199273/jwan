@@ -36,9 +36,9 @@ class OffersTransformer extends Transformer
 
             'status'   => $offer->status,
 
-            'created_date'      => $offer->created_at,
+            'created_date'      => Carbon::parse($campaign->created_at)->toDateTimeString(),
 
-            'updated_date'      => $offer->updated_at,
+            'updated_date'      => Carbon::parse($campaign->updated_at)->toDateTimeString(),
             
 
         ];
