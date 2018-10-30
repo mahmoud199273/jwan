@@ -7,7 +7,7 @@ use App\User;
 use App\UserCategory;
 use App\UserCountry;
 use App\UserArea;
-//use App\UserPlayerId;
+use App\UserPlayerId;
 //use App\VerifyPhoneCode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -174,9 +174,9 @@ class AuthController extends Controller
     	$validator = Validator::make( $request->all(), [
 
             'email'         => 'required',
-        
+
             'phone'         => 'required|max:14|min:9',
-            
+
             'country_id'    => 'required',
 
             'password'      => 'required|string|max:25|min:8',
@@ -191,23 +191,23 @@ class AuthController extends Controller
 
             'facebook'      => 'nullable',
 
-            
+
 
             'twitter' => 'nullable',
 
-            
+
 
             'instgrame' => 'nullable',
 
-            
+
 
             'snapchat' => 'nullable',
 
-            
+
 
             'linkedin' => 'nullable',
 
-            
+
 
             'youtube'       => 'nullable'
 
@@ -236,10 +236,10 @@ class AuthController extends Controller
 		  $user = new User();
 
 
-           $user->phone         =  $request->phone; 
+           $user->phone         =  $request->phone;
 
-            $user->email        =  $request->email; 
-            
+            $user->email        =  $request->email;
+
             $user->password     =  bcrypt($request->password);
 
              if(!$request->image){
@@ -276,12 +276,12 @@ class AuthController extends Controller
             $user->countries_id = $request->country_id;
 
 
-        
 
-            $user->is_active        =  '1'; 
+
+            $user->is_active        =  '1';
             $user->account_type     =  '0';
             $user->save();
-            
+
 
            // $this->createVerificationCode( arTOen($request->phone) );
 
@@ -296,14 +296,14 @@ class AuthController extends Controller
 
     public function registerInfluncer( Request $request )
     {
-        
+
 
         $validator = Validator::make( $request->all(), [
 
             'email'         => 'required|unique:users,email',
-        
+
             'phone'         => 'required|max:14|min:9',
-            
+
             'password'      => 'required|string|max:25|min:8',
 
             'image'         => 'nullable',
@@ -320,7 +320,7 @@ class AuthController extends Controller
 
             'account_manger' => 'required',
 
-            
+
 
             'minimumRate'   =>  'required',
 
@@ -379,10 +379,10 @@ class AuthController extends Controller
             $user = new User();
 
 
-            $user->phone        =  $request->phone; 
+            $user->phone        =  $request->phone;
 
-            $user->email        =  $request->email; 
-            
+            $user->email        =  $request->email;
+
             $user->password     =  bcrypt($request->password);
 
              if(!$request->image){
@@ -409,7 +409,7 @@ class AuthController extends Controller
 
             $user->account_manger      = $request->account_manger;
 
-            
+
 
             $user->minimumRate       = $request->minimumRate;
 
@@ -446,8 +446,8 @@ class AuthController extends Controller
 
 
 
-            $user->is_active    =  '1'; 
-            
+            $user->is_active    =  '1';
+
             $user->save();
 
            $categories_id  =$request->categories_id;
@@ -556,10 +556,10 @@ class AuthController extends Controller
         if ($validator -> fails()) {
             # code...
             return response()->json($validator->errors());
-            
+
         }
 
-       
+
         $credentials = $request->only('email','password');
         try{
             if (! $token = JWTAuth::attempt( $credentials) ) {
@@ -573,7 +573,7 @@ class AuthController extends Controller
 
 
         return response()->json( compact('token'));
-        
+
     }*/
 
 
@@ -581,7 +581,7 @@ class AuthController extends Controller
     /*public function login( Request $request )
     {
     	$validator = Validator::make( $request->all(), [
-            
+
             'email'			=> 'required',
             'password'		=> 'required'
         ]);
@@ -632,13 +632,14 @@ class AuthController extends Controller
          'email'   => 'required',
          'password'=> 'required'
         ]);
-
+        
          if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('parameters failed validation');
         }
 
         
     
+
         $credentials = $request->only('email','password');
          if ( !$this->isActiveAccount( $credentials,$account_type ) ) {
 
@@ -649,7 +650,7 @@ class AuthController extends Controller
             return $this->generateToken( $request->only('email' ,'password') );
 
         }
-    
+
 
     }
 
@@ -752,20 +753,13 @@ class AuthController extends Controller
     {
         $user = $this->getAuthenticatedUser();
 
-        //$validator = Validator::make( $request->all(), [
-           // 'player_id'     => 'required',
-        //]);
-        
-       /*if ($validator->fails()) {
-           return $this->setStatusCode(422)->respondWithError('parameters failed validation');
-         }*/
-        
+        $validator = Validator::make( $request->all(), [
+            'player_id'     => 'required',
+        ]);
 
-       // if ($validator->fails()) {
-         //   return $this->setStatusCode(422)->respondWithError('parameters failed validation');
-       // }
-
-
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError('parameters failed validation');
+        }
 
         $current_token  = JWTAuth::getToken();
 
@@ -773,7 +767,7 @@ class AuthController extends Controller
             return $this->setStatusCode(422)->respondWithError('parameters faild validation');
         }
 
-        //UserPlayerId::where([['user_id', $user->id ],['player_id' , $request->player_id ]])->delete();
+        UserPlayerId::where([['user_id', $user->id ],['player_id' , $request->player_id ]])->delete();
         JWTAuth::setToken( $current_token )->invalidate();
         return $this->respondWithSuccess( trans('api_msgs.loggedout') );
 

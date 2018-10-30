@@ -22,6 +22,7 @@ class ResetPasswordController extends Controller
 
     public function sendCode( Request $request )
     {
+      // atef comment //should also validate if data sent are email.
         $validator = Validator::make( $request->all(), [
             'phone'                  => 'required|max:14|min:9|exists:users',
         ]);

@@ -1,9 +1,10 @@
 <?php
- 
+
 namespace App\Http\Controllers\API\V1;
 use App\Traits\Restable;
 use Illuminate\Http\Request;
 use App\User;
+use App\UserPlayerId;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 
 
-class BaseController extends Controller  
+class BaseController extends Controller
 {
 
     use ValidatesRequests, Restable;
@@ -38,7 +39,7 @@ class BaseController extends Controller
             $response['date'] = $errorMessages;
         }
         return response()->json($response , $code);
-        
+
     }
 
     // public function transformCollection(Collection $items ) : Collection
@@ -121,13 +122,20 @@ class BaseController extends Controller
 
     public function uploadFile( $file , $path )
     {
-        $filePath = "";      
-        $file_name = time().time().uniqid().'.'.$file->getClientOriginalExtension();  
+        $filePath = "";
+        $file_name = time().time().uniqid().'.'.$file->getClientOriginalExtension();
         $fileDir   = base_path() .'/public/assets/'.$path;
-        $upload_file = $file->move($fileDir,$file_name); 
+        $upload_file = $file->move($fileDir,$file_name);
         $filePath  = '/public/assets/'.$path.$file_name;
 
-        return $filePath;   
+        return $filePath;
     }
-  
+
+
+    public function getUserPlayerIds( $user_id )
+    {
+        $player_ids = UserPlayerId::where('user_id',$user_id)->pluck('player_id')->toArray();
+        return $player_ids ? $player_ids : null;
+    }
+
 }
