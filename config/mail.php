@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'smtp.sendgrid.net'),
 
     /*
     |--------------------------------------------------------------------------
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => env('sreer'),
+    // 'username' => env('sreer'),
 
-    'password' => env('123456789asdASD!@#'),
+    // 'password' => env('123456789asdASD!@#'),
 
     /*
     |--------------------------------------------------------------------------

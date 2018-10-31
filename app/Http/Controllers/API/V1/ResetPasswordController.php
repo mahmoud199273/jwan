@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\API\V1\BaseController as Controller;
-use App\ResetPassword;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,9 +26,9 @@ class ResetPasswordController extends Controller
             'email'                  => 'required|exists:users',
         ]);
 
-        if ($validator->fails()) {
-            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_email'));
-        }
+        // if ($validator->fails()) {
+        //     return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_email'));
+        // }
 
         //create reset password code
         Password::sendResetLink(['email' => $request->email]);

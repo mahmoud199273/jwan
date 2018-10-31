@@ -100,3 +100,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 
 	});
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
