@@ -194,6 +194,11 @@ Route::get('/influncer/campaign/offer/inprogress/{id}','API\V1\OffersController@
 Route::get('/influncer/campaign/offer/proof/{id}','API\V1\OffersController@proof');
 Route::get('/influncer/campaign/offer/cancel/{id}','API\V1\OffersController@influncer_cancel');
 Route::post('/influncer/campaign/offer/rate/{id}','API\V1\OffersController@influncer_rate');
+Route::get('/influncer/offers/get_inprogress','API\V1\OffersController@get_inprogresses');
+
+Route::get('/influncer/offers/get_proofed','API\V1\OffersController@get_proofed');
+
+Route::get('/influncer/offers/canceled','API\V1\OffersController@canceledOffers');
 
 
 
