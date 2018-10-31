@@ -148,17 +148,37 @@ class OffersController extends Controller
 
         public function finish(Request $request)
         {
-        $user =  $this->getAuthenticatedUser();
-        // security check
-        $offer = Offer::where([['id',$request->id], ['status', "5"]])->get()->first();
-        if(!$offer){
-        return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not proofed'));
-        }
-        $offer->status = "7";
-        $offer->save();
-        ///////////////////////////////////// payment success or redirect /////////////////////////////////////
-        //////////////////// new push /////////////////////////////////////
-        return $this->respondWithSuccess(trans('api_msgs.updated'));
+            $user =  $this->getAuthenticatedUser();
+            // security check
+            $validator = Validator::make( $request->all(), [
+                'id'                => 'required|exists:offers,id',
+                'rate'              => 'required|integer|between:1,5',
+                'comment'           => 'nullable|string'
+            ]);
+
+            if ($validator->fails()) {
+              return redirect()->back()->withInput($request->input())->withErrors($validator);
+            }
+
+            $offer = Offer::where([['id',$request->id], ['status', "5"]])->get()->first();
+            if(!$offer){
+              return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not proofed'));
+            }
+            $offer->status = "7";
+            $offer->save();
+
+
+            $chat = new Chat;
+            $chat->from_user_id	= $offer->influncer_id;
+            $chat->to_user_id = $campaign->user_id;
+            $chat->offer_id = $offer->id;
+            $chat->campaign_id = $offer->campaign_id;
+            $chat->content = $request->comment;
+            $chat->type = 1;
+            $chat->save();
+            ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+            //////////////////// new push /////////////////////////////////////
+            return $this->respondWithSuccess(trans('api_msgs.updated'));
         }
 
 
