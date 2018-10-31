@@ -63,7 +63,8 @@ class OffersController extends Controller
            	$this->setPagination($limit);
             $influncer =  $this->getAuthenticatedUser();
 
-            $pagination = Offer::where([['influncer_id',$influncer->id], ['status', '0']])
+            $pagination = Offer::
+                        where([['influncer_id',$influncer->id], ['status', '0']])
                         ->orderBy('created_at','DESC')
                         ->paginate($this->getPagination());
 
@@ -85,7 +86,7 @@ class OffersController extends Controller
             $influncer =  $this->getAuthenticatedUser();
 
             $pagination = Offer::
-                        ->where([['influncer_id',$influncer->id], ['status', '1']])
+                        where([['influncer_id',$influncer->id], ['status', '1']])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '3']])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '4']])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '5']])
@@ -111,7 +112,7 @@ class OffersController extends Controller
             $influncer =  $this->getAuthenticatedUser();
 
             $pagination = Offer::
-                        ->where([['influncer_id',$influncer->id], ['status', '2']])
+                        where([['influncer_id',$influncer->id], ['status', '2']])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '7']])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '8']])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '9']])
