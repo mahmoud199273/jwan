@@ -41,17 +41,87 @@ class OffersController extends Controller
 
 
 
-     public function allOffers( Request $request,User $user )
-     {
-         $influncer =  $this->getAuthenticatedUser();
-         $offers = Offer::where('influncer_id',$influncer->id)->get();
-        // dd($offers);
-         return $this->sendResponse( $this->offersTransformer->transformCollection($offers),trans('lang.read succefully'),200);
-     }
+         public function allOffers( Request $request,User $user )
+         {
+             $influncer =  $this->getAuthenticatedUser();
+             $offers = Offer::where('influncer_id',$influncer->id)->get();
+            // dd($offers);
+             return $this->sendResponse( $this->offersTransformer->transformCollection($offers),trans('lang.read succefully'),200);
+         }
 
 
 
 
+         public function influncer_offer_new( Request $request )
+         {
+             if ( $request->limit && $request->limit<30) {
+           		$limit = $request->limit;
+           	}
+             else {
+               $limit = 30;
+             }
+           	$this->setPagination($limit);
+            $influncer =  $this->getAuthenticatedUser();
+
+            $pagination = Offer::where([['influncer_id',$influncer->id], ['status', '0']])
+                        ->orderBy('created_at','DESC')
+                        ->paginate($this->getPagination());
+
+           	$offers =  $this->offersTransformer->transformCollection(collect($pagination->items()));
+
+           	return $this->respondWithPagination( $pagination, [ 'data' =>  $offers ]);
+         }
+
+
+         public function influncer_offer_inprogress( Request $request )
+         {
+             if ( $request->limit && $request->limit<30) {
+              $limit = $request->limit;
+            }
+             else {
+               $limit = 30;
+             }
+            $this->setPagination($limit);
+            $influncer =  $this->getAuthenticatedUser();
+
+            $pagination = Offer::
+                        ->where([['influncer_id',$influncer->id], ['status', '1']])
+                        ->orwhere([['influncer_id',$influncer->id], ['status', '3']])
+                        ->orwhere([['influncer_id',$influncer->id], ['status', '4']])
+                        ->orwhere([['influncer_id',$influncer->id], ['status', '5']])
+                        ->orderBy('created_at','DESC')
+                        ->paginate($this->getPagination());
+
+            $offers =  $this->offersTransformer->transformCollection(collect($pagination->items()));
+
+            return $this->respondWithPagination( $pagination, [ 'data' =>  $offers ]);
+         }
+
+
+
+         public function influncer_offer_finished( Request $request )
+         {
+             if ( $request->limit && $request->limit<30) {
+              $limit = $request->limit;
+            }
+             else {
+               $limit = 30;
+             }
+            $this->setPagination($limit);
+            $influncer =  $this->getAuthenticatedUser();
+
+            $pagination = Offer::
+                        ->where([['influncer_id',$influncer->id], ['status', '2']])
+                        ->orwhere([['influncer_id',$influncer->id], ['status', '7']])
+                        ->orwhere([['influncer_id',$influncer->id], ['status', '8']])
+                        ->orwhere([['influncer_id',$influncer->id], ['status', '9']])
+                        ->orderBy('created_at','DESC')
+                        ->paginate($this->getPagination());
+
+            $offers =  $this->offersTransformer->transformCollection(collect($pagination->items()));
+
+            return $this->respondWithPagination( $pagination, [ 'data' =>  $offers ]);
+         }
 
 
 

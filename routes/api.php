@@ -201,6 +201,13 @@ Route::get('/influncer/offers/get_proofed','API\V1\OffersController@get_proofed'
 Route::get('/influncer/offers/canceled','API\V1\OffersController@canceledOffers');
 
 
+Route::get('/influncer/campaign/offers/new','API\V1\OffersController@influncer_offer_new');
+Route::get('/influncer/campaign/offers/inprogress','API\V1\OffersController@influncer_offer_inprogress');
+Route::get('/influncer/campaign/offers/finished','API\V1\OffersController@influncer_offer_finished');
+
+//
+
+
 
 
 /* about the app - license agreement */
