@@ -332,7 +332,7 @@ class OffersController extends Controller
                     return $this->respondWithSuccess(trans('api_msgs.updated'));
                 }
 
-                public function get_inprogresses( Request $reqest )
+                /*public function get_inprogresses( Request $reqest )
                 {
                     $influncer = $this->getAuthenticatedUser();
                     $offers = Offer::where([['influncer_id',$influncer->id],
@@ -347,7 +347,7 @@ class OffersController extends Controller
                     }
                     return $this->sendResponse( $this->offersTransformer->transformCollection($offers),trans('lang.read succefully'),200);
                     
-                }
+                }*/
 
                 public function proof(Request $request)
                 {
@@ -364,7 +364,7 @@ class OffersController extends Controller
                     return $this->respondWithSuccess(trans('api_msgs.updated'));
                 }
 
-                public function get_proofed(Request $reqest )
+                /*public function get_proofed(Request $reqest )
                 {
                     $influncer = $this->getAuthenticatedUser();
                     $offers = Offer::where([['influncer_id',$influncer->id],
@@ -378,7 +378,7 @@ class OffersController extends Controller
                         return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not approved'));
                     }
                     return $this->sendResponse( $this->offersTransformer->transformCollection($offers),trans('lang.read succefully'),200);
-                }
+                }*/
 
                 public function influncer_cancel(Request $request)
                 {
@@ -401,7 +401,7 @@ class OffersController extends Controller
                 }
 
                 
-                public function canceledOffers(Request $reqest)
+               /* public function canceledOffers(Request $reqest)
                 {
                     $influncer = $this->getAuthenticatedUser();
                     $offers = Offer::where([['influncer_id',$influncer->id],
@@ -415,7 +415,7 @@ class OffersController extends Controller
                         return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not approved'));
                     }
                     return $this->sendResponse( $this->offersTransformer->transformCollection($offers),trans('lang.read succefully'),200);
-                }
+                }*/
 
 
 
