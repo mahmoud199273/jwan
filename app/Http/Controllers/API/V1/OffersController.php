@@ -157,7 +157,8 @@ class OffersController extends Controller
             ]);
 
             if ($validator->fails()) {
-              return redirect()->back()->withInput($request->input())->withErrors($validator);
+              // return redirect()->back()->withInput($request->input())->withErrors($validator);
+                return $this->setStatusCode(422)->respondWithError(trans('parameters faild validation'));
             }
 
             $offer = Offer::where([['id',$request->id], ['status', "5"]])->get()->first();
