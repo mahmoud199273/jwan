@@ -67,7 +67,7 @@ class OffersController extends Controller
                         ->orderBy('created_at','DESC')
                         ->paginate($this->getPagination());
 
-           	$offers =  $this->chattransformer->transformCollection(collect($pagination->items()));
+           	$offers =  $this->offersTransformer->transformCollection(collect($pagination->items()));
 
            	return $this->respondWithPagination( $pagination, [ 'data' =>  $offers ]);
          }
