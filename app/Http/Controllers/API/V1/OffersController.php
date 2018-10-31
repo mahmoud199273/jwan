@@ -73,7 +73,25 @@ class OffersController extends Controller
          }
 
 
+         public function influncer_offer_inprogress( Request $request )
+         {
+             if ( $request->limit && $request->limit<30) {
+              $limit = $request->limit;
+            }
+             else {
+               $limit = 30;
+             }
+            $this->setPagination($limit);
+            $influncer =  $this->getAuthenticatedUser();
 
+            $pagination = Offer::where([['influncer_id',$influncer->id], ['status', '0']])
+                        ->orderBy('created_at','DESC')
+                        ->paginate($this->getPagination());
+
+            $offers =  $this->offersTransformer->transformCollection(collect($pagination->items()));
+
+            return $this->respondWithPagination( $pagination, [ 'data' =>  $offers ]);
+         }
 
 
 

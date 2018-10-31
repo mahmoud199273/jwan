@@ -197,6 +197,9 @@ Route::post('/influncer/campaign/offer/rate/{id}','API\V1\OffersController@influ
 
 
 Route::get('/influncer/campaign/offers/new','API\V1\OffersController@influncer_offer_new');
+Route::get('/influncer/campaign/offers/inprogress','API\V1\OffersController@influncer_offer_inprogress');
+
+
 
 
 /* about the app - license agreement */
