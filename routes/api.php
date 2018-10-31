@@ -180,6 +180,7 @@ Route::get('/influncer/offers','API\V1\OffersController@allOffers');
 Route::get('/influncer/offer/{id}','API\V1\OffersController@show');
 
 
+Route::get('/user/offer/{id}','API\V1\OffersController@show');
 
 Route::get('/user/campaign/offer/approve/{id}','API\V1\OffersController@approve');
 Route::get('/user/campaign/offer/pay/{id}','API\V1\OffersController@pay');
