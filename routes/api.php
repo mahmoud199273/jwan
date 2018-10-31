@@ -196,6 +196,7 @@ Route::get('/influncer/campaign/offer/cancel/{id}','API\V1\OffersController@infl
 Route::post('/influncer/campaign/offer/rate/{id}','API\V1\OffersController@influncer_rate');
 
 
+Route::get('/influncer/campaign/offers/new','API\V1\OffersController@influncer_offer_new');
 
 
 /* about the app - license agreement */

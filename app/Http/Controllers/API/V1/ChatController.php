@@ -47,19 +47,6 @@ class ChatController extends BaseController
         	                            ->orderBy('created_at','ASC')
         	                            ->paginate($this->getPagination());
 
-
-
-    // select count(*) as aggregate from `chat` where (`from_user_id1` = 7 and `campaign_id` = 9 and `to_user_id` is null) or (`to_user_id` = 7 and `campaign_id` = 9 and `from_user_id` is null)
-
-        // $pagination = Course::join('course_rates','course_rates.course_id','=','courses.id', 'LEFT OUTER')
-    	  //   								   ->join('users','courses.instructor_id','=','users.id')
-    	  //   	                               ->select('courses.*','users.name',DB::raw('SUM(course_rates.rate) as rate'))
-    	  //   	                               ->groupBy('courses.id')
-    	  //   	                               ->orderBy($orderBy,'DESC')
-    	  //   	                               ->paginate($this->getPagination());
-
-
-
         	$chat =  $this->chattransformer->transformCollection(collect($pagination->items()));
 
         	return $this->respondWithPagination( $pagination, [ 'data' =>  $chat ]);
