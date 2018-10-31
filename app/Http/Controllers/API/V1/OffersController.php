@@ -196,7 +196,8 @@ class OffersController extends Controller
             ]);
 
             if ($validator->fails()) {
-              return redirect()->back()->withInput($request->input())->withErrors($validator);
+              return $this->setStatusCode(422)->respondWithError($validator->messages());
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
             }
 
             $offer = Offer::where([['id',$request->id], ['user_rate', null]])->get()->first();
@@ -310,7 +311,8 @@ class OffersController extends Controller
                     ]);
 
                     if ($validator->fails()) {
-                      return redirect()->back()->withInput($request->input())->withErrors($validator);
+                       return $this->setStatusCode(422)->respondWithError($validator->messages());
+                        return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
                     }
 
                     $offer = Offer::where([['id',$request->id], ['influncer_rate', null]])->get()->first();
