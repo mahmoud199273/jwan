@@ -165,6 +165,45 @@ class OffersController extends Controller
               return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not proofed'));
             }
             $offer->status = "7";
+            $offer->user_rate = (int)$request->rate;
+            $offer->user_rate_comment = $request->comment;
+            $offer->save();
+
+
+            $chat = new Chat;
+            $chat->from_user_id	= $offer->user_id;
+            $chat->to_user_id = $offer->influncer_id;
+            $chat->offer_id = $offer->id;
+            $chat->campaign_id = $offer->campaign_id;
+            $chat->content = $request->comment;
+            $chat->type = 1;
+            $chat->save();
+            ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+            //////////////////// new push /////////////////////////////////////
+            return $this->respondWithSuccess(trans('api_msgs.updated'));
+        }
+
+
+        public function user_rate(Request $request)
+        {
+            $user =  $this->getAuthenticatedUser();
+            // security check
+            $validator = Validator::make( $request->all(), [
+                'id'                => 'required|exists:offers,id',
+                'rate'              => 'required|integer|between:1,5',
+                'comment'           => 'nullable|string'
+            ]);
+
+            if ($validator->fails()) {
+              return redirect()->back()->withInput($request->input())->withErrors($validator);
+            }
+
+            $offer = Offer::where([['id',$request->id], ['user_rate', null]])->get()->first();
+            if(!$offer){
+              return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not allowed to rate'));
+            }
+            $offer->user_rate = (int)$request->rate;
+            $offer->user_rate_comment = $request->comment;
             $offer->save();
 
 
@@ -182,6 +221,8 @@ class OffersController extends Controller
         }
 
 
+
+
         public function user_cancel(Request $request)
         {
             $user =  $this->getAuthenticatedUser();
@@ -194,6 +235,7 @@ class OffersController extends Controller
                 return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or you not allowed now'));
             }
             $offer->status = "9";
+            $offer->user_rate = 0;
             $offer->save();
             ///////////////////////////////////// payment success or redirect /////////////////////////////////////
             //////////////////// new push /////////////////////////////////////
@@ -245,8 +287,48 @@ class OffersController extends Controller
                     if(!$offer){
                         return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or you not allowed now'));
                     }
+                    $offer->influncer_rate = 0;
                     $offer->status = "8";
                     $offer->save();
+                    ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+                    //////////////////// new push /////////////////////////////////////
+                    return $this->respondWithSuccess(trans('api_msgs.updated'));
+                }
+
+
+
+
+                public function influncer_rate(Request $request)
+                {
+                    $user =  $this->getAuthenticatedUser();
+                    // security check
+                    $validator = Validator::make( $request->all(), [
+                        'id'                => 'required|exists:offers,id',
+                        'rate'              => 'required|integer|between:1,5',
+                        'comment'           => 'nullable|string'
+                    ]);
+
+                    if ($validator->fails()) {
+                      return redirect()->back()->withInput($request->input())->withErrors($validator);
+                    }
+
+                    $offer = Offer::where([['id',$request->id], ['influncer_rate', null]])->get()->first();
+                    if(!$offer){
+                      return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not allowed to rate'));
+                    }
+                    $offer->influncer_rate = (int)$request->rate;
+                    $offer->influncer_rate_comment = $request->comment;
+                    $offer->save();
+
+
+                    $chat = new Chat;
+                    $chat->from_user_id	= $offer->influncer_id;
+                    $chat->to_user_id = $offer->user_id;
+                    $chat->offer_id = $offer->id;
+                    $chat->campaign_id = $offer->campaign_id;
+                    $chat->content = $request->comment;
+                    $chat->type = 1;
+                    $chat->save();
                     ///////////////////////////////////// payment success or redirect /////////////////////////////////////
                     //////////////////// new push /////////////////////////////////////
                     return $this->respondWithSuccess(trans('api_msgs.updated'));

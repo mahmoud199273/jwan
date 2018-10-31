@@ -186,12 +186,14 @@ Route::get('/user/campaign/offer/pay/{id}','API\V1\OffersController@pay');
 Route::get('/user/campaign/offer/reject/{id}','API\V1\OffersController@reject');
 Route::post('/user/campaign/offer/finish/{id}','API\V1\OffersController@finish');
 Route::get('/user/campaign/offer/cancel/{id}','API\V1\OffersController@user_cancel');
+Route::post('/user/campaign/offer/rate/{id}','API\V1\OffersController@user_rate');
 
 
 
 Route::get('/influncer/campaign/offer/inprogress/{id}','API\V1\OffersController@inprogress');
 Route::get('/influncer/campaign/offer/proof/{id}','API\V1\OffersController@proof');
 Route::get('/influncer/campaign/offer/cancel/{id}','API\V1\OffersController@influncer_cancel');
+Route::post('/influncer/campaign/offer/rate/{id}','API\V1\OffersController@influncer_rate');
 
 
 
