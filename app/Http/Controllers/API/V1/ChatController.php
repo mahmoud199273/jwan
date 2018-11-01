@@ -122,17 +122,17 @@ public function store(Request $request)
 
         $player_ids = $this->getUserPlayerIds($to_user_id);
         Notification::create(['user_id' => $to_user_id,
-                                  'message' => 'A new message was added  ',
+                                  'message' => 'A new message was added',
                                   'message_ar' => 'هناك رساله جديده ',
-                                  'campaign_id' =>  $campaign->id,
+                                  'campaign_id' =>  $offer->campaign_id,
                                   'offer_id'    => $offer->id,
                                   'type'          =>  12,
                                   'type_title'  => 'new chat']);
         sendNotification($who,
-                              'A new message was added  ',
+                              'A new message was added',
                               'لديك رساله جديده ',
                               $player_ids,
-                              ['campaign_id' =>  (int)$campaign->id,
+                              ['campaign_id' =>  (int)$offer->campaign_id,
                               'offer_id'    => (int)$offer->id,
                               'type'          =>  12,
                               'type_title'  => 'new chat']);
