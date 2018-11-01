@@ -7,6 +7,7 @@ use App\Http\Controllers\API\V1\BaseController as Controller;
 use App\Transformers\ProfileTransformer;
 use App\Transformers\InfluncerTransformer;
 use App\User;
+use App\Notification;
 use App\UserPlayerId;
 use Hash;
 use Illuminate\Http\Request;
@@ -494,13 +495,26 @@ class UserController extends Controller
     {
         $user =  $this->getAuthenticatedUser();
 
-        $notifications =  Notification::where('user_id' , $user->id)->latest()->get();
+				if ( $request->limit ) {
+					$this->setPagination($request->limit);
+				}
 
-        return $this->respond(['data' => $notifications ]);
+        $pagination =  Notification::where('user_id' , $user->id)
+										->orderBy('updated_at','DESC')
+										->paginate($this->getPagination());
+
+				$notifications =  $pagination->items();
+
+				foreach ($notifications as $key => $value) {
+						$notifications_array[] = $value->id;
+				}
+				if(!empty($notifications_array))
+				{
+						$notifications_array = Notification::where('user_id' , $user->id)->whereIn('id', $notifications_array)->update(['is_seen' => '1']);
+				}
+
+        return $this->respondWithPagination($pagination, ['data' => $notifications ]);
     }
-
-
-
 
 
 

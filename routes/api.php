@@ -206,6 +206,11 @@ Route::get('/influncer/campaign/offers/inprogress','API\V1\OffersController@infl
 Route::get('/influncer/campaign/offers/finished','API\V1\OffersController@influncer_offer_finished');
 
 
+
+Route::get('/user/notifications'		, 'Api\V1\UserController@getNotifications');
+Route::get('/influncer/notifications'		, 'Api\V1\UserController@getNotifications');
+
+
 //Route::get('/influncer/offers/get_inprogress','API\V1\OffersController@get_inprogresses');
 
 //Route::get('/influncer/offers/get_proofed','API\V1\OffersController@get_proofed');
