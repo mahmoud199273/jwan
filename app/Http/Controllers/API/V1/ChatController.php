@@ -9,7 +9,7 @@ use App\Chat;
 use App\Campaign;
 use App\Offer;
 use Hash;
-use App\Notification,
+use App\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
