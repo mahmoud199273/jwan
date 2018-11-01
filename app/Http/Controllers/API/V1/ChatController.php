@@ -45,7 +45,7 @@ class ChatController extends BaseController
 
           $pagination = Chat::where([['from_user_id' ,$user->id],['campaign_id',$request->campaign_id],['to_user_id',$request->user_id]])
                             ->orWhere([['to_user_id' ,$user->id],['campaign_id',$request->campaign_id],['from_user_id',$request->user_id]])
-        	                            ->orderBy('created_at','ASC')
+        	                            ->orderBy('id','DESC')
         	                            ->paginate($this->getPagination());
 
         	$chat =  $this->chattransformer->transformCollection(collect($pagination->items()));
