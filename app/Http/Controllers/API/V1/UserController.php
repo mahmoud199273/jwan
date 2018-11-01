@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\API\V1\BaseController as Controller;
-//use App\Notification;
 use App\Transformers\ProfileTransformer;
 use App\Transformers\InfluncerTransformer;
 use App\User;
