@@ -9,6 +9,7 @@ use App\Chat;
 use App\Campaign;
 use App\Offer;
 use Hash;
+use App\Notification,
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
@@ -80,6 +81,7 @@ public function store(Request $request)
           }
           $from_user_id = $user->id;
           $to_user_id = $offer->influncer_id;
+          $who = 1;
         }
         else {
           //influncer
@@ -97,6 +99,7 @@ public function store(Request $request)
           }
           $from_user_id = $user->id;
           $to_user_id = $campaign->user_id;
+          $who = 0;
         }
 
         $type = 1;
@@ -116,6 +119,23 @@ public function store(Request $request)
         $chat->save();
 
         // push notifications
+
+        $player_ids = $this->getUserPlayerIds($to_user_id);
+        Notification::create(['user_id' => $to_user_id,
+                                  'message' => 'A new message was added  ',
+                                  'message_ar' => 'يوجد عرض جديد على حملة ',
+                                  'campaign_id' =>  $campaign->id,
+                                  'offer_id'    => $offer->id,
+                                  'type'          =>  12,
+                                  'type_title'  => 'new chat']);
+        sendNotification($who,
+                              'A new message was added  ',
+                              'لديك رساله جديده ',
+                              $player_ids,
+                              ['campaign_id' =>  (int)$campaign->id,
+                              'offer_id'    => (int)$offer->id,
+                              'type'          =>  12,
+                              'type_title'  => 'new chat']);
 
         return $this->respondWithSuccess(__('api_msgs.created'));
       }
