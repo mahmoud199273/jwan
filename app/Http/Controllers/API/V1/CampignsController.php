@@ -14,6 +14,7 @@ use App\InfluncerCampaign;
 use App\UserCategory;
 use App\UserCountry;
 use App\Setting;
+use App\Notification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -277,7 +278,7 @@ class CampignsController extends Controller
 
                 'campaign_id'       => $campaign->id,
 
-                'file'              => $file['file'] 
+                'file'              => $file['file']
 
                 //'file_type'          => $file['type']
 

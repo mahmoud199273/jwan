@@ -8,6 +8,7 @@ use App\User;
 use App\Offer;
 use App\Chat;
 use App\Campaign;
+use App\Notification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
