@@ -207,8 +207,8 @@ Route::get('/influncer/campaign/offers/finished','API\V1\OffersController@influn
 
 
 
-Route::get('/user/notifications'		, 'Api\V1\UserController@getNotifications');
-Route::get('/influncer/notifications'		, 'Api\V1\UserController@getNotifications');
+Route::get('/user/notifications'		, 'API\V1\UserController@getNotifications');
+Route::get('/influncer/notifications'		, 'API\V1\UserController@getNotifications');
 
 
 //Route::get('/influncer/offers/get_inprogress','API\V1\OffersController@get_inprogresses');
