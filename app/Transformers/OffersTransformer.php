@@ -35,16 +35,23 @@ class OffersTransformer extends Transformer
             'description'       => $offer->description,
 
 
-            'status'   => $offer->status,
+						'status'   => $offer->status,
+
+
+
+						'user_rate'   => $offer->user_rate,
+						//'user_rate_comment'   => $offer->user_rate_comment,
+						'influncer_rate'   => $offer->influncer_rate,
+						//'influncer_rate_comment'   => $offer->influncer_rate_comment,
 
             'created_date'      => Carbon::parse($offer->created_at)->toDateTimeString(),
 
             'updated_date'      => Carbon::parse($offer->updated_at)->toDateTimeString(),
-            
+
 
         ];
     }
- 
+
 
 
 
