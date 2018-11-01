@@ -56,7 +56,7 @@ class ChatController extends BaseController
 
 public function store(Request $request)
 {
-    $user =  $this->getAuthenticatedUser();
+    $user =  $this->getAuthenticatedUser(); 
 
     $validator = Validator::make($request->all() , [
           'campaign_id'    	=> 'required|exists:campaigns,id',
@@ -120,6 +120,7 @@ public function store(Request $request)
 
         // push notifications
 
+
         $player_ids = $this->getUserPlayerIds($to_user_id);
         Notification::create(['user_id' => $to_user_id,
                                   'message' => 'A new message was added',
@@ -128,9 +129,11 @@ public function store(Request $request)
                                   'offer_id'    => $offer->id,
                                   'type'          =>  12,
                                   'type_title'  => 'new chat']);
+
+
         sendNotification($who,
                               'A new message was added',
-                              'لديك رساله جديده ',
+                              'هناك رساله جديده ',
                               $player_ids,
                               ['campaign_id' =>  (int)$offer->campaign_id,
                               'offer_id'    => (int)$offer->id,

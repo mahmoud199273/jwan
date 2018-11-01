@@ -1,7 +1,7 @@
 <?php
 
 
-    function sendNotification($account_type, $msg = 'new message', $player_id = null ,  $data = array())
+    function sendNotification($account_type, $msg = 'new message',$msg_ar = 'new message ar' ,$player_id = null ,  $data = array())
 		{
 			if($account_type == 0) //user
 			{
@@ -15,7 +15,7 @@
 			}
         $content = array(
                          "en" => $msg,
-                         "ar" => $msg
+                         "ar" => $msg_ar
                          );
         $fields = array(
                         'app_id' => "$app_id",
