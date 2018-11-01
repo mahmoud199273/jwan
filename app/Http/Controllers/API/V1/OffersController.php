@@ -181,6 +181,26 @@ class OffersController extends Controller
             $offer->status = "1";
             $offer->save();
 
+
+            $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
+
+            $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
+            Notification::create(['user_id' => $campaign->influncer_id,
+                                      'message' => 'Your offer approved on '.$campaign->title,
+                                      'message_ar' => 'تم الموافقة على عرضك على حملة '.$campaign->title,
+                                      'campaign_id' =>  $campaign->id,
+                                      'offer_id'    => $offer->id,
+                                      'type'          =>  1,
+                                      'type_title'	=> 'offer approved']);
+            sendNotification(1,
+                                  'message' => 'Your offer approved on '.$campaign->title,
+                                  'message_ar' => 'تم الموافقة على عرضك على حملة '.$campaign->title,
+                                  $player_ids,
+                                  ['campaign_id' =>  (int)$campaign->id,
+                                  'offer_id'    => (int)$offer->id,
+                                  'type'          =>  1,
+                                  'type_title'	=> 'offer rejected']);
+
             //////////////////// new push /////////////////////////////////////
             return $this->respondWithSuccess(trans('api_msgs.updated'));
         }
@@ -198,6 +218,25 @@ class OffersController extends Controller
                     $offer->status = "2";
                     $offer->save();
 
+                    $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
+
+                    $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
+                    Notification::create(['user_id' => $campaign->influncer_id,
+                                              'message' => 'Your offer rejected on '.$campaign->title,
+                                              'message_ar' => 'تم رفض عرضك على حملة '.$campaign->title,
+                                              'campaign_id' =>  $campaign->id,
+                                              'offer_id'    => $offer->id,
+                                              'type'          =>  2,
+                                              'type_title'	=> 'rejected offer']);
+                    sendNotification(1,
+                                          'message' => 'Your offer rejected on '.$campaign->title,
+                                          'message_ar' => 'تم رفض عرضك على حملة '.$campaign->title,
+                                          $player_ids,
+                                          ['campaign_id' =>  (int)$campaign->id,
+                                          'offer_id'    => (int)$offer->id,
+                                          'type'          =>  2,
+                                          'type_title'	=> 'rejected offer']);
+
                     //////////////////// new push /////////////////////////////////////
                     return $this->respondWithSuccess(trans('api_msgs.updated'));
                 }
@@ -213,6 +252,27 @@ class OffersController extends Controller
             $offer->status = "3";
             $offer->save();
             ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+
+
+
+            $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
+
+            $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
+            Notification::create(['user_id' => $campaign->influncer_id,
+                                      'message' => 'Your offer paid on '.$campaign->title,
+                                      'message_ar' => 'تم سداد قيمة عرضك على حملة '.$campaign->title,
+                                      'campaign_id' =>  $campaign->id,
+                                      'offer_id'    => $offer->id,
+                                      'type'          =>  3,
+                                      'type_title'	=> 'paid offer']);
+            sendNotification(1,
+                                  'message' => 'Your offer paid on '.$campaign->title,
+                                  'message_ar' => 'تم سداد قيمة عرضك على حملة '.$campaign->title,
+                                  $player_ids,
+                                  ['campaign_id' =>  (int)$campaign->id,
+                                  'offer_id'    => (int)$offer->id,
+                                  'type'          =>  3,
+                                  'type_title'	=> 'paid offer']);
             //////////////////// new push /////////////////////////////////////
             return $this->respondWithSuccess(trans('api_msgs.updated'));
         }
@@ -252,6 +312,27 @@ class OffersController extends Controller
             $chat->type = 1;
             $chat->save();
             ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+
+
+
+            $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
+
+            $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
+            Notification::create(['user_id' => $campaign->influncer_id,
+                                      'message' => 'Your proof have been approved and finished on '.$campaign->title,
+                                      'message_ar' => 'تم قبول توثيقك واغلاقه لحملة '.$campaign->title,
+                                      'campaign_id' =>  $campaign->id,
+                                      'offer_id'    => $offer->id,
+                                      'type'          =>  7,
+                                      'type_title'	=> 'finished offer']);
+            sendNotification(1,
+                                  'message' => 'Your proof have been approved and finished on '.$campaign->title,
+                                  'message_ar' => 'تم قبول توثيقك واغلاقه لحملة '.$campaign->title,
+                                  $player_ids,
+                                  ['campaign_id' =>  (int)$campaign->id,
+                                  'offer_id'    => (int)$offer->id,
+                                  'type'          =>  7,
+                                  'type_title'	=> 'finished offer']);
             //////////////////// new push /////////////////////////////////////
             return $this->respondWithSuccess(trans('api_msgs.updated'));
         }
@@ -312,6 +393,27 @@ class OffersController extends Controller
             $offer->user_rate = 0;
             $offer->save();
             ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+
+
+
+            $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
+
+            $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
+            Notification::create(['user_id' => $campaign->influncer_id,
+                                      'message' => 'user has canceled '.$campaign->title,
+                                      'message_ar' => 'تم الغاء حملة '.$campaign->title,
+                                      'campaign_id' =>  $campaign->id,
+                                      'offer_id'    => $offer->id,
+                                      'type'          =>  9,
+                                      'type_title'	=> 'canceled offer']);
+            sendNotification(1,
+                                  'message' => 'user has canceled '.$campaign->title,
+                                  'message_ar' => 'تم الغاء حملة '.$campaign->title,
+                                  $player_ids,
+                                  ['campaign_id' =>  (int)$campaign->id,
+                                  'offer_id'    => (int)$offer->id,
+                                  'type'          =>  9,
+                                  'type_title'	=> 'canceled offer']);
             //////////////////// new push /////////////////////////////////////
             return $this->respondWithSuccess(trans('api_msgs.updated'));
         }
@@ -330,6 +432,27 @@ class OffersController extends Controller
                     $offer->status = "4";
                     $offer->save();
                     ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+
+
+
+                    $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
+
+                    $player_ids = $this->getUserPlayerIds($campaign->user_id);
+                    Notification::create(['user_id' => $campaign->user_id,
+                                              'message' => 'influner is working on '.$campaign->title,
+                                              'message_ar' => 'جاري العمل على الحملة '.$campaign->title,
+                                              'campaign_id' =>  $campaign->id,
+                                              'offer_id'    => $offer->id,
+                                              'type'          =>  4,
+                                              'type_title'	=> 'inprogress offer']);
+                    sendNotification(0,
+                                          'message' => 'influner is working on '.$campaign->title,
+                                          'message_ar' => 'جاري العمل على الحملة '.$campaign->title,
+                                          $player_ids,
+                                          ['campaign_id' =>  (int)$campaign->id,
+                                          'offer_id'    => (int)$offer->id,
+                                          'type'          =>  4,
+                                          'type_title'	=> 'inprogress offer']);
                     //////////////////// new push /////////////////////////////////////
                     return $this->respondWithSuccess(trans('api_msgs.updated'));
                 }
@@ -348,7 +471,7 @@ class OffersController extends Controller
                         return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not approved'));
                     }
                     return $this->sendResponse( $this->offersTransformer->transformCollection($offers),trans('lang.read succefully'),200);
-                    
+
                 }*/
 
                 public function proof(Request $request)
@@ -362,6 +485,26 @@ class OffersController extends Controller
                     $offer->status = "5";
                     $offer->save();
                     ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+
+
+                    $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
+
+                    $player_ids = $this->getUserPlayerIds($campaign->user_id);
+                    Notification::create(['user_id' => $campaign->user_id,
+                                              'message' => 'influner has finished and proofed '.$campaign->title,
+                                              'message_ar' => 'تم الانتهاء وتثيق حملة '.$campaign->title,
+                                              'campaign_id' =>  $campaign->id,
+                                              'offer_id'    => $offer->id,
+                                              'type'          =>  5,
+                                              'type_title'	=> 'proofed offer']);
+                    sendNotification(0,
+                                          'message' => 'influner has finished and proofed '.$campaign->title,
+                                          'message_ar' => 'تم الانتهاء وتثيق حملة '.$campaign->title,
+                                          $player_ids,
+                                          ['campaign_id' =>  (int)$campaign->id,
+                                          'offer_id'    => (int)$offer->id,
+                                          'type'          =>  5,
+                                          'type_title'	=> 'proofed offer']);
                     //////////////////// new push /////////////////////////////////////
                     return $this->respondWithSuccess(trans('api_msgs.updated'));
                 }
@@ -398,11 +541,34 @@ class OffersController extends Controller
                     $offer->status = "8";
                     $offer->save();
                     ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+
+
+
+
+
+                    $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
+
+                    $player_ids = $this->getUserPlayerIds($campaign->user_id);
+                    Notification::create(['user_id' => $campaign->user_id,
+                                              'message' => 'influner has canceled offer on '.$campaign->title,
+                                              'message_ar' => 'قام المؤثر بالغاء عرضه على '.$campaign->title,
+                                              'campaign_id' =>  $campaign->id,
+                                              'offer_id'    => $offer->id,
+                                              'type'          =>  8,
+                                              'type_title'	=> 'canceled offer']);
+                    sendNotification(0,
+                                          'message' => 'influner has canceled offer on '.$campaign->title,
+                                          'message_ar' => 'قام المؤثر بالغاء عرضه على '.$campaign->title,
+                                          $player_ids,
+                                          ['campaign_id' =>  (int)$campaign->id,
+                                          'offer_id'    => (int)$offer->id,
+                                          'type'          =>  8,
+                                          'type_title'	=> 'canceled offer']);
                     //////////////////// new push /////////////////////////////////////
                     return $this->respondWithSuccess(trans('api_msgs.updated'));
                 }
 
-                
+
                /* public function canceledOffers(Request $reqest)
                 {
                     $influncer = $this->getAuthenticatedUser();
@@ -509,7 +675,26 @@ class OffersController extends Controller
         $chat->type = 1;
         $chat->save();
 
-        //////////////////////////////////// new push /////////////////////////////////////////////
+
+
+        $player_ids = $this->getUserPlayerIds($campaign->user_id);
+        Notification::create(['user_id' => $campaign->user_id,
+																	'message' => 'A new offer was added on '.$campaign->title,
+																	'message_ar' => 'يوجد عرض جديد على حملة '.$campaign->title,
+																	'campaign_id' =>  $campaign->id,
+                                  'offer_id'    => $offer->id,
+                                  'type'          =>  0,
+																	'type_title'	=> 'new offer']);
+        sendNotification(0,
+                              'A new offer was added on '.$campaign->title,
+															'يوجد عرض جديد على حملة '.$campaign->title,
+															$player_ids,
+															['campaign_id' =>  (int)$campaign->id,
+                              'offer_id'    => (int)$offer->id,
+                              'type'          =>  0,
+                              'type_title'	=> 'new offer']);
+
+
         return $this->respondWithSuccess(trans('api_msgs.created'));
 
     }
@@ -564,7 +749,22 @@ class OffersController extends Controller
        }
 
 
-
+       $player_ids = $this->getUserPlayerIds($campaign->user_id);
+       Notification::create(['user_id' => $campaign->user_id,
+                                 'message' => 'A new offer update on '.$campaign->title,
+                                 'message_ar' => 'يوجد تعديل جديد على عرض حملة '.$campaign->title,
+                                 'campaign_id' =>  $campaign->id,
+                                 'offer_id'    => $offer->id,
+                                 'type'          =>  1,
+                                 'type_title'	=> 'update offer']);
+       sendNotification(0,
+                             'A new offer was added on '.$campaign->title,
+                             'يوجد تعديل جديد على عرض حملة '.$campaign->title,
+                             $player_ids,
+                             ['campaign_id' =>  (int)$campaign->id,
+                             'offer_id'    => (int)$offer->id,
+                             'type'          =>  1,
+                             'type_title'	=> 'update offer']);
       //////////////////////////////////// new push //////////////////////////////////////////////////////
 
        return $this->respondWithSuccess(trans('api_msgs.created'));
