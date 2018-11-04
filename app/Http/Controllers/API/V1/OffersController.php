@@ -333,7 +333,9 @@ class OffersController extends Controller
                                   ['campaign_id' =>  (int)$campaign->id,
                                   'offer_id'    => (int)$offer->id,
                                   'type'          =>  7,
-                                  'type_title'	=> 'finished offer']);
+                                  'type_title'	=> 'finished offer',
+                                  'chat_content'         => $request->description,
+                                  'chat_type'       => 1]);
             //////////////////// new push /////////////////////////////////////
             return $this->respondWithSuccess(trans('api_msgs.updated'));
         }
@@ -768,7 +770,9 @@ class OffersController extends Controller
                              ['campaign_id' =>  (int)$campaign->id,
                              'offer_id'    => (int)$offer->id,
                              'type'          =>  1,
-                             'type_title'	=> 'update offer']);
+                             'type_title'	=> 'update offer',
+                             'chat_content'         => $request->description,
+                             'chat_type'       => 1]);
       //////////////////////////////////// new push //////////////////////////////////////////////////////
 
        return $this->respondWithSuccess(trans('api_msgs.created'));
