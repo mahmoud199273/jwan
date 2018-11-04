@@ -693,7 +693,10 @@ class OffersController extends Controller
 															['campaign_id' =>  (int)$campaign->id,
                               'offer_id'    => (int)$offer->id,
                               'type'          =>  0,
-                              'type_title'	=> 'new offer']);
+                              'type_title'	=> 'new offer',
+                              'chat_content'         => $request->description,
+                              'chat_type'       => 1]);
+
 
 
         return $this->respondWithSuccess(trans('api_msgs.created'));

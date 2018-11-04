@@ -16,13 +16,13 @@ class Campaign extends Model
                return $this->hasMany('App\Attachment','campaign_id','id');
             }
 
-            
+
 
       public function categories()
     	{
 
 
-         return $this->belongsToMany('App\Category', 'campaign_categories', 
+         return $this->belongsToMany('App\Category', 'campaign_categories',
                 'campaign_id', 'category_id');
 
     	}
@@ -32,7 +32,7 @@ class Campaign extends Model
     	{
 
 
-         return $this->belongsToMany('App\Country', 'campaign_countries', 
+         return $this->belongsToMany('App\Country', 'campaign_countries',
                 'campaign_id', 'country_id');
 
     	}
@@ -41,19 +41,19 @@ class Campaign extends Model
     public function areas()
     	{
 
-         return $this->belongsToMany('App\Area', 'campaign_areas', 
+         return $this->belongsToMany('App\Area', 'campaign_areas',
                 'campaign_id', 'area_id');
     	}
 
         public function user()
         {
- 
+
          return $this->belongsTo('App\User','user_id','id');
         }
 
         public function offers()
         {
- 
+
          return $this->hasMany('App\Offer','campaign_id','id');
         }
 
@@ -61,7 +61,7 @@ class Campaign extends Model
     protected $casts = [
         'is_extened' => 'string',
 
-        
+
 
     ];
 

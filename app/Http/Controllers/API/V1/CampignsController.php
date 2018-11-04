@@ -326,7 +326,24 @@ class CampignsController extends Controller
                       ]);
             }
 
-
+            // $player_ids = $this->getUserPlayerIds($to_user_id);
+            // Notification::create(['user_id' => $to_user_id,
+            //                           'message' => 'A new campaign was added',
+            //                           'message_ar' => 'يوجد حملة جديدة',
+            //                           'campaign_id' =>  $offer->campaign_id,
+            //                           'offer_id'    => 0,
+            //                           'type'          =>  20,
+            //                           'type_title'  => 'new campaign']);
+            //
+            //
+            // sendNotification($who,
+            //                       'A new campaign was added',
+            //                       'يوجد حملة جديدة',
+            //                       $player_ids,
+            //                       ['campaign_id' =>  (int)$offer->campaign_id,
+            //                       'offer_id'    => (int)$offer->id,
+            //                       'type'          =>  20,
+            //                       'type_title'  => 'new campaign']);
 
         return $this->respondWithSuccess(trans('api_msgs.created'));
 
