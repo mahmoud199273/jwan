@@ -78,7 +78,7 @@ class CampignsController extends Controller
             if ($campaign_ids) {
                 $campaigns->whereNotIn('campaigns.id',$campaign_ids);
             }
-            $campaigns->where('campaigns.capaign_status','1')
+            $campaigns->where('campaigns.status','1')
             ->groupBy('campaigns.id')
 
 
