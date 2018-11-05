@@ -40,7 +40,7 @@ class CampignsContrller extends Controller
     {
         $influncer =  $this->getAuthenticatedUser();
 
-        $campaign_ids = InfluncerCampaign::where('user_id',$influncer->id)->pluck('campaign_id')->toArray();
+        $campaign_ids = InfluncerCampaign::where('influncer_id',$influncer->id)->pluck('campaign_id')->toArray();
          //dd($campaign_ids);
 
         $orderBy = 'created_at';
@@ -503,7 +503,7 @@ class CampignsContrller extends Controller
 
             $skipped = DB::table('influncer_campaigns')
                      ->where([['status', '=', '0'],
-                        ['user_id',$user->id]
+                        ['influncer_id',$user->id]
                  ])
                      ->pluck('campaign_id')->toArray();
             //dd($skipped);
@@ -536,7 +536,7 @@ class CampignsContrller extends Controller
 
             $favorite = DB::table('influncer_campaigns')
                      ->where([['status', '=','1'],
-                        ['user_id',$user->id]
+                        ['influncer_id',$user->id]
                  ])
                      ->pluck('campaign_id')->toArray();
             //dd($favorite);
