@@ -65,7 +65,7 @@
                                             <i class="fa fa-edit m--font-info"></i>
                                         </a>
                                          <a type="button" 
-                                            href="{{url('admin/offers')}}/{{ $campaign->id }}" 
+                                            href="{{url('admin/offers')}}/{{ $campaign->id }}/campaign" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             {{ __('admin.offers') }}
                                         </a>

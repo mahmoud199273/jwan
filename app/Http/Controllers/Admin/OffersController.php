@@ -26,6 +26,7 @@ class OffersController extends Controller
         $offers = Offer::latest()->paginate(10);
         return view('admin.offers.index',compact('offers'));
     }
+    
 
     function campaigns(Request $request , $id)
     {

@@ -34,8 +34,8 @@ class UsersController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $users   = User::where([['name', 'LIKE', '%' . $query. '%'],['type','user']] )
-                                     ->orWhere([['phone', 'LIKE', '%' . $query. '%'],['type','user']] )
+             $users   = User::where([['name', 'LIKE', '%' . $query. '%'],['account_type','0']] )
+                                     ->orWhere([['phone', 'LIKE', '%' . $query. '%'],['account_type','0']] )
                                      ->paginate(10);
             $users->appends( ['q' => $request->q] );
             if (count ( $users ) > 0){
@@ -150,4 +150,5 @@ class UsersController extends Controller
         }
 
     }
+
 }

@@ -13,6 +13,13 @@ use Carbon\Carbon;
 
 class CampaignsTransformer extends Transformer
 {
+    protected $flag = false;
+
+    function setFlag($flag)
+    {
+        $this->flag = $flag; // set true to show influencers in campaigns list
+    }
+    
 	public function transform($campaign  ) : array
     {
 
@@ -24,16 +31,14 @@ class CampaignsTransformer extends Transformer
 			5 => 'closed');
         $campaign = Campaign::find($campaign->id);
 
-        return [
+        $return_array =  [
         	'id'       			=> (int) $campaign->id,
 
             'title'             => $campaign->title,
 
             'user'              => isset($campaign->user) ? $campaign->user : null ,
 
-            //'user'         => User::select('id','name','image')
-                                //->where('id',$campaign->user_id)
-                                //->get()[0],
+            
 
             //'image'         => $camapign->($user->image) ?config('app.url').$user->image : null,
 
@@ -92,6 +97,13 @@ class CampaignsTransformer extends Transformer
 
 
         ];
+
+        if($this->flag)
+        {
+            $return_array['influencers']  = User::select('users.id','users.name','users.image')->join('offers', 'offers.influncer_id', '=', 'users.id')->where('offers.campaign_id',$campaign->id)->get();
+        }
+
+        return $return_array;
     }
 
 

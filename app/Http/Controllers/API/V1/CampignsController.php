@@ -40,56 +40,56 @@ class CampignsController extends Controller
     {
         $influncer =  $this->getAuthenticatedUser();
 
-        $campaign_ids = InfluncerCampaign::where('user_id',$influncer->id)->pluck('campaign_id')->toArray();
+        $campaign_ids = InfluncerCampaign::where('influncer_id',$influncer->id)->pluck('campaign_id')->toArray();
          //dd($campaign_ids);
-
+ 
         $orderBy = 'created_at';
         $influncer_categories = UserCategory::where('user_id',$influncer->id)->pluck('categories_id')->toArray();
-
-
-
+ 
+ 
+ 
         $influncer_countries = UserCountry::where('user_id',$influncer->id)->pluck('country_id')->toArray();
-
-
+ 
+ 
         //dd($influncer_categories);
-
+ 
             $campaigns = DB::table('campaigns')
-
-
-
+ 
+ 
+ 
             ->join('campaign_countries', 'campaigns.id', '=', 'campaign_countries.campaign_id')
-
+ 
             ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id');
-
+ 
             if($influncer_categories){
                 $campaigns->whereIn('campaign_categories.category_id',$influncer_categories);
-
+ 
             }
-
+ 
             if($influncer_countries){
                 $campaigns->whereIn('campaign_countries.country_id',$influncer_countries);
-
+ 
             }
-
-
+ 
+ 
             $campaigns->select('campaigns.*');
-
-
+ 
+ 
             if ($campaign_ids) {
-                $campaigns->where('campaigns.id','<>',$campaign_ids);
+                $campaigns->whereNotIn('campaigns.id',$campaign_ids);
             }
             $campaigns->where('campaigns.status','1')
             ->groupBy('campaigns.id')
-
-
-
-
+ 
+ 
+ 
+ 
              ->orderBy($orderBy,'DESC');
-
-
+ 
+ 
              $result = $campaigns->get();
             //dd($campaigns);
-
+ 
         return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('lang.read succefully'),200);
     }
 
@@ -138,6 +138,7 @@ class CampignsController extends Controller
         $validator = Validator::make( ['id' =>  $request->id ], [
             'id'    => 'required|exists:campaigns,id',
         ]);
+        
         return $validator->fails() ? $this->setStatusCode(422)->respondWithError('parameters faild validation') :
                                         $this->sendResponse( $this->campaignsTransformer->transform(Campaign::find($request->id)),
                                             trans('lang.read succefully'),200);
@@ -154,9 +155,8 @@ class CampignsController extends Controller
             }
 
         $data = Campaign::where('user_id' ,$user->id)->get();
-
+        $this->campaignsTransformer->setFlag(true);
         $campaigns = $this->campaignsTransformer->transformCollection($data);
-
         return $this->sendResponse($campaigns, trans('lang.campaigns read succesfully'),200);
     }
 
@@ -579,30 +579,39 @@ class CampignsController extends Controller
          public function status(Request $request)
 
         {
-            $user =  $this->getAuthenticatedUser();
+            $influncer =  $this->getAuthenticatedUser();
 
-            $validator = Validator::make( $request->all(), [
-            'campaign_id'                => 'required',
-            'status'                     => 'required'
+           if($influncer->account_type == '0'){
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the rigtt to be here'));
 
-            ]);
+              }
 
-            if ($validator->fails()) {
-                return $this->setStatusCode(422)->respondWithError($validator->messages());
-                return $this->setStatusCode(422)->respondWithError('parameters faild validation');
-            }
+           $validator = Validator::make( $request->all(), [
+           'campaign_id'                => 'required',
+           'status'                     => 'required'
 
-            $influncercampaign = new InfluncerCampaign;
+           ]);
 
-            $influncercampaign->campaign_id    = $request->campaign_id;
+           if($this->isCampaignExist($influncer->id,$request->campaign_id)){
+           return $this->setStatusCode(422)->respondWithError('you have put a status for this campaign before you can change campaign status');
+       }
 
-            $influncercampaign->status         = $request->status;
+           if ($validator->fails()) {
+               return $this->setStatusCode(422)->respondWithError($validator->messages());
+               return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+           }
 
-            $influncercampaign->user_id        = $user->id;
+           $influncercampaign = new InfluncerCampaign;
 
-            $influncercampaign->save();
+           $influncercampaign->campaign_id    = $request->campaign_id;
 
-            return $this->respondWithSuccess(trans('api_msgs.set status successfully'));
+           $influncercampaign->status         = $request->status;
+
+           $influncercampaign->influncer_id        = $influncer->id;
+
+           $influncercampaign->save();
+
+           return $this->respondWithSuccess(trans('api_msgs.set status successfully'));
 
 
         }
