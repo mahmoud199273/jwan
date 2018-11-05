@@ -55,7 +55,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $countries =  COuntry::all();
+        $countries =  Country::all();
 
         return view('admin.users.create',compact('countries'));
     }
