@@ -334,7 +334,7 @@ class OffersController extends Controller
                                   'offer_id'    => (int)$offer->id,
                                   'type'          =>  7,
                                   'type_title'	=> 'finished offer',
-                                  'chat_content'         => $request->description,
+                                  'chat_content'         => $request->comment,
                                   'chat_type'       => 1]);
             //////////////////// new push /////////////////////////////////////
             return $this->respondWithSuccess(trans('api_msgs.updated'));
