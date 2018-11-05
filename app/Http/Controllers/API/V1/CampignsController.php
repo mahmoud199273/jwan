@@ -40,7 +40,7 @@ class CampignsController extends Controller
     {
         $influncer =  $this->getAuthenticatedUser();
 
-        $campaign_ids = InfluncerCampaign::where('user_id',$influncer->id)->pluck('campaign_id')->toArray();
+        $campaign_ids = InfluncerCampaign::where('influncer_id',$influncer->id)->pluck('campaign_id')->toArray();
          //dd($campaign_ids);
 
         $orderBy = 'created_at';
@@ -574,18 +574,35 @@ class CampignsController extends Controller
         return $this->respondWithSuccess(trans('api_msgs.updated'));
     }
 
+    public function isCampaignExist($influncer_id,$campaign_id)
+    {
+         return InfluncerCampaign::where([
+            ['influncer_id',$influncer_id],
+            ['campaign_id',$campaign_id]
+            ])->first() ? true : false;
+    }
+
 
 
          public function status(Request $request)
 
         {
-            $user =  $this->getAuthenticatedUser();
+            $influncer =  $this->getAuthenticatedUser();
+
+            if($influncer->account_type == '0'){
+             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the rigtt to be here'));
+
+               }
 
             $validator = Validator::make( $request->all(), [
             'campaign_id'                => 'required',
             'status'                     => 'required'
 
             ]);
+
+            if($this->isCampaignExist($influncer->id,$request->campaign_id)){
+            return $this->setStatusCode(422)->respondWithError('you have put a status for this campaign before you can change campaign status');
+        }
 
             if ($validator->fails()) {
                 return $this->setStatusCode(422)->respondWithError($validator->messages());
@@ -598,7 +615,7 @@ class CampignsController extends Controller
 
             $influncercampaign->status         = $request->status;
 
-            $influncercampaign->user_id        = $user->id;
+            $influncercampaign->influncer_id        = $influncer->id;
 
             $influncercampaign->save();
 
