@@ -615,7 +615,7 @@ class CampignsController extends Controller
 
             $skipped = DB::table('influncer_campaigns')
                      ->where([['status', '=', '0'],
-                        ['user_id',$user->id]
+                        ['influncer_id',$user->id]
                  ])
                      ->pluck('campaign_id')->toArray();
             //dd($skipped);
@@ -648,7 +648,7 @@ class CampignsController extends Controller
 
             $favorite = DB::table('influncer_campaigns')
                      ->where([['status', '=','1'],
-                        ['user_id',$user->id]
+                        ['influncer_id',$user->id]
                  ])
                      ->pluck('campaign_id')->toArray();
             //dd($favorite);
