@@ -12,9 +12,6 @@ class ProfileTransformer extends Transformer
      * {@inheritdoc}
      */
 
-    
-
-
 
     public function transform($user ) : array
     {
@@ -61,47 +58,5 @@ class ProfileTransformer extends Transformer
 
         ];
     }
-
-   /* public function transform($influncer ) : array
-    {
-        return [
-            'id'            => (int) $influncer->id,
-            'name'          => $influncer->name,
-            
-            'email'         => $influncer->email,
-            'phone'         => $influncer->phone,
-            'image'         => ($influncer->image) ?config('app.url').$influncer->user_image : null,
-            //'is_instructor' => (boolean) $user->is_instructor,
-            'notes'         => $influncer->notes,
-
-            'gender'        =>(boolean)$influncer->gender,
-
-            'nationality'   => $influncer->nationality,
-
-            'account_manger' => (boolean) $influncer->account_manger,
-
-            'type'          => (boolean) $influncer->type,
-
-            'facebook'     => $influncer->facebook,
-            'facebook_followers' => $influncer->facebook_followers,
-
-            'twitter'     => $influncer->twitter,
-            'twitter_followers' => $influncer->twitter_followers,
-
-            'instagram'     => $influncer->instagram,
-            'instagram_followers' => $influncer->instagram_followers,
-
-
-            'snapchat'     => $influncer->snapchat,
-            'snapchat_followers' => $influncer->snapchat_followers,
-
-            'linkedin'     => $influncer->linkedin,
-            'linkedin_followers' => $influncer->linkedin_followers,
-
-            'youtube'   => $influncer->youtube,
-            'youtube_followers' => $influncer->youtube_followers
-
-        ];
-    }*/
 
 }
