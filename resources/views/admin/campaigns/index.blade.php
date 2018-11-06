@@ -2,9 +2,39 @@
 
 @section('content')
 
+<div class="row">
+    <form class="m-form" action="{{url('admin/campaign/search')}}" method="get" id="search_form">
+        <div class="form-group m-form__group row ">
+            <label for="q" class="col-1 col-form-label"></label>
+            <div class="col-6">
+                <input type="text" name="q" class="form-control m-input" 
+                placeholder="{{ __('admin.search_word') }}">
+            </div>
+            <div class="col-2">
+                <a href="#" class="btn btn-secondary m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" id="confirm_search">
+                    <span>
+                        <i class="la la-search"></i>
+                        <span>{{ __('admin.search') }}</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+<br>
+
+@if(isset($query))
+<div class="row" style="padding-right: 35px;">
+    <span>{{ __('admin.searched_for') }}</span>
+    <span><b>"{{ $query}}"</b></span>
+</div>
+@endif
+
+<br>
+
 
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12"> 
 
         <!--begin::Portlet-->
         <div class="m-portlet m-portlet--last m-portlet--head-lg m-portlet--responsive-mobile" id="main_portlet">
@@ -101,6 +131,19 @@
        @endif
    </div>
 </div>
+
+<br>
+
+@if(isset($query ) or isset($message))
+<div>
+    <a href="{{url('admin/campaigns')}}" class="btn btn-danger m-btn m-btn--icon m-btn--wide">
+        <span>
+            <i class="la la-warning"></i>
+            <span>{{ __('admin.cancel_search') }}</span>
+        </span>
+    </a>
+</div>
+@endif
 
 
 

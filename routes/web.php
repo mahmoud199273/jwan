@@ -37,29 +37,16 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 	Route::group(['namespace'=>'Admin'],function(){
 
 
-		//Route::get('/test',"TestController@index");
-
-		// Route::get('/admin',function(){
-		// 	return " admin` ";
-		// });
+		
 		Route::get('/admin', 'DashboardController@index');
-		Route::get('profile','ProfileController@getIndex');
-		Route::post('profile','ProfileController@postIndex');
+		
 
-		Route::resource('country','CountriesController');
-		//Route::post('country/activate/{id}', 'CountryController@activate');
-		Route::resource('area','AreasController');
-		Route::resource('category','CategoryController');
+		Route::resource('users','UsersController');
+		
 
-		//Route::resource('natoinality','NathoinalityController');
-
-		//Route::get('nathoinality','TestController@index');
-
-		Route::resource('users','UserController');
-		//Route::get('/users','UsersController@index');
-
-		Route::post('/users/activate'       , 'UserController@activate');
-		Route::post('/users/ban'            , 'UserController@ban');
+		Route::post('/users/activate'       , 'UsersController@activate');
+		Route::post('/users/ban'            , 'UsersController@ban');
+		Route::get('/user/search'           , 'UsersController@search');
 
 		Route::group(['prefix' => '/auth'], function() {
             Route::post('/login', 'AuthController@login');
@@ -74,27 +61,41 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::get('/dashboard' , 'DashboardController@index');
 
 
-		// Route::get('/admin', 'DashboardController@index');
-		//Route::get('profile','ProfileController@getIndex');
-		//Route::post('profile','ProfileController@postIndex');
+		
 
 		Route::resource('country','CountriesController');
-		//Route::post('country/activate/{id}', 'CountryController@activate');
+		Route::get('/countries/search','CountriesController@search');
+		
+
 		Route::resource('area','AreasController');
+		Route::get('/areas/search','AreasController@search');
+
 		Route::resource('category','CategoriesController');
+		Route::get('/categories/search','CategoriesController@search');
+
 		Route::resource('natoinality','NatoinalitiesController');
-		Route::resource('users','UsersController');
-		Route::post('/users/activate'       , 'UsersControllers@activate');
-		Route::post('/users/ban'            , 'UsersControllers@ban');
+		Route::get('Natoinalities/search','NatoinalitiesController@search');
+		//Route::resource('users','UserController');
+		//Route::post('/users/activate'       , 'UserController@activate');
+		//Route::post('/users/ban'            , 'UserController@ban');
+		//Route::get('/user/search'           , 'UserController@search');
 
 		Route::resource('influencers','InfluencersController');
+		Route::get('influencer/search','InfluencersController@search');
 
 		Route::resource('complaints','ComplaintsController');
+		Route::get('complaint/search','ComplaintsController@search');
+
 		Route::resource('campaigns','CampaignsController');
+		Route::get('/campaign/search','CampaignsController@search');
+
 		Route::resource('pages','PagesController');
 		Route::resource('bank','BankAccountsController');
 		//Route::get('offers/{id}', 'OffersController@campaigns');
+
 		Route::resource('offers','OffersController');
+		Route::get('offer/search','OffersController@search');
+		
 		// Route::get('offers', 'OffersController@index');
 		// Route::get('offers/show/{id}', 'OffersController@show');
 

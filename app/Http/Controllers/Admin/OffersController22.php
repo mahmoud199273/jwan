@@ -6,11 +6,12 @@ use App\City;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Office\EditOfficeRequest;
 use App\Http\Requests\Admin\Office\StoreOfficeRequest;
+use App\Offer;
 use App\User;
 use Illuminate\Http\Request;
 
 
-class OfficeController extends Controller
+class OffersController extends Controller
 {
 
     function __construct(){
@@ -34,8 +35,11 @@ class OfficeController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $offices   = User::where([['name', 'LIKE', '%' . $query. '%'],['type','office']] )
-                                     ->orWhere([['phone', 'LIKE', '%' . $query. '%'],['type','office']] )
+             $offers   = Offer::where('influncer_id', 'LIKE', '%' . $query. '%')
+                                     ->orWhere('user_id', 'LIKE', '%' . $query. '%')
+                                     ->orWhere('campaign_id', 'LIKE', '%' . $query. '%')
+                                     ->orWhere('cost', 'LIKE', '%' . $query. '%')
+                                     ->orWhere('status', 'LIKE', '%' . $query. '%')
                                      ->paginate(10);
             $offices->appends( ['q' => $request->q] );
             if (count ( $offices ) > 0){

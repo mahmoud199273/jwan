@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <form class="m-form" action="{{url('admin/influencers/search')}}" method="get" id="search_form">
+    <form class="m-form" action="{{url('admin/influencer/search')}}" method="get" id="search_form">
         <div class="form-group m-form__group row ">
             <label for="q" class="col-1 col-form-label"></label>
             <div class="col-6">

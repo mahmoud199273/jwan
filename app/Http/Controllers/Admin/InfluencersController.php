@@ -34,8 +34,8 @@ class InfluencersController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $users   = User::where([['name', 'LIKE', '%' . $query. '%'],['type','user']] )
-                                     ->orWhere([['phone', 'LIKE', '%' . $query. '%'],['type','user']] )
+             $users   = User::where([['name', 'LIKE', '%' . $query. '%'],['account_type','1']] )
+                                     ->orWhere([['phone', 'LIKE', '%' . $query. '%'],['account_type','1']] )
                                      ->paginate(10);
             $users->appends( ['q' => $request->q] );
             if (count ( $users ) > 0){
@@ -55,7 +55,7 @@ class InfluencersController extends Controller
      */
     public function create()
     {
-        $countries =  COuntry::all();
+        $countries =  Country::all();
 
         return view('admin.influencers.create',compact('countries'));
     }

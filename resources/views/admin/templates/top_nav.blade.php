@@ -11,7 +11,7 @@
 			<li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
 				<a href="#" class="m-nav__link m-dropdown__toggle">
 					<span class="m-topbar__userpic">
-						<img src="{{ config('app.url') }}/public/admin/assets/app/media/img/users/user3.png" alt=""/>
+						<img src="{{asset('/admin/assets/app/media/img/users/user3.png')}}" alt=""/>
 					</span>					
 				</a>
 				<div class="m-dropdown__wrapper">
@@ -40,7 +40,7 @@
 										<span class="m-nav__section-text">Section</span>
 									</li>
 									<li class="m-nav__item">
-										<a href="{{ config('app.admin_url') }}/admin/profile" class="m-nav__link">
+										<a href="{{ config('app.admin_url') }}/profile" class="m-nav__link">
 											<i class="m-nav__link-icon flaticon-profile-1"></i>
 											<span class="m-nav__link-title">  
 												<span class="m-nav__link-wrap">      
@@ -53,7 +53,7 @@
 									<li class="m-nav__separator m-nav__separator--fit">
 									</li>
 									<li class="m-nav__item">
-										<a href="{{ config('app.admin_url') }}/admin/logout" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">{{ __('admin.logout') }}</a>
+										<a href="{{ config('app.admin_url') }}/logout" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">{{ __('admin.logout') }}</a>
 									</li>
 								</ul>
 							</div>

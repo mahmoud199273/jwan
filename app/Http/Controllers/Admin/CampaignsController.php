@@ -31,11 +31,14 @@ class campaignsController extends Controller
 
      public function search( Request $request )
     {
+        //dd(10);
         $query =  $request->q;
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $campaigns   = Campaign::where('title', 'LIKE', '%' . $query. '%' )
+             $campaigns   = Campaign::where('title', 'LIKE', '%'.$query.'%' )
+                                    ->orWhere('user_id','LIKE','%'.$query.'%')
+                                    ->orWhere('created_at','LIKE','%'.$query.'%')
                                      ->paginate(10);
             $campaigns->appends( ['q' => $request->q] );
             if (count ( $campaigns ) > 0){
