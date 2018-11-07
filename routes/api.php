@@ -228,8 +228,9 @@ Route::get('/influncer/notifications'		, 'API\V1\UserController@getNotifications
 
 
 
-
   Route::get('influncer/banks/list','API\V1\UserBanksController@index');
+  Route::post('influncer/banks/store', 'API\V1\UserBanksController@store');
+
 
 
 
