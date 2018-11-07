@@ -26,9 +26,9 @@ class ResetPasswordController extends Controller
             'email'                  => 'required|exists:users',
         ]);
 
-        // if ($validator->fails()) {
-        //     return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_email'));
-        // }
+         if ($validator->fails()) {
+             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_email'));
+        }
 
         //create reset password code
         Password::sendResetLink(['email' => $request->email]);

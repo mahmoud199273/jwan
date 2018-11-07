@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Area;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Areas\StoreAreaRequest;
 use App\Http\Requests\Admin\Areas\EditAreaRequest;
-use App\Models\Admin\Area;
+use App\Http\Requests\Admin\Areas\StoreAreaRequest;
+
 use App\Models\Admin\Country;
 use Illuminate\Http\Request;
 
@@ -36,6 +37,7 @@ class AreasController extends Controller
             return redirect()->back();
         }else{
              $areas   = Area::where('name', 'LIKE', '%' . $query. '%' )
+                                     ->orWhere('name_ar','LIKE','%'.$query.'%')
                                      ->paginate(10);
             $areas->appends( ['q' => $request->q] );
             if (count ( $areas ) > 0){

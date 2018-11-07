@@ -28,10 +28,34 @@ class OffersController extends Controller
     }
     
 
+
     function campaigns(Request $request , $id)
     {
         $offers = Offer::where('campaign_id',$id)->latest()->paginate(10);
         return view('admin.offers.index',compact('offers'));
+    }
+
+     public function search( Request $request )
+    {
+        //dd(10);
+        $query =  $request->q;
+        
+        if ( $query == "") {
+            return redirect()->back();
+        }else{
+             $offers   = Offer::join('users as influncer','influncer.id','=','offers.influncer_id')->join('users as user','user.id','=','offers.user_id')->join('campaigns','campaigns.id','=','offers.campaign_id')->where('influncer.name', 'LIKE', '%' . $query. '%')
+                                     ->orWhere('user.name', 'LIKE', '%' . $query. '%')
+                                     ->orWhere('campaigns.title', 'LIKE', '%' . $query. '%')
+                                     ->orWhere('offers.cost', 'LIKE', '%' . $query. '%')
+                                     ->orWhere('offers.status', 'LIKE', '%' . $query. '%')
+                                     ->paginate(10);
+            $offers->appends( ['q' => $request->q] );
+            if (count ( $offers ) > 0){
+                return view('admin.offers.index',[ 'offers' => $offers ])->withQuery($query);
+            }else{
+                return view('admin.offers.index',[ 'offers'=>null ,'message' => __('admin.no_result') ]);
+            }
+        }
     }
 
 

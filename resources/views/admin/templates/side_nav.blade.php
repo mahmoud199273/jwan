@@ -104,6 +104,14 @@
 			</a>
 		</li>
 
+		<li class="m-menu__item" aria-haspopup="true" >
+			<a  href="{{url('admin/aboutApp')}}" class="m-menu__link ">
+				<span class="m-menu__item-here"></span>
+				<i class="m-menu__link-icon fa fa-map"></i>
+				<span class="m-menu__link-text">{{ __('admin.aboutApp') }}</span>
+			</a>
+		</li>
+
 		{{--  <li class="m-menu__item {{ isActiveTap('districts') }}" aria-haspopup="true" >
 				<a  href="{{ config('app.admin_url') }}/districts" class="m-menu__link ">
 					<span class="m-menu__item-here"></span>

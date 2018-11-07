@@ -35,6 +35,8 @@ class ComplaintsController extends Controller
             return redirect()->back();
         }else{
              $complaints   = Complaint::where('title', 'LIKE', '%' . $query. '%' )
+                                     ->orWhere('user_id','LIKE','%'.$query.'%')
+                                     ->orWhere('created_at','LIKE','%'.$query.'%')
                                      ->paginate(10);
             $complaints->appends( ['q' => $request->q] );
             if (count ( $complaints ) > 0){

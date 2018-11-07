@@ -34,15 +34,25 @@ class UsersController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
+
+             /*$users   = User::where([['name', 'LIKE', '%' . $query. '%'],
+                                            ['account_type','0']] )
+                                     ->orWhere([['phone', 'LIKE', '%' . $query. '%'],
+                                        ['account_type','0']] )*/
+
              $users   = User::where([['name', 'LIKE', '%' . $query. '%'],['account_type','0']] )
                                      ->orWhere([['phone', 'LIKE', '%' . $query. '%'],['account_type','0']] )
+                                     ->orWhere('email','LIKE','%'.$query.'%')
+
                                      ->paginate(10);
             $users->appends( ['q' => $request->q] );
+
             if (count ( $users ) > 0){
                 return view('admin.users.index',[ 'users' => $users ])->withQuery($query);
             }else{
                 return view('admin.users.index',[ 'users'=>null ,'message' => __('admin.no_result') ]);
             }
+            //dd($users);
         }
     }
 
@@ -55,7 +65,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $countries =  COuntry::all();
+        $countries =  Country::all();
 
         return view('admin.users.create',compact('countries'));
     }
@@ -81,7 +91,9 @@ class UsersController extends Controller
      */
     public function show($id)
     {
+        //dd($id);
         $user = User::find($id);
+        //dd($user);
         $countries =  Country::all();
         return view('admin.users.show',compact('user','countries'));
     }

@@ -2,9 +2,39 @@
 
 @section('content')
 
+<div class="row">
+    <form class="m-form" action="{{url('admin/campaign/search')}}" method="get" id="search_form">
+        <div class="form-group m-form__group row ">
+            <label for="q" class="col-1 col-form-label"></label>
+            <div class="col-6">
+                <input type="text" name="q" class="form-control m-input" 
+                placeholder="{{ __('admin.search_word') }}">
+            </div>
+            <div class="col-2">
+                <a href="#" class="btn btn-secondary m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" id="confirm_search">
+                    <span>
+                        <i class="la la-search"></i>
+                        <span>{{ __('admin.search') }}</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+<br>
+ 
+@if(isset($query))
+<div class="row" style="padding-right: 35px;">
+    <span>{{ __('admin.searched_for') }}</span>
+    <span><b>"{{ $query}}"</b></span>
+</div>
+@endif
+
+<br>
+
 
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12"> 
 
         <!--begin::Portlet-->
         <div class="m-portlet m-portlet--last m-portlet--head-lg m-portlet--responsive-mobile" id="main_portlet">
@@ -42,6 +72,8 @@
                                     <th><b>{{ __('admin.title') }}</b></th>
                                     <th><b>{{ __('admin.name') }}</b></th>
                                     <th><b>{{ __('admin.campaign_date') }}</b></th>
+                                    <th><b>{{ __('admin.status') }}</b></th>
+                                    
                                     <th><b>{{ __('admin.control') }}</b></th>
                                 </tr>
                             </thead>
@@ -52,6 +84,42 @@
                                     <th scope="row">{{ $campaign->title }}</th>
                                     <th scope="row">{{ $campaign->user->name }}</th>
                                     <th scope="row">{{ $campaign->created_at }}</th>
+                                    <th scope="row">
+                                        @if ($campaign->status == 0)
+                                            {{  __('admin.new_campaign') }}
+
+                                        @elseif ($campaign->status == 1)
+                                            {{ __('admin.campaign_approved') }}
+
+                                        @elseif ($campaign->status == 2)
+                                            {{ __('admin.campaign_rejected') }}   
+
+                                        @elseif ($campaign->status == 3)
+                                            {{ __('admin.campaign_in_progress') }}
+
+                                        @elseif ($campaign->status == 4)
+                                            {{ __('admin.campaign_Pending_proof') }}
+
+                                        @elseif ($campaign->status == 5)
+                                            {{ __('admin.campaign_Pending_payment') }}
+
+                                        @elseif ($campaign->status == 6)
+                                            {{ __('admin.campaign_Confirmed') }}
+
+                                        @elseif ($campaign->status == 7)
+                                            {{ __('admin.campaign_finished') }}
+
+                                        @elseif ($campaign->status == 8)
+                                            {{ __('admin.campaign_canceled') }}
+
+                                        @elseif ($campaign->status == 9)
+                                            {{ __('admin.campaign_closed') }}
+
+                                        @else
+                                            {{ __('admin.done') }}
+                                        @endif
+                                    </th>
+                                    
                                     <td>
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
                                             <a type="button" 
@@ -59,6 +127,7 @@
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             <i class="fa fa-eye m--font-info"></i>
                                         </a>
+                                        
                                         <a type="button" 
                                             href="{{url('admin/campaigns')}}/{{ $campaign->id }}/edit" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
@@ -101,6 +170,19 @@
        @endif
    </div>
 </div>
+
+<br>
+
+@if(isset($query ) or isset($message))
+<div>
+    <a href="{{url('admin/campaigns')}}" class="btn btn-danger m-btn m-btn--icon m-btn--wide">
+        <span>
+            <i class="la la-warning"></i>
+            <span>{{ __('admin.cancel_search') }}</span>
+        </span>
+    </a>
+</div>
+@endif
 
 
 

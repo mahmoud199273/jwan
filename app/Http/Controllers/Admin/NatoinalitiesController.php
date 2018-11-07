@@ -35,6 +35,7 @@ class NatoinalitiesController extends Controller
             return redirect()->back();
         }else{
              $rows   = Nathionality::where('name', 'LIKE', '%' . $query. '%' )
+                                     ->orWhere('name_ar','LIKE','%'.$query.'%')
                                      ->paginate(10);
             $rows->appends( ['q' => $request->q] );
             if (count ( $rows ) > 0){

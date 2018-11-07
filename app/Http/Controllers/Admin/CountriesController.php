@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Country;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Countries\StoreCountryRequest;
 use App\Http\Requests\Admin\Countries\EditCountryRequest;
-use App\Models\Admin\Country;
+use App\Http\Requests\Admin\Countries\StoreCountryRequest;
 use Illuminate\Http\Request;
 
 
@@ -30,11 +30,14 @@ class CountriesController extends Controller
 
      public function search( Request $request )
     {
+        //dd(10);
         $query =  $request->q;
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $countries   = Country::where('name', 'LIKE', '%' . $query. '%' )
+             $countries   = Country::where('name_ar', 'LIKE', '%' . $query. '%' )
+                                     ->orWhere('name','LIKE','%'.$query.'%')
+                                     ->orWhere('code','LIKE','%'.$query.'%')
                                      ->paginate(10);
             $countries->appends( ['q' => $request->q] );
             if (count ( $countries ) > 0){
@@ -43,7 +46,7 @@ class CountriesController extends Controller
                 return view('admin.countries.index',[ 'countries'=> null ,'message' => __('admin.no_result') ]);
             }
         }
-    }
+    }  
 
     /**
      * Show the form for creating a new resource.

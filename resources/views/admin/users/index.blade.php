@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <form class="m-form" action="{{url('admin/users/search')}}" method="get" id="search_form">
+    <form class="m-form" action="{{url('admin/user/search')}}" method="get" id="search_form">
         <div class="form-group m-form__group row ">
             <label for="q" class="col-1 col-form-label"></label>
             <div class="col-6">
@@ -29,7 +29,7 @@
 </div>
 @endif
 
-<br>
+<br> 
 
 <div class="row">
     <div class="col-lg-12">

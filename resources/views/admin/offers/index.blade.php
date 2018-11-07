@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-    <form class="m-form" action="{{url('admin/country/search')}}" method="get" id="search_form">
+    <form class="m-form" action="{{url('admin/offer/search')}}" method="get" id="search_form">
         <div class="form-group m-form__group row ">
             <label for="q" class="col-1 col-form-label"></label>
             <div class="col-6">
@@ -102,7 +102,7 @@
                                     <td>
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
                                             <a type="button" 
-                                            href="{{url('admin/offers/show')}}/{{ $row->id }}" 
+                                            href="{{url('admin/offers')}}/{{ $row->id }}" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             <i class="fa fa-eye m--font-primary"></i>
                                         </a>

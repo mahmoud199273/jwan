@@ -199,12 +199,6 @@ class CampignsController extends Controller
 
             'maximum_rate'      => 'required',
 
-            //'created_date'      => 'required',
-
-            //'updated_date'      => 'required',
-
-            //'status'    => 'required',
-
             'files_arr'         => 'nullable',
 
             'categories_id'     => 'required',
@@ -574,6 +568,14 @@ class CampignsController extends Controller
         return $this->respondWithSuccess(trans('api_msgs.updated'));
     }
 
+    public function isCampaignExist($influncer_id,$campaign_id)
+    {
+         return InfluncerCampaign::where([
+            ['influncer_id',$influncer_id],
+            ['campaign_id',$campaign_id]
+            ])->first() ? true : false;
+    }
+
 
 
          public function status(Request $request)
@@ -581,10 +583,6 @@ class CampignsController extends Controller
         {
             $influncer =  $this->getAuthenticatedUser();
 
-           if($influncer->account_type == '0'){
-            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the rigtt to be here'));
-
-              }
 
            $validator = Validator::make( $request->all(), [
            'campaign_id'                => 'required',
@@ -601,13 +599,17 @@ class CampignsController extends Controller
                return $this->setStatusCode(422)->respondWithError('parameters faild validation');
            }
 
+
            $influncercampaign = new InfluncerCampaign;
 
            $influncercampaign->campaign_id    = $request->campaign_id;
 
            $influncercampaign->status         = $request->status;
 
+            $influncercampaign->influncer_id        = $influncer->id;
+
            $influncercampaign->influncer_id        = $influncer->id;
+
 
            $influncercampaign->save();
 

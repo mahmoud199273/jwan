@@ -21,11 +21,25 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 
 	Route::group(['namespace'=>'Admin'],function(){
 
+
+
+		
+		Route::get('/admin', 'DashboardController@index');
+		
+
+		/*Route::resource('users','UsersController');
+		
+
+		Route::post('/users/activate'       , 'UsersController@activate');
+		Route::post('/users/ban'            , 'UsersController@ban');
+		Route::get('/user/search'           , 'UsersController@search');
+
 		Route::get('/admin', 'DashboardController@index');
 
 		Route::resource('country','CountriesController');
 		Route::resource('area','AreasController');
-		Route::resource('category','CategoryController');
+		Route::resource('category','CategoryController');*/
+
 
 
 		Route::group(['prefix' => '/auth'], function() {
@@ -41,24 +55,70 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::get('/dashboard' , 'DashboardController@index');
 
 
+
+		
+
 		Route::resource('country','CountriesController');
+		Route::get('/countries/search','CountriesController@search');
+		
+
+
+		//Route::resource('country','CountriesController');
+
 		Route::resource('area','AreasController');
+		Route::get('/areas/search','AreasController@search');
+
 		Route::resource('category','CategoriesController');
+		Route::get('/categories/search','CategoriesController@search');
+
 		Route::resource('natoinality','NatoinalitiesController');
+
+		Route::get('Natoinalities/search','NatoinalitiesController@search');
 		Route::resource('users','UsersController');
-		Route::post('/users/activate'       , 'UsersControllers@activate');
-		Route::post('/users/ban'            , 'UsersControllers@ban');
-		Route::get('/users/search'            , 'UsersControllers@search');
+		Route::post('/users/activate'       , 'UsersController@activate');
+		Route::post('/users/ban'            , 'UsersController@ban');
+		Route::get('/user/search'           , 'UsersController@search');
 
 		Route::resource('influencers','InfluencersController');
-		Route::get('/influencers/search'            , 'InfluencersController@search');
+		Route::post('/influencers/activate'       , 'InfluencersController@activate');
+		Route::post('/influencers/ban'            , 'InfluencersController@ban');
+		Route::get('influencer/search','InfluencersController@search');
+
+		// Route::resource('users','UsersController');
+		// Route::post('/users/activate'       , 'UsersControllers@activate');
+		// Route::post('/users/ban'            , 'UsersControllers@ban');
+		// Route::get('/user/search'            , 'UsersControllers@search');
+
+		//Route::resource('influencers','InfluencersController');
+		//Route::get('/influencers/search'            , 'InfluencersController@search');
+
 
 		Route::resource('complaints','ComplaintsController');
+		Route::get('complaint/search','ComplaintsController@search');
+
 		Route::resource('campaigns','CampaignsController');
+		Route::post('/campaigns/approve'       , 'CampaignsController@approve');
+		Route::post('/campaigns/reject'        , 'CampaignsController@reject');
+		Route::get('/campaign/search','CampaignsController@search');
+
 		Route::resource('pages','PagesController');
+
 		Route::resource('bank','BankAccountsController');
+
+		Route::resource('aboutApp','AboutappController');
+
+		//Route::get('offers/{id}', 'OffersController@campaigns');
+
+		Route::resource('offers','OffersController');
+		Route::get('offer/search','OffersController@search');
+		
+		// Route::get('offers', 'OffersController@index');
+		// Route::get('offers/show/{id}', 'OffersController@show');
+
+
 		Route::resource('offers','OffersController');
 		Route::get('offers/{id}/{campaign}','OffersController@campaigns');
+
 	});
 });
 

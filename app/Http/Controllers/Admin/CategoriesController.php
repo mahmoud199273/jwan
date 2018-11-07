@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Categories\StoreCategoryRequest;
 use App\Http\Requests\Admin\Categories\EditCategoryRequest;
-use App\Models\Admin\Category;
+use App\Http\Requests\Admin\Categories\StoreCategoryRequest;
+
 use Illuminate\Http\Request;
 
 
@@ -30,17 +31,19 @@ class CategoriesController extends Controller
 
      public function search( Request $request )
     {
+        //dd(10);
         $query =  $request->q;
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $rows   = Category::where('name', 'LIKE', '%' . $query. '%' )
+             $categories   = Category::where('name', 'LIKE', '%' . $query. '%' )
+                                     ->orWhere('name_ar','LIKE','%'.$query.'%')
                                      ->paginate(10);
-            $rows->appends( ['q' => $request->q] );
-            if (count ( $rows ) > 0){
-                return view('admin.categories.index',[ 'rows' => $rows ])->withQuery($query);
+            $categories->appends( ['q' => $request->q] );
+            if (count ( $categories ) > 0){
+                return view('admin.categories.index',[ 'categories' => $categories ])->withQuery($query);
             }else{
-                return view('admin.categories.index',[ 'rows'=> null ,'message' => __('admin.no_result') ]);
+                return view('admin.categories.index',[ 'categories'=> null ,'message' => __('admin.no_result') ]);
             }
         }
     }
