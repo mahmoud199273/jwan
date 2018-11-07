@@ -204,10 +204,11 @@ class OffersController extends Controller
             $transations->offer_id     = $offer->id;
             $transations->save();
 
+            $user->balance = $user->balance - $offer->cost;
+            $user->save();
 
-
-            $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
-            Notification::create(['user_id' => $campaign->influncer_id,
+            $player_ids = $this->getUserPlayerIds($offer->influncer_id);
+            Notification::create(['user_id' => $offer->influncer_id,
                                       'message' => 'Your offer approved on '.$campaign->title,
                                       'message_ar' => 'تم الموافقة على عرضك على حملة '.$campaign->title,
                                       'campaign_id' =>  $campaign->id,
@@ -221,7 +222,7 @@ class OffersController extends Controller
                                   ['campaign_id' =>  (int)$campaign->id,
                                   'offer_id'    => (int)$offer->id,
                                   'type'          =>  1,
-                                  'type_title'	=> 'offer rejected']);
+                                  'type_title'	=> 'offer approved']);
 
             //////////////////// new push /////////////////////////////////////
             return $this->respondWithSuccess(trans('api_msgs.updated'));
