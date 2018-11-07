@@ -112,11 +112,11 @@ class TransactionsController extends Controller
         $transations->transaction_amount     = $request->transaction_amount;
         $transations->image     = $request-> image;
 
-        $transactions->direction = "0";
-        $transations->type     = "0";
-        $transations->status     = "0";
-        $transations->campaign_id     = "0";
-        $transations->offer_id     = "0";
+        $transactions->direction = 0;
+        $transations->type     = 0;
+        $transations->status     = 0;
+        $transations->campaign_id     = 0;
+        $transations->offer_id     = 0;
         $transations->amount     = $request->transaction_amount;
 
 
