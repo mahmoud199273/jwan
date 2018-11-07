@@ -110,7 +110,7 @@ class TransactionsController extends Controller
         $transations->transaction_number     = $request->transaction_number;
         $transations->transaction_date     = $request->transaction_date;
         $transations->transaction_amount     = $request->transaction_amount;
-        $transations->image     = $request-> image;
+        $transations->image     = $request->image;
 
         $transactions->direction = 0;
         $transations->type     = 0;
