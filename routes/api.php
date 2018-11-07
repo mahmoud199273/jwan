@@ -130,11 +130,14 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  // m.abdelrahman api links (user profile for influencer , influencer profile for user)
  Route::get('influencer/user/profile/{id}', 'API\V1\UserController@influncerUserProfile'); // influencer view user profile and campaignes
+ Route::get('influencer/user/campaigns/{id}','API\V1\CampignsController@allCampaigns');
  Route::get('user/influencer/profile/{id}', 'API\V1\UserController@UserinfluncerProfile'); // user view influencer profile and campaignes
 
  // start Camapign routes
 
  Route::post('/user/add/campaign','API\V1\CampignsController@store');
+
+ Route::get('/user/archive/campaign','API\V1\CampignsController@archiveCampaigns');
 
  Route::get('/user/campaigns','API\V1\CampignsController@allCampaigns');
 
