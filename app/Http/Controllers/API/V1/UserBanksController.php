@@ -58,7 +58,7 @@ class UserBanksController extends Controller
         // }
 
             $data = BankAccounts::where([['user_id' ,$user->id]])->get();
-        $bankaccounts = $this->BankAccountsTransformer->transformCollection($data);
+            $bankaccounts = $this->bankaccounttransformer->transformCollection($data);
 
         return $this->sendResponse($bankaccounts, trans('lang.bank account read succesfully'),200);
     }
