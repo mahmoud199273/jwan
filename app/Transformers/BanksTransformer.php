@@ -4,7 +4,7 @@ namespace App\Transformers;
 
 use App\Transformers\BaseTransformer as Transformer;
 
-class AppBanksTransformer extends Transformer
+class BanksTransformer extends Transformer
 {
 	public function transform($bank  ) : array
     {
