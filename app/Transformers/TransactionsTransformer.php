@@ -47,7 +47,7 @@ class TransactionsTransformer extends Transformer
             'amount'       => $tranaction->amount,
             'campaign_id'       => (int) $tranaction->campaign_id,
             'offer_id'       => (int) $tranaction->offer_id,
-            'status'       => $tranaction->status,
+            'status'       => (int) $tranaction->status,
             'status_title'	=> $status_array[(int) $tranaction->status],
             'direction'       => $tranaction->direction,
             'direction_title'	=> $direction_array[(int) $tranaction->direction],
