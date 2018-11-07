@@ -28,7 +28,7 @@ class TransactionsTransformer extends Transformer
 
 
 
-	public function transform( $tranaction  ) : array
+	public function transform( $transaction  ) : array
     {
 			$status_array = array(0 => 'pending',
                       			1 => 'approved',
@@ -43,27 +43,27 @@ class TransactionsTransformer extends Transformer
                           2 => 'finished offer (in influncer)');
         // $campaign = Campaign::find($campaign->id);
         $return_array =  [
-        	  'id'       			=> (int) $tranaction->id,
-            'user_id'           => (int) $tranaction->user_id,
-            'amount'       => $tranaction->amount,
-            'campaign_id'       => (int) $tranaction->campaign_id,
-            'offer_id'       => (int) $tranaction->offer_id,
-            'status'       => (int) $tranaction->status,
-            'status_title'	=> $status_array[(int) $tranaction->status],
-            'direction'       => $tranaction->direction,
-            'direction_title'	=> $direction_array[(int) $tranaction->direction],
-            'type'       => (int) $tranaction->type,
-            'type_title'	=> $type_array[(int) $tranaction->type],
-            'image'       => $tranaction->image,
-            'transaction_bank_name'       => $tranaction->transaction_bank_name,
-            'transaction_account_name'       => $tranaction->transaction_account_name,
-            'transaction_account_number'       => $tranaction->transaction_account_number,
-            'transaction_account_IBAN'       => $tranaction->transaction_account_IBAN,
-            'transaction_number'       => $tranaction->transaction_number,
-            'transaction_date'       => Carbon::parse($tranaction->transaction_date)->toDateTimeString(),
-            'transaction_amount'       => $tranaction->transaction_amount,
-            'created_at'       => Carbon::parse($tranaction->created_at)->toDateTimeString(),
-            'updated_at'          => Carbon::parse($tranaction->updated_at)->toDateTimeString(),
+        	  'id'       			=> (int) $transaction->id,
+            'user_id'           => (int) $transaction->user_id,
+            'amount'       => $transaction->amount,
+            'campaign_id'       => (int) $transaction->campaign_id,
+            'offer_id'       => (int) $transaction->offer_id,
+            'status'       => (int) $transaction->status,
+            'status_title'	=> $status_array[(int) $transaction->status],
+            'direction'       => $transaction->direction,
+            'direction_title'	=> $direction_array[(int) $transaction->direction],
+            'type'       => (int) $transaction->type,
+            'type_title'	=> $type_array[(int) $transaction->type],
+            'image'       => $transaction->image,
+            'transaction_bank_name'       => $transaction->transaction_bank_name,
+            'transaction_account_name'       => $transaction->transaction_account_name,
+            'transaction_account_number'       => $transaction->transaction_account_number,
+            'transaction_account_IBAN'       => $transaction->transaction_account_IBAN,
+            'transaction_number'       => $transaction->transaction_number,
+            'transaction_date'       => Carbon::parse($transaction->transaction_date)->toDateTimeString(),
+            'transaction_amount'       => $transaction->transaction_amount,
+            'created_at'       => Carbon::parse($transaction->created_at)->toDateTimeString(),
+            'updated_at'          => Carbon::parse($transaction->updated_at)->toDateTimeString(),
 
 
 
@@ -73,16 +73,16 @@ class TransactionsTransformer extends Transformer
             //'image'         => $camapign->($user->image) ?config('app.url').$user->image : null,
             //'file'              => isset($campaign->attachments) ? $campaign->attachments : null,
             //'number_of_offers'  =>  Offer::where('campaign_id',$campaign->id)->count(),
-            // 'status'   => (int) $tranaction->status,
-						// 'status_title'	=> $status_array[(int) $tranaction->status],
+            // 'status'   => (int) $transaction->status,
+						// 'status_title'	=> $status_array[(int) $transaction->status],
             //
-            // 'categories' => isset($tranaction->categories) ? $tranaction->categories : null,
+            // 'categories' => isset($transaction->categories) ? $transaction->categories : null,
             //
-            // 'countries' => isset($tranaction->countries) ? $tranaction->countries : null,
+            // 'countries' => isset($transaction->countries) ? $transaction->countries : null,
             //
-            // 'areas' => isset($tranaction->areas) ? $tranaction->areas : null,
+            // 'areas' => isset($transaction->areas) ? $transaction->areas : null,
             //
-						// 'is_extened'	=> isset($tranaction->is_extened) ? $tranaction->is_extened : 0
+						// 'is_extened'	=> isset($transaction->is_extened) ? $transaction->is_extened : 0
 
 
         ];
