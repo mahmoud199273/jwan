@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\BankAccounts;
 
-use App\BankAccounts;
+use App\AppBankAccounts;
 use App\Http\Requests\Admin\BaseRequest;
 
 
@@ -17,18 +17,18 @@ class StoreBankAccountsRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name_ar'                        => 'required|string',
-            'name'                           => 'required|string',
-            'desc'                           => 'required',
-            'desc_ar'                        => 'required',
-            'account_number'                 => 'required',
-            'logo'                           => 'required',
+            'name'                        => 'required|string',
+            'name_ar'                     => 'required|string',
+            'IBAN'                        => 'required',
+            'account_number'              => 'required',
+            'account_name'                => 'required',
+            'logo'                        => 'required',
         ];
     }
 
     public function persist()
     {
-        BankAccounts::create($this->request->all());
+        AppBankAccounts::create($this->request->all());
     }
 
 

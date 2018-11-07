@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AppBankAccounts extends Model
 {
-    //
+    // 
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $table = 'app_bank_accounts';

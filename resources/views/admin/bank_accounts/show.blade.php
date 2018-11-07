@@ -33,7 +33,7 @@
     </div>
 
     <!--begin::Form-->
-    <form class="m-form" action="{{ config('app.admin_url') }}/cities/{{ $row->id }}" method="post" enctype="multipart/form-data">
+    <form class="m-form" action="{{ config('app.admin_url') }}/bank/{{ $row->id }}" method="post" enctype="multipart/form-data">
        
         <div class="m-portlet__body">
 
@@ -52,8 +52,17 @@
             </div>
         @endif
 
+            <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
+                <label for="name" class="col-1 col-form-label">{{ __('admin.name') }}</label>
+                <div class="col-9">
+                    <input type="text" name="name" class="form-control m-input" 
+                            placeholder="{{ __('admin.name') }}" value="{{ $row->name }}" disabled="">
+                    {!! $errors->first('name', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+
             <div class="form-group m-form__group row {{ $errors->has('name_ar') ? 'has-danger' : ''}}">
-                <label for="name" class="col-1 col-form-label">{{ __('admin.name_ar') }}</label>
+                <label for="name_ar" class="col-1 col-form-label">{{ __('admin.name_ar') }}</label>
                 <div class="col-9">
                     <input type="text" name="name_ar" class="form-control m-input" 
                             placeholder="{{ __('admin.name_ar') }}" value="{{ $row->name_ar }}" disabled="">
@@ -61,43 +70,34 @@
                 </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
-                <label for="name" class="col-1 col-form-label">{{ __('admin.name_en') }}</label>
+            <div class="form-group m-form__group row {{ $errors->has('IBAN') ? 'has-danger' : ''}}">
+                <label for="IBAN" class="col-2 col-form-label">{{ __('admin.IBAN') }}</label>
                 <div class="col-9">
-                    <input type="text" name="name" class="form-control m-input" 
-                            placeholder="{{ __('admin.name_en') }}" value="{{ $row->name }}" disabled="">
-                    {!! $errors->first('name', '<span class="form-control-feedback">:message</span>') !!}
+                    <textarea class="form-control m-input" placeholder="{{ __('admin.IBAN') }}" name="IBAN" disabled>{{ $row->IBAN }}</textarea>
+                    {!! $errors->first('IBAN', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('desc_ar') ? 'has-danger' : ''}}">
-                <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.description_ar') }}</label>
-                <div class="col-9">
-                    <textarea class="form-control m-input" placeholder="{{ __('admin.description_ar') }}" name="desc_ar" disabled>{{ $row->desc_ar }}</textarea>
-                    {!! $errors->first('desc_ar', '<span class="form-control-feedback">:message</span>') !!}
-                </div>
-            </div>
-
-            <div class="form-group m-form__group row {{ $errors->has('desc') ? 'has-danger' : ''}}">
-                <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.description') }}</label>
-                <div class="col-9">
-                    <textarea class="form-control m-input" placeholder="{{ __('admin.description') }}" name="desc" disabled>{{ $row->desc }}</textarea>
-                    {!! $errors->first('desc', '<span class="form-control-feedback">:message</span>') !!}
-                </div>
-            </div>
-           
             <div class="form-group m-form__group row {{ $errors->has('account_number') ? 'has-danger' : ''}}">
-                <label for="name" class="col-1 col-form-label">{{ __('admin.account_number') }}</label>
+                <label for="account_number" class="col-2 col-form-label">{{ __('admin.account_number') }}</label>
                 <div class="col-9">
-                    <input type="text" name="account_number" class="form-control m-input" 
-                            placeholder="{{ __('admin.account_number') }}" value="{{ $row->account_number }}" disabled="">
+                    <textarea class="form-control m-input" placeholder="{{ __('admin.account_number') }}" name="account_number" disabled>{{ $row->account_number }}</textarea>
                     {!! $errors->first('account_number', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
+           
+            <div class="form-group m-form__group row {{ $errors->has('account_name') ? 'has-danger' : ''}}">
+                <label for="account_name" class="col-1 col-form-label">{{ __('admin.account_name') }}</label>
+                <div class="col-9">
+                    <input type="text" name="account_name" class="form-control m-input" 
+                            placeholder="{{ __('admin.account_name') }}" value="{{ $row->account_name }}" disabled="">
+                    {!! $errors->first('account_name', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
 
            
-            <div class="form-group m-form__group row {{ $errors->has('flag') ? 'has-danger' : ''}}">
-                    <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.logo') }}</label>
+            <div class="form-group m-form__group row {{ $errors->has('logo') ? 'has-danger' : ''}}">
+                    <label for="logo" class="col-2 col-form-label">{{ __('admin.logo') }}</label>
                     <div class="col-9">
                         <img src="{{url('/assets/uploads')}}/{{ $row->logo }}" width="400" height="400" class="form-control">
                     </div>

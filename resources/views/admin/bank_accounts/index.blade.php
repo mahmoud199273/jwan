@@ -76,7 +76,10 @@
                                 <tr>
                                     <th><b>{{ __('admin.name_ar') }}</b></th>
                                     <th><b>{{ __('admin.name_en') }}</b></th>
+                                    <th><b>{{ __('admin.IBAN') }}</b></th>
                                     <th><b>{{ __('admin.account_number') }}</b></th>
+                                    
+                                    <th><b>{{ __('admin.account_name') }}</b></th>
                                     <th><b>{{ __('admin.control') }}</b></th>
                                 </tr>
                             </thead>
@@ -86,7 +89,10 @@
                                 <tr>
                                     <th scope="row">{{ $row->name_ar }}</th>
                                     <th scope="row">{{ $row->name }}</th>
+                                    <th scope="row">{{ $row->IBAN }}</th>
                                     <th scope="row">{{ $row->account_number }}</th>
+                                   
+                                    <th scope="row">{{ $row->account_name }}</th>
                                     <td>
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
                                             <a type="button" 

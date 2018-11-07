@@ -174,6 +174,7 @@ return [
     'influncer_privacy_policy' => 'سياسة خصوصية المؤثر',
     'influncer_privacy_title_ar' => 'عنوان خصوصية المؤثر بالعربية',
     'influncer_privacy_policy_ar' => 'سياسة خصوصية المؤثر بالعربية',
+    'IBAN' => 'رقم الحساب المصرفى الدولي',
     /* m.abdelrahman  */
     'Business manager'=>'مدير اعمال',
     'Personal'=>' حساب شخصى ',

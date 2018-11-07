@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\AppBankAccounts;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BankAccounts\StoreBankAccountsRequest;
 use App\Http\Requests\Admin\BankAccounts\EditBankAccountsRequest;
-use App\BankAccounts;
+use App\Http\Requests\Admin\BankAccounts\StoreBankAccountsRequest;
+use Illuminate\Http\Request;
 
 class BankAccountsController extends Controller
 {
@@ -22,7 +22,7 @@ class BankAccountsController extends Controller
     public function index()
     {
         //
-        $list = BankAccounts::latest()->paginate(10);
+        $list = AppBankAccounts::latest()->paginate(10);
         return view('admin.bank_accounts.index',compact('list'));
     }
 
@@ -59,7 +59,7 @@ class BankAccountsController extends Controller
     public function show($id)
     {
         //
-        $row = BankAccounts::find($id);
+        $row = AppBankAccounts::find($id);
         return view('admin.bank_accounts.show',compact('row'));
     }
 
@@ -72,7 +72,7 @@ class BankAccountsController extends Controller
     public function edit($id)
     {
         //
-        $row = BankAccounts::find($id);
+        $row = AppBankAccounts::find($id);
         return view('admin.bank_accounts.edit',compact('row'));
     }
 
@@ -99,7 +99,7 @@ class BankAccountsController extends Controller
     {
         //
         if ($request->ajax()) {
-            BankAccounts::find($id)->delete();
+            AppBankAccounts::find($id)->delete();
             return response(['msg' => 'deleted', 'status' => 'success']);
         }
     }
