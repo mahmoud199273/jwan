@@ -360,8 +360,8 @@ class OffersController extends Controller
 
             $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
 
-            $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
-            Notification::create(['user_id' => $campaign->influncer_id,
+            $player_ids = $this->getUserPlayerIds($offer->influncer_id);
+            Notification::create(['user_id' => $offer->influncer_id,
                                       'message' => 'Your proof have been approved and finished on '.$campaign->title,
                                       'message_ar' => 'تم قبول توثيقك واغلاقه لحملة '.$campaign->title,
                                       'campaign_id' =>  $campaign->id,
