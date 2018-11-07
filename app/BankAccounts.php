@@ -11,5 +11,5 @@ class BankAccounts extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $table = 'bank_accounts';
-    protected $fillable = ['name','name_ar','desc','desc_ar','logo','account_number'];
+    protected $fillable = ['user_id','bank_id','account_name','IBAN','note','account_number'];
 }

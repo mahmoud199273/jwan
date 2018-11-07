@@ -229,6 +229,10 @@ Route::get('/influncer/notifications'		, 'API\V1\UserController@getNotifications
 
 
 
+  Route::get('influncer/banks/list','API\V1\UserBanksController@index');
+
+
+
 /* about the app - license agreement */
 Route::get('/about/app','API\V1\AboutAppController@index') ;
 
