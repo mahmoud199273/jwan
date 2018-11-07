@@ -9,6 +9,7 @@ use App\Offer;
 use App\Chat;
 use App\Campaign;
 use App\Notification;
+use App\Transactions;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -184,6 +185,21 @@ class OffersController extends Controller
 
 
             $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
+
+
+
+            $transations = new Transactions;
+            $transations->user_id = $user->id;
+            $transations->amount     = $offer->cost;
+            $transations->direction = 1;
+            $transations->type     = 1;
+            $transations->status     = 0;
+            $transations->campaign_id     = $campaign->id;
+            $transations->offer_id     = $offer->id;
+            $transations->amount     = $request->transaction_amount;
+            $transations->save();
+
+
 
             $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
             Notification::create(['user_id' => $campaign->influncer_id,
