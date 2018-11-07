@@ -61,7 +61,8 @@ class TransactionsController extends Controller
                                     ->leftJoin('offers', 'offers.id', '=', 'transactions.offer_id')
                     ->orderBy('transactions.id','DESC')
                     ->paginate($this->getPagination());
-        $transations =  $pagination->items();
+
+        $transations =  $this->transactionstransformer->transformCollection(collect($pagination->items()));
         // foreach ($notifications as $key => $value) {
         //     $notifications_array[] = $value->id;
         // }
