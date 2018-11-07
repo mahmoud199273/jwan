@@ -109,7 +109,8 @@ class TransactionsController extends Controller
         $transations->transaction_account_number     = $request->transaction_account_number;
         $transations->transaction_account_IBAN     = $request->transaction_account_IBAN;
         $transations->transaction_number     = $request->transaction_number;
-        $transations->transaction_date     = $request->transaction_date;
+        // $transations->transaction_date     = $request->transaction_date;
+        $transations->transaction_date = Carbon::parse($request->transaction_date);
         $transations->transaction_amount     = $request->transaction_amount;
         $transations->image     = $request->image;
 
