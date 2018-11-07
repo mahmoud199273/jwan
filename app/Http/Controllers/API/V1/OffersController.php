@@ -337,7 +337,7 @@ class OffersController extends Controller
             $influncer_transations->direction = 0;
             $influncer_transations->type     = 2;
             $influncer_transations->status     = 1;
-            $influncer_transations->campaign_id     = $campaign->id;
+            $influncer_transations->campaign_id     = $offer->campaign_id;
             $influncer_transations->offer_id     = $offer->id;
             $influncer_transations->save();
 
