@@ -91,11 +91,11 @@ class UserBanksController extends Controller
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
         }
 
-        $bankaccount = BankAccounts::where('user_id', $user->id)->get()->all();
-        if($bankaccount)
-        {
-            $bankaccount->delete();
-        }
+        $bankaccount = BankAccounts::where('user_id', $user->id)->delete();
+        // if($bankaccount)
+        // {
+        //     $bankaccount->delete();
+        // }
 
 
         $bankaccount_new = new BankAccounts;
