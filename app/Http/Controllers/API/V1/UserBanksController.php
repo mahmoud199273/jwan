@@ -105,7 +105,7 @@ class UserBanksController extends Controller
         $bankaccount_new->IBAN     = $request->IBAN;
         $bankaccount_new->note     = $request->note;
         $bankaccount_new->account_number     = $request->account_number;
-        $offer->save();
+        $bankaccount_new->save();
 
         return $this->respondWithSuccess(trans('api_msgs.created'));
 
