@@ -235,6 +235,8 @@ Route::get('/influncer/notifications'		, 'API\V1\UserController@getNotifications
   Route::post('influncer/banks/store', 'API\V1\UserBanksController@store');
 
   Route::post('user/transaction/store', 'API\V1\TransactionsController@store');
+  Route::post('user/transaction/list', 'API\V1\TransactionsController@index');
+  Route::post('influncer/transaction/list', 'API\V1\TransactionsController@index');
 
 
 
