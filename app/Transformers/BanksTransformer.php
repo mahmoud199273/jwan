@@ -13,10 +13,7 @@ class AppBanksTransformer extends Transformer
             'id'            => 	$bank->id,
             'name'          => 	$bank->name,
             'name_ar'       => 	$bank->name_ar,
-            'IBAN'       		=> 	$bank->IBAN,
-            'account_number'       => 	$bank->account_number,
             'logo'       => 	$bank->logo,
-            'account_name'       => 	$bank->account_name,
         ];
     }
 
