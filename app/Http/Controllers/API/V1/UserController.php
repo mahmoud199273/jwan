@@ -5,7 +5,9 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\API\V1\BaseController as Controller;
 use App\Transformers\ProfileTransformer;
 use App\Transformers\InfluncerTransformer;
+use App\Transformers\CampaignsTransformer;
 use App\User;
+use App\Campaign;
 use App\Notification;
 use App\UserPlayerId;
 use Hash;
@@ -21,12 +23,14 @@ class UserController extends Controller
 
     protected $profileTransformer;
     protected $influncerTransformer;
+    protected $campaignsTransformer;
 
-    function __construct(Request $request, ProfileTransformer $profileTransformer,InfluncerTransformer $influncerTransformer  ){
+    function __construct(Request $request, ProfileTransformer $profileTransformer,InfluncerTransformer $influncerTransformer,CampaignsTransformer $campaignsTransformer  ){
         App::setlocale($request->lang);
         $this->middleware('jwt.auth');
         $this->profileTransformer = $profileTransformer;
         $this->influncerTransformer = $influncerTransformer;
+        $this->campaignsTransformer   = $campaignsTransformer;
     }
 
 
@@ -498,8 +502,16 @@ class UserController extends Controller
 					$this->setPagination($request->limit);
 				}
 
-        $pagination =  Notification::where('user_id' , $user->id)
-										->orderBy('updated_at','DESC')
+
+                // $pagination =  Notification::where('user_id' , $user->id)
+				// 						->orderBy('updated_at','DESC')
+                // 						->paginate($this->getPagination());
+                
+        $pagination =  Notification::select('notifications.id' , 'notifications.user_id' , 'users.name' , 'users.image' , 'notifications.message' , 'notifications.message_ar','notifications.type',
+'notifications.type' , 'notifications.type_title' , 'notifications.campaign_id' , 'notifications.offer_id' , 'notifications.is_seen' , 'notifications.created_at' , 'notifications.updated_at')
+                                        ->join('users', 'users.id', '=', 'notifications.user_id')
+                                        ->where('notifications.user_id' , $user->id)
+										->orderBy('notifications.updated_at','DESC')
 										->paginate($this->getPagination());
 
 				$notifications =  $pagination->items();
@@ -516,7 +528,37 @@ class UserController extends Controller
     }
 
 
+    function influncerUserProfile(Request $request)
+    {
+        
+        $validator = Validator::make( ['id' =>  $request->id ], [
+            'id'    => 'required|exists:users,id,deleted_at,NULL',
+        ]);
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError('paramters failed validation');
+        }
+        $data = $this->profileTransformer->transform(User::find($request->id));
+        $user_campaigns = Campaign::where('user_id' ,$request->id)->get();
+        $this->campaignsTransformer->setUserFlag(false);
+        $data['campaigns'] = $this->campaignsTransformer->transformCollection($user_campaigns);
+        return $this->sendResponse($data,trans('lang.read succefully'),200);
+    }
 
+
+    function UserinfluncerProfile(Request $request)
+    {
+        $validator = Validator::make( ['id' =>  $request->id ], [
+            'id'    => 'required|exists:users,id,deleted_at,NULL',
+        ]);
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError('paramters failed validation');
+        }
+
+        $data = $this->influncerTransformer->transform(User::find($request->id));
+        $influncer_campaigns = Campaign::select('campaigns.*')->join('offers', 'offers.campaign_id', '=', 'campaigns.id')->where('offers.influncer_id' ,$request->id)->where('offers.status',1)->get();
+        $data['campaigns'] = $this->campaignsTransformer->transformCollection($influncer_campaigns);
+        return $this->sendResponse($data,trans('lang.read succefully'),200);
+    }
 
 
 

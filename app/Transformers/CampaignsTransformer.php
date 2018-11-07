@@ -6,7 +6,7 @@ use App\Campaign;
 use App\Offer;
 use App\Transformers\BaseTransformer as Transformer;
 use App\Transformers\InfluncerTransformer;
-use App\user;
+use App\User;
 use Carbon\Carbon;
 
 
@@ -14,11 +14,20 @@ use Carbon\Carbon;
 class CampaignsTransformer extends Transformer
 {
     protected $flag = false;
+    protected $user_flag = true;
+
 
     function setFlag($flag)
     {
         $this->flag = $flag; // set true to show influencers in campaigns list
     }
+
+    function setUserFlag($user_flag)
+    {
+        $this->user_flag = $user_flag; // set true to show influencers in campaigns list
+    }
+
+
     
 	public function transform($campaign  ) : array
     {
@@ -36,8 +45,7 @@ class CampaignsTransformer extends Transformer
 
             'title'             => $campaign->title,
 
-            'user'              => isset($campaign->user) ? $campaign->user : null ,
-
+            //'user'              => isset($campaign->user()->select('id','name','image')->get()[0]) ? $campaign->user()->select('id','name','image')->get()[0] : null ,
             
 
             //'image'         => $camapign->($user->image) ?config('app.url').$user->image : null,
@@ -98,6 +106,10 @@ class CampaignsTransformer extends Transformer
 
         ];
 
+        if($this->user_flag)
+        {
+            $return_array['user'] = isset($campaign->user()->select('id','name','image')->get()[0]) ? $campaign->user()->select('id','name','image')->get()[0] : null ;
+        }
         if($this->flag)
         {
             $return_array['influencers']  = User::select('users.id','users.name','users.image')->join('offers', 'offers.influncer_id', '=', 'users.id')->where('offers.campaign_id',$campaign->id)->get();

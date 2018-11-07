@@ -127,6 +127,11 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::get('/nathionalities','API\V1\NathionalitiesController@index');
 
+
+ // m.abdelrahman api links (user profile for influencer , influencer profile for user)
+ Route::get('influencer/user/profile/{id}', 'API\V1\UserController@influncerUserProfile'); // influencer view user profile and campaignes
+ Route::get('user/influencer/profile/{id}', 'API\V1\UserController@UserinfluncerProfile'); // user view influencer profile and campaignes
+
  // start Camapign routes
 
  Route::post('/user/add/campaign','API\V1\CampignsController@store');
@@ -152,6 +157,8 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
   Route::post('/chat/index', 'API\V1\ChatController@index');
 
 
+
+  Route::get('bank/app_accounts','API\V1\AppBankController@index');
 
  //	Route::post('/camapign/update'	, 'API\V1\CampignsController@update');
 

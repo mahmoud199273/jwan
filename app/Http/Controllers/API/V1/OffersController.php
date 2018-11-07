@@ -740,8 +740,8 @@ class OffersController extends Controller
        $offer->save();
 
        //$request->description
-       $campaign = Campaign::where('id', $request->campaign_id)->get();
-
+       //$campaign = Campaign::where('id', $request->campaign_id)->get();
+       $campaign = Campaign::find($offer->campaign_id);
        if(strlen($request->description)!=0)
        {
          $chat = new Chat;
