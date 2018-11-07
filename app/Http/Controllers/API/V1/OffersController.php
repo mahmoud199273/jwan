@@ -202,7 +202,6 @@ class OffersController extends Controller
             $transations->status     = 0;
             $transations->campaign_id     = $campaign->id;
             $transations->offer_id     = $offer->id;
-            $transations->amount     = $request->transaction_amount;
             $transations->save();
 
 
@@ -325,6 +324,25 @@ class OffersController extends Controller
             $offer->user_rate_comment = $request->comment;
             $offer->save();
 
+            //find my tranaction
+            $user_transation = Transactions::where([['user_id', $user->id], ['offer_id', $offer->id]])->get()->first();
+            $user_transation->status = 1;
+            $user_transation->save();
+
+
+            $influncer_transations = new Transactions;
+            $influncer_transations->user_id = $offer->influncer_id;
+            $influncer_transations->amount     = $offer->cost;
+            $influncer_transations->direction = 0;
+            $influncer_transations->type     = 2;
+            $influncer_transations->status     = 1;
+            $influncer_transations->campaign_id     = $campaign->id;
+            $influncer_transations->offer_id     = $offer->id;
+            $influncer_transations->save();
+
+            $influcer = Users::find($offer->influncer_id);
+            $influncer->wallet = $influncer->wallet+$offer->cost;
+            $influncer->save();
 
             $chat = new Chat;
             $chat->from_user_id	= $offer->user_id;

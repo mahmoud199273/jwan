@@ -39,7 +39,8 @@ class TransactionsTransformer extends Transformer
       $direction_array = array(0 => 'In',
                       			1 => 'Out');
       $type_array = array(0 => 'user bank transfer',
-                      			1 => 'approved offer (pending)');
+                      			1 => 'approved offer (pending)',
+                          2 => 'finished offer (in influncer)');
         // $campaign = Campaign::find($campaign->id);
         $return_array =  [
         	  'id'       			=> (int) $tranaction->id,
