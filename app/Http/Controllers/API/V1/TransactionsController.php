@@ -54,7 +54,7 @@ class TransactionsController extends Controller
         if ( $request->limit ) {
           $this->setPagination($request->limit);
         }
-        $pagination =  Transactions::SELECT("transactions.*")
+        $pagination =  Transactions::SELECT('transactions.*', 'campaign.title', 'offer.*')
                                     ->where('transactions.user_id', $user->id)
                                     ->join('users', 'users.id', '=', 'transactions.user_id')
                                     ->leftJoin('campaigns', 'campaigns.id', '=', 'transactions.id')
