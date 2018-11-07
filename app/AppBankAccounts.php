@@ -13,7 +13,7 @@ class AppBankAccounts extends Model
     protected $table = 'app_bank_accounts';
     protected $fillable = ['name','name_ar','IBAN','account_number', 'account_name', 'logo'];
 
-    // protected $hidden = [
-    //     'created_at', 'updated_at','deleted_at'
-    // ];
+    protected $hidden = [
+        'created_at', 'updated_at','deleted_at'
+    ];
 }
