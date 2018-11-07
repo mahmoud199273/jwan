@@ -176,10 +176,16 @@ class OffersController extends Controller
         {
             $user =  $this->getAuthenticatedUser();
             // security check
+
             $offer = Offer::where([['id',$request->id], ['status', "0"]])->get()->first();
             if(!$offer){
                 return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or approved before'));
             }
+            if($user->balance<$offer->cost)
+            {
+              return $this->setStatusCode(422)->respondWithError(trans('api_msgs.please charge your account'));
+            }
+
             $offer->status = "1";
             $offer->save();
 
