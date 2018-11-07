@@ -94,7 +94,7 @@ class UserBanksController extends Controller
         $bankaccount = BankAccounts::where('user_id', $user->id)->get()->first();
         if($bankaccount)
         {
-            $bankaccount->trashed();
+            $bankaccount->delete();
         }
 
 
