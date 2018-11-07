@@ -57,8 +57,8 @@ class TransactionsController extends Controller
         $pagination =  Transactions::SELECT('transactions.*', 'campaigns.title', 'offers.*')
                                     ->where('transactions.user_id', $user->id)
                                     ->join('users', 'users.id', '=', 'transactions.user_id')
-                                    ->leftJoin('campaigns', 'campaigns.id', '=', 'transactions.id')
-                                    ->leftJoin('offers', 'offers.id', '=', 'transactions.id')
+                                    ->leftJoin('campaigns', 'campaigns.id', '=', 'transactions.campaign_id')
+                                    ->leftJoin('offers', 'offers.id', '=', 'transactions.offer_id')
                     ->orderBy('transactions.id','DESC')
                     ->paginate($this->getPagination());
         $transations =  $pagination->items();
