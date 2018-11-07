@@ -86,6 +86,7 @@ class TransactionsController extends Controller
             'transaction_account_IBAN'   =>  'required',
             'transaction_number'   =>  'required',
             'transaction_date'   =>  'required',
+            'image'             => 'required'
         ]);
 
 
@@ -112,7 +113,7 @@ class TransactionsController extends Controller
         $transations->transaction_amount     = $request->transaction_amount;
         $transations->image     = $request->image;
 
-        $transactions->direction = 0;
+        $transations->direction = 0;
         $transations->type     = 0;
         $transations->status     = 0;
         $transations->campaign_id     = 0;
