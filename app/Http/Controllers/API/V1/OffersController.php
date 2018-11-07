@@ -341,7 +341,7 @@ class OffersController extends Controller
             $influncer_transations->offer_id     = $offer->id;
             $influncer_transations->save();
 
-            $influcer = Users::find($offer->influncer_id);
+            $influcer = User::find($offer->influncer_id);
             $influncer->wallet = $influncer->wallet+$offer->cost;
             $influncer->save();
 
