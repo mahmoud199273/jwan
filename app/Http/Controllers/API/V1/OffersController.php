@@ -342,8 +342,9 @@ class OffersController extends Controller
             $influncer_transations->save();
 
             $influncer = User::find($offer->influncer_id);
-            $influncer->wallet = $influncer->wallet+$offer->cost;
+            $influncer->balance = $influncer->balance+$offer->cost;
             $influncer->save();
+
 
             $chat = new Chat;
             $chat->from_user_id	= $offer->user_id;
