@@ -22,7 +22,7 @@
     </form>
 </div>
 <br>
-
+ 
 @if(isset($query))
 <div class="row" style="padding-right: 35px;">
     <span>{{ __('admin.searched_for') }}</span>
@@ -72,6 +72,8 @@
                                     <th><b>{{ __('admin.title') }}</b></th>
                                     <th><b>{{ __('admin.name') }}</b></th>
                                     <th><b>{{ __('admin.campaign_date') }}</b></th>
+                                    <th><b>{{ __('admin.status') }}</b></th>
+                                    
                                     <th><b>{{ __('admin.control') }}</b></th>
                                 </tr>
                             </thead>
@@ -82,6 +84,42 @@
                                     <th scope="row">{{ $campaign->title }}</th>
                                     <th scope="row">{{ $campaign->user->name }}</th>
                                     <th scope="row">{{ $campaign->created_at }}</th>
+                                    <th scope="row">
+                                        @if ($campaign->status == 0)
+                                            {{  __('admin.new_campaign') }}
+
+                                        @elseif ($campaign->status == 1)
+                                            {{ __('admin.campaign_approved') }}
+
+                                        @elseif ($campaign->status == 2)
+                                            {{ __('admin.campaign_rejected') }}   
+
+                                        @elseif ($campaign->status == 3)
+                                            {{ __('admin.campaign_in_progress') }}
+
+                                        @elseif ($campaign->status == 4)
+                                            {{ __('admin.campaign_Pending_proof') }}
+
+                                        @elseif ($campaign->status == 5)
+                                            {{ __('admin.campaign_Pending_payment') }}
+
+                                        @elseif ($campaign->status == 6)
+                                            {{ __('admin.campaign_Confirmed') }}
+
+                                        @elseif ($campaign->status == 7)
+                                            {{ __('admin.campaign_finished') }}
+
+                                        @elseif ($campaign->status == 8)
+                                            {{ __('admin.campaign_canceled') }}
+
+                                        @elseif ($campaign->status == 9)
+                                            {{ __('admin.campaign_closed') }}
+
+                                        @else
+                                            {{ __('admin.done') }}
+                                        @endif
+                                    </th>
+                                    
                                     <td>
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
                                             <a type="button" 
@@ -89,13 +127,14 @@
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             <i class="fa fa-eye m--font-info"></i>
                                         </a>
+                                        
                                         <a type="button" 
                                             href="{{url('admin/campaigns')}}/{{ $campaign->id }}/edit" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             <i class="fa fa-edit m--font-info"></i>
                                         </a>
                                          <a type="button" 
-                                            href="{{url('admin/offers')}}/{{ $campaign->id }}" 
+                                            href="{{url('admin/offers')}}/{{ $campaign->id }}/campaign" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             {{ __('admin.offers') }}
                                         </a>

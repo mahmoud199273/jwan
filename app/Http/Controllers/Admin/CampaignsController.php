@@ -125,6 +125,29 @@ class campaignsController extends Controller
         }
     }
 
+     public function approve( Request $request)
+    {
+        if ( $request->ajax() ) {
+            $campaign = Campaign::find( $request->id );
+            $campaign->status = '1';
+            $campaign->save();
+            return response(['msg' => 'activated', 'status' => 'success']);
+        }
+
+        
+    }
+
+    public function reject( Request $request )
+    {
+        $campaign =  Campaign::find( $request->id );
+        if ( $request->ajax() ) {
+            $campaign->status = '0';
+            $campaign->save();
+            return response(['msg' => 'banned', 'status' => 'success']);
+        }
+
+    }
+
 
   
 }

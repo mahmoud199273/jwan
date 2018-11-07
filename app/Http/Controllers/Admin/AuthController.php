@@ -42,7 +42,7 @@ class AuthController extends Controller
         }
     }
 
-    public function profile()
+   /* public function profile()
    {
        if(\Auth::check()){
            $admin = Auth::guard('admin')->user();
@@ -76,36 +76,55 @@ class AuthController extends Controller
        }else{
            return redirect(config('app.admin_url').'/admin');
        }
-   }
+   }*/
 
-    /*public function profile()
+    public function profile()
     {
+
        // dd(10);
-        $admin = auth::guard('admin')->user();
-        dd($admin);
-        return view('admin.auth.profile', compact('admin'));
+        
+      $admin = Auth::guard('admin')->user();
+     // dd($admin->toArray());
+        if(Auth::guard('admin')->user()){
+            $admin = Auth::guard('admin')->user();
+            return view('admin.auth.profile', compact('admin'));
+        }else{
+            return redirect(config('app.admin_url').'/admin');
+        }
+        
+
     }
 
     public function updateProfile( Request $request )
     {
+
+        if(Auth::guard('admin')->user()){
+
         $admin = Auth::guard('admin')->user();
 
-        $validator = Validator::make( $request->all(), [
-            'name'      => 'required|string|max:100|min:3',
-            'email'     => ['required', Rule::unique('admins')->ignore($admin->id, 'id')],
-            'password'  => 'nullable|string|min:6'        
+            $validator = Validator::make( $request->all(), [
+                'name'      => 'required|string|max:100|min:3',
+                'email'     => ['required', Rule::unique('admins')->ignore($admin->id, 'id')],
+                'password'  => 'nullable|string|min:6'        
 
-        ]);
+            ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withInput($request->input())->withErrors($validator);
+            if ($validator->fails()) {
+                return redirect()->back()->withInput($request->input())->withErrors($validator);
+            }
+            
+            Admin::find($admin->id)->update($request->all());
+
+
+    
+
+            return redirect()->back()->with('status' , __('admin.updated') );
+        }else{
+            return redirect(config('app.admin_url').'/admin');
         }
-        
-        Admin::find($admin->id)->update($request->all());
+    }
 
-        return redirect()->back()->with('status' , __('admin.updated') );
 
-    }*/
 
 
     public function logout( Request $request )

@@ -16,37 +16,31 @@ if (!defined('ADMIN_PATH')) {
 	define('ADMIN_PATH', 'admin');
 }
 
-Route::get('/test',"TestController@index");
 
 Route::group(['prefix'=>ADMIN_PATH],function(){
 
-	// Route::group(['namespace'=>'Auth\Admin'], function(){
-	// 	Route::get('login', 'LoginController@showLoginForm')->name('admin.login');
-	// 	Route::post('login', 'LoginController@login');
-	// 	Route::post('logout', 'LoginController@logout')->name('admin.logout');
-	// 	// Password Reset Routes...
-	// 	Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
-
-	// 	Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
-	// 	Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('admin.password.reset');
-	// 	Route::post('password/reset', 'ResetPasswordController@reset');
-	// });
-
-
-//	Route::group(['middleware'=>['admin.auth'],'namespace'=>'Admin'],function(){
 	Route::group(['namespace'=>'Admin'],function(){
+
 
 
 		
 		Route::get('/admin', 'DashboardController@index');
 		
 
-		Route::resource('users','UsersController');
+		/*Route::resource('users','UsersController');
 		
 
 		Route::post('/users/activate'       , 'UsersController@activate');
 		Route::post('/users/ban'            , 'UsersController@ban');
 		Route::get('/user/search'           , 'UsersController@search');
+
+		Route::get('/admin', 'DashboardController@index');
+
+		Route::resource('country','CountriesController');
+		Route::resource('area','AreasController');
+		Route::resource('category','CategoryController');*/
+
+
 
 		Route::group(['prefix' => '/auth'], function() {
             Route::post('/login', 'AuthController@login');
@@ -61,11 +55,15 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::get('/dashboard' , 'DashboardController@index');
 
 
+
 		
 
 		Route::resource('country','CountriesController');
 		Route::get('/countries/search','CountriesController@search');
 		
+
+
+		//Route::resource('country','CountriesController');
 
 		Route::resource('area','AreasController');
 		Route::get('/areas/search','AreasController@search');
@@ -74,23 +72,41 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::get('/categories/search','CategoriesController@search');
 
 		Route::resource('natoinality','NatoinalitiesController');
+
 		Route::get('Natoinalities/search','NatoinalitiesController@search');
-		//Route::resource('users','UserController');
-		//Route::post('/users/activate'       , 'UserController@activate');
-		//Route::post('/users/ban'            , 'UserController@ban');
-		//Route::get('/user/search'           , 'UserController@search');
+		Route::resource('users','UsersController');
+		Route::post('/users/activate'       , 'UsersController@activate');
+		Route::post('/users/ban'            , 'UsersController@ban');
+		Route::get('/user/search'           , 'UsersController@search');
 
 		Route::resource('influencers','InfluencersController');
+		Route::post('/influencers/activate'       , 'InfluencersController@activate');
+		Route::post('/influencers/ban'            , 'InfluencersController@ban');
 		Route::get('influencer/search','InfluencersController@search');
+
+		// Route::resource('users','UsersController');
+		// Route::post('/users/activate'       , 'UsersControllers@activate');
+		// Route::post('/users/ban'            , 'UsersControllers@ban');
+		// Route::get('/user/search'            , 'UsersControllers@search');
+
+		//Route::resource('influencers','InfluencersController');
+		//Route::get('/influencers/search'            , 'InfluencersController@search');
+
 
 		Route::resource('complaints','ComplaintsController');
 		Route::get('complaint/search','ComplaintsController@search');
 
 		Route::resource('campaigns','CampaignsController');
+		Route::post('/campaigns/approve'       , 'CampaignsController@approve');
+		Route::post('/campaigns/reject'        , 'CampaignsController@reject');
 		Route::get('/campaign/search','CampaignsController@search');
 
 		Route::resource('pages','PagesController');
+
 		Route::resource('bank','BankAccountsController');
+
+		Route::resource('aboutApp','AboutappController');
+
 		//Route::get('offers/{id}', 'OffersController@campaigns');
 
 		Route::resource('offers','OffersController');
@@ -98,6 +114,10 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		
 		// Route::get('offers', 'OffersController@index');
 		// Route::get('offers/show/{id}', 'OffersController@show');
+
+
+		Route::resource('offers','OffersController');
+		Route::get('offers/{id}/{campaign}','OffersController@campaigns');
 
 	});
 });

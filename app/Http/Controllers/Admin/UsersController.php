@@ -34,10 +34,16 @@ class UsersController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $users   = User::where([['name', 'LIKE', '%' . $query. '%'],
+
+             /*$users   = User::where([['name', 'LIKE', '%' . $query. '%'],
                                             ['account_type','0']] )
                                      ->orWhere([['phone', 'LIKE', '%' . $query. '%'],
-                                        ['account_type','0']] )
+                                        ['account_type','0']] )*/
+
+             $users   = User::where([['name', 'LIKE', '%' . $query. '%'],['account_type','0']] )
+                                     ->orWhere([['phone', 'LIKE', '%' . $query. '%'],['account_type','0']] )
+                                     ->orWhere('email','LIKE','%'.$query.'%')
+
                                      ->paginate(10);
             $users->appends( ['q' => $request->q] );
 
@@ -156,4 +162,5 @@ class UsersController extends Controller
         }
 
     }
+
 }

@@ -36,6 +36,7 @@ class InfluencersController extends Controller
         }else{
              $users   = User::where([['name', 'LIKE', '%' . $query. '%'],['account_type','1']] )
                                      ->orWhere([['phone', 'LIKE', '%' . $query. '%'],['account_type','1']] )
+                                     ->orWhere([['email', 'LIKE', '%' . $query. '%'],['account_type','1']] )
                                      ->paginate(10);
             $users->appends( ['q' => $request->q] );
             if (count ( $users ) > 0){

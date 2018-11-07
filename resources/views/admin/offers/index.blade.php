@@ -102,7 +102,7 @@
                                     <td>
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
                                             <a type="button" 
-                                            href="{{url('admin/offers/show')}}/{{ $row->id }}" 
+                                            href="{{url('admin/offers')}}/{{ $row->id }}" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             <i class="fa fa-eye m--font-primary"></i>
                                         </a>
