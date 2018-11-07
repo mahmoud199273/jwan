@@ -158,7 +158,7 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
 
 
-  Route::get('bank/app_accounts','API\V1\AppBankAccounts@index');
+  Route::get('bank/app_accounts','API\V1\AppBankController@index');
 
  //	Route::post('/camapign/update'	, 'API\V1\CampignsController@update');
 
