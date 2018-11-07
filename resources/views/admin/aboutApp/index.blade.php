@@ -75,9 +75,9 @@
 
                                     <th><b>{{ __('admin.influncer_privacy_policy') }}</b></th>
 
-                                    <th><b>{{ __('admin.    influncer_privacy_title_ar') }}</b></th>
+                                    <th><b>{{ __('admin.influncer_privacy_title_ar') }}</b></th>
 
-                                    <th><b>{{ __('admin.influncer_privacy_policy_ar') }}</b></th>
+                                    <th><b>{{ __('admin.influncer_privacy_policy_ar')}}</b></th>
 
                                     <th><b>{{ __('admin.control') }}</b></th>
 
