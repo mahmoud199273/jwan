@@ -28,20 +28,6 @@ class TransactionsTransformer extends Transformer
 
 
 
-    public function transform($country) : array
-      {
-          return [
-              'id'            => (int) $country->id,
-              'name'          => $country->name,
-              'name_ar'       => $country->name_ar,
-              'code'          => $country->code,
-              'flag'          => $country->flag,
-              'areas'			=> $country->area
-
-          ];
-      }
-
-
 	public function transform( $tranaction  ) : array
     {
 			$status_array = array(0 => 'pending',
@@ -86,16 +72,16 @@ class TransactionsTransformer extends Transformer
             //'image'         => $camapign->($user->image) ?config('app.url').$user->image : null,
             //'file'              => isset($campaign->attachments) ? $campaign->attachments : null,
             //'number_of_offers'  =>  Offer::where('campaign_id',$campaign->id)->count(),
-            'status'   => (int) $tranaction->status,
-						'status_title'	=> $status_array[(int) $tranaction->status],
-
-            'categories' => isset($tranaction->categories) ? $tranaction->categories : null,
-
-            'countries' => isset($tranaction->countries) ? $tranaction->countries : null,
-
-            'areas' => isset($tranaction->areas) ? $tranaction->areas : null,
-
-						'is_extened'	=> isset($tranaction->is_extened) ? $tranaction->is_extened : 0
+            // 'status'   => (int) $tranaction->status,
+						// 'status_title'	=> $status_array[(int) $tranaction->status],
+            //
+            // 'categories' => isset($tranaction->categories) ? $tranaction->categories : null,
+            //
+            // 'countries' => isset($tranaction->countries) ? $tranaction->countries : null,
+            //
+            // 'areas' => isset($tranaction->areas) ? $tranaction->areas : null,
+            //
+						// 'is_extened'	=> isset($tranaction->is_extened) ? $tranaction->is_extened : 0
 
 
         ];
