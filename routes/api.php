@@ -237,6 +237,9 @@ Route::get('/influncer/notifications'		, 'API\V1\UserController@getNotifications
   Route::post('user/transaction/store', 'API\V1\TransactionsController@store');
   Route::get('user/transaction/list', 'API\V1\TransactionsController@index');
   Route::get('influncer/transaction/list', 'API\V1\TransactionsController@index');
+  Route::get('user/transaction/details/{id}', 'API\V1\TransactionsController@details');
+  Route::get('influncer/transaction/details/{id}', 'API\V1\TransactionsController@details');
+
 
 /* about the app - license agreement */
 Route::get('/about/app','API\V1\AboutAppController@index') ;
