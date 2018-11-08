@@ -78,7 +78,7 @@ class CampignsController extends Controller
             if ($campaign_ids) {
                 $campaigns->whereNotIn('campaigns.id',$campaign_ids);
             }
-            $campaigns->where('campaigns.status','1')
+            $campaigns->where('campaigns.status',1)
             ->groupBy('campaigns.id')
  
  
@@ -148,16 +148,24 @@ class CampignsController extends Controller
     public function allCampaigns(Request $request)
     {
     # code...
-        $user =  $this->getAuthenticatedUser();
-
+        if($request->id){
+            $user =  User::find($request->id);
+        }
+        else
+        {
+            $user =  $this->getAuthenticatedUser();
+            $this->campaignsTransformer->setFlag(true);
+        }
         if ( $request->limit ) {
                 $this->setPagination($request->limit);
             }
 
-        $data = Campaign::where('user_id' ,$user->id)->get();
-        $this->campaignsTransformer->setFlag(true);
-        $campaigns = $this->campaignsTransformer->transformCollection($data);
-        return $this->sendResponse($campaigns, trans('lang.campaigns read succesfully'),200);
+        //$data = Campaign::where('user_id' ,$user->id)->get();
+        $pagination = Campaign::where('user_id' ,$user->id)->paginate($this->getPagination());
+
+        $campaigns = $this->campaignsTransformer->transformCollection(collect($pagination->items()));
+        //return $this->sendResponse($campaigns, trans('lang.campaigns read succesfully'),200);
+        return $this->respondWithPagination($pagination, ['data' => $campaigns ]);    
     }
 
 
@@ -727,6 +735,7 @@ class CampignsController extends Controller
         return $this->respondWithSuccess(trans('api_msgs.deleted'));
 
     }
+    
 
 
    /* public function rateCampaign( Request $request )
@@ -758,6 +767,23 @@ class CampignsController extends Controller
 
 
 
+    public function archiveCampaigns(Request $request)
+    {
+        $user =  $this->getAuthenticatedUser();
+        $this->campaignsTransformer->setFlag(true);
+        
+        if ( $request->limit ) {
+                $this->setPagination($request->limit);
+        }
+
+        $this->campaignsTransformer->setFlag(true);
+        //$data = Campaign::where('user_id' ,$user->id)->where('status','8')->get();
+        $pagination = Campaign::where('user_id' ,$user->id)->where('status','8')->paginate($this->getPagination());
+        $campaigns =  $this->campaignsTransformer->transformCollection(collect($pagination->items()));
+        //$campaigns = $this->campaignsTransformer->transformCollection($data);
+        return $this->respondWithPagination($pagination, ['data' => $campaigns ]);
+        //return $this->sendResponse($campaigns, trans('lang.campaigns read succesfully'),200);
+    }
 
 
 

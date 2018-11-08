@@ -9,6 +9,7 @@ use App\Offer;
 use App\Chat;
 use App\Campaign;
 use App\Notification;
+use App\Transactions;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -175,18 +176,39 @@ class OffersController extends Controller
         {
             $user =  $this->getAuthenticatedUser();
             // security check
+
             $offer = Offer::where([['id',$request->id], ['status', "0"]])->get()->first();
             if(!$offer){
                 return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or approved before'));
             }
+            if($user->balance<$offer->cost)
+            {
+              return $this->setStatusCode(422)->respondWithError(trans('api_msgs.please charge your account'));
+            }
+
             $offer->status = "1";
             $offer->save();
 
 
             $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
 
-            $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
-            Notification::create(['user_id' => $campaign->influncer_id,
+
+
+            $transations = new Transactions;
+            $transations->user_id = $user->id;
+            $transations->amount     = $offer->cost;
+            $transations->direction = 1;
+            $transations->type     = 1;
+            $transations->status     = 0;
+            $transations->campaign_id     = $campaign->id;
+            $transations->offer_id     = $offer->id;
+            $transations->save();
+
+            $user->balance = $user->balance - $offer->cost;
+            $user->save();
+
+            $player_ids = $this->getUserPlayerIds($offer->influncer_id);
+            Notification::create(['user_id' => $offer->influncer_id,
                                       'message' => 'Your offer approved on '.$campaign->title,
                                       'message_ar' => 'تم الموافقة على عرضك على حملة '.$campaign->title,
                                       'campaign_id' =>  $campaign->id,
@@ -200,7 +222,7 @@ class OffersController extends Controller
                                   ['campaign_id' =>  (int)$campaign->id,
                                   'offer_id'    => (int)$offer->id,
                                   'type'          =>  1,
-                                  'type_title'	=> 'offer rejected']);
+                                  'type_title'	=> 'offer approved']);
 
             //////////////////// new push /////////////////////////////////////
             return $this->respondWithSuccess(trans('api_msgs.updated'));
@@ -303,6 +325,26 @@ class OffersController extends Controller
             $offer->user_rate_comment = $request->comment;
             $offer->save();
 
+            //find my tranaction
+            $user_transation = Transactions::where([['user_id', $user->id], ['offer_id', $offer->id]])->get()->first();
+            $user_transation->status = 1;
+            $user_transation->save();
+
+
+            $influncer_transations = new Transactions;
+            $influncer_transations->user_id = $offer->influncer_id;
+            $influncer_transations->amount     = $offer->cost;
+            $influncer_transations->direction = 0;
+            $influncer_transations->type     = 2;
+            $influncer_transations->status     = 1;
+            $influncer_transations->campaign_id     = $offer->campaign_id;
+            $influncer_transations->offer_id     = $offer->id;
+            $influncer_transations->save();
+
+            $influncer = User::find($offer->influncer_id);
+            $influncer->balance = $influncer->balance+$offer->cost;
+            $influncer->save();
+
 
             $chat = new Chat;
             $chat->from_user_id	= $offer->user_id;
@@ -318,8 +360,8 @@ class OffersController extends Controller
 
             $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
 
-            $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
-            Notification::create(['user_id' => $campaign->influncer_id,
+            $player_ids = $this->getUserPlayerIds($offer->influncer_id);
+            Notification::create(['user_id' => $offer->influncer_id,
                                       'message' => 'Your proof have been approved and finished on '.$campaign->title,
                                       'message_ar' => 'تم قبول توثيقك واغلاقه لحملة '.$campaign->title,
                                       'campaign_id' =>  $campaign->id,

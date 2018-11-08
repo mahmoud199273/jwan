@@ -537,10 +537,8 @@ class UserController extends Controller
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('paramters failed validation');
         }
+        $this->profileTransformer->setFlag(true);
         $data = $this->profileTransformer->transform(User::find($request->id));
-        $user_campaigns = Campaign::where('user_id' ,$request->id)->get();
-        $this->campaignsTransformer->setUserFlag(false);
-        $data['campaigns'] = $this->campaignsTransformer->transformCollection($user_campaigns);
         return $this->sendResponse($data,trans('lang.read succefully'),200);
     }
 
@@ -554,9 +552,8 @@ class UserController extends Controller
             return $this->setStatusCode(422)->respondWithError('paramters failed validation');
         }
 
+        $this->influncerTransformer->setFlag(true);
         $data = $this->influncerTransformer->transform(User::find($request->id));
-        $influncer_campaigns = Campaign::select('campaigns.*')->join('offers', 'offers.campaign_id', '=', 'campaigns.id')->where('offers.influncer_id' ,$request->id)->where('offers.status',1)->get();
-        $data['campaigns'] = $this->campaignsTransformer->transformCollection($influncer_campaigns);
         return $this->sendResponse($data,trans('lang.read succefully'),200);
     }
 

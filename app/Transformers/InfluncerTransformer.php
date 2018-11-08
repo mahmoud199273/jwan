@@ -12,64 +12,97 @@ class InfluncerTransformer extends Transformer
      * {@inheritdoc}
      */
 
-    
+    protected $flag = false;
+
+    function setFlag($flag) 
+    {
+        $this->flag = $flag; // set true to show influencers profile data only necessary 
+    }
 
 
 
     public function transform($user ) : array
     {
-        return [
-            'id'            => (int) $user->id,
-            'name'          => $user->name,
-            'rate'          => 3,
 
-            'number_of_coins' => 300,
-            "number_of_offers" => Offer::where('influncer_id','=',$user->id)->count(),
-            "wallet"        => 20,
-            'email'         => $user->email,
-            'phone'         => $user->phone,
-            'country'       => Country::find($user->countries_id),
-            'image'         => ($user->image) ?config('app.url').$user->image : null,
-            'notes'         => $user->notes,
-            'gender'        => (int) $user->gender,
+        if($this->flag) // this flag to hide unnecessary data this work only when client need to see influencer profile this function called in UserController/UserinfluncerProfile to set true
+        {
+            return [
+                'id'            => (int) $user->id,
+                'name'          => $user->name,
+                'rate'          => 3,
+                'image'         => ($user->image) ?config('app.url').$user->image : null,
+                'notes'         => $user->notes,
+                'type'          => (int) $user->type,
+                'facebook'     => $user->facebook,
+                'facebook_followers' => $user->facebook_follwers,
+                'twitter'     => $user->twitter,
+                'twitter_followers' => $user->twitter_follwers,
+                'instagram'     => $user->instgrame,
+                'instagram_followers' => $user->instgrame_follwers,
+                'snapchat'     => $user->snapchat,
+                'snapchat_followers' => $user->snapchat_follwers,
+                'linkedin'     => $user->linkedin,
+                'linkedin_followers' => $user->linkedin_follwers,
+                'youtube'   => $user->youtube,
+                'youtube_followers' => $user->youtube_follwers,
+                'account_type' =>(int) $user->account_type
+            ];    
+        }
+        else
+        {    
+            return [
+                'id'            => (int) $user->id,
+                'name'          => $user->name,
+                'rate'          => 3,
+
+                'number_of_coins' => 300,
+                "number_of_offers" => Offer::where('influncer_id','=',$user->id)->count(),
+                "wallet"        => 20,
+                'email'         => $user->email,
+                'phone'         => $user->phone,
+                'country'       => Country::find($user->countries_id),
+                'image'         => ($user->image) ?config('app.url').$user->image : null,
+                'notes'         => $user->notes,
+                'gender'        => (int) $user->gender,
 
 
-            'nationality_id'   =>(int) $user->nationality_id,
+                'nationality_id'   =>(int) $user->nationality_id,
 
 
-            'account_manger' => (int) $user->account_manger,
+                'account_manger' => (int) $user->account_manger,
 
-            'type'          => (int) $user->type,
+                'type'          => (int) $user->type,
 
-            'minimum_rate'   => $user->minimum_rate,
+                'minimum_rate'   => $user->minimum_rate,
 
-            'facebook'     => $user->facebook,
-            'facebook_followers' => $user->facebook_follwers,
+                'facebook'     => $user->facebook,
+                'facebook_followers' => $user->facebook_follwers,
 
-            'twitter'     => $user->twitter,
-            'twitter_followers' => $user->twitter_follwers,
+                'twitter'     => $user->twitter,
+                'twitter_followers' => $user->twitter_follwers,
 
-            'instagram'     => $user->instgrame,
-            'instagram_followers' => $user->instgrame_follwers,
+                'instagram'     => $user->instgrame,
+                'instagram_followers' => $user->instgrame_follwers,
 
 
-            'snapchat'     => $user->snapchat,
-            'snapchat_followers' => $user->snapchat_follwers,
+                'snapchat'     => $user->snapchat,
+                'snapchat_followers' => $user->snapchat_follwers,
 
-            'linkedin'     => $user->linkedin,
-            'linkedin_followers' => $user->linkedin_follwers,
+                'linkedin'     => $user->linkedin,
+                'linkedin_followers' => $user->linkedin_follwers,
 
-            'youtube'   => $user->youtube,
-            'youtube_followers' => $user->youtube_follwers,
+                'youtube'   => $user->youtube,
+                'youtube_followers' => $user->youtube_follwers,
 
-            'account_type' =>(int) $user->account_type,
+                'account_type' =>(int) $user->account_type,
 
-            'categories' => $user->categories ,
+                'categories' => $user->categories ,
 
-            'countries' => $user->countries,
+                'countries' => $user->countries,
 
-            'areas' =>$user->areas,
-        ];
+                'areas' =>$user->areas,
+            ];
+        }
     }
 
 }
