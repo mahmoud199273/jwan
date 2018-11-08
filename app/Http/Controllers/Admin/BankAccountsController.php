@@ -22,7 +22,8 @@ class BankAccountsController extends Controller
     public function index()
     {
         //
-        $list = BankAccounts::select('bank_accounts.*','users.name','banks.name_ar')->join('users','users.id','bank_accounts.user_id')
+        $list = BankAccounts::select('bank_accounts.*','users.name','banks.name_ar')
+               ->join('users','users.id','bank_accounts.user_id')
                ->join('banks','banks.id','bank_accounts.bank_id')
                ->latest()->paginate(10);
         return view('admin.bank_accounts.index',compact('list'));
@@ -33,6 +34,33 @@ class BankAccountsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     public function search( Request $request )
+    {
+        //dd(10);
+        $query =  $request->q;
+        //dd(10);
+        
+        if ( $query == "") {
+            return redirect()->back();
+        }else{
+             $list   = BankAccounts::join('users','users.id','=','bank_accounts.user_id')
+             ->join('banks','banks.id','=','bank_accounts.bank_id')->where('users.name', 'LIKE', '%' . $query. '%')
+                                     
+                                     ->orWhere('banks.name_ar', 'LIKE', '%' . $query. '%')
+                                     ->orWhere('bank_accounts.account_name', 'LIKE', '%' . $query. '%')
+                                     ->orWhere('bank_accounts.IBAN', 'LIKE', '%' . $query. '%')
+                                     ->orWhere('bank_accounts.note', 'LIKE', '%' . $query. '%')
+                                     ->orWhere('bank_accounts.account_number', 'LIKE', '%' . $query. '%')
+                                     ->paginate(10);
+            $list->appends( ['q' => $request->q] );
+            if (count ( $list ) > 0){
+                return view('admin.bank_accounts.index',[ 'list' => $list ])->withQuery($query);
+            }else{
+                return view('admin.bank_accounts.index',[ 'list'=>null ,'message' => __('admin.no_result') ]);
+            }
+        }
+    }
+
     public function create()
     {
         //

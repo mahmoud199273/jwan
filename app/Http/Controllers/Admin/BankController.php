@@ -34,9 +34,8 @@ class BankController extends Controller
             return redirect()->back();
         }else{
              $banks   = Banks::where('name', 'LIKE', '%' . $query. '%' )
-                                     ->orWhere( 'account_name', 'LIKE', '%' . $query. '%' )
-                                     ->orWhere( 'account_number', 'LIKE', '%' . $query. '%' )
-                                     ->orWhere( 'iban_account_number', 'LIKE', '%' . $query. '%' )
+                                     ->orWhere( 'name_ar', 'LIKE', '%' . $query. '%' )
+                                     
                                      ->paginate(10);
             $banks->appends( ['q' => $request->q] );
             if (count ( $banks ) > 0){

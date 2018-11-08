@@ -31,6 +31,30 @@ class AppBankAccountsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     public function search( Request $request )
+    {
+        //dd(10);
+        $query =  $request->q;
+        //dd(10);
+        
+        if ( $query == "") {
+            return redirect()->back();
+        }else{
+             $list   = AppBankAccounts::where('name', 'LIKE', '%' . $query. '%')
+                                     
+                                     ->orWhere('name_ar', 'LIKE', '%' . $query. '%')
+                                     ->orWhere('IBAN', 'LIKE', '%' . $query. '%')
+                                     ->orWhere('account_number', 'LIKE', '%' . $query. '%')
+                                     ->paginate(10);
+            $list->appends( ['q' => $request->q] );
+            if (count ( $list ) > 0){
+                return view('admin.App_bank_accounts.index',[ 'list' => $list ])->withQuery($query);
+            }else{
+                return view('admin.App_bank_accounts.index',[ 'list'=>null ,'message' => __('admin.no_result') ]);
+            }
+        }
+    }
+
     public function create()
     {
         //

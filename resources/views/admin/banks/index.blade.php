@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-    <form class="m-form" action="{{ config('app.admin_url') }}/bank/search" method="get" id="search_form">
+    <form class="m-form" action="{{ config('app.admin_url') }}/banks/search" method="get" id="search_form">
         <div class="form-group m-form__group row ">
             <label for="q" class="col-1 col-form-label"></label>
             <div class="col-6">
@@ -148,7 +148,7 @@
 <br>
 @if(isset($query ) or isset($message))
 <div>
-    <a href="{{ config('app.admin_url') }}/banks" class="btn btn-danger m-btn m-btn--icon m-btn--wide">
+    <a href="{{ config('app.admin_url') }}/bank" class="btn btn-danger m-btn m-btn--icon m-btn--wide">
         <span>
             <i class="la la-warning"></i>
             <span>{{ __('admin.cancel_search') }}</span>

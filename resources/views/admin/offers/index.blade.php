@@ -97,6 +97,8 @@
                                             {{ __('admin.proof_accepted') }}
                                         @else
                                             {{ __('admin.done') }}
+                                         @else
+                                            {{ __('admin.done') }}
                                         @endif
                                     </th>
                                     <td>

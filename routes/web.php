@@ -104,12 +104,19 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::resource('pages','PagesController');
 
 		Route::resource('bank','BankController');
+		Route::get('banks/search','BankController@search');
 
 		
 
 		Route::resource('bankaccounts','BankAccountsController');
+		Route::get('bankaccount/search','BankAccountsController@search');
+
+		Route::resource('transactions','TransactionsController');
+		Route::post('/transaction/approve','TransactionsController@approve');
+		Route::get('transaction/search','TransactionsController@search');
 
 		Route::resource('appbankaccount','AppBankAccountsController');
+		Route::get('appbankaccounts/search','AppBankAccountsController@search');
 		
 
 		Route::resource('aboutApp','AboutappController');

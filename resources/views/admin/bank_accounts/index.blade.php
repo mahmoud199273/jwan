@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-    <form class="m-form" action="{{ config('app.admin_url') }}/bankaccounts/search" method="get" id="search_form">
+    <form class="m-form" action="{{ config('app.admin_url') }}/bankaccount/search" method="get" id="search_form">
         <div class="form-group m-form__group row ">
             <label for="q" class="col-1 col-form-label"></label>
             <div class="col-6">
@@ -18,7 +18,7 @@
                     </span>
                 </a>
             </div>
-        </div>
+        </div> 
     </form>
 </div>
 <br>

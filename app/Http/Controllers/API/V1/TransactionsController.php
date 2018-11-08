@@ -82,14 +82,14 @@ class TransactionsController extends Controller
     {
         $user =  $this->getAuthenticatedUser();
         $validator = Validator::make( $request->all(), [
-            'transaction_amount'    => 'required|numeric',
-            'transaction_bank_name'   =>  'required',
-            'transaction_account_name'   =>  'required',
-            'transaction_account_number'   =>  'required',
-            'transaction_account_IBAN'   =>  'required',
-            'transaction_number'   =>  'required',
-            'transaction_date'   =>  'required',
-            'image'             => 'required'
+            'transaction_amount'            => 'required|numeric',
+            'transaction_bank_name'         =>  'required',
+            'transaction_account_name'      =>  'required',
+            'transaction_account_number'    =>  'required',
+            'transaction_account_IBAN'      =>  'required',
+            'transaction_number'            =>  'required',
+            'transaction_date'              =>  'required',
+            'image'                         => 'required'
         ]);
 
 
@@ -116,12 +116,12 @@ class TransactionsController extends Controller
         $transations->transaction_amount     = $request->transaction_amount;
         $transations->image     = $request->image;
 
-        $transations->direction = 0;
-        $transations->type     = 0;
-        $transations->status     = 0;
-        $transations->campaign_id     = 0;
+        $transations->direction    = 0;
+        $transations->type         = 0;
+        $transations->status       = 0;
+        $transations->campaign_id  = 0;
         $transations->offer_id     = 0;
-        $transations->amount     = $request->transaction_amount;
+        $transations->amount       = $request->transaction_amount;
 
 
         $transations->save();
