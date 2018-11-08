@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Banks\StoreBankRequest;
 use App\Http\Requests\Admin\Banks\EditBankRequest;
-use App\Bank;
+use App\Banks;
 use Illuminate\Http\Request;
 
 
@@ -22,7 +22,7 @@ class BankController extends Controller
      */
     public function index()
     {
-        $banks = Bank::latest()->paginate(10);
+        $banks = Banks::latest()->paginate(10);
         return view('admin.banks.index',compact('banks'));
     }
 
@@ -33,7 +33,7 @@ class BankController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $banks   = Bank::where('name', 'LIKE', '%' . $query. '%' )
+             $banks   = Banks::where('name', 'LIKE', '%' . $query. '%' )
                                      ->orWhere( 'account_name', 'LIKE', '%' . $query. '%' )
                                      ->orWhere( 'account_number', 'LIKE', '%' . $query. '%' )
                                      ->orWhere( 'iban_account_number', 'LIKE', '%' . $query. '%' )
@@ -78,7 +78,7 @@ class BankController extends Controller
      */
     public function show($id)
     {
-        $bank = Bank::find($id);
+        $bank = Banks::find($id);
         return view('admin.banks.show',compact('bank'));
     }
 
@@ -90,7 +90,7 @@ class BankController extends Controller
      */
     public function edit($id)
     {
-        $bank = Bank::find($id);
+        $bank = Banks::find($id);
         return view('admin.banks.edit',compact('bank'));
     }
 
@@ -116,7 +116,7 @@ class BankController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
-            Bank::find($id)->delete();
+            Banks::find($id)->delete();
             return response(['msg' => 'deleted', 'status' => 'success']);
         }
     }

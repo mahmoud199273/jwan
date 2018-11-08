@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\BankAccounts;
+use App\AppBankAccounts;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BankAccounts\EditBankAccountsRequest;
 use App\Http\Requests\Admin\BankAccounts\StoreBankAccountsRequest;
 use Illuminate\Http\Request;
 
-class BankAccountsController extends Controller
+class AppBankAccountsController extends Controller
 {
- 
+
     function __construct(){
         $this->middleware('admin');
     }
@@ -22,10 +22,8 @@ class BankAccountsController extends Controller
     public function index()
     {
         //
-        $list = BankAccounts::select('bank_accounts.*','users.name','banks.name_ar')->join('users','users.id','bank_accounts.user_id')
-               ->join('banks','banks.id','bank_accounts.bank_id')
-               ->latest()->paginate(10);
-        return view('admin.bank_accounts.index',compact('list'));
+        $list = AppBankAccounts::latest()->paginate(10);
+        return view('admin.App_bank_accounts.index',compact('list'));
     }
 
     /**
@@ -36,7 +34,7 @@ class BankAccountsController extends Controller
     public function create()
     {
         //
-        return view('admin.bank_accounts.create');
+        return view('admin.App_bank_accounts.create');
     }
 
     /**
@@ -61,11 +59,8 @@ class BankAccountsController extends Controller
     public function show($id)
     {
         //
-        $row = BankAccounts::select('bank_accounts.*','users.name','banks.name_ar')->join('users','users.id','bank_accounts.user_id')
-               ->join('banks','banks.id','bank_accounts.bank_id')
-               ->where('bank_accounts.id',$id)
-               ->first();
-        return view('admin.bank_accounts.show',compact('row'));
+        $row = AppBankAccounts::find($id);
+        return view('admin.App_bank_accounts.show',compact('row'));
     }
 
     /**
@@ -77,8 +72,8 @@ class BankAccountsController extends Controller
     public function edit($id)
     {
         //
-        $row = BankAccounts::find($id);
-        return view('admin.bank_accounts.edit',compact('row'));
+        $row = AppBankAccounts::find($id);
+        return view('admin.App_bank_accounts.edit',compact('row'));
     }
 
     /**
@@ -104,7 +99,7 @@ class BankAccountsController extends Controller
     {
         //
         if ($request->ajax()) {
-            BankAccounts::find($id)->delete();
+            AppBankAccounts::find($id)->delete();
             return response(['msg' => 'deleted', 'status' => 'success']);
         }
     }

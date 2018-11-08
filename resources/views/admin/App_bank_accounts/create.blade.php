@@ -1,4 +1,4 @@
-@extends('admin.layouts.index_layout',['title' => __('admin.bank_accounts') ])
+@extends('admin.layouts.index_layout',['title' => __('admin.App_bank_accounts') ])
 
 @section('content')
 
@@ -26,14 +26,14 @@
                     <i class="la la-gear"></i>
                 </span>
                 <h3 class="m-portlet__head-text">
-                   {{ __('admin.add') }} | {{ __('admin.bank_account') }}
+                   {{ __('admin.add') }} | {{ __('admin.App_bank_accounts') }}
                 </h3>
             </div>
         </div>
     </div>
 
     <!--begin::Form-->
-    <form class="m-form" action="{{url('admin/bank')}}" method="post" enctype="multipart/form-data">
+    <form class="m-form" action="{{url('admin/appbankaccount')}}" method="post" enctype="multipart/form-data">
        
             {{ csrf_field() }}
         <div class="m-portlet__body">
@@ -146,7 +146,7 @@
                     </div>
                     <div class="col-9">
                         <button type="submit" class="btn btn-brand">{{ __('admin.save') }}</button>
-                        <a type="reset" href="{{url('admin/bank')}}" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
+                        <a type="reset" href="{{url('admin/appbankaccount')}}" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
                     </div>
                 </div>
             </div>

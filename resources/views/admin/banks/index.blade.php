@@ -75,9 +75,9 @@
                                 <thead>
                                     <tr>
                                         <th><b>{{ __('admin.name') }}</b></th>
-                                        <th><b>{{ __('admin.account_name') }}</b></th>
-                                        <th><b>{{ __('admin.account_number') }}</b></th>
-                                        <th><b>{{ __('admin.iban_account_number') }}</b></th>
+                                        
+                                        <th><b>{{ __('admin.name_ar') }}</b></th>
+                                        
                                         <th><b>{{ __('admin.image') }}</b></th>
                                         <th><b>{{ __('admin.control') }}</b></th>
                                     </tr>
@@ -87,17 +87,17 @@
                                     @foreach ($banks as $bank)
                                     <tr>
                                         <th scope="row">{{ $bank->name }}</th>
-                                        <td>{{ $bank->account_name }}</td>
-                                        <td>{{ $bank->account_number }}</td>
-                                        <td>{{ $bank->iban_account_number }}</td>
+                                       
+                                        <td>{{ $bank->name_ar }}</td>
+                                        
                                         <td class="text-center">
-                                            <img src="{{ config('app.url') }}/{{ $bank->image }}" height="50" width="150" class="img img-cirlce">
+                                            <img src="{{url('/assets/uploads')}}/{{ $bank->logo }}" height="60" width="60" class="img img-cirlce">
                                         </td>
 
                                         <td>
                                             <div class="btn-group mr-2" role="group" aria-label="First group">
                                                 <a type="button" 
-                                                href="{{ config('app.admin_url') }}/banks/{{ $bank->id }}/edit" 
+                                                href="{{ config('app.admin_url') }}/bank/{{ $bank->id }}/edit" 
                                                 class="m-btn m-btn m-btn--square btn btn-secondary">
                                                 <i class="fa fa-edit m--font-info"></i>
                                             </a>

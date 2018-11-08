@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Admin\Banks;
 
 use App\Http\Requests\Admin\BaseRequest;
-use App\Bank;
+use App\Banks;
 use Illuminate\Validation\Rule;
 
 
@@ -20,10 +20,8 @@ class EditBankRequest extends BaseRequest
 
          return [
             'name'                            => 'required|string',
-            'account_name'                    => 'required|string',
-            'account_number'                  => 'required|string',
-            'iban_account_number'             => 'required|string',
-            'image'                           => 'nullable',
+            'name_ar'                         => 'required|string',
+            'logo'                            => 'nullable',
 
         ];
     }
@@ -34,7 +32,7 @@ class EditBankRequest extends BaseRequest
             $image = $this->uploadImage($this->image);
             $this->offsetSet('image', $image);
         }
-        Bank::find($id)->Update($this->request->all());
+        Banks::find($id)->Update($this->request->all());
     }
 
 

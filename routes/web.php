@@ -103,7 +103,14 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 
 		Route::resource('pages','PagesController');
 
-		Route::resource('bank','BankAccountsController');
+		Route::resource('bank','BankController');
+
+		
+
+		Route::resource('bankaccounts','BankAccountsController');
+
+		Route::resource('appbankaccount','AppBankAccountsController');
+		
 
 		Route::resource('aboutApp','AboutappController');
 

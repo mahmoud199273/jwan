@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\Banks;
 
-use App\Bank;
+use App\Banks;
 use App\Http\Requests\Admin\BaseRequest;
 
 
@@ -19,21 +19,19 @@ class StoreBankRequest extends BaseRequest
 
         return [
             'name'                            => 'required|string',
-            'account_name'                    => 'required|string',
-            'account_number'                  => 'required|string',
-            'iban_account_number'             => 'required|string',
-            'image'                           => 'required',
+            'name_ar'                         => 'required|string',
+            'logo'                            => 'required',
 
         ];
     }
 
     public function persist()
     {
-         if ($this->image) {
-            $image = $this->uploadImage($this->image);
-            $this->offsetSet('image', $image);
+         if ($this->logo) {
+            $logo = $this->uploadImage($this->logo);
+            $this->offsetSet('logo', $logo);
         }
-        Bank::create($this->request->all());
+        Banks::create($this->request->all());
     }
 
 

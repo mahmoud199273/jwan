@@ -1,4 +1,4 @@
-@extends('admin.layouts.index_layout',['title' => __('admin.bank_accounts') ])
+@extends('admin.layouts.index_layout',['title' => __('admin.App_bank_accounts') ])
 
 @section('content')
 
@@ -26,14 +26,14 @@
                     <i class="la la-gear"></i>
                 </span>
                 <h3 class="m-portlet__head-text">
-                   {{ $row->account_name }}
+                   {{ $row->name_ar }}
                 </h3>
             </div>
         </div>
     </div>
 
     <!--begin::Form-->
-    <form class="m-form" action="{{ config('app.admin_url') }}/bankaccounts/{{ $row->id }}" method="post" enctype="multipart/form-data">
+    <form class="m-form" action="{{ config('app.admin_url') }}/appbankaccount/{{ $row->id }}" method="post" enctype="multipart/form-data">
        
         <div class="m-portlet__body">
 
@@ -70,15 +70,6 @@
                 </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('account_name') ? 'has-danger' : ''}}">
-                <label for="account_name" class="col-1 col-form-label">{{ __('admin.account_name') }}</label>
-                <div class="col-9">
-                    <input type="text" name="account_name" class="form-control m-input" 
-                            placeholder="{{ __('admin.account_name') }}" value="{{ $row->account_name }}" disabled="">
-                    {!! $errors->first('account_name', '<span class="form-control-feedback">:message</span>') !!}
-                </div>
-            </div>
-
             <div class="form-group m-form__group row {{ $errors->has('IBAN') ? 'has-danger' : ''}}">
                 <label for="IBAN" class="col-2 col-form-label">{{ __('admin.IBAN') }}</label>
                 <div class="col-9">
@@ -95,17 +86,22 @@
                 </div>
             </div>
            
-           <div class="form-group m-form__group row {{ $errors->has('note') ? 'has-danger' : ''}}">
-                <label for="note" class="col-2 col-form-label">{{ __('admin.note') }}</label>
+            <div class="form-group m-form__group row {{ $errors->has('account_name') ? 'has-danger' : ''}}">
+                <label for="account_name" class="col-1 col-form-label">{{ __('admin.account_name') }}</label>
                 <div class="col-9">
-                    <textarea class="form-control m-input" placeholder="{{ __('admin.note') }}" name="note" disabled>{{ $row->note }}</textarea>
-                    {!! $errors->first('note', '<span class="form-control-feedback">:message</span>') !!}
+                    <input type="text" name="account_name" class="form-control m-input" 
+                            placeholder="{{ __('admin.account_name') }}" value="{{ $row->account_name }}" disabled="">
+                    {!! $errors->first('account_name', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
-            
 
            
-            
+            <div class="form-group m-form__group row {{ $errors->has('logo') ? 'has-danger' : ''}}">
+                    <label for="logo" class="col-2 col-form-label">{{ __('admin.logo') }}</label>
+                    <div class="col-9">
+                        <img src="{{url('/assets/uploads')}}/{{ $row->logo }}" width="400" height="400" class="form-control">
+                    </div>
+            </div>
 
            
           
@@ -120,7 +116,7 @@
                     <div class="col-3">
                     </div>
                     <div class="col-9">
-                        <a type="reset" href="{{url('admin/bankaccounts')}}" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
+                        <a type="reset" href="{{url('admin/appbankaccount')}}" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
                     </div>
                 </div>
             </div>

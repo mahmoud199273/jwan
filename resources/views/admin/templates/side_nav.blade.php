@@ -92,7 +92,23 @@
 				<a  href="{{url('admin/bank')}}" class="m-menu__link ">
 					<span class="m-menu__item-here"></span>
 					<i class="m-menu__link-icon fa fa-map"></i>
+					<span class="m-menu__link-text">{{ __('admin.banks') }}</span>
+				</a>
+		</li>
+
+		<li class="m-menu__item" aria-haspopup="true" >
+				<a  href="{{url('admin/bankaccounts')}}" class="m-menu__link ">
+					<span class="m-menu__item-here"></span>
+					<i class="m-menu__link-icon fa fa-map"></i>
 					<span class="m-menu__link-text">{{ __('admin.bank_accounts') }}</span>
+				</a>
+		</li>
+
+		<li class="m-menu__item" aria-haspopup="true" >
+				<a  href="{{url('admin/appbankaccount')}}" class="m-menu__link ">
+					<span class="m-menu__item-here"></span>
+					<i class="m-menu__link-icon fa fa-map"></i>
+					<span class="m-menu__link-text">{{ __('admin.App_bank_accounts') }}</span>
 				</a>
 		</li>
 

@@ -33,7 +33,7 @@
     </div>
 
     <!--begin::Form-->
-    <form class="m-form" action="{{ config('app.admin_url') }}/banks/{{ $bank->id }}" method="post" enctype="multipart/form-data">
+    <form class="m-form" action="{{ config('app.admin_url') }}/bank/{{ $bank->id }}" method="post" enctype="multipart/form-data">
        
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
@@ -63,42 +63,44 @@
                 </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('account_name') ? 'has-danger' : ''}}">
-                <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.account_name') }}</label>
+            <div class="form-group m-form__group row {{ $errors->has('name_ar') ? 'has-danger' : ''}}">
+                <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.name_ar') }}</label>
                 <div class="col-9">
                     <input type="text" class="form-control m-input" 
-                            placeholder="{{ __('admin.account_name') }}" name="account_name" value="{{ $bank->account_name }}">
-                    {!! $errors->first('account_name', '<span class="form-control-feedback">:message</span>') !!}
+                            placeholder="{{ __('admin.name_ar') }}" name="name_ar" value="{{ $bank->name_ar }}">
+                    {!! $errors->first('name_ar', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
 
-            <div class="form-group m-form__group row {{ $errors->has('account_number') ? 'has-danger' : ''}}">
-                <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.account_number') }}</label>
-                <div class="col-9">
-                    <input type="text" class="form-control m-input" 
-                            placeholder="{{ __('admin.account_number') }}" name="account_number" value="{{ $bank->account_number }}">
-                    {!! $errors->first('account_number', '<span class="form-control-feedback">:message</span>') !!}
-                </div>
-            </div>
-
-             <div class="form-group m-form__group row {{ $errors->has('iban_account_number') ? 'has-danger' : ''}}">
-                <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.iban_account_number') }}</label>
-                <div class="col-9">
-                    <input type="text" class="form-control m-input" 
-                            placeholder="{{ __('admin.iban_account_number') }}" name="iban_account_number" value="{{ $bank->iban_account_number }}">
-                    {!! $errors->first('iban_account_number', '<span class="form-control-feedback">:message</span>') !!}
-                </div>
-            </div>
-
-
-            <div class="form-group m-form__group row {{ $errors->has('image') ? 'has-danger' : ''}}">
-                <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.image') }}</label>
-                <div class="col-9">
-                    <input type="file" class="form-control m-input" 
-                            placeholder="{{ __('admin.image') }}" name="image" accept="images/*">
-                    {!! $errors->first('image', '<span class="form-control-feedback">:message</span>') !!}
-                </div>
+             <div class="form-group m-form__group row {{ $errors->has('logo') ? 'has-danger' : ''}}">
+                    <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.logo') }}</label>
+                    <div class="col-9">
+                            <input type="hidden" name="logo" id="file" class="form-control m-input" placeholder="{{ __('admin.logo') }}" value="{{ $bank->logo }}">
+                            {{--   upload image div   --}}
+                            <div class="container">
+                                    <div class="row" style="padding-top:10px;">
+                                      <div class="col-xs-2">
+                                        <button id="uploadBtn" class="btn btn-large btn-primary"> اختر ملف </button>
+                                      </div>
+                                      <div class="col-xs-10">
+                                    <div id="progressOuter" class="progress progress-striped active" style="display:none;">
+                                      <div id="progressBar" class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                      </div>
+                                    </div>
+                                      </div>
+                                    </div>
+                                    <div class="row" style="padding-top:10px;">
+                                      <div class="col-xs-10">
+                                        <div id="msgBox">
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <img src="{{url('/assets/uploads')}}/{{ $bank->logo }}" id="image_file" width="100" height="100" >
+                                </div>
+                                {{--   upload image div   --}}
+                        {!! $errors->first('logo', '<span class="form-control-feedback">:message</span>') !!}
+                    </div>
             </div>
 
           
@@ -114,7 +116,7 @@
                     </div>
                     <div class="col-9">
                         <button type="submit" class="btn btn-brand">{{ __('admin.save') }}</button>
-                        <a type="reset" href="{{ config('app.admin_url') }}/banks" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
+                        <a type="reset" href="{{ config('app.admin_url') }}/bank" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
                     </div>
                 </div>
             </div>
