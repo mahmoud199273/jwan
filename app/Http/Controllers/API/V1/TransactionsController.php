@@ -54,15 +54,29 @@ class TransactionsController extends Controller
         if ( $request->limit ) {
           $this->setPagination($request->limit);
         }
-        $pagination =  Transactions::SELECT('transactions.*', 'campaigns.title')
+
+        if($user->account_type == 0) // user transactions 
+        {
+            $join_column = "influncer_id"; 
+        }
+        else // influencer transactions
+        {
+            $join_column = "user_id";
+        }
+        
+
+        $pagination =  Transactions::SELECT('transactions.*', 'campaigns.title','u.name as user_name','u.image as user_image')
                                     ->where('transactions.user_id', $user->id)
                                     ->join('users', 'users.id', '=', 'transactions.user_id')
                                     ->leftJoin('campaigns', 'campaigns.id', '=', 'transactions.campaign_id')
                                     ->leftJoin('offers', 'offers.id', '=', 'transactions.offer_id')
-                    ->orderBy('transactions.id','DESC')
-                    ->paginate($this->getPagination());
+                                    ->leftJoin('users as u', 'offers.'.$join_column, '=', 'u.id')
+                                    ->orderBy('transactions.id','DESC')
+                                    ->paginate($this->getPagination());
 
-        $transations =  $this->transactionstransformer->transformCollection(collect($pagination->items()));
+        $transations['balance'] = $user->balance;          
+        //$this->transactionstransformer->setFlag(true);           
+        $transations['transactions'] =  $this->transactionstransformer->transformCollection(collect($pagination->items()));
         // foreach ($notifications as $key => $value) {
         //     $notifications_array[] = $value->id;
         // }
