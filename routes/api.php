@@ -59,6 +59,11 @@ Route::post('/refresh/token','API\V1\AuthController@refreshToken');
 
 Route::post('user/send/reset/code'	, 'API\V1\ResetPasswordController@sendCode');
 
+// mahmoud abdelrahman 8/11/2018
+Route::post('user/send/verfiy/code'	, 'API\V1\ResetPasswordController@sendVerifyCode');
+Route::post('user/verfiy/mobile/code'	, 'API\V1\ResetPasswordController@verifyMobileCode');
+// mahmoud abdelrahman 8/11/2018
+
 Route::post('user/send/email'	, 'API\V1\ResetPasswordController@sendMail');
 
 Route::post('user/verify/reset/code', 'API\V1\ResetPasswordController@verifyCode');

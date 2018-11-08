@@ -4,6 +4,7 @@ return[
    'code_sent'   			    =>  'Code Sent Successfully.',
    'enter_valid_phone'			=>  'Please Enter a Valid Phone Number.',
    'invalid_code'  				=>  'Invalid Code',
+   'code_expire'  				=>  ' code expire ',
    'sms_code_text'				=>  'Activation Code For Classes Mobile App ',
    'phone_exists'          		=>  'Sorry, This phone already exists',
    'loggedout'  			        =>  'Logged out successfully',

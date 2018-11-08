@@ -68,6 +68,8 @@ class TransactionsTransformer extends Transformer
         	'id'       			=> (int) $transaction->id,
             'user_id'           => (int) $transaction->user_id,
             'amount'       => $transaction->amount,
+            'cost'       => ($transaction->amount * 95) / 100,
+            'vat'       => ($transaction->amount * 5) / 100,
             'campaign_id'       => (int) $transaction->campaign_id,
             'campaign_title'       => $transaction->title,
             'offer_id'       => (int) $transaction->offer_id,
