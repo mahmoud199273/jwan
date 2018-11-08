@@ -59,6 +59,11 @@ Route::post('/refresh/token','API\V1\AuthController@refreshToken');
 
 Route::post('user/send/reset/code'	, 'API\V1\ResetPasswordController@sendCode');
 
+// mahmoud abdelrahman 8/11/2018
+Route::post('user/send/verfiy/code'	, 'API\V1\ResetPasswordController@sendVerifyCode');
+Route::post('user/verfiy/mobile/code'	, 'API\V1\ResetPasswordController@verifyMobileCode');
+// mahmoud abdelrahman 8/11/2018
+
 Route::post('user/send/email'	, 'API\V1\ResetPasswordController@sendMail');
 
 Route::post('user/verify/reset/code', 'API\V1\ResetPasswordController@verifyCode');
@@ -237,6 +242,9 @@ Route::get('/influncer/notifications'		, 'API\V1\UserController@getNotifications
   Route::post('user/transaction/store', 'API\V1\TransactionsController@store');
   Route::get('user/transaction/list', 'API\V1\TransactionsController@index');
   Route::get('influncer/transaction/list', 'API\V1\TransactionsController@index');
+  Route::get('user/transaction/details/{id}', 'API\V1\TransactionsController@details');
+  Route::get('influncer/transaction/details/{id}', 'API\V1\TransactionsController@details');
+
 
 /* about the app - license agreement */
 Route::get('/about/app','API\V1\AboutAppController@index') ;

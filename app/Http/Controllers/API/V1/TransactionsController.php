@@ -54,15 +54,29 @@ class TransactionsController extends Controller
         if ( $request->limit ) {
           $this->setPagination($request->limit);
         }
-        $pagination =  Transactions::SELECT('transactions.*', 'campaigns.title')
+
+        if($user->account_type == 0) // user transactions 
+        {
+            $join_column = "influncer_id"; 
+        }
+        else // influencer transactions
+        {
+            $join_column = "user_id";
+        }
+        
+
+        $pagination =  Transactions::SELECT('transactions.*', 'campaigns.title','u.name as user_name','u.image as user_image')
                                     ->where('transactions.user_id', $user->id)
                                     ->join('users', 'users.id', '=', 'transactions.user_id')
                                     ->leftJoin('campaigns', 'campaigns.id', '=', 'transactions.campaign_id')
                                     ->leftJoin('offers', 'offers.id', '=', 'transactions.offer_id')
-                    ->orderBy('transactions.id','DESC')
-                    ->paginate($this->getPagination());
+                                    ->leftJoin('users as u', 'offers.'.$join_column, '=', 'u.id')
+                                    ->orderBy('transactions.id','DESC')
+                                    ->paginate($this->getPagination());
 
-        $transations =  $this->transactionstransformer->transformCollection(collect($pagination->items()));
+        $transations['balance'] = $user->balance;          
+        //$this->transactionstransformer->setFlag(true);           
+        $transations['transactions'] =  $this->transactionstransformer->transformCollection(collect($pagination->items()));
         // foreach ($notifications as $key => $value) {
         //     $notifications_array[] = $value->id;
         // }
@@ -71,6 +85,42 @@ class TransactionsController extends Controller
         //     $notifications_array = Notification::where('user_id' , $user->id)->whereIn('id', $notifications_array)->update(['is_seen' => '1']);
         // }
         return $this->respondWithPagination($pagination, ['data' => $transations ]);
+    }
+
+
+    function details(Request $request,$id)
+    {
+
+        $user =  $this->getAuthenticatedUser();
+        if($user->account_type == 0) // user transactions 
+        {
+            $join_column = "influncer_id"; 
+        }
+        else // influencer transactions
+        {
+            $join_column = "user_id";
+        }
+        
+        $validator = Validator::make( ['id' =>  $request->id ], [
+            'id'    => 'required|exists:transactions,id,deleted_at,NULL',
+        ]);
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError('paramters failed validation');
+        }
+        $data =  Transactions::SELECT('transactions.*', 'campaigns.title','u.name as user_name','u.image as user_image')
+                                    ->where('transactions.id', $request->id)
+                                    ->where('transactions.user_id', $user->id)
+                                    ->join('users', 'users.id', '=', 'transactions.user_id')
+                                    ->leftJoin('campaigns', 'campaigns.id', '=', 'transactions.campaign_id')
+                                    ->leftJoin('offers', 'offers.id', '=', 'transactions.offer_id')
+                                    ->leftJoin('users as u', 'offers.'.$join_column, '=', 'u.id')->first();
+        if ( !empty ( $data ) ) {
+            $transaction = $this->transactionstransformer->transform($data);
+            return $this->sendResponse($transaction,trans('lang.read succefully'),200);
+        }else{
+            return $this->setStatusCode(422)->respondWithError('paramters failed validation');
+        }                                
+        
     }
 
 

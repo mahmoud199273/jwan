@@ -16,10 +16,32 @@ class TransactionsTransformer extends Transformer
     protected $flag = false;
     protected $user_flag = true;
 
-    // function setFlag($flag)
-    // {
-    //     $this->flag = $flag; // set true to show influencers in campaigns list
-    // }
+    function setColor($status,$type)
+    {
+        $this->color = "#FFFF00";
+        if ($status == 0) 
+        {
+            $this->color = "#FFFF00";
+        } 
+        elseif($type == 0 && $status == 1)
+        {
+            $this->color = "#008000";
+        }
+        elseif ($type == 1 && $status == 1) 
+        {
+            $this->color = "#FF0000";
+        }
+        elseif ($type == 3 && $status == 1) 
+        {
+            $this->color = "#FF0000";
+        }
+        else
+        {
+            $this->color = "#008000";  
+        }
+        
+        return $this->color;
+    }
     //
     // function setUserFlag($user_flag)
     // {
@@ -43,10 +65,13 @@ class TransactionsTransformer extends Transformer
                           2 => 'finished offer (in influncer)');
         // $campaign = Campaign::find($campaign->id);
         $return_array =  [
-        	  'id'       			=> (int) $transaction->id,
+        	'id'       			=> (int) $transaction->id,
             'user_id'           => (int) $transaction->user_id,
             'amount'       => $transaction->amount,
+            'cost'       => round((($transaction->amount * 95) / 100), 2), //(int)(($transaction->amount * 95) / 100),
+            'vat'       => round((($transaction->amount * 5) / 100), 2), //(int) ($transaction->amount * 5) / 100,
             'campaign_id'       => (int) $transaction->campaign_id,
+            'campaign_title'       => $transaction->title,
             'offer_id'       => (int) $transaction->offer_id,
             'status'       => (int) $transaction->status,
             'status_title'	=> $status_array[(int) $transaction->status],
@@ -62,6 +87,9 @@ class TransactionsTransformer extends Transformer
             'transaction_number'       => $transaction->transaction_number,
             'transaction_date'       => Carbon::parse($transaction->transaction_date)->toDateTimeString(),
             'transaction_amount'       => $transaction->transaction_amount,
+            'transaction_user_name'           => $transaction->user_name,
+            'transaction_user_image'           => $transaction->user_image,
+            'color'           => $this->setColor((int) $transaction->status,(int) $transaction->type),
             'created_at'       => Carbon::parse($transaction->created_at)->toDateTimeString(),
             'updated_at'          => Carbon::parse($transaction->updated_at)->toDateTimeString(),
 

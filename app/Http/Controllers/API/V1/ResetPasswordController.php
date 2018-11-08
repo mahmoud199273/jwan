@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\API\V1\BaseController as Controller;
 use App\User;
+use App\VerifyPhoneCode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -192,6 +193,75 @@ class ResetPasswordController extends Controller
     public function updatePassword(  $phone , $password )
     {
         User::where('phone' , $phone )->update(['password' => bcrypt($password)]);
+    }
+
+
+
+    //======================================================== send verify code ===========
+
+    public function sendVerifyCode( Request $request )
+    {
+      // atef comment //should also validate if data sent are email.
+        $validator = Validator::make( $request->all(), [
+            'phone'                  => 'required|max:14|min:9|exists:users',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_phone'));
+        }
+
+        //create verify phone code
+        $this->createVerifyToken( $request->phone );
+
+        return $this->respondCreated(trans('api_msgs.code_sent'));
+    }
+
+    public function createVerifyToken( $phone )
+    {
+        $token    = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
+        $current_time   = Carbon::now();
+        $created_at     = $current_time->toDateTimeString();
+        $expired_at     = $current_time->addHours(1)->toDateTimeString();
+        DB::table('verify_phone_codes')->insert([
+                   'phone'         => $phone ,
+                   'code'         => $token ,
+                   'created_at'    => $created_at,
+                   'expired_at'    => $expired_at
+                                                ]);
+        //send message to mobile
+        @sendSMS($this->formatPhone($mail) , __('api_msgs.reset_pass_code').$token );
+
+    }
+
+    public function verifyMobileCode( Request $request )
+    {
+        $validator = Validator::make( $request->all(), [
+            'code'                  => 'required|max:4|min:4'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+        }
+
+        $code   = VerifyPhoneCode::where([ [ 'code', $request->code ],[ 'verified', '0'] ])->first();
+
+        if ( !$code ) {
+
+            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.invalid_code'));
+        }
+
+        $current_time   = Carbon::now();
+        $current    = strtotime($current_time->addHours(1)->toDateTimeString());
+        $expired_at = strtotime($code->expired_at);
+        if ( $expired_at < $current or $expired_at == $current )  {
+
+            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.code_expire'));
+
+        }else{
+
+            VerifyPhoneCode::where([ [ 'code', $request->code ],[ 'verified', '0'] ])->update(['verified' => '1']);
+            return $this->respondWithSuccess('sucess');
+        }
     }
 
 
