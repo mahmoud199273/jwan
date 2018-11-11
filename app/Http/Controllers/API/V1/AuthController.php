@@ -127,7 +127,7 @@ class AuthController extends Controller
         //create verify phone code
         $this->createVerificationCode( $request->phone );
 
-        return $this->respondCreated(trans('api_msgs.sms_code_text'));
+        return $this->respondWithSuccess(trans('api_msgs.sms_code_text'));
     }
 
 	public function createVerificationCode( $phone )
@@ -344,7 +344,7 @@ class AuthController extends Controller
 
             //return Response::json( compact('token'));
 
-           return $this->respondCreated(trans('api_msgs.success'));
+           return $this->respondWithSuccess(trans('api_msgs.success'));
 
 
     }
@@ -548,7 +548,7 @@ class AuthController extends Controller
 
             $this->createVerificationCode( arTOen($request->phone) );
 
-            return $this->respondCreated(trans('api_msgs.success'));
+            return $this->respondWithSuccess(trans('api_msgs.success'));
             //$token = JWTAuth::fromUser($user);
 
             //return Response::json( compact('token'));
