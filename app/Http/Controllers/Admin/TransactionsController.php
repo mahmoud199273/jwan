@@ -20,6 +20,12 @@ class TransactionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function userTransactions(Request  $request  ,$id)
+    {
+        $list = Transactions::where('user_id',$id)->latest()->paginate(10);
+         return view('admin.transactions.index',compact('list'));
+    }
     public function index()
     {
         //
@@ -59,9 +65,10 @@ class TransactionsController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
+            //dd($query);
              $list   = Transactions::join('users','users.id','=','transactions.user_id')
-             ->join('campaigns','campaigns.id','=','transactions.campaign_id')
-             ->join('offers','offers.id','=','transactions.offer_id')
+             ->leftjoin('campaigns','campaigns.id','=','transactions.campaign_id')
+             ->leftjoin('offers','offers.id','=','transactions.offer_id')
              ->where('users.name', 'LIKE', '%' . $query. '%')
                                      
                                      ->orWhere('campaigns.title', 'LIKE', '%' . $query. '%')
@@ -72,11 +79,12 @@ class TransactionsController extends Controller
                                      ->orWhere('transactions.transaction_account_name', 'LIKE', '%' . $query. '%')
                                      ->orWhere('transactions.transaction_account_number', 'LIKE', '%' . $query. '%')
                                      ->orWhere('transactions.transaction_number', 'LIKE', '%' . $query. '%')
-                                     ->orWhere('transactions.transaction_date', 'LIKE', '%' . $query. '%')
+                                     //->orWhere('convert(transactions.transaction_date , utf8)', 'LIKE', '%' . $query. '%')
                                      ->orWhere('transactions.transaction_amount', 'LIKE', '%' . $query. '%')
                                      // ->orWhere('transactions.type', 'LIKE', '%' . $query. '%')
                                      ->paginate(10);
             $list->appends( ['q' => $request->q] );
+
             if (count ( $list ) > 0){
                 return view('admin.transactions.index',[ 'list' => $list ])->withQuery($query);
             }else{
@@ -169,7 +177,7 @@ class TransactionsController extends Controller
     {
         if ( $request->ajax() ) {
             $transaction = Transactions::find( $request->id );
-            $transaction->status = 1;
+            $transaction->status = $request->status;
             $transaction->save();
             return response(['msg' => 'approved', 'status' => 'success']);
         }

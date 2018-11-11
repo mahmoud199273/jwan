@@ -104,6 +104,7 @@
                                     <th><b>{{ __('admin.transaction_amount') }}</b></th>
 
                                     <th><b>{{ __('admin.type')}}</b></th>
+                                     <th><b>{{ __('admin.approved')}}</b></th>
 
                                     <th><b>{{ __('admin.control') }}</b></th>
 
@@ -175,6 +176,8 @@
 
 
                                     </th>
+                                    <td class="text-center">{!! ($row->status)? "<i class='fa fa-check m--font-success'></i>" : 
+                                    "<i class='fa fa-times m--font-danger'></i>" !!}</td>
 
                                     
                                     
@@ -193,10 +196,13 @@
                                             <i class="fa fa-edit m--font-info"></i>
                                         </a>--}}
                                         @if($row->status==0)
-                                            <a type="button" href="javascript:;" data-id = "{{ $row->id }}"
+                                            <a type="button" href="javascript:;" data-status="1" data-id = "{{ $row->id }}"
                                                 class="m-btn m-btn m-btn--square btn btn-secondary _statusApprove">
                                                 <i class="fa fa-times m--font-danger"></i>
                                             </a>
+                                             
+
+                                           
                                             @endif
 
                                         <a type="button"  data-id = "{{ $row->id }}" 

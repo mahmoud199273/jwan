@@ -110,6 +110,11 @@
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             <i class="fa fa-edit m--font-info"></i>
                                         </a>
+                                        <a type="button" 
+                                            href="{{url('admin/transactions')}}/{{ $user->id }}/transaction" 
+                                            class="m-btn m-btn m-btn--square btn btn-secondary">
+                                            {{ __('admin.transactions') }}
+                                        </a>
 
                                         <a type="button"  data-id = "{{ $user->id }}" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary _remove">

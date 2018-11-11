@@ -26,6 +26,28 @@ class PagesController extends Controller
         return view('admin.pages.index',compact('pages'));
     }
 
+    
+     public function search( Request $request )
+    {
+        //dd(10);
+        $query =  $request->q;
+        if ( $query == "") {
+            return redirect()->back();
+        }else{
+             $pages   = Pages::where('name_ar', 'LIKE', '%' . $query. '%' )
+                                     ->orWhere('name','LIKE','%'.$query.'%')
+                                     ->orWhere('desc','LIKE','%'.$query.'%')
+                                     ->orWhere('desc_ar','LIKE','%'.$query.'%')
+                                     ->paginate(10);
+            $pages->appends( ['q' => $request->q] );
+            if (count ( $pages ) > 0){
+                return view('admin.pages.index',[ 'pages' => $pages ])->withQuery($query);
+            }else{
+                return view('admin.pages.index',[ 'pages'=> null ,'message' => __('admin.no_result') ]);
+            }
+        }
+    }  
+
     /**
      * Show the form for creating a new resource.
      *

@@ -332,6 +332,7 @@
 
 $('._statusApprove').on('click', function(){
         id = $(this).attr('data-id');
+        status = $(this).attr('data-status');
         swal({
 		  title: 'هل تريد الاستمرار؟',
 		  confirmButtonText:  'نعم',
@@ -344,7 +345,7 @@ $('._statusApprove').on('click', function(){
 		           $.ajax({
                         url: '{{url("admin")}}/transaction/approve',
                         type: 'POST',
-                        data: {'_method':'post','_token': $('meta[name="csrf-token"]').attr('content'),'id':id },
+                        data: {'_method':'post','_token': $('meta[name="csrf-token"]').attr('content'),'id':id,'status':status },
                         success: function( msg ) {
                             if ( msg.status === 'success' ) {
                               window.location.reload();
