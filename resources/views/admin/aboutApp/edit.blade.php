@@ -1,4 +1,4 @@
-@extends('admin.layouts.index_layout',['title' => __('admin.bank_accounts') ])
+@extends('admin.layouts.index_layout',['title' => __('admin.aboutApp') ])
 
 @section('content')
 
@@ -33,7 +33,7 @@
     </div>
 
     <!--begin::Form-->
-    <form class="m-form" action="{{url('admin/bank')}}/{{ $row->id }}" method="post" enctype="multipart/form-data">
+    <form class="m-form" action="{{url('admin/aboutApp')}}/{{ $row->id }}" method="post" enctype="multipart/form-data">
        
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
@@ -140,7 +140,7 @@
                     </div>
                     <div class="col-9">
                         <button type="submit" class="btn btn-brand">{{ __('admin.save') }}</button>
-                        <a type="reset" href="{{url('admin/bank')}}" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
+                        <a type="reset" href="{{url('admin/aboutApp')}}" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
                     </div>
                 </div>
             </div>

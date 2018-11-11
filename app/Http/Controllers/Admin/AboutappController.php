@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\AboutApp;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BankAccounts\EditBankAccountsRequest;
-use App\Http\Requests\Admin\BankAccounts\StoreBankAccountsRequest;
+use App\Http\Requests\Admin\AboutApp\EditAboutAppRequest;
+use App\Http\Requests\Admin\AboutApp\StoreAboutAppRequest;
 use Illuminate\Http\Request;
 
 
@@ -32,11 +32,11 @@ class AboutappController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function create()
-    // {
-    //     //
-    //     return view('admin.aboutApp.create');
-    // }
+    public function create()
+    {
+        //
+        return view('admin.aboutApp.create');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,7 +44,7 @@ class AboutappController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAboutAppRequest $request)
     {
         $request->persist();
         return redirect()->back()->with('status' , __('admin.created') );
@@ -84,7 +84,7 @@ class AboutappController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditAboutAppRequest $request, $id)
     {
         $request->persist($id);
         return redirect()->back()->with('status' , __('admin.updated') );
@@ -104,4 +104,4 @@ class AboutappController extends Controller
             return response(['msg' => 'deleted', 'status' => 'success']);
         }
     }
-}
+} 

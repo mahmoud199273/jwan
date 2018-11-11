@@ -38,10 +38,10 @@ class EditUserRequest extends BaseRequest
 
     public function persist($id)
     {
-        // if ($this->image) {
-        //     $image = $this->uploadImage($this->image);
-        //     $this->offsetSet('image', $image);
-        // }
+        if ($this->password) {
+            $password = bcrypt($this->password);
+            $this->offsetSet('password', $password);
+        }
 
         User::find($id)->Update($this->request->all());
     }

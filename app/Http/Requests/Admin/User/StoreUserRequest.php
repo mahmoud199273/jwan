@@ -43,6 +43,11 @@ class StoreUserRequest extends BaseRequest
         // }
         //$this->offsetSet('type', 'users');
 
+        if ($this->password) {
+            $password = bcrypt($this->password);
+            $this->offsetSet('password', $password);
+        }
+
         User::create($this->request->all());
     }
 
