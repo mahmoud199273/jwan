@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\AppBankAccounts;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BankAccounts\EditBankAccountsRequest;
-use App\Http\Requests\Admin\BankAccounts\StoreBankAccountsRequest;
+use App\Http\Requests\Admin\AppBankAccounts\EditAppBankAccountsRequest;
+use App\Http\Requests\Admin\AppBankAccounts\StoreAppBankAccountsRequest;
 use Illuminate\Http\Request;
 
 class AppBankAccountsController extends Controller
@@ -67,7 +67,7 @@ class AppBankAccountsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBankAccountsRequest $request)
+    public function store(StoreAppBankAccountsRequest $request)
     {
         $request->persist();
         return redirect()->back()->with('status' , __('admin.created') );
@@ -107,7 +107,7 @@ class AppBankAccountsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditBankAccountsRequest $request, $id)
+    public function update(EditAppBankAccountsRequest $request, $id)
     {
         $request->persist($id);
         return redirect()->back()->with('status' , __('admin.updated') );

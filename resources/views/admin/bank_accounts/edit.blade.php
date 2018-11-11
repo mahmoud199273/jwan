@@ -1,4 +1,4 @@
-@extends('admin.layouts.index_layout',['title' => __('admin.banks') ])
+@extends('admin.layouts.index_layout',['title' => __('admin.bank_accounts') ])
 
 @section('content')
 

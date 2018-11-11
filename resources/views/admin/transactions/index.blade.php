@@ -56,7 +56,7 @@
                             </h3>
                         </div>
                     </div>
-                    <div class="m-portlet__head-tools">
+                    <!-- <div class="m-portlet__head-tools">
 
                         <a href="{{url('admin/transactions/create')}}" class="btn btn-brand m-btn m-btn--icon m-btn--wide m-btn--md m--margin-right-10">
                             <span>
@@ -65,7 +65,7 @@
                             </span>
                         </a>
 
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="m-portlet__body">

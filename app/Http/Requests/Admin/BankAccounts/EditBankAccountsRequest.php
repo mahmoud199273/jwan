@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Admin\BankAccounts;
 
 use App\Http\Requests\Admin\BaseRequest;
-use App\AppBankAccounts;
+use App\BankAccounts;
 use Illuminate\Validation\Rule;
 
 
@@ -19,18 +19,20 @@ class EditBankAccountsRequest extends BaseRequest
     {
  
         return [
-            'name'                        => 'required|string',
-            'name_ar'                     => 'required|string',
+            'user_id'                     => 'required',
+            'bank_id'                     => 'required'
+            'account_name'                => 'required|string',
             'IBAN'                        => 'required',
+            'note'                        => 'required',
             'account_number'              => 'required',
-            'account_name'                => 'required',
-            'logo'                        => 'required',
+            
+            
         ];
     }
 
     public function persist($id)
     {
-        AppBankAccounts::find($id)->Update($this->request->all());
+        BankAccounts::find($id)->Update($this->request->all());
     }
 
 

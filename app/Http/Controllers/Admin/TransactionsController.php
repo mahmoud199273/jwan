@@ -94,11 +94,11 @@ class TransactionsController extends Controller
     }
 
 
-    public function create()
-    {
-        //
-        return view('admin.bank_accounts.create');
-    }
+    // public function create()
+    // {
+    //     //
+    //     return view('admin.bank_accounts.create');
+    // }
 
     /**
      * Store a newly created resource in storage.
