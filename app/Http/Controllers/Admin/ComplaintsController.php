@@ -34,9 +34,9 @@ class ComplaintsController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $complaints   = ContactUs::where('subject', 'LIKE', '%' . $query. '%' )
-                                     ->orWhere('user_id','LIKE','%'.$query.'%')
-                                     ->orWhere('created_at','LIKE','%'.$query.'%')
+             $complaints   = ContactUs::leftjoin('users','users.id','contact_us.user_id')->where('subject', 'LIKE', '%' . $query. '%' )
+                                     ->orWhere('users.name','LIKE','%'.$query.'%')
+                                     ->orWhere('contact_us.created_at','LIKE','%'.$query.'%')
                                      ->paginate(10);
             $complaints->appends( ['q' => $request->q] );
             if (count ( $complaints ) > 0){
