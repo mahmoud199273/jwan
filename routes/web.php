@@ -102,6 +102,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::get('/campaign/search','CampaignsController@search');
 
 		Route::resource('pages','PagesController');
+		Route::get('page/search','PagesController@search');
 
 		Route::resource('bank','BankController');
 		Route::get('banks/search','BankController@search');

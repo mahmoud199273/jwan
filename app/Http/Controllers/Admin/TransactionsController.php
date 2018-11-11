@@ -59,9 +59,10 @@ class TransactionsController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
+            //dd($query);
              $list   = Transactions::join('users','users.id','=','transactions.user_id')
-             ->join('campaigns','campaigns.id','=','transactions.campaign_id')
-             ->join('offers','offers.id','=','transactions.offer_id')
+             ->leftjoin('campaigns','campaigns.id','=','transactions.campaign_id')
+             ->leftjoin('offers','offers.id','=','transactions.offer_id')
              ->where('users.name', 'LIKE', '%' . $query. '%')
                                      
                                      ->orWhere('campaigns.title', 'LIKE', '%' . $query. '%')
@@ -72,11 +73,12 @@ class TransactionsController extends Controller
                                      ->orWhere('transactions.transaction_account_name', 'LIKE', '%' . $query. '%')
                                      ->orWhere('transactions.transaction_account_number', 'LIKE', '%' . $query. '%')
                                      ->orWhere('transactions.transaction_number', 'LIKE', '%' . $query. '%')
-                                     ->orWhere('transactions.transaction_date', 'LIKE', '%' . $query. '%')
+                                     //->orWhere('convert(transactions.transaction_date , utf8)', 'LIKE', '%' . $query. '%')
                                      ->orWhere('transactions.transaction_amount', 'LIKE', '%' . $query. '%')
                                      // ->orWhere('transactions.type', 'LIKE', '%' . $query. '%')
                                      ->paginate(10);
             $list->appends( ['q' => $request->q] );
+
             if (count ( $list ) > 0){
                 return view('admin.transactions.index',[ 'list' => $list ])->withQuery($query);
             }else{

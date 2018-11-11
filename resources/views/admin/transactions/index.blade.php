@@ -197,6 +197,13 @@
                                                 class="m-btn m-btn m-btn--square btn btn-secondary _statusApprove">
                                                 <i class="fa fa-times m--font-danger"></i>
                                             </a>
+                                             
+
+                                            @else
+                                            <a type="button"  data-id = "{{ $row->id }}" 
+                                                class="m-btn m-btn m-btn--square btn btn-secondary _activate">
+                                                <i class="fa fa-check m--font-success"></i>
+                                            </a>
                                             @endif
 
                                         <a type="button"  data-id = "{{ $row->id }}" 
