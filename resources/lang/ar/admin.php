@@ -101,6 +101,8 @@ return [
     'family_area'                   => 'قسم عوائل',
     'section'                       => 'القسم',
     'location'                      => 'الموقع',
+    'subject'                       => 'العنوان',
+    'message'                       => 'الرساله',
     'floors_number'                 => 'عدد الأدوار',
     'wells_number'                  => 'عدد الآبار',
     'already_subscriped'            => 'عفواً ,أنت مشترك في باقة حاليا ',

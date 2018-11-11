@@ -78,7 +78,7 @@ class ComplaintsController extends Controller
      */
     public function show($id)
     {
-        $complaint = ContactUs::find($id);
+        $complaint =  ContactUs::select('contact_us.*','users.name')->leftjoin('users','users.id','contact_us.user_id')->first($id);
         return view('admin.contact_us.show',compact('complaint'));
     }
 

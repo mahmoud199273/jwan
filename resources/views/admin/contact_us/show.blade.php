@@ -45,46 +45,29 @@
                 <label for="name" class="col-1 col-form-label">{{ __('admin.name') }}</label>
                 <div class="col-9">
                     <input type="text" name="name" class="form-control m-input" 
-                            placeholder="{{ __('admin.name') }}" value="{{ $complaint->user->name }}" disabled="">
+                            placeholder="{{ __('admin.name') }}" value="{{ $complaint->name }}" disabled="">
                     {!! $errors->first('name', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
    
 
-            <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
-                <label for="name" class="col-1 col-form-label">{{ __('admin.email') }}</label>
+            
+
+
+            <div class="form-group m-form__group row {{ $errors->has('subject') ? 'has-danger' : ''}}">
+                <label for="name" class="col-1 col-form-label">{{ __('admin.subject') }}</label>
                 <div class="col-9">
-                    <input type="text" name="name" class="form-control m-input" 
-                            placeholder="{{ __('admin.email') }}" value="{{ $complaint->user->email }}" disabled="">
-                    {!! $errors->first('name', '<span class="form-control-feedback">:message</span>') !!}
+                    <input type="text" name="subject" class="form-control m-input" 
+                            placeholder="{{ __('admin.subject') }}" value="{{ $complaint->subject }}" disabled="">
+                    {!! $errors->first('subject', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
 
-            <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
-                <label for="name" class="col-1 col-form-label">{{ __('admin.phone') }}</label>
+            <div class="form-group m-form__group row {{ $errors->has('message') ? 'has-danger' : ''}}">
+                <label for="message" class="col-1 col-form-label"> {{ __('admin.message') }}  </label>
                 <div class="col-9">
-                    <input type="text" name="name" class="form-control m-input" 
-                            placeholder="{{ __('admin.phone') }}" value="{{ $complaint->user->phone }}" disabled="">
-                    {!! $errors->first('name', '<span class="form-control-feedback">:message</span>') !!}
-                </div>
-            </div>
-
-
-            <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
-                <label for="name" class="col-1 col-form-label">{{ __('admin.title') }}</label>
-                <div class="col-9">
-                    <input type="text" name="name" class="form-control m-input" 
-                            placeholder="{{ __('admin.title') }}" value="{{ $complaint->title }}" disabled="">
-                    {!! $errors->first('name', '<span class="form-control-feedback">:message</span>') !!}
-                </div>
-            </div>
-
-
-            <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
-                <label for="name" class="col-1 col-form-label"> {{ __('admin.body') }}  </label>
-                <div class="col-9">
-                    <textarea class="form-control m-input" disabled="">{{ $complaint->body }}</textarea>
+                    <textarea class="form-control m-input" disabled="">{{ $complaint->message }}</textarea>
                 </div>
             </div>
            
