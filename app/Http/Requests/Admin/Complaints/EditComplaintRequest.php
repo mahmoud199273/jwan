@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Admin\Complaints;
 
 use App\Http\Requests\Admin\BaseRequest;
-use App\Complaint;
+use App\ContactUs;
 use Illuminate\Validation\Rule;
 
 
@@ -19,14 +19,15 @@ class EditComplaintRequest extends BaseRequest
     {
 
         return [
-            'title'                        => 'required|string',
-            'body'                           => 'required|string',
+            'user_id'                        => 'required',
+            'subject'                        => 'required|string',
+            'message'                           => 'required|string',
         ];
     }
 
     public function persist($id)
     {
-        Complaint::find($id)->Update($this->request->all());
+        ContactUs::find($id)->Update($this->request->all());
     }
 
 
