@@ -181,7 +181,8 @@ class OffersController extends Controller
             if(!$offer){
                 return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or approved before'));
             }
-            if($user->balance<$offer->cost)
+            $userData = User::find($user->id);
+            if($userData->balance<$offer->cost)
             {
               return $this->setStatusCode(422)->respondWithError(trans('api_msgs.please charge your account'));
             }
