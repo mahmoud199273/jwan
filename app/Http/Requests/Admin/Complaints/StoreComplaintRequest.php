@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\Complaints;
 
-use App\Complaint;
+use App\ContactUs;
 use App\Http\Requests\Admin\BaseRequest;
 
 
@@ -14,17 +14,18 @@ class StoreComplaintRequest extends BaseRequest
      *
      * @return array
      */
-    public function rules()
+     public function rules()
     {
+
         return [
-            'title'                        => 'required|string',
-            'body'                           => 'required|string',
+            'subject'                        => 'required|string',
+            'message'                           => 'required|string',
         ];
     }
 
     public function persist()
     {
-        Complaint::create($this->request->all());
+        ContactUs::create($this->request->all());
     }
 
 

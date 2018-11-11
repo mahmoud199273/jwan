@@ -1,4 +1,4 @@
-@extends('admin.layouts.index_layout' , ['title' => __('admin.banks') ,'route' => 'banks'])
+@extends('admin.layouts.index_layout' , ['title' => __('admin.banks') ,'route' => 'bank'])
 
 @section('content')
 
@@ -55,7 +55,7 @@
                     </div>
                     <div class="m-portlet__head-tools">
 
-                        <a href="{{ config('app.admin_url') }}/banks/create" class="btn btn-brand m-btn m-btn--icon m-btn--wide m-btn--md m--margin-right-10">
+                        <a href="{{ config('app.admin_url') }}/bank/create" class="btn btn-brand m-btn m-btn--icon m-btn--wide m-btn--md m--margin-right-10">
                             <span>
                                 <i class="la la-plus"></i>
                                 <span>{{ __('admin.add') }}</span>

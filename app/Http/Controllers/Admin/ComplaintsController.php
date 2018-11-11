@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ContactUs;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Complaints\StoreComplaintRequest;
 use App\Http\Requests\Admin\Complaints\EditComplaintRequest;
-use App\Complaint;
+use App\Http\Requests\Admin\Complaints\StoreComplaintRequest;
 use Illuminate\Http\Request;
 
 
@@ -23,7 +23,7 @@ class ComplaintsController extends Controller
     public function index()
     {
         
-        $complaints = Complaint::latest()->paginate(10);
+        $complaints = ContactUs::latest()->paginate(10);
         return view('admin.contact_us.index',compact('complaints'));
     }
 
@@ -34,7 +34,7 @@ class ComplaintsController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $complaints   = Complaint::where('title', 'LIKE', '%' . $query. '%' )
+             $complaints   = ContactUs::where('subject', 'LIKE', '%' . $query. '%' )
                                      ->orWhere('user_id','LIKE','%'.$query.'%')
                                      ->orWhere('created_at','LIKE','%'.$query.'%')
                                      ->paginate(10);
@@ -78,7 +78,7 @@ class ComplaintsController extends Controller
      */
     public function show($id)
     {
-        $complaint = Complaint::find($id);
+        $complaint = ContactUs::find($id);
         return view('admin.contact_us.show',compact('complaint'));
     }
 
@@ -90,7 +90,7 @@ class ComplaintsController extends Controller
      */
     public function edit($id)
     {
-        $complaint = Complaint::find($id);
+        $complaint = ContactUs::find($id);
         return view('admin.contact_us.edit',compact('complaint'));
     }
 
@@ -116,7 +116,7 @@ class ComplaintsController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
-            Complaint::find($id)->delete();
+            ContactUs::find($id)->delete();
             return response(['msg' => 'deleted', 'status' => 'success']);
         }
     }

@@ -28,10 +28,10 @@ class EditBankRequest extends BaseRequest
 
     public function persist($id)
     {
-        if ($this->image) {
-            $image = $this->uploadImage($this->image);
-            $this->offsetSet('image', $image);
-        }
+        // if ($this->image) {
+        //     $image = $this->uploadImage($this->image);
+        //     $this->offsetSet('image', $image);
+        // }
         Banks::find($id)->Update($this->request->all());
     }
 

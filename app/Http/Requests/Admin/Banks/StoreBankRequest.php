@@ -27,10 +27,10 @@ class StoreBankRequest extends BaseRequest
 
     public function persist()
     {
-         if ($this->logo) {
-            $logo = $this->uploadImage($this->logo);
-            $this->offsetSet('logo', $logo);
-        }
+        //  if ($this->logo) {
+        //     $logo = $this->uploadImage($this->logo);
+        //     $this->offsetSet('logo', $logo);
+        // }
         Banks::create($this->request->all());
     }
 
