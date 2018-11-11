@@ -89,6 +89,7 @@ class TransactionsTransformer extends Transformer
             'transaction_amount'       => $transaction->transaction_amount,
             'transaction_user_name'           => $transaction->user_name,
             'transaction_user_image'           => $transaction->user_image,
+            'transaction_user_id'           => $transaction->user_id,
             'color'           => $this->setColor((int) $transaction->status,(int) $transaction->type),
             'created_at'       => Carbon::parse($transaction->created_at)->toDateTimeString(),
             'updated_at'          => Carbon::parse($transaction->updated_at)->toDateTimeString(),

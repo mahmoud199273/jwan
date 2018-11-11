@@ -56,13 +56,18 @@ Route::post('/logout', 'API\V1\AuthController@logout');
 Route::post('/refresh/token','API\V1\AuthController@refreshToken');
 
 
+// mahmoud abdelrahman 8/11/2018
+Route::post('user/send/verfiy/code'	, 'API\V1\AuthController@sendVerifyCode');
+Route::post('influncer/send/verfiy/code'	, 'API\V1\AuthController@sendVerifyCode');
+
+Route::post('user/verfiy/mobile/code'	, 'API\V1\AuthController@verifyMobileCode');
+Route::post('influncer/verfiy/mobile/code'	, 'API\V1\AuthController@verifyMobileCode');
+// mahmoud abdelrahman 8/11/2018
+
 
 Route::post('user/send/reset/code'	, 'API\V1\ResetPasswordController@sendCode');
 
-// mahmoud abdelrahman 8/11/2018
-Route::post('user/send/verfiy/code'	, 'API\V1\ResetPasswordController@sendVerifyCode');
-Route::post('user/verfiy/mobile/code'	, 'API\V1\ResetPasswordController@verifyMobileCode');
-// mahmoud abdelrahman 8/11/2018
+
 
 Route::post('user/send/email'	, 'API\V1\ResetPasswordController@sendMail');
 

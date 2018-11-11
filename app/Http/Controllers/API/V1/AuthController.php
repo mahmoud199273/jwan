@@ -8,7 +8,7 @@ use App\UserCategory;
 use App\UserCountry;
 use App\UserArea;
 use App\UserPlayerId;
-//use App\VerifyPhoneCode;
+use App\VerifyPhoneCode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -74,8 +74,63 @@ class AuthController extends Controller
     }*/
 
 
-	/*
-    *public function createVerificationCode( $phone )
+    public function verifyMobileCode( Request $request )
+    {
+        $validator = Validator::make( $request->all(), [
+            'code'                  => 'required|max:4|min:4',
+            'phone'                  => 'required|max:14|min:9',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+        }
+
+        $code   = VerifyPhoneCode::where([ [ 'code', $request->code ],[ 'verified', '0'] ])->first();
+
+        if ( !$code ) {
+
+            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.invalid_code'));
+        }
+
+        $current_time   = Carbon::now();
+        $current    = strtotime($current_time->addHours(1)->toDateTimeString());
+        $expired_at = strtotime($code->expired_at);
+        if ( $expired_at < $current or $expired_at == $current )  {
+
+            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.code_expire'));
+
+        }else{
+
+             VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],[ 'verified', '0'] ])->update(['verified' => '1']);
+            //VerifyPhoneCode::where('id', $user->id)->where('id', $user->id)
+            //return $this->respondWithSuccess('sucess');
+
+            $user = User::where('phone', $code->phone)->first();
+            $token = JWTAuth::fromUser($user);
+
+            return Response::json( compact('token'));
+        }
+    }
+
+
+    public function sendVerifyCode( Request $request )
+    {
+      // atef comment //should also validate if data sent are email.
+        $validator = Validator::make( $request->all(), [
+            'phone'                  => 'required|max:14|min:9|exists:users',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_phone'));
+        }
+
+        //create verify phone code
+        $this->createVerificationCode( $request->phone );
+
+        return $this->respondCreated(trans('api_msgs.sms_code_text'));
+    }
+
+	public function createVerificationCode( $phone )
     {
         $verify_code    = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
         $current_time   = Carbon::now();
@@ -88,8 +143,8 @@ class AuthController extends Controller
 		        'expired_at'    => $expired_at
 	                                            ]);
         //send message to mobile
-       // @sendSMS($phone , __('api_msgs.sms_code_text').$verify_code );
-    }*/
+        @sendSMS($phone , __('api_msgs.sms_code_text').$verify_code );
+    }
 
 
     public function isPhoneExists( $phone )
@@ -283,13 +338,13 @@ class AuthController extends Controller
             $user->save();
 
 
-           // $this->createVerificationCode( arTOen($request->phone) );
+           $this->createVerificationCode( arTOen($request->phone) );
 
-            $token = JWTAuth::fromUser($user);
+            //$token = JWTAuth::fromUser($user);
 
-            return Response::json( compact('token'));
+            //return Response::json( compact('token'));
 
-            //return $this->respondCreated(trans('api_msgs.success'));
+           return $this->respondCreated(trans('api_msgs.success'));
 
 
     }
@@ -491,11 +546,12 @@ class AuthController extends Controller
         }
 
 
-           // $this->createVerificationCode( arTOen($request->phone) );
+            $this->createVerificationCode( arTOen($request->phone) );
 
-            $token = JWTAuth::fromUser($user);
+            return $this->respondCreated(trans('api_msgs.success'));
+            //$token = JWTAuth::fromUser($user);
 
-            return Response::json( compact('token'));
+            //return Response::json( compact('token'));
 
 
 
@@ -615,14 +671,14 @@ class AuthController extends Controller
 
     public function login(Request $request){
 
-      if($request->input('email'))
-      {
-        $check_input = 'email';
-      }
-      else
-      {
-        $check_input = 'phone';
-      }
+    //   if($request->input('email'))
+    //   {
+    //     $check_input = 'email';
+    //   }
+    //   else
+    //   {
+    //     $check_input = 'phone';
+    //   }
       if(strpos($request->server("REQUEST_URI"), '/user/login'))
       {
           $account_type = '0';
@@ -637,7 +693,7 @@ class AuthController extends Controller
         return $this->setStatusCode(422)->respondWithError('user type not exising');
       }
         $validator = Validator::make($request->all(),[
-         $check_input   => 'required',
+         'phone'   => 'required',
          'password'=> 'required'
         ]);
         
@@ -647,24 +703,31 @@ class AuthController extends Controller
 
         
        
-        $login_type = filter_var($request->input($check_input), FILTER_VALIDATE_EMAIL ) 
-        ? 'email' 
-        : 'phone';
+        // $login_type = filter_var($request->input($check_input), FILTER_VALIDATE_EMAIL ) 
+        // ? 'email' 
+        // : 'phone';
  
-        $request->merge([$login_type => $request->input($check_input)]);
-        if($login_type == 'email') $field = 'email';
-        else $field = 'phone';
+        // $request->merge([$login_type => $request->input($check_input)]);
+        // if($login_type == 'email') $field = 'email';
+        // else $field = 'phone';
 
-        $credentials = $request->only($login_type,'password');
+        //$credentials = $request->only($login_type,'password');
+        $credentials = $request->only('phone','password');
 
         //dd($credentials);
-         if ( !$this->isActiveAccount( $credentials,$account_type,$field ) ) {
+
+        
+         if ( !$this->isActiveAccount( $credentials,$account_type ) ) {
 
             return $this->respondUnauthorized( trans('api_msgs.check_credentials') );
 
         }else{
 
-            return $this->generateToken( $request->only($login_type,'password') );
+            if(!$this->isPhoneVerified($request->input('phone')))
+        {
+            return $this->respondUnauthorized( trans('api_msgs.activate_msg') );
+        }    
+            return $this->generateToken( $request->only('phone','password') );
 
         }
 
@@ -680,9 +743,9 @@ class AuthController extends Controller
 
 
 
-    public function isActiveAccount( array $credentails, $type,$field ) :bool
+    public function isActiveAccount( array $credentails, $type ) :bool
     {
-         if (! Auth::attempt([$field => $credentails[$field] , 'password' => $credentails['password'] ,'is_active'=> '1' ,'account_type' => $type])) {
+         if (! Auth::attempt(['phone' => $credentails['phone'] , 'password' => $credentails['password'] ,'is_active'=> '1' ,'account_type' => $type])) {
             // not active user
             return false;
 
@@ -695,8 +758,8 @@ class AuthController extends Controller
 
     public function isPhoneVerified( $phone )
     {
-    	$isVerified = VerifyPhoneCode::where([ [ 'phone', $phone ],[ 'verified', '1'] ])->first();
-    	 return $isVerified ? true :false;
+        $isVerified = VerifyPhoneCode::where([ [ 'phone', $phone ],[ 'verified', '1'] ])->first();
+    	return $isVerified ? true :false;
     }
 
     public function uploadProfileImage( $image )
