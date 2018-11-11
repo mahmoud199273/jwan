@@ -205,7 +205,7 @@ class OffersController extends Controller
             $transations->offer_id     = $offer->id;
             $transations->save();
 
-            $user->balance = $user->balance - $offer->cost;
+            $user->balance = $userData->balance - $offer->cost;
             $user->save();
 
             $player_ids = $this->getUserPlayerIds($offer->influncer_id);
