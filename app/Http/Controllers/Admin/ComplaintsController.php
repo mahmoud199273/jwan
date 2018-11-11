@@ -23,7 +23,7 @@ class ComplaintsController extends Controller
     public function index()
     {
         
-        $complaints = ContactUs::latest()->paginate(10);
+        $complaints = ContactUs::join('users','users.id','contact_us.user_id')->latest()->paginate(10);
         return view('admin.contact_us.index',compact('complaints'));
     }
 
