@@ -20,6 +20,12 @@ class TransactionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function userTransactions(Request  $request  ,$id)
+    {
+        $list = Transactions::where('user_id',$id)->latest()->paginate(10);
+         return view('admin.transactions.index',compact('list'));
+    }
     public function index()
     {
         //

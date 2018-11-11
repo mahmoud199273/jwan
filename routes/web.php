@@ -115,6 +115,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::resource('transactions','TransactionsController');
 		Route::post('/transaction/approve','TransactionsController@approve');
 		Route::get('transaction/search','TransactionsController@search');
+		Route::get('transactions/{id}/{user}','TransactionsController@userTransactions');
 
 		Route::resource('appbankaccount','AppBankAccountsController');
 		Route::get('appbankaccounts/search','AppBankAccountsController@search');
