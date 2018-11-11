@@ -615,6 +615,14 @@ class AuthController extends Controller
 
     public function login(Request $request){
 
+      if($request->input('email'))
+      {
+        $check_input = 'email';
+      }
+      else
+      {
+        $check_input = 'phone';
+      }
       if(strpos($request->server("REQUEST_URI"), '/user/login'))
       {
           $account_type = '0';
@@ -629,7 +637,7 @@ class AuthController extends Controller
         return $this->setStatusCode(422)->respondWithError('user type not exising');
       }
         $validator = Validator::make($request->all(),[
-         'email'   => 'required',
+         $check_input   => 'required',
          'password'=> 'required'
         ]);
         
@@ -638,16 +646,25 @@ class AuthController extends Controller
         }
 
         
-    
+       
+        $login_type = filter_var($request->input($check_input), FILTER_VALIDATE_EMAIL ) 
+        ? 'email' 
+        : 'phone';
+ 
+        $request->merge([$login_type => $request->input($check_input)]);
+        if($login_type == 'email') $field = 'email';
+        else $field = 'phone';
 
-        $credentials = $request->only('email','password');
-         if ( !$this->isActiveAccount( $credentials,$account_type ) ) {
+        $credentials = $request->only($login_type,'password');
+
+        //dd($credentials);
+         if ( !$this->isActiveAccount( $credentials,$account_type,$field ) ) {
 
             return $this->respondUnauthorized( trans('api_msgs.check_credentials') );
 
         }else{
 
-            return $this->generateToken( $request->only('email' ,'password') );
+            return $this->generateToken( $request->only($login_type,'password') );
 
         }
 
@@ -663,9 +680,9 @@ class AuthController extends Controller
 
 
 
-    public function isActiveAccount( array $credentails, $type ) :bool
+    public function isActiveAccount( array $credentails, $type,$field ) :bool
     {
-         if (! Auth::attempt(['email' => $credentails['email'] , 'password' => $credentails['password'] ,'is_active'=> '1' ,'account_type' => $type])) {
+         if (! Auth::attempt([$field => $credentails[$field] , 'password' => $credentails['password'] ,'is_active'=> '1' ,'account_type' => $type])) {
             // not active user
             return false;
 
