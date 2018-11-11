@@ -71,7 +71,7 @@
                                 @foreach ($complaints as $complaint)
                                 <tr>
                                     <th scope="row">{{ $complaint->subject }}</th>
-                                    <th scope="row">{{ $complaint->user->name }}</th>
+                                    <th scope="row">{{ $complaint->name }}</th>
                                     <th scope="row">{{ $complaint->created_at }}</th>
                                     <td>
                                         <div class="btn-group mr-2" role="group" aria-label="First group">

@@ -18,6 +18,7 @@ class StoreComplaintRequest extends BaseRequest
     {
 
         return [
+            'user_id'                        => 'required',
             'subject'                        => 'required|string',
             'message'                           => 'required|string',
         ];
