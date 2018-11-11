@@ -171,7 +171,7 @@ class TransactionsController extends Controller
     {
         if ( $request->ajax() ) {
             $transaction = Transactions::find( $request->id );
-            $transaction->status = 1;
+            $transaction->status = $request->status;
             $transaction->save();
             return response(['msg' => 'approved', 'status' => 'success']);
         }
