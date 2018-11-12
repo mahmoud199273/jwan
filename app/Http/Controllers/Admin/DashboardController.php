@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Campaign;
 use App\Complaint;
+use App\ContactUs;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -23,7 +24,7 @@ class DashboardController extends Controller
     	$users  		= User::where('account_type','0')->count();
     	$influencers 	= User::where('account_type','1')->count();
         $campaigns      = Campaign::count();
-    	$complaints 	= Complaint::count();
+    	$complaints 	= ContactUS::count();
         return view('admin.dashboard.index', compact('users', 'influencers', 'campaigns', 'complaints'));
     }
 }
