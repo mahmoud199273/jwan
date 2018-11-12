@@ -25236,6 +25236,14 @@ body.m-portlet--fullscreen {
   .toast .toast-close-button:before {
     font-size: 1.1rem; }
 
+  .notification{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: red;
+    color: gold;
+  }
+
 .toast-success {
   background-color: #34bfa3;
   color: #ffffff;
@@ -26175,6 +26183,11 @@ select.m-bootstrap-select {
   -moz-box-shadow: none ;
   box-shadow: none ;
   background-color: transparent; }
+
+  .dessign{
+
+    color: red;
+  }
 
 .bootstrap-select.btn-group .dropdown-menu.inner > li > a .text {
   color: #3f4047; }

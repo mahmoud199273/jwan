@@ -25,6 +25,7 @@ class DashboardController extends Controller
     	$influencers 	= User::where('account_type','1')->count();
         $campaigns      = Campaign::count();
     	$complaints 	= ContactUS::count();
-        return view('admin.dashboard.index', compact('users', 'influencers', 'campaigns', 'complaints'));
+        $notification   = User::where('is_active','0')->count();
+        return view('admin.dashboard.index', compact('users', 'influencers', 'campaigns', 'complaints','notification'));
     }
 }

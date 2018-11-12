@@ -23,8 +23,9 @@ class UsersController extends Controller
      */
     public function index()
     {
+        $notification   = User::where('is_active','0')->count();
         $users = User::where('account_type','0')->latest()->paginate(10);
-        return view('admin.users.index',compact('users'));
+        return view('admin.users.index',compact('users','notification'));
     }
 
        public function search( Request $request )

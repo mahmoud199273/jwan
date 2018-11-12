@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,21 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
+        $inactive_users=DB::table('users')->where([['is_active','0'],['account_type','0'],['deleted_at',NULL]])->count();
+
+        $inactive_influncers=DB::table('users')->where([['is_active','0'],['account_type','1'],['deleted_at',NULL]])->count();
+
+        $inactive_campaigns=DB::table('campaigns')->where([['status','0'],['deleted_at',NULL]])->count();
+
+         $inactive_transactions=DB::table('transactions')->where([['status','0'],['deleted_at',NULL]])->count();
+        
+        View::share('inactive_users', $inactive_users);
+
+        View::share('inactive_influncers', $inactive_influncers);
+
+        View::share('inactive_campaigns', $inactive_campaigns);
+
+        View::share('inactive_transactions', $inactive_transactions);
     }
 
     /**

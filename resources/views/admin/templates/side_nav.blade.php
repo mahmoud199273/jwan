@@ -19,6 +19,15 @@
 			<a  href="{{url('admin/users')}}" class="m-menu__link ">
 				<span class="m-menu__item-here"></span>
 				<i class="m-menu__link-icon flaticon-avatar"></i>
+				@if($inactive_users > 0)
+				<big class="badge badge-danger">
+				
+					{{$inactive_users}}
+
+
+
+			</big>
+				@endif
 				<span class="m-menu__link-text">{{ __('admin.users') }}</span>
 			</a>
 		</li>
@@ -27,6 +36,15 @@
 			<a  href="{{url('admin/influencers')}}" class="m-menu__link ">
 				<span class="m-menu__item-here"></span>
 				<i class="m-menu__link-icon flaticon-avatar"></i>
+				@if($inactive_influncers > 0)
+				<big class="badge badge-danger">
+				
+					{{$inactive_influncers}}
+					
+
+
+			</big>
+				@endif
 				<span class="m-menu__link-text">{{ __('admin.influencers') }}</span>
 			</a>
 		</li>
@@ -76,6 +94,15 @@
 				<a  href="{{url('admin/campaigns')}}" class="m-menu__link ">
 					<span class="m-menu__item-here"></span>
 					<i class="m-menu__link-icon fa fa-map"></i>
+					@if($inactive_campaigns > 0)
+				<big class="badge badge-danger">
+				
+					{{$inactive_campaigns}}
+
+
+
+			</big>
+				@endif
 					<span class="m-menu__link-text">{{ __('admin.campaigns') }}</span>
 				</a>
 		</li>
@@ -116,6 +143,15 @@
 				<a  href="{{url('admin/transactions')}}" class="m-menu__link ">
 					<span class="m-menu__item-here"></span>
 					<i class="m-menu__link-icon fa fa-map"></i>
+					@if($inactive_transactions > 0)
+						<big class="badge badge-danger">
+				
+							{{$inactive_transactions}}
+
+
+
+						</big>
+					@endif
 					<span class="m-menu__link-text">{{ __('admin.transactions') }}</span>
 				</a>
 		</li>
