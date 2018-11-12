@@ -507,9 +507,10 @@ class UserController extends Controller
 				// 						->orderBy('updated_at','DESC')
                 // 						->paginate($this->getPagination());
                 
-        $pagination =  Notification::select('notifications.id' , 'notifications.user_id' , 'users.name' , 'users.image' , 'notifications.message' , 'notifications.message_ar','notifications.type',
+        $pagination =  Notification::select('notifications.id' , 'notifications.user_id' , 'to.name as to_name' , 'to.image as to_image' , 'notifications.from_user_id','from.name as from_name' , 'from.image as from_image' , 'notifications.message' , 'notifications.message_ar','notifications.type',
 'notifications.type' , 'notifications.type_title' , 'notifications.campaign_id' , 'notifications.offer_id' , 'notifications.is_seen' , 'notifications.created_at' , 'notifications.updated_at')
-                                        ->join('users', 'users.id', '=', 'notifications.user_id')
+                                        ->join('users as to', 'to.id', '=', 'notifications.user_id')
+                                        ->leftjoin('users as from', 'from.id', '=', 'notifications.from_user_id')
                                         ->where('notifications.user_id' , $user->id)
 										->orderBy('notifications.updated_at','DESC')
 										->paginate($this->getPagination());

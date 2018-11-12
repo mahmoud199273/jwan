@@ -413,7 +413,7 @@ $('._statusApprove').on('click', function(){
 	
 							if ( response.success === true ) {
 									msgBox.innerHTML = '<strong>' + filename + '</strong>' + ' تم رفع الملف بنجاح .';
-									$("#file").val(response.newFileName);
+									$("#file").val('/public/assets/uploads/'+response.newFileName);
 									var image_url = "{{url('/assets/uploads')}}/"+response.newFileName;
 									console.log(image_url);
 									$("#image_file").css("display","block");

@@ -123,6 +123,7 @@ public function store(Request $request)
 
         $player_ids = $this->getUserPlayerIds($to_user_id);
         Notification::create(['user_id' => $to_user_id,
+                                  'from_user_id' => $user->id,  
                                   'message' => 'A new message was added',
                                   'message_ar' => 'لديك رساله جديده',
                                   'campaign_id' =>  $offer->campaign_id,

@@ -166,7 +166,7 @@
                                     </div>
                                   </div>
                                 </div>
-                                <img src="{{url('/assets/uploads')}}/{{ $user->image }}" id="image_file" width="100" height="100" >
+                                <img src="{{url('')}}{{ str_replace('public/', '', $user->image) }}" id="image_file" width="100" height="100" >
                             </div>
                             {{--   upload image div   --}}
                         {!! $errors->first('image', '<span class="form-control-feedback">:message</span>') !!}

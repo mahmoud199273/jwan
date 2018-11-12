@@ -91,7 +91,7 @@
                                         <td>{{ $bank->name_ar }}</td>
                                         
                                         <td class="text-center">
-                                            <img src="{{url('/assets/uploads')}}/{{ $bank->logo }}" height="60" width="60" class="img img-cirlce">
+                                            <img src="{{url('')}}{{ str_replace('public/', '', $bank->logo) }}" height="60" width="60" class="img img-cirlce">
                                         </td>
 
                                         <td>

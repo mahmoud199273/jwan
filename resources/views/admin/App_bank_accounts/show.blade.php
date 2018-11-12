@@ -99,7 +99,7 @@
             <div class="form-group m-form__group row {{ $errors->has('logo') ? 'has-danger' : ''}}">
                     <label for="logo" class="col-2 col-form-label">{{ __('admin.logo') }}</label>
                     <div class="col-9">
-                        <img src="{{url('/assets/uploads')}}/{{ $row->logo }}" width="400" height="400" class="form-control">
+                        <img src="{{url('')}}{{ str_replace('public/', '', $row->logo) }}" width="400" height="400" class="form-control">
                     </div>
             </div>
 

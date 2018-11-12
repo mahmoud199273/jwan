@@ -58,8 +58,7 @@ class AuthController extends Controller
 
 
 
-    /*
-    *public function formatPhone( $phone )
+    public function formatPhone( $phone )
     {
 	$is_valid_phone = preg_match('/^(9665|\9665|05)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/', $phone);
         if ($is_valid_phone) {
@@ -71,7 +70,7 @@ class AuthController extends Controller
         }
 
         return false;
-    }*/
+    }
 
 
     public function verifyMobileCode( Request $request )
@@ -143,7 +142,8 @@ class AuthController extends Controller
 		        'expired_at'    => $expired_at
 	                                            ]);
         //send message to mobile
-        @sendSMS($phone , __('api_msgs.sms_code_text').$verify_code );
+        //@sendSMS($phone , __('api_msgs.sms_code_text').$verify_code );
+        @sendSMS($this->formatPhone($phone) , __('api_msgs.sms_code_text').$verify_code );
     }
 
 
@@ -693,6 +693,7 @@ class AuthController extends Controller
         return $this->setStatusCode(422)->respondWithError('user type not exising');
       }
         $validator = Validator::make($request->all(),[
+         'country_id'   => 'required',
          'phone'   => 'required',
          'password'=> 'required'
         ]);
@@ -712,20 +713,22 @@ class AuthController extends Controller
         // else $field = 'phone';
 
         //$credentials = $request->only($login_type,'password');
-        $credentials = $request->only('phone','password');
+        $credentials = $request->only('country_id','phone','password');
 
         //dd($credentials);
 
         
          if ( !$this->isActiveAccount( $credentials,$account_type ) ) {
 
-            return $this->respondUnauthorized( trans('api_msgs.check_credentials') );
+            //return $this->respondUnauthorized( trans('api_msgs.check_credentials') );
+            return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials'));
 
         }else{
 
             if(!$this->isPhoneVerified($request->input('phone')))
         {
-            return $this->respondUnauthorized( trans('api_msgs.activate_msg') );
+            //return $this->respondUnauthorized( trans('api_msgs.activate_msg') );
+            return $this->setStatusCode(403)->respondWithError(trans('api_msgs.activate_msg'));
         }    
             return $this->generateToken( $request->only('phone','password') );
 
@@ -745,7 +748,7 @@ class AuthController extends Controller
 
     public function isActiveAccount( array $credentails, $type ) :bool
     {
-         if (! Auth::attempt(['phone' => $credentails['phone'] , 'password' => $credentails['password'] ,'is_active'=> '1' ,'account_type' => $type])) {
+         if (! Auth::attempt(['countries_id' => $credentails['country_id'] , 'phone' => $credentails['phone'] , 'password' => $credentails['password'] ,'is_active'=> '1' ,'account_type' => $type])) {
             // not active user
             return false;
 

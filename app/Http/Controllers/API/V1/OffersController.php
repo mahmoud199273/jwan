@@ -210,6 +210,7 @@ class OffersController extends Controller
 
             $player_ids = $this->getUserPlayerIds($offer->influncer_id);
             Notification::create(['user_id' => $offer->influncer_id,
+                                      'from_user_id' => $user->id,  
                                       'message' => 'Your offer approved on '.$campaign->title,
                                       'message_ar' => 'تم الموافقة على عرضك على حملة '.$campaign->title,
                                       'campaign_id' =>  $campaign->id,
@@ -246,6 +247,7 @@ class OffersController extends Controller
 
                     $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
                     Notification::create(['user_id' => $campaign->influncer_id,
+                                              'from_user_id' => $user->id, 
                                               'message' => 'Your offer rejected on '.$campaign->title,
                                               'message_ar' => 'تم رفض عرضك على حملة '.$campaign->title,
                                               'campaign_id' =>  $campaign->id,
@@ -283,6 +285,7 @@ class OffersController extends Controller
 
             $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
             Notification::create(['user_id' => $campaign->influncer_id,
+                                      'from_user_id' => $user->id,    
                                       'message' => 'Your offer paid on '.$campaign->title,
                                       'message_ar' => 'تم سداد قيمة عرضك على حملة '.$campaign->title,
                                       'campaign_id' =>  $campaign->id,
@@ -363,6 +366,7 @@ class OffersController extends Controller
 
             $player_ids = $this->getUserPlayerIds($offer->influncer_id);
             Notification::create(['user_id' => $offer->influncer_id,
+                                      'from_user_id' => $user->id,   
                                       'message' => 'Your proof have been approved and finished on '.$campaign->title,
                                       'message_ar' => 'تم قبول توثيقك واغلاقه لحملة '.$campaign->title,
                                       'campaign_id' =>  $campaign->id,
@@ -446,6 +450,7 @@ class OffersController extends Controller
 
             $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
             Notification::create(['user_id' => $campaign->influncer_id,
+                                      'from_user_id' => $user->id, 
                                       'message' => 'user has canceled '.$campaign->title,
                                       'message_ar' => 'تم الغاء حملة '.$campaign->title,
                                       'campaign_id' =>  $campaign->id,
@@ -485,6 +490,7 @@ class OffersController extends Controller
 
                     $player_ids = $this->getUserPlayerIds($campaign->user_id);
                     Notification::create(['user_id' => $campaign->user_id,
+                                              'from_user_id' => $user->id,   
                                               'message' => 'influner is working on '.$campaign->title,
                                               'message_ar' => 'جاري العمل على الحملة '.$campaign->title,
                                               'campaign_id' =>  $campaign->id,
@@ -537,6 +543,7 @@ class OffersController extends Controller
 
                     $player_ids = $this->getUserPlayerIds($campaign->user_id);
                     Notification::create(['user_id' => $campaign->user_id,
+                                              'from_user_id' => $user->id, 
                                               'message' => 'influner has finished and proofed '.$campaign->title,
                                               'message_ar' => 'تم الانتهاء وتثيق حملة '.$campaign->title,
                                               'campaign_id' =>  $campaign->id,
@@ -596,6 +603,7 @@ class OffersController extends Controller
 
                     $player_ids = $this->getUserPlayerIds($campaign->user_id);
                     Notification::create(['user_id' => $campaign->user_id,
+                                              'from_user_id' => $user->id, 
                                               'message' => 'influner has canceled offer on '.$campaign->title,
                                               'message_ar' => 'قام المؤثر بالغاء عرضه على '.$campaign->title,
                                               'campaign_id' =>  $campaign->id,
@@ -725,6 +733,7 @@ class OffersController extends Controller
 
         $player_ids = $this->getUserPlayerIds($campaign->user_id);
         Notification::create(['user_id' => $campaign->user_id,
+                              'from_user_id' => $influncer->id, 
 																	'message' => 'A new offer was added on '.$campaign->title,
 																	'message_ar' => 'يوجد عرض جديد على حملة '.$campaign->title,
 																	'campaign_id' =>  $campaign->id,
@@ -800,6 +809,7 @@ class OffersController extends Controller
 
        $player_ids = $this->getUserPlayerIds($campaign->user_id);
        Notification::create(['user_id' => $campaign->user_id,
+                                 'from_user_id' => $influncer->id,
                                  'message' => 'A new offer update on '.$campaign->title,
                                  'message_ar' => 'يوجد تعديل جديد على عرض حملة '.$campaign->title,
                                  'campaign_id' =>  $campaign->id,
