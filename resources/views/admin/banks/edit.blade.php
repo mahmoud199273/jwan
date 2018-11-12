@@ -96,7 +96,7 @@
                                         </div>
                                       </div>
                                     </div>
-                                    <img src="{{url('/assets/uploads')}}/{{ $bank->logo }}" id="image_file" width="100" height="100" >
+                                    <img src="{{url('')}}{{ str_replace('public/', '', $bank->logo) }}" id="image_file" width="100" height="100" >
                                 </div>
                                 {{--   upload image div   --}}
                         {!! $errors->first('logo', '<span class="form-control-feedback">:message</span>') !!}

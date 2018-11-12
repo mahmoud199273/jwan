@@ -185,6 +185,8 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::get('favorite/campaign','API\V1\CampignsController@favorite');
 
+ 
+
  /* influncer offers route */
 
   Route::post('/influncer/create/offer','API\V1\OffersController@store');

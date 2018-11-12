@@ -614,12 +614,14 @@ class CampignsController extends Controller
 
            $influncercampaign->status         = $request->status;
 
-            $influncercampaign->influncer_id        = $influncer->id;
+           $influncercampaign->influncer_id        = $influncer->id;
 
            $influncercampaign->influncer_id        = $influncer->id;
 
 
            $influncercampaign->save();
+
+           //influncercampaign::find($id)->delete();
 
            return $this->respondWithSuccess(trans('api_msgs.set status successfully'));
 
