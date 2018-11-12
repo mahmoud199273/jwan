@@ -598,7 +598,7 @@ class CampignsController extends Controller
 
            ]);
 
-           if($this->isCampaignExist($influncer->id,$request->campaign_id)){
+           if($this->isCampaignExist($influncer->id,$request->campaign_id) && $request->status != 2){
            return $this->setStatusCode(422)->respondWithError('you have put a status for this campaign before you can change campaign status');
        }
 
@@ -607,19 +607,26 @@ class CampignsController extends Controller
                return $this->setStatusCode(422)->respondWithError('parameters faild validation');
            }
 
+           if($request->status == 2)
+           {
+                influncercampaign::where("campaign_id",$request->campaign_id)->delete();
+           }
+           else
+           {
+                $influncercampaign = new InfluncerCampaign;
 
-           $influncercampaign = new InfluncerCampaign;
+                $influncercampaign->campaign_id    = $request->campaign_id;
 
-           $influncercampaign->campaign_id    = $request->campaign_id;
+                $influncercampaign->status         = $request->status;
 
-           $influncercampaign->status         = $request->status;
+                $influncercampaign->influncer_id        = $influncer->id;
 
-           $influncercampaign->influncer_id        = $influncer->id;
-
-           $influncercampaign->influncer_id        = $influncer->id;
+                $influncercampaign->influncer_id        = $influncer->id;
 
 
-           $influncercampaign->save();
+                $influncercampaign->save();
+           }
+           
 
            //influncercampaign::find($id)->delete();
 
