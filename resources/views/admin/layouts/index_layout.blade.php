@@ -368,6 +368,44 @@ $('._statusApprove').on('click', function(){
     });
 
 
+$('._campaignApprove').on('click', function(){
+        id = $(this).attr('data-id');
+        status = $(this).attr('data-status');
+        swal({
+		  title: 'هل تريد الاستمرار؟',
+		  confirmButtonText:  'نعم',
+		  cancelButtonText:  'لا',
+		  showCancelButton: true,
+		  showCloseButton: true,
+		  target: document.getElementById('rtl-container')
+		}).then((result) => {
+		  if (result.value) {
+		           $.ajax({
+                        url: '{{url("admin")}}/campaigns/approve',
+                        type: 'POST',
+                        data: {'_method':'post','_token': $('meta[name="csrf-token"]').attr('content'),'id':id,'status':status },
+                        success: function( msg ) {
+                            if ( msg.status === 'success' ) {
+                              window.location.reload();
+                             }
+                    },
+                    error : function(){
+                        window.location.reload();
+                    },
+                  });
+		  }else {
+                    swal({
+								  position: 'center',
+								  type: 'error',
+								  title: "تم الالغاء",
+								  showConfirmButton: false,
+								  timer: 2000
+								});
+                }
+		});
+    });
+
+
    $('#confirm_search').on('click', function(e){
    		e.preventDefault();
    		$('#search_form').submit();

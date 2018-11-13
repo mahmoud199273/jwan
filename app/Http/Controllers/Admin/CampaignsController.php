@@ -125,7 +125,19 @@ class campaignsController extends Controller
         }
     }
 
-     public function approve( Request $request)
+    public function approve( Request $request)
+    {
+        if ( $request->ajax() ) {
+            $campaign = Campaign::find( $request->id );
+            $campaign->status = '1';
+            $campaign->save();
+            return response(['msg' => 'approved', 'status' => 'success']);
+        }
+
+        
+    }
+
+     public function approved( Request $request)
     {
         if ( $request->ajax() ) {
             $campaign = Campaign::find( $request->id );

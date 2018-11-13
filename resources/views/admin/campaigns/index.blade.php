@@ -73,6 +73,7 @@
                                     <th><b>{{ __('admin.name') }}</b></th>
                                     <th><b>{{ __('admin.campaign_date') }}</b></th>
                                     <th><b>{{ __('admin.status') }}</b></th>
+                                    <th><b>{{ __('admin.approved')}}</b></th>
                                     
                                     <th><b>{{ __('admin.control') }}</b></th>
                                 </tr>
@@ -119,6 +120,9 @@
                                             {{ __('admin.done') }}
                                         @endif
                                     </th>
+
+                                     <td class="text-center">{!! ($campaign->status)? "<i class='fa fa-check m--font-success'></i>" : 
+                                    "<i class='fa fa-times m--font-danger'></i>" !!}</td>
                                     
                                     <td>
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
@@ -138,6 +142,15 @@
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             {{ __('admin.offers') }}
                                         </a>
+                                         @if($campaign->status==0)
+                                            <a type="button" href="javascript:;" data-status="1" data-id = "{{ $campaign->id }}"
+                                                class="m-btn m-btn m-btn--square btn btn-secondary _campaignApprove">
+                                                <i class="fa fa-times m--font-danger"></i>
+                                            </a>
+                                             
+
+                                           
+                                            @endif
 
                                         <a type="button"  data-id = "{{ $campaign->id }}" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary _remove">

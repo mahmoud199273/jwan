@@ -97,6 +97,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::get('complaint/search','ComplaintsController@search');
 
 		Route::resource('campaigns','CampaignsController');
+		Route::post('/campaigns/approved'       , 'CampaignsController@approved');
 		Route::post('/campaigns/approve'       , 'CampaignsController@approve');
 		Route::post('/campaigns/reject'        , 'CampaignsController@reject');
 		Route::get('/campaign/search','CampaignsController@search');
