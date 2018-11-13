@@ -13,6 +13,8 @@ class BankAccountsTransformer extends Transformer
             'id'            => 	$bank->id,
             //'user_id'          => 	$bank->user_id,
             'bank_id'       => 	$bank->bank_id,
+            'bank_name'       => 	$bank->name,
+            'bank_name_ar'       => 	$bank->name_ar,
             'account_name'       => 	$bank->account_name,
             'IBAN'       => 	$bank->IBAN,
             'note'       => 	$bank->note,
