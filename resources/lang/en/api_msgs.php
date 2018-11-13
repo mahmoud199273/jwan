@@ -8,6 +8,7 @@ return[
    'activate_msg' => ' Mobile number not activated Please activated your mobile number to login ',
    'sms_code_text'				=>  'The activation code has been sent for Signify Mobile App ',
    'phone_exists'          		=>  'Sorry, This phone already exists',
+   'data_exists'=>'Data already exist',
    'loggedout'  			        =>  'Logged out successfully',
    'reset_pass_code'  			 =>  'Use this code to reset your password ',
    'reset_sccuess'				 =>  'Password has been reset successfully',

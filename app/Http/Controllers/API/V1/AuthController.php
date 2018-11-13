@@ -595,6 +595,15 @@ class AuthController extends Controller
             'email'         => 'required|unique:users'
         ]);
 
+        if ($this->isMailExists( $request->email )) {
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
+        }
+        
+        if ($this->isPhoneExists( $request->phone )) {
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+        }
+ 
+       
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.data_exists'));
         }
