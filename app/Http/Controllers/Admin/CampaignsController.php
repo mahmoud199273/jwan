@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Campaigns\EditCampaignsRequest;
 use App\Campaign;
 use App\User;
+use App\UserPlayerId;
 use Illuminate\Http\Request;
 
 
@@ -131,34 +132,39 @@ class campaignsController extends Controller
             $campaign = Campaign::find( $request->id );
             $campaign->status = '1';
             $campaign->save();
+            $player_ids = $this->getUserPlayerIds();
+            $return = sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,
+                                  ['campaign_id' =>  (int)$request->id,'type'=>  20,'type_title'=> 'new campaign']);
+                                  //dd($return);
             return response(['msg' => 'approved', 'status' => 'success']);
         }
 
         
     }
 
-    // public function getUserPlayerIds( $user_id )
-    // {
-    //     $player_ids = UserPlayerId::where('user_id',$user_id)->pluck('player_id')->toArray();
-    //     return $player_ids ? $player_ids : null;
-    // }
-
-
-     public function approved( Request $request)
+    public function getUserPlayerIds()
     {
-        if ( $request->ajax() ) {
-            $campaign = Campaign::find( $request->id );
-            $campaign->status = '1';
-            $campaign->save();
-            // $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
-            // sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,
-            //                       ['campaign_id' =>  (int)$request->id,'type'=>  20,'type_title'=> 'new campaign']);
+        $player_ids = UserPlayerId::select("user_player_ids.player_id")->join('users','users.id','user_player_ids.user_id')->where('users.account_type','1')->pluck('player_id')->toArray();
+        return $player_ids ? $player_ids : null;
+    }
+
+
+    //  public function approved( Request $request)
+    // {
+    //     if ( $request->ajax() ) {
+    //         $campaign = Campaign::find( $request->id );
+    //         $campaign->status = '1';
+    //         //$campaign->save();
+    //         $player_ids = $this->getUserPlayerIds();
+    //         dd($player_ids);
+    //         sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,
+    //                               ['campaign_id' =>  (int)$request->id,'type'=>  20,'type_title'=> 'new campaign']);
             
-            return response(['msg' => 'activated', 'status' => 'success']);
-        }
+    //         return response(['msg' => 'activated', 'status' => 'success']);
+    //     }
 
         
-    }
+    // }
 
     public function reject( Request $request )
     {
