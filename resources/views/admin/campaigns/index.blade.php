@@ -145,7 +145,7 @@
                                          @if($campaign->status==0)
                                             <a type="button" href="javascript:;" data-status="1" data-id = "{{ $campaign->id }}"
                                                 class="m-btn m-btn m-btn--square btn btn-secondary _campaignApprove">
-                                                <i class="fa fa-times m--font-danger"></i>
+                                                <i class="fa fa-check m--font-success"></i>
                                             </a>
                                              
 

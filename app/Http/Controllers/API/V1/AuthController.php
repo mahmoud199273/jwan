@@ -333,7 +333,7 @@ class AuthController extends Controller
 
 
 
-            $user->is_active        =  '1';
+            //$user->is_active        =  '1';
             $user->account_type     =  '0';
             $user->save();
 
@@ -501,7 +501,7 @@ class AuthController extends Controller
 
 
 
-            $user->is_active    =  '1';
+            //$user->is_active    =  '1';
 
             $user->save();
 

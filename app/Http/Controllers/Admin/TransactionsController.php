@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BankAccounts\EditTransactionsRequest;
 use App\Http\Requests\Admin\BankAccounts\StoreTransactionsRequest;
 use App\Transactions;
+use App\User;
 use Illuminate\Http\Request;
 
 class TransactionsController extends Controller
@@ -179,6 +180,23 @@ class TransactionsController extends Controller
             $transaction = Transactions::find( $request->id );
             $transaction->status = $request->status;
             $transaction->save();
+
+            $TransactionData = Transactions::select('users.*','transactions.*')->join('users','users.id','transactions.user_id')->where('transactions.id',$request->id)->first();
+            if($TransactionData->account_type == 0 && $request->status == 1 && $TransactionData->campaign_id == 0 && $TransactionData->offer_id == 0)
+            {
+                $user = User::find($TransactionData->user_id);
+                $user->balance = $user->balance + $TransactionData->transaction_amount;
+                //dd($user->balance);
+                $user->save();
+            }
+            elseif($TransactionData->account_type == 1 && $request->status == 1 && $TransactionData->campaign_id == 0 && $TransactionData->offer_id == 0)
+            {
+                $user = User::find($TransactionData->user_id);
+                $user->balance = $user->balance - $TransactionData->transaction_amount;
+                //dd($user->balance);
+                $user->save();
+            }
+            
             return response(['msg' => 'approved', 'status' => 'success']);
         }
 

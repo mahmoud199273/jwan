@@ -93,11 +93,11 @@
 
                                     <th><b>{{ __('admin.transaction_account_name') }}</b></th>
 
-                                    <th><b>{{ __('admin.transaction_account_number') }}</b></th>
+                                    {{--  <th><b>{{ __('admin.transaction_account_number') }}</b></th>
 
                                     <th><b>{{ __('admin.transaction_account_IBAN') }}</b></th>
 
-                                    <th><b>{{ __('admin.transaction_number') }}</b></th>
+                                    <th><b>{{ __('admin.transaction_number') }}</b></th>  --}}
 
                                     <th><b>{{ __('admin.transaction_date') }}</b></th>
 
@@ -152,10 +152,10 @@
 
                                     <th scope="row">{{ $row->transaction_bank_name }}</th>
                                     <th scope="row">{{ $row->transaction_account_name }}</th>
-                                    <th scope="row">{{ $row->transaction_account_number }}</th>
+                                    {{--  <th scope="row">{{ $row->transaction_account_number }}</th>
 
                                     <th scope="row">{{ $row->transaction_account_IBAN }}</th>
-                                    <th scope="row">{{ $row->transaction_number }}</th>
+                                    <th scope="row">{{ $row->transaction_number }}</th>  --}}
 
                                     <th scope="row">{{ $row->transaction_date }}</th>
 
@@ -198,7 +198,7 @@
                                         @if($row->status==0)
                                             <a type="button" href="javascript:;" data-status="1" data-id = "{{ $row->id }}"
                                                 class="m-btn m-btn m-btn--square btn btn-secondary _statusApprove">
-                                                <i class="fa fa-times m--font-danger"></i>
+                                                <i class="fa fa-check m--font-success"></i>
                                             </a>
                                              
 

@@ -137,12 +137,23 @@ class campaignsController extends Controller
         
     }
 
+    // public function getUserPlayerIds( $user_id )
+    // {
+    //     $player_ids = UserPlayerId::where('user_id',$user_id)->pluck('player_id')->toArray();
+    //     return $player_ids ? $player_ids : null;
+    // }
+
+
      public function approved( Request $request)
     {
         if ( $request->ajax() ) {
             $campaign = Campaign::find( $request->id );
             $campaign->status = '1';
             $campaign->save();
+            // $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
+            // sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,
+            //                       ['campaign_id' =>  (int)$request->id,'type'=>  20,'type_title'=> 'new campaign']);
+            
             return response(['msg' => 'activated', 'status' => 'success']);
         }
 
