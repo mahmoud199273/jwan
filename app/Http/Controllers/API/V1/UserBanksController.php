@@ -57,7 +57,7 @@ class UserBanksController extends Controller
         //     return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the right to be here'));
         // }
 
-            $data = BankAccounts::where([['user_id' ,$user->id]])->get();
+            $data = BankAccounts::select('bank_accounts.*','banks.name','banks.name_ar')->join('banks','banks.id','bank_accounts.bank_id')->where([['user_id' ,$user->id]])->get();
             $bankaccounts = $this->bankaccounttransformer->transformCollection($data);
 
         return $this->sendResponse($bankaccounts, trans('lang.bank account read succesfully'),200);
