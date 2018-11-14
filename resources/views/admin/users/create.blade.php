@@ -91,8 +91,8 @@
                  <div class="col-9">
                 <select name="type"  class="form-control m-input">
                    <option value="0"> {{ __('admin.Government') }} </option>
-                   <option value="1"> {{ __('admin.Private sector') }} </option>
-                   <option value="2"> {{ __('admin.Personal') }} </option>
+                   <option value="1"> {{ __('admin.Personal') }} </option>
+                   <option value="2"> {{ __('admin.Private sector') }} </option>
                 </select>
                     {!! $errors->first('type', '<span class="form-control-feedback">:message</span>') !!}
                 </div>

@@ -135,7 +135,6 @@ class campaignsController extends Controller
             $player_ids = $this->getUserPlayerIds();
             $return = sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,
                                   ['campaign_id' =>  (int)$request->id,'type'=>  20,'type_title'=> 'new campaign']);
-                                  //dd($return);
             return response(['msg' => 'approved', 'status' => 'success']);
         }
 
