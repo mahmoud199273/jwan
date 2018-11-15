@@ -90,9 +90,9 @@
                        <option value="0" {{ $user->type == 0? "selected" : "" }} > 
                            {{ __('admin.Government') }} </option>
                        <option value="1" {{ $user->type == 1? "selected" : "" }}>
-                            {{ __('admin.Private sector') }} </option>
-                       <option value="2" {{ $user->type == 2? "selected" : "" }} >
                             {{ __('admin.Personal') }} </option>
+                       <option value="2" {{ $user->type == 2? "selected" : "" }} >
+                            {{ __('admin.Private sector') }} </option>
                     </select>
                         {!! $errors->first('type', '<span class="form-control-feedback">:message</span>') !!}
                     </div>

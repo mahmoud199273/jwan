@@ -105,6 +105,12 @@ class AuthController extends Controller
             //return $this->respondWithSuccess('sucess');
 
             $user = User::where('phone', $code->phone)->first();
+            
+            if($user->account_type == 1)
+            {
+                return $this->respondWithSuccess(trans('api_msgs.success'));
+            }
+
             $token = JWTAuth::fromUser($user);
 
             return Response::json( compact('token'));
@@ -333,7 +339,7 @@ class AuthController extends Controller
 
 
 
-            //$user->is_active        =  '1';
+            $user->is_active        =  '1';
             $user->account_type     =  '0';
             $user->save();
 
