@@ -135,7 +135,7 @@ public function store(Request $request)
         sendNotification($who,
                               'A new message was added',
                               'لديك رساله جديده',
-                              $player_ids,
+                              $player_ids,"chat",
                               ['campaign_id' =>  (int)$offer->campaign_id,
                               'offer_id'    => (int)$offer->id,
                               'type'          =>  12,

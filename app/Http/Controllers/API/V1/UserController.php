@@ -6,6 +6,7 @@ use App\Http\Controllers\API\V1\BaseController as Controller;
 use App\Transformers\ProfileTransformer;
 use App\Transformers\InfluncerTransformer;
 use App\Transformers\CampaignsTransformer;
+use App\Transformers\NotificationsTransformer;
 use App\User;
 use App\Campaign;
 use App\Notification;
@@ -24,13 +25,15 @@ class UserController extends Controller
     protected $profileTransformer;
     protected $influncerTransformer;
     protected $campaignsTransformer;
+    protected $notificationsTransformer;
 
-    function __construct(Request $request, ProfileTransformer $profileTransformer,InfluncerTransformer $influncerTransformer,CampaignsTransformer $campaignsTransformer  ){
+    function __construct(Request $request, ProfileTransformer $profileTransformer,InfluncerTransformer $influncerTransformer,CampaignsTransformer $campaignsTransformer,NotificationsTransformer $notificationsTransformer  ){
         App::setlocale($request->lang);
         $this->middleware('jwt.auth');
         $this->profileTransformer = $profileTransformer;
         $this->influncerTransformer = $influncerTransformer;
         $this->campaignsTransformer   = $campaignsTransformer;
+        $this->notificationsTransformer   = $notificationsTransformer;
     }
 
 
@@ -411,7 +414,7 @@ class UserController extends Controller
 
         }else{
 
-            return $this->respondWithError(trans('api_msgs.wrong_password'));
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.wrong_password'));
 
         }
 
@@ -507,8 +510,9 @@ class UserController extends Controller
 				// 						->orderBy('updated_at','DESC')
                 // 						->paginate($this->getPagination());
                 
-        $pagination =  Notification::select('notifications.id' , 'notifications.user_id' , 'to.name as to_name' , 'to.image as to_image' , 'notifications.from_user_id','from.name as from_name' , 'from.image as from_image' , 'notifications.message' , 'notifications.message_ar','notifications.type',
-'notifications.type' , 'notifications.type_title' , 'notifications.campaign_id' , 'notifications.offer_id' , 'notifications.is_seen' , 'notifications.created_at' , 'notifications.updated_at')
+                //DB::raw('CONCAT("[", GROUP_CONCAT(CONCAT({id:", species.id, ", name:", species.name, "})
+//SEPARATOR ", "), "]") AS species')
+        $pagination =  Notification::select('notifications.*')
                                         ->join('users as to', 'to.id', '=', 'notifications.user_id')
                                         ->leftjoin('users as from', 'from.id', '=', 'notifications.from_user_id')
                                         ->where('notifications.user_id' , $user->id)
@@ -524,7 +528,7 @@ class UserController extends Controller
 				{
 						$notifications_array = Notification::where('user_id' , $user->id)->whereIn('id', $notifications_array)->update(['is_seen' => '1']);
 				}
-
+        $notifications =  $this->notificationsTransformer->transformCollection(collect($pagination->items()));       
         return $this->respondWithPagination($pagination, ['data' => $notifications ]);
     }
 

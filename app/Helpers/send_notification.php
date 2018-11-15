@@ -1,7 +1,7 @@
 <?php
 
 
-    function sendNotification($account_type, $msg = 'new message',$msg_ar = 'new message ar' ,$player_id = null ,  $data = array())
+    function sendNotification($account_type, $msg = 'new message',$msg_ar = 'new message ar' ,$player_id = null ,$tag_key="chat",  $data = array())
 		{
 			if($account_type == 0) //user
 			{
@@ -12,7 +12,8 @@
 			{
 					$app_id = "b424f52b-e243-411c-81b0-b3cc568470b2";
 					$auth_key = "YTJiZDk1OGUtZmYxMy00ZWMyLWI1YTUtNDcxODVkNjQzNWJm";
-			}
+      }
+       $daTags = array(array("key" => "$tag_key", "relation" => "=", "value" => 1),);
         $content = array(
                          "en" => $msg,
                          "ar" => $msg_ar
@@ -21,6 +22,7 @@
                         'app_id' => "$app_id",
                         'include_player_ids' =>  $player_id,
                         'data' => $data,
+                        'tags' => $daTags,
                         'contents' => $content,
                         'content_available' => true
                         );

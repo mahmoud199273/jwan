@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\API\V1\BaseController as Controller;
 use App\User;
+use App\Country;
 use App\VerifyPhoneCode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -66,6 +67,7 @@ class ResetPasswordController extends Controller
     {
       // atef comment //should also validate if data sent are email.
         $validator = Validator::make( $request->all(), [
+            'country_id'    => 'required',
             'phone'                  => 'required|max:14|min:9|exists:users',
         ]);
 
@@ -74,7 +76,7 @@ class ResetPasswordController extends Controller
         }
 
         //create reset password code
-        $this->createToken( $request->phone );
+        $this->createToken( $request->phone,$request->country_id );
 
         return $this->respondCreated(trans('api_msgs.code_sent'));
     }
@@ -83,7 +85,7 @@ class ResetPasswordController extends Controller
 
 
 
-    public function createToken( $phone )
+    public function createToken( $phone,$country_id )
     {
         $token    = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
         $current_time   = Carbon::now();
@@ -96,18 +98,23 @@ class ResetPasswordController extends Controller
                    'expired_at'    => $expired_at
                                                 ]);
         //send message to mobile
-        @sendSMS($this->formatPhone($mail) , __('api_msgs.reset_pass_code').$token );
+        @sendSMS($this->formatPhone($phone,$country_id) , __('api_msgs.reset_pass_code').$token );
 
     }
 
-    public function formatPhone( $phone )
+    public function formatPhone( $phone,$country_id )
     {
+        $country_code = Country::where('id',$country_id)->pluck('code');
+        
+        if($country_code) $country_code = $country_code;
+        else $country_code = "966";
+        
         $is_valid_phone = preg_match('/^(9665|\9665|05)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/', $phone);
         if ($is_valid_phone) {
-            if (strncmp($phone, "966", 3) === 0) {
+            if (strncmp($phone, $country_code, 3) === 0) {
                 return $phone;
             }else{
-                return substr_replace($phone , '966', 0 , 1 );
+                return substr_replace($phone , $country_code, 0 , 1 );
             }
         }
 

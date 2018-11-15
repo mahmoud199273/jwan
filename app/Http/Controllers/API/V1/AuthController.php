@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\API\V1\BaseController as Controller;
 use App\User;
+use App\Country;
 use App\UserCategory;
 use App\UserCountry;
 use App\UserArea;
@@ -58,14 +59,20 @@ class AuthController extends Controller
 
 
 
-    public function formatPhone( $phone )
+    public function formatPhone( $phone,$country_id )
     {
+
+    $country_code = Country::where('id',$country_id)->pluck('code');
+        
+    if($country_code) $country_code = $country_code;
+    else $country_code = "966";
+
 	$is_valid_phone = preg_match('/^(9665|\9665|05)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/', $phone);
         if ($is_valid_phone) {
-            if (strncmp($phone, "966", 3) === 0) {
+            if (strncmp($phone, $country_code, 3) === 0) {
                 return $phone;
             }else{
-                return substr_replace($phone , '966', 0 , 1 );
+                return substr_replace($phone , $country_code, 0 , 1 );
             }
         }
 
@@ -122,6 +129,7 @@ class AuthController extends Controller
     {
       // atef comment //should also validate if data sent are email.
         $validator = Validator::make( $request->all(), [
+            'country_id'    => 'required',
             'phone'                  => 'required|max:14|min:9|exists:users',
         ]);
 
@@ -130,12 +138,12 @@ class AuthController extends Controller
         }
 
         //create verify phone code
-        $this->createVerificationCode( $request->phone );
+        $this->createVerificationCode( $request->phone,$request->country_id );
 
         return $this->respondWithSuccess(trans('api_msgs.sms_code_text'));
     }
 
-	public function createVerificationCode( $phone )
+	public function createVerificationCode( $phone,$country_id )
     {
         $verify_code    = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
         $current_time   = Carbon::now();
@@ -149,7 +157,7 @@ class AuthController extends Controller
 	                                            ]);
         //send message to mobile
         //@sendSMS($phone , __('api_msgs.sms_code_text').$verify_code );
-        @sendSMS($this->formatPhone($phone) , __('api_msgs.sms_code_text').$verify_code );
+        @sendSMS($this->formatPhone($phone,$country_id) , __('api_msgs.sms_code_text').$verify_code );
     }
 
 
