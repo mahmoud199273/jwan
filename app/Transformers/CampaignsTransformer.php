@@ -38,6 +38,7 @@ class CampaignsTransformer extends Transformer
 			3 => 'finished',
 			4 => 'canceled',
 			8 => 'canceled',
+			9 => 'closed',
 			5 => 'closed');
         $campaign = Campaign::find($campaign->id);
 
