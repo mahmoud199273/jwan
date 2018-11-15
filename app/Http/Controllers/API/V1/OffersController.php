@@ -35,7 +35,7 @@ class OffersController extends Controller
          return Offer::where([
             ['influncer_id',$influncer_id],
             ['campaign_id',$campaign_id],
-            ['status','2']
+            ['status',"!=",'2']
             ])->first() ? true : false;
     }
 
