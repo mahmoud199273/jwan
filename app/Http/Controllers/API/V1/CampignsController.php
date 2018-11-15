@@ -496,7 +496,7 @@ class CampignsController extends Controller
                 return $this->setStatusCode(422)->respondWithError('you dont own it');
               }
               else {
-                $campaign->status = '5';
+                $campaign->status = '9';
                 $campaign->save();
                 return $this->respondWithSuccess(trans('api_msgs.closed'));
               }
@@ -525,7 +525,7 @@ class CampignsController extends Controller
                     return $this->setStatusCode(422)->respondWithError('you dont own it');
                   }
                   else {
-                    $campaign->status = '4';
+                    $campaign->status = '8';
                     $campaign->save();
                     return $this->respondWithSuccess(trans('api_msgs.canceled'));
                   }
