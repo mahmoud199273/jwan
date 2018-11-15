@@ -793,7 +793,7 @@ class CampignsController extends Controller
 
         $this->campaignsTransformer->setFlag(true);
         //$data = Campaign::where('user_id' ,$user->id)->where('status','8')->get();
-        $pagination = Campaign::where('user_id' ,$user->id)->where('status','8')->paginate($this->getPagination());
+        $pagination = Campaign::where('user_id' ,$user->id)->where('status','8')->orwhere('status','9')->paginate($this->getPagination());
         $campaigns =  $this->campaignsTransformer->transformCollection(collect($pagination->items()));
         //$campaigns = $this->campaignsTransformer->transformCollection($data);
         return $this->respondWithPagination($pagination, ['data' => $campaigns ]);
