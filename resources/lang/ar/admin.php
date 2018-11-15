@@ -251,7 +251,9 @@ return [
     'in_progress'     => '  جارى العمل   ',
     'proof_submitted'     => '  دليل التقدم   ',
     'proof_accepted'     => '  دليل الموافقة   ',
-    'done'     => '  انتهى'
+    'done'     => '  انتهى',
+    "account_manger" => " المسئول عن الحساب ",
+    "manager" => " مدير اعمال "
     /* m.abdelrahman  */ 
 
 ];

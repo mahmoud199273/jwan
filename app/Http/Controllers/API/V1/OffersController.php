@@ -414,7 +414,7 @@ class OffersController extends Controller
 
             $chat = new Chat;
             $chat->from_user_id	= $offer->influncer_id;
-            $chat->to_user_id = $campaign->user_id;
+            $chat->to_user_id = $offer->user_id;
             $chat->offer_id = $offer->id;
             $chat->campaign_id = $offer->campaign_id;
             $chat->content = Crypt::encryptString($request->comment);

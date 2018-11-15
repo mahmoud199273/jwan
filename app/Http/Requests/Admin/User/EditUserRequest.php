@@ -26,6 +26,7 @@ class EditUserRequest extends BaseRequest
             'password'      => 'required|string|min:6',
             'notes'         => 'required',
             'type'          => 'required',
+            'account_manger'=> 'nullable',
             'facebook'      => 'nullable',
             'twitter'       => 'nullable',
             'instagram'     => 'nullable',
@@ -42,7 +43,6 @@ class EditUserRequest extends BaseRequest
             $password = bcrypt($this->password);
             $this->offsetSet('password', $password);
         }
-
         User::find($id)->Update($this->request->all());
     }
 
