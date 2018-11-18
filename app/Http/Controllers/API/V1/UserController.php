@@ -68,7 +68,7 @@ class UserController extends Controller
 
             'email'      => 'required',
 
-            'phone'      => 'required',
+            //'phone'      => 'required',
 
             'image'      => 'required|string',
 
@@ -82,9 +82,9 @@ class UserController extends Controller
 
         ]);
 
-        if ($this->isPhoneExists( $request->phone ,$user->id)) {
-           return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
-        }
+        // if ($this->isPhoneExists( $request->phone ,$user->id)) {
+        //    return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+        // }
         if ($this->isEmailExists( $request->email ,$user->id)) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
          }
@@ -208,7 +208,7 @@ class UserController extends Controller
             'name'     => 'required|string|max:50|min:2',
             'email'    => 'required|string',
 
-            'phone'   => 'required|string',
+            //'phone'   => 'required|string',
 
 
             'image'         => 'required',
@@ -238,9 +238,9 @@ class UserController extends Controller
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
         $user = User::find( $user->id );
         }
-         if ($this->isPhoneExists( $request->phone ,$user->id)) {
-           return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
-        }
+        //  if ($this->isPhoneExists( $request->phone ,$user->id)) {
+        //    return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+        // }
 
         if ($this->isEmailExists( $request->email ,$user->id)) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
@@ -569,6 +569,43 @@ class UserController extends Controller
         $this->influncerTransformer->setFlag(true);
         $data = $this->influncerTransformer->transform(User::find($request->id));
         return $this->sendResponse($data,trans('lang.read succefully'),200);
+    }
+
+
+
+    //  update user and influencer mobile number
+
+    function updatePhone (Request $request)
+    {
+        $user =  $this->getAuthenticatedUser();
+
+        $validator = Validator::make( $request->all(), [
+            'phone'      => 'required',
+        ]);
+
+
+        if ($this->isPhoneExists( $request->phone ,$user->id)) {
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+        }
+
+        if($request->phone == $user->phone)
+        {
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.nothing_to_update')); 
+        }
+ 
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError($validator->messages());
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
+        }
+
+
+        app('App\Http\Controllers\API\V1\AuthController')->createVerificationCode($request->phone,$user->countries_id);
+
+        return $this->respondWithSuccess(trans('api_msgs.sms_code_text'));
+
+
+    
+    
     }
 
 

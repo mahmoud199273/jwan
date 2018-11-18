@@ -108,11 +108,16 @@ class AuthController extends Controller
         }else{
 
              VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],[ 'verified', '0'] ])->update(['verified' => '1']);
+
+            if($request->header('Authorization')){
+                $user_auth =  $this->getAuthenticatedUser();
+                User::where([[ 'id', $user_auth->id] ])->update(['phone' => $code->phone]);
+                return $this->respondWithSuccess(trans('api_msgs.success'));
+            }
             //VerifyPhoneCode::where('id', $user->id)->where('id', $user->id)
             //return $this->respondWithSuccess('sucess');
 
             $user = User::where('phone', $code->phone)->first();
-            
             if($user->account_type == 1)
             {
                 return $this->respondWithSuccess(trans('api_msgs.success'));
