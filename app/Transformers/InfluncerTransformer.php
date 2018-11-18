@@ -3,8 +3,10 @@
 namespace App\Transformers;
 
 use App\Transformers\BaseTransformer as Transformer;
+use Illuminate\Support\Facades\DB;
 use App\Country;
 use App\Offer;
+use App\Notification;
 
 class InfluncerTransformer extends Transformer
 {
@@ -45,7 +47,7 @@ class InfluncerTransformer extends Transformer
                 'linkedin_followers' => $user->linkedin_follwers,
                 'youtube'   => $user->youtube,
                 'youtube_followers' => $user->youtube_follwers,
-                'account_type' =>(int) $user->account_type
+                'account_type' =>(int) $user->account_type,
             ];    
         }
         else
@@ -53,18 +55,20 @@ class InfluncerTransformer extends Transformer
             return [
                 'id'            => (int) $user->id,
                 'name'          => $user->name,
-                'rate'          => 3,
+                //'rate'          => 3,
+                'rate'          => (int) Offer::select(DB::raw("IF( ROUND(SUM(user_rate)/COUNT(user_rate)) , ROUND(SUM(user_rate)/COUNT(user_rate)), 0 ) as rate"))->where('influncer_id', $user->id)->first()->rate,
 
-                'number_of_coins' => 300,
+                'number_of_coins' => $user->balance,
                 "number_of_offers" => Offer::where('influncer_id','=',$user->id)->count(),
-                "wallet"        => 20,
+                "wallet"        => $user->balance,
                 'email'         => $user->email,
                 'phone'         => $user->phone,
                 'country'       => Country::find($user->countries_id),
                 'image'         => ($user->image) ?config('app.url').$user->image : null,
                 'notes'         => $user->notes,
                 'gender'        => (int) $user->gender,
-
+                'notifications' => Notification::select('id')->where('is_seen',0)->where('user_id',$user->id)->count(),
+                'balance' => $user->balance,
 
                 'nationality_id'   =>(int) $user->nationality_id,
 

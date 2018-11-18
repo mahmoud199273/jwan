@@ -5,6 +5,7 @@ use App\Http\Controllers\API\V1\BaseController as Controller;
 use App\User;
 use App\Country;
 use App\VerifyPhoneCode;
+use App\ResetPassword;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -148,7 +149,7 @@ class ResetPasswordController extends Controller
             return $this->setStatusCode(404)->respondWithError(trans('api_msgs.invalid_code'));
 
         }else{
-
+            //ResetPassword::where([ [ 'code', $request->code ],[ 'used', '0'] ])->update(['used' => '1']);
             return $this->respondWithSuccess('sucess');
         }
     }

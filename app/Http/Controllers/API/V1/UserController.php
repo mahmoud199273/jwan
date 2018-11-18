@@ -105,9 +105,9 @@ class UserController extends Controller
         $user->email   = $request->email;
 
 
-        if ($user->phone  != $request->phone) {
-            $user->phone   = $request->phone;
-        }
+        // if ($user->phone  != $request->phone) {
+        //     $user->phone   = $request->phone;
+        // }
 
 
         $user->email        =  $request->email;
@@ -247,10 +247,10 @@ class UserController extends Controller
         }
 
 
-            if ($user->phone != $request->phone) {
-                # code...
-                $user->phone        =  $request->phone;
-            }
+            // if ($user->phone != $request->phone) {
+            //     # code...
+            //     $user->phone        =  $request->phone;
+            // }
 
 
             $user->email        =  $request->email;
@@ -606,6 +606,18 @@ class UserController extends Controller
 
     
     
+    }
+
+
+    function getNotificationsCount(Request $request)
+    {
+        $user =  $this->getAuthenticatedUser();
+
+        $notifications = Notification::select('id')->where('is_seen',0)->where('user_id',$user->id)->count();
+
+        //dd($notifications);
+        return $this->sendResponse(['notifications' => $notifications ],trans('lang.read succefully'),200);
+
     }
 
 
