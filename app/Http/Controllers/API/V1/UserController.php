@@ -105,9 +105,9 @@ class UserController extends Controller
         $user->email   = $request->email;
 
 
-        if ($user->phone  != $request->phone) {
-            $user->phone   = $request->phone;
-        }
+        // if ($user->phone  != $request->phone) {
+        //     $user->phone   = $request->phone;
+        // }
 
 
         $user->email        =  $request->email;
@@ -247,10 +247,10 @@ class UserController extends Controller
         }
 
 
-            if ($user->phone != $request->phone) {
-                # code...
-                $user->phone        =  $request->phone;
-            }
+            // if ($user->phone != $request->phone) {
+            //     # code...
+            //     $user->phone        =  $request->phone;
+            // }
 
 
             $user->email        =  $request->email;
