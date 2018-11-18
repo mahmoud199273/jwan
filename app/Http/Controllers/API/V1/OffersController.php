@@ -356,6 +356,8 @@ class OffersController extends Controller
             $chat->to_user_id = $offer->influncer_id;
             $chat->offer_id = $offer->id;
             $chat->campaign_id = $offer->campaign_id;
+            $chat->created_at   = Carbon::now()->addHours(2);
+            $chat->updated_at   = Carbon::now()->addHours(2);
             $chat->content = Crypt::encryptString($request->comment);
             $chat->type = 1;
             $chat->save();
@@ -418,6 +420,8 @@ class OffersController extends Controller
             $chat->to_user_id = $offer->user_id;
             $chat->offer_id = $offer->id;
             $chat->campaign_id = $offer->campaign_id;
+            $chat->created_at   = Carbon::now()->addHours(2);
+            $chat->updated_at   = Carbon::now()->addHours(2);
             $chat->content = Crypt::encryptString($request->comment);
             $chat->type = 1;
             $chat->save();
@@ -672,6 +676,8 @@ class OffersController extends Controller
                     $chat->to_user_id = $offer->user_id;
                     $chat->offer_id = $offer->id;
                     $chat->campaign_id = $offer->campaign_id;
+                    $chat->created_at   = Carbon::now()->addHours(2);
+                    $chat->updated_at   = Carbon::now()->addHours(2);
                     $chat->content = Crypt::encryptString($request->comment);
                     $chat->type = 1;
                     $chat->save();
@@ -726,6 +732,8 @@ class OffersController extends Controller
         $chat->to_user_id = $campaign->user_id;
         $chat->offer_id = $offer->id;
         $chat->campaign_id = $request->campaign_id;
+        $chat->created_at   = Carbon::now()->addHours(2);
+        $chat->updated_at   = Carbon::now()->addHours(2);
         $chat->content = Crypt::encryptString($request->description);
         $chat->type = 1;
         $chat->save();
@@ -801,6 +809,8 @@ class OffersController extends Controller
          $chat->to_user_id = $campaign->user_id;
          $chat->offer_id = $offer->id;
          $chat->campaign_id = $campaign->id;
+         $chat->created_at   = Carbon::now()->addHours(2);
+         $chat->updated_at   = Carbon::now()->addHours(2);
          $chat->content = Crypt::encryptString($request->description);
          $chat->type = 1;
          $chat->save();
