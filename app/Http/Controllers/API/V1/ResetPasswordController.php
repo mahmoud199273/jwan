@@ -5,6 +5,7 @@ use App\Http\Controllers\API\V1\BaseController as Controller;
 use App\User;
 use App\Country;
 use App\VerifyPhoneCode;
+use App\ResetPassword;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
