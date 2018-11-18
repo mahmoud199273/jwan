@@ -5,6 +5,7 @@ namespace App\Transformers;
 use App\Transformers\BaseTransformer as Transformer;
 use App\Country;
 use App\Offer;
+use App\Notification;
 
 class InfluncerTransformer extends Transformer
 {
@@ -45,7 +46,7 @@ class InfluncerTransformer extends Transformer
                 'linkedin_followers' => $user->linkedin_follwers,
                 'youtube'   => $user->youtube,
                 'youtube_followers' => $user->youtube_follwers,
-                'account_type' =>(int) $user->account_type
+                'account_type' =>(int) $user->account_type,
             ];    
         }
         else
@@ -64,7 +65,7 @@ class InfluncerTransformer extends Transformer
                 'image'         => ($user->image) ?config('app.url').$user->image : null,
                 'notes'         => $user->notes,
                 'gender'        => (int) $user->gender,
-
+                'notifications' => Notification::select('id')->where('is_seen',0)->where('user_id',$user->id)->count(),
 
                 'nationality_id'   =>(int) $user->nationality_id,
 

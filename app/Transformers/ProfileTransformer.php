@@ -5,6 +5,7 @@ namespace App\Transformers;
 use App\Transformers\BaseTransformer as Transformer;
 use App\UserCountry;  
 use App\Country;  
+use App\Notification;
 
 class ProfileTransformer extends Transformer
 {
@@ -57,6 +58,7 @@ class ProfileTransformer extends Transformer
                 'number_of_coins' => 300,
                 "number_of_offers" => 12,
                 "number_of_influnceres" => 20,
+                'notifications' => Notification::select('id')->where('is_seen',0)->where('user_id',$user->id)->count(),
 
 
                 'type'          => (int) $user->type,
