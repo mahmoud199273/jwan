@@ -731,7 +731,6 @@ class OffersController extends Controller
         $chat->save();
 
 
-
         $player_ids = $this->getUserPlayerIds($campaign->user_id);
         Notification::create(['user_id' => $campaign->user_id,
                               'from_user_id' => $influncer->id, 
