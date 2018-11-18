@@ -609,5 +609,17 @@ class UserController extends Controller
     }
 
 
+    function getNotificationsCount(Request $request)
+    {
+        $user =  $this->getAuthenticatedUser();
+
+        $notifications = Notification::select('id')->where('is_seen',0)->where('user_id',$user->id)->count();
+
+        //dd($notifications);
+        return $this->sendResponse(['notifications' => $notifications ],trans('lang.read succefully'),200);
+
+    }
+
+
 
 }

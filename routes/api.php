@@ -242,6 +242,10 @@ Route::get('/user/notifications'		, 'API\V1\UserController@getNotifications');
 Route::get('/influncer/notifications'		, 'API\V1\UserController@getNotifications');
 
 
+Route::get('/user/notifications/unseen'		, 'API\V1\UserController@getNotificationsCount');
+Route::get('/influncer/notifications/unseen'		, 'API\V1\UserController@getNotificationsCount');
+
+
 //Route::get('/influncer/offers/get_inprogress','API\V1\OffersController@get_inprogresses');
 
 //Route::get('/influncer/offers/get_proofed','API\V1\OffersController@get_proofed');

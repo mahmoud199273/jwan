@@ -58,7 +58,7 @@ class InfluncerTransformer extends Transformer
 
                 'number_of_coins' => 300,
                 "number_of_offers" => Offer::where('influncer_id','=',$user->id)->count(),
-                "wallet"        => 20,
+                "wallet"        => $user->balance,
                 'email'         => $user->email,
                 'phone'         => $user->phone,
                 'country'       => Country::find($user->countries_id),
@@ -66,6 +66,7 @@ class InfluncerTransformer extends Transformer
                 'notes'         => $user->notes,
                 'gender'        => (int) $user->gender,
                 'notifications' => Notification::select('id')->where('is_seen',0)->where('user_id',$user->id)->count(),
+                'balance' => $user->balance,
 
                 'nationality_id'   =>(int) $user->nationality_id,
 

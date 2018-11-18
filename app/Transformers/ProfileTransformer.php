@@ -6,6 +6,7 @@ use App\Transformers\BaseTransformer as Transformer;
 use App\UserCountry;  
 use App\Country;  
 use App\Notification;
+use App\Campaign;
 
 class ProfileTransformer extends Transformer
 {
@@ -55,10 +56,11 @@ class ProfileTransformer extends Transformer
                 'image'         => ($user->image) ?config('app.url').$user->image : null,
                 //'is_instructor' => (boolean) $user->is_instructor,
                 'notes'         => $user->notes,
-                'number_of_coins' => 300,
-                "number_of_offers" => 12,
+                'number_of_coins' => Campaign::where('user_id','=',$user->id)->count(),
+                "number_of_offers" => Offer::where('user_id','=',$user->id)->count(),
                 "number_of_influnceres" => 20,
                 'notifications' => Notification::select('id')->where('is_seen',0)->where('user_id',$user->id)->count(),
+                'balance' => $user->balance,
 
 
                 'type'          => (int) $user->type,
