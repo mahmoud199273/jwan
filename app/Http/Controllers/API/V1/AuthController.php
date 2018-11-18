@@ -137,7 +137,7 @@ class AuthController extends Controller
             }
             else
             {
-                return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+                return $this->setStatusCode(422)->respondWithError('missing auth');
             }
             
         }
