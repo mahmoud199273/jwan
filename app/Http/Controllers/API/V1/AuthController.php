@@ -149,12 +149,27 @@ class AuthController extends Controller
       // atef comment //should also validate if data sent are email.
         $validator = Validator::make( $request->all(), [
             'country_id'    => 'required',
-            'phone'                  => 'required|max:14|min:9|exists:users',
+            'phone'                  => 'required',
         ]);
 
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_phone'));
         }
+
+        if($request->header('Authorization')){
+
+            $user_auth =  $this->getAuthenticatedUser();
+
+            if ($this->isPhoneExists( $request->phone ,$user_auth->id)) {
+                return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+            }
+
+            if($request->phone == $user_auth->phone)
+            {
+                return $this->setStatusCode(422)->respondWithError(trans('api_msgs.nothing_to_update')); 
+            }
+        }
+
 
         //create verify phone code
         $this->createVerificationCode( $request->phone,$request->country_id );

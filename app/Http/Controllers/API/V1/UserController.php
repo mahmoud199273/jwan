@@ -580,6 +580,7 @@ class UserController extends Controller
         $user =  $this->getAuthenticatedUser();
 
         $validator = Validator::make( $request->all(), [
+            'country_id' => 'required',
             'phone'      => 'required',
         ]);
 
