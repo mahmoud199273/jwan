@@ -149,7 +149,7 @@ class ResetPasswordController extends Controller
             return $this->setStatusCode(404)->respondWithError(trans('api_msgs.invalid_code'));
 
         }else{
-
+            ResetPassword::where([ [ 'code', $request->code ],[ 'used', '0'] ])->update(['used' => '1']);
             return $this->respondWithSuccess('sucess');
         }
     }
