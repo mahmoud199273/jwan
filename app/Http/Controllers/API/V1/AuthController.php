@@ -386,7 +386,7 @@ class AuthController extends Controller
             $user->save();
 
 
-           $this->createVerificationCode( arTOen($request->phone) );
+           $this->createVerificationCode( arTOen($request->phone),$request->country_id );
 
             //$token = JWTAuth::fromUser($user);
 
@@ -594,7 +594,7 @@ class AuthController extends Controller
         }
 
 
-            $this->createVerificationCode( arTOen($request->phone) );
+            $this->createVerificationCode( arTOen($request->phone),$request->country_id );
 
             return $this->respondWithSuccess(trans('api_msgs.success'));
             //$token = JWTAuth::fromUser($user);
