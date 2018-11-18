@@ -242,6 +242,10 @@ class UserController extends Controller
            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
         }
 
+        if ($this->isEmailExists( $request->email ,$user->id)) {
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
+        }
+
 
             if ($user->phone != $request->phone) {
                 # code...
