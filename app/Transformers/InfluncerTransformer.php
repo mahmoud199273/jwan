@@ -3,6 +3,7 @@
 namespace App\Transformers;
 
 use App\Transformers\BaseTransformer as Transformer;
+use Illuminate\Support\Facades\DB;
 use App\Country;
 use App\Offer;
 use App\Notification;
@@ -54,9 +55,10 @@ class InfluncerTransformer extends Transformer
             return [
                 'id'            => (int) $user->id,
                 'name'          => $user->name,
-                'rate'          => 3,
+                //'rate'          => 3,
+                'rate'          => (int) Offer::select(DB::raw("IF( ROUND(SUM(user_rate)/COUNT(user_rate)) , ROUND(SUM(user_rate)/COUNT(user_rate)), 0 ) as rate"))->where('influncer_id', $user->id)->first()->rate,
 
-                'number_of_coins' => 300,
+                'number_of_coins' => $user->balance,
                 "number_of_offers" => Offer::where('influncer_id','=',$user->id)->count(),
                 "wallet"        => $user->balance,
                 'email'         => $user->email,
