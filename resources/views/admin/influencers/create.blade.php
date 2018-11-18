@@ -84,6 +84,17 @@
                 </div>
             </div>
 
+            <div class="form-group m-form__group row {{ $errors->has('account_manger') ? 'has-danger' : ''}}">
+                <label for="countries_id" class="col-2 col-form-label">{{ __('admin.account_manger') }}</label>
+                 <div class="col-9">
+                <select name="account_manger"  class="form-control m-input">
+                   <option value="0"> {{ __('admin.manager') }} </option>
+                   <option value="1"> {{ __('admin.Personal') }} </option>
+                </select>
+                    {!! $errors->first('account_manger', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+
             <div class="form-group m-form__group row {{ $errors->has('email') ? 'has-danger' : ''}}">
                 <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.email') }}</label>
                 <div class="col-9">

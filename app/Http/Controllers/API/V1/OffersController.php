@@ -34,7 +34,8 @@ class OffersController extends Controller
     {
          return Offer::where([
             ['influncer_id',$influncer_id],
-            ['campaign_id',$campaign_id]
+            ['campaign_id',$campaign_id],
+            ['status',"!=",'2']
             ])->first() ? true : false;
     }
 
@@ -220,7 +221,7 @@ class OffersController extends Controller
             sendNotification(1,
                                   'Your offer approved on '.$campaign->title,
                                   'تم الموافقة على عرضك على حملة '.$campaign->title,
-                                  $player_ids,
+                                  $player_ids,"offers",
                                   ['campaign_id' =>  (int)$campaign->id,
                                   'offer_id'    => (int)$offer->id,
                                   'type'          =>  1,
@@ -257,7 +258,7 @@ class OffersController extends Controller
                     sendNotification(1,
                                           'Your offer rejected on '.$campaign->title,
                                           'تم رفض عرضك على حملة '.$campaign->title,
-                                          $player_ids,
+                                          $player_ids,"offers",
                                           ['campaign_id' =>  (int)$campaign->id,
                                           'offer_id'    => (int)$offer->id,
                                           'type'          =>  2,
@@ -295,7 +296,7 @@ class OffersController extends Controller
             sendNotification(1,
                                   'Your offer paid on '.$campaign->title,
                                   'تم سداد قيمة عرضك على حملة '.$campaign->title,
-                                  $player_ids,
+                                  $player_ids,"offers",
                                   ['campaign_id' =>  (int)$campaign->id,
                                   'offer_id'    => (int)$offer->id,
                                   'type'          =>  3,
@@ -376,7 +377,7 @@ class OffersController extends Controller
             sendNotification(1,
                                   'Your proof have been approved and finished on '.$campaign->title,
                                   'تم قبول توثيقك واغلاقه لحملة '.$campaign->title,
-                                  $player_ids,
+                                  $player_ids,"offers",
                                   ['campaign_id' =>  (int)$campaign->id,
                                   'offer_id'    => (int)$offer->id,
                                   'type'          =>  7,
@@ -414,7 +415,7 @@ class OffersController extends Controller
 
             $chat = new Chat;
             $chat->from_user_id	= $offer->influncer_id;
-            $chat->to_user_id = $campaign->user_id;
+            $chat->to_user_id = $offer->user_id;
             $chat->offer_id = $offer->id;
             $chat->campaign_id = $offer->campaign_id;
             $chat->content = Crypt::encryptString($request->comment);
@@ -460,7 +461,7 @@ class OffersController extends Controller
             sendNotification(1,
                                   'user has canceled '.$campaign->title,
                                   'تم الغاء حملة '.$campaign->title,
-                                  $player_ids,
+                                  $player_ids,"offers",
                                   ['campaign_id' =>  (int)$campaign->id,
                                   'offer_id'    => (int)$offer->id,
                                   'type'          =>  9,
@@ -500,7 +501,7 @@ class OffersController extends Controller
                     sendNotification(0,
                                           'influner is working on '.$campaign->title,
                                           'جاري العمل على الحملة '.$campaign->title,
-                                          $player_ids,
+                                          $player_ids,"offers",
                                           ['campaign_id' =>  (int)$campaign->id,
                                           'offer_id'    => (int)$offer->id,
                                           'type'          =>  4,
@@ -553,7 +554,7 @@ class OffersController extends Controller
                     sendNotification(0,
                                           'influner has finished and proofed '.$campaign->title,
                                           'تم الانتهاء وتثيق حملة '.$campaign->title,
-                                          $player_ids,
+                                          $player_ids,"offers",
                                           ['campaign_id' =>  (int)$campaign->id,
                                           'offer_id'    => (int)$offer->id,
                                           'type'          =>  5,
@@ -613,7 +614,7 @@ class OffersController extends Controller
                     sendNotification(0,
                                           'influner has canceled offer on '.$campaign->title,
                                           'قام المؤثر بالغاء عرضه على '.$campaign->title,
-                                          $player_ids,
+                                          $player_ids,"offers",
                                           ['campaign_id' =>  (int)$campaign->id,
                                           'offer_id'    => (int)$offer->id,
                                           'type'          =>  8,
@@ -743,7 +744,7 @@ class OffersController extends Controller
         sendNotification(0,
                               'A new offer was added on '.$campaign->title,
 															'يوجد عرض جديد على حملة '.$campaign->title,
-															$player_ids,
+															$player_ids,"offers",
 															['campaign_id' =>  (int)$campaign->id,
                               'offer_id'    => (int)$offer->id,
                               'type'          =>  0,
@@ -819,7 +820,7 @@ class OffersController extends Controller
        sendNotification(0,
                              'A new offer was added on '.$campaign->title,
                              'يوجد تعديل جديد على عرض حملة '.$campaign->title,
-                             $player_ids,
+                             $player_ids,"offers",
                              ['campaign_id' =>  (int)$campaign->id,
                              'offer_id'    => (int)$offer->id,
                              'type'          =>  1,

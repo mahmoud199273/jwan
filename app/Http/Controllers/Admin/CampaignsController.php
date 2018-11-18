@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Campaigns\EditCampaignsRequest;
 use App\Campaign;
 use App\User;
+use App\Setting;
 use App\UserPlayerId;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 
@@ -129,11 +131,18 @@ class campaignsController extends Controller
     public function approve( Request $request)
     {
         if ( $request->ajax() ) {
+
+            $settings = Setting::first();
+            $amount = $settings->campaign_period;
+
             $campaign = Campaign::find( $request->id );
+            $end_date =  Carbon::parse($campaign->end_at);
+            $end_date = $end_date->addDays($amount);
             $campaign->status = '1';
+            $campaign->end_at = $end_date;
             $campaign->save();
             $player_ids = $this->getUserPlayerIds();
-            $return = sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,
+            sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,
                                   ['campaign_id' =>  (int)$request->id,'type'=>  20,'type_title'=> 'new campaign']);
             return response(['msg' => 'approved', 'status' => 'success']);
         }

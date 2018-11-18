@@ -24,6 +24,7 @@ class StoreUserRequest extends BaseRequest
             'email'         => 'required|string|email|unique:users,email',
             'password'      => 'required|string|min:6',
             //'gender'     => 'required',
+            'account_manger'=> 'nullable',
             'notes'     => 'required',
             'type'      => 'required',
             'facebook'      => 'nullable',

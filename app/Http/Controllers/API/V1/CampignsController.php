@@ -43,7 +43,8 @@ class CampignsController extends Controller
         $campaign_ids = InfluncerCampaign::where('influncer_id',$influncer->id)->pluck('campaign_id')->toArray();
          //dd($campaign_ids);
  
-        $orderBy = 'created_at';
+        //$orderBy = 'created_at';
+        $orderBy = 'updated_at';
         $influncer_categories = UserCategory::where('user_id',$influncer->id)->pluck('categories_id')->toArray();
  
  
@@ -161,7 +162,7 @@ class CampignsController extends Controller
             }
 
         //$data = Campaign::where('user_id' ,$user->id)->get();
-        $pagination = Campaign::where('user_id' ,$user->id)->paginate($this->getPagination());
+        $pagination = Campaign::where('user_id' ,$user->id)->where('status','!=','4')->where('status','!=','5')->where('status','!=','8')->where('status','!=','9')->orderBy('updated_at','DESC')->paginate($this->getPagination());
 
         $campaigns = $this->campaignsTransformer->transformCollection(collect($pagination->items()));
         //return $this->sendResponse($campaigns, trans('lang.campaigns read succesfully'),200);
@@ -527,6 +528,9 @@ class CampignsController extends Controller
                   else {
                     $campaign->status = '4';
                     $campaign->save();
+
+                    
+
                     return $this->respondWithSuccess(trans('api_msgs.canceled'));
                   }
                 }
@@ -789,7 +793,7 @@ class CampignsController extends Controller
 
         $this->campaignsTransformer->setFlag(true);
         //$data = Campaign::where('user_id' ,$user->id)->where('status','8')->get();
-        $pagination = Campaign::where('user_id' ,$user->id)->where('status','8')->paginate($this->getPagination());
+        $pagination = Campaign::where('user_id' ,$user->id)->where('status','8')->orwhere('status','9')->orwhere('status','4')->orwhere('status','5')->paginate($this->getPagination());
         $campaigns =  $this->campaignsTransformer->transformCollection(collect($pagination->items()));
         //$campaigns = $this->campaignsTransformer->transformCollection($data);
         return $this->respondWithPagination($pagination, ['data' => $campaigns ]);

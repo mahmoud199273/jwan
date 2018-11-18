@@ -48,7 +48,11 @@ class CreateCampaignsTable extends Migration
              $table->dateTime('updated_date');
 
 
+
              //$table->enum('campaign_status',[0,1,2,3,4,5,6,7,8,9]);
+
+            $table->enum('campaign_status',[0,1,2,3,4,5,6,7,8,9]);
+
 
             // 0 = new
             // 1 = approved
