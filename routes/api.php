@@ -81,6 +81,10 @@ Route::post('influncer/reset/password', 'API\V1\ResetPasswordController@resetPas
 
 Route::get('user/profile', 'API\V1\UserController@profile');
 
+
+Route::post('user/update/phone','API\V1\UserController@updatePhone');// user update phone
+
+
 Route::post('user/update/profile', 'API\V1\UserController@updateProfile');
 
 Route::post('user/update/channels', 'API\V1\UserController@userChannels');
@@ -116,7 +120,7 @@ Route::post('influncer/update/player_id','API\V1\UserController@updatePlayerId')
 Route::get('influncer/profile', 'API\V1\UserController@influncerProfile');
 
 Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerProfile');
-
+Route::post('influncer/update/phone','API\V1\UserController@updatePhone');// influencer update phone
 
 
 Route::post('influncer/update/password'	, 'API\V1\UserController@updateInfluncerPassword');
@@ -127,6 +131,9 @@ Route::post('influncer/send/complanit', 'API\V1\ComplaintsController@store');
 
 
 Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerProfile');
+
+
+
 
 
  Route::resource('countries', 'API\V1\CountryController');

@@ -30,6 +30,7 @@ return[
    'duplicate_email'          => 'email is duplicated',
    'closed'             => 'Campaign has been closed',
    'canceled'            => 'Campaign has been canceled',
+   'nothing_to_update'            => 'There is no changes. nothing to update',
 
 
 

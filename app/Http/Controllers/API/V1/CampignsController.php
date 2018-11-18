@@ -162,7 +162,7 @@ class CampignsController extends Controller
             }
 
         //$data = Campaign::where('user_id' ,$user->id)->get();
-        $pagination = Campaign::where('user_id' ,$user->id)->where('status','!=','4')->where('status','!=','5')->where('status','!=','8')->where('status','!=','9')->orderBy('updated_at','DESC')->paginate($this->getPagination());
+        $pagination = Campaign::where('user_id' ,$user->id)->orderBy('updated_at','DESC')->paginate($this->getPagination());
 
         $campaigns = $this->campaignsTransformer->transformCollection(collect($pagination->items()));
         //return $this->sendResponse($campaigns, trans('lang.campaigns read succesfully'),200);
