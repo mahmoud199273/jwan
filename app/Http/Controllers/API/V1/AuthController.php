@@ -107,9 +107,12 @@ class AuthController extends Controller
 
         }else{
 
-             VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],[ 'verified', '0'] ])->update(['verified' => '1']);
+             
 
-            if($request->header('Authorization')){
+            if($request->header('Authorization')){ // check for update phone
+                
+                VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],[ 'verified', '0'] ])->update(['verified' => '1']);
+
                 $user_auth =  $this->getAuthenticatedUser();
                 User::where([[ 'id', $user_auth->id] ])->update(['phone' => $code->phone]);
                 return $this->respondWithSuccess(trans('api_msgs.success'));
@@ -118,14 +121,25 @@ class AuthController extends Controller
             //return $this->respondWithSuccess('sucess');
 
             $user = User::where('phone', $code->phone)->first();
-            if($user->account_type == 1)
+            if($user)
             {
-                return $this->respondWithSuccess(trans('api_msgs.success'));
+
+                VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],[ 'verified', '0'] ])->update(['verified' => '1']);
+
+                if($user->account_type == 1)
+                {
+                    return $this->respondWithSuccess(trans('api_msgs.success'));
+                }
+
+                $token = JWTAuth::fromUser($user);
+
+                return Response::json( compact('token'));
             }
-
-            $token = JWTAuth::fromUser($user);
-
-            return Response::json( compact('token'));
+            else
+            {
+                return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+            }
+            
         }
     }
 
