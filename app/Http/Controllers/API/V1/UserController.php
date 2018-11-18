@@ -85,6 +85,10 @@ class UserController extends Controller
         if ($this->isPhoneExists( $request->phone ,$user->id)) {
            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
         }
+        if ($this->isEmailExists( $request->email ,$user->id)) {
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
+         }
+        
 
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
@@ -116,6 +120,7 @@ class UserController extends Controller
         $user->notes       = $request->notes;
 
         $user->countries_id = $request->country_id;
+        $user->type = $request->type;
 
 
         $user->save();
