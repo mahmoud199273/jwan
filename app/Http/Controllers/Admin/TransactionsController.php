@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BankAccounts\EditTransactionsRequest;
 use App\Http\Requests\Admin\BankAccounts\StoreTransactionsRequest;
 use App\Transactions;
+use App\UserPlayerId;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -181,7 +182,17 @@ class TransactionsController extends Controller
             $transaction->status = $request->status;
             $transaction->save();
 
-            $TransactionData = Transactions::select('users.*','transactions.*')->join('users','users.id','transactions.user_id')->where('transactions.id',$request->id)->first();
+            $TransactionData = Transactions::select('users.*','transactions.*','campaigns.title','uinf.id as influencer_id','uuser.id as offer_user_id')
+                                            ->join('users','users.id','transactions.user_id')
+                                            ->leftJoin('campaigns', 'campaigns.id', '=', 'transactions.campaign_id')
+                                            ->leftJoin('offers', 'offers.id', '=', 'transactions.offer_id')
+                                            ->leftJoin('users as uinf', 'offers.influncer_id', '=', 'uinf.id')
+                                            ->leftJoin('users as uuser', 'offers.user_id', '=', 'uuser.id')
+                                            ->where('transactions.id','23')
+                                            //->where('transactions.id',$request->id)
+                                            ->first();
+
+            
             if($TransactionData->account_type == 0 && $request->status == 1 && $TransactionData->campaign_id == 0 && $TransactionData->offer_id == 0)
             {
                 $user = User::find($TransactionData->user_id);
@@ -196,11 +207,57 @@ class TransactionsController extends Controller
                 //dd($user->balance);
                 $user->save();
             }
+
+            if($TransactionData->influencer_id) // send notification to influencer if transaction has offer id
+            {
+                $player_ids = $this->getUserPlayerIds($TransactionData->influencer_id);
+                sendNotification(1,
+                                  'Your transaction approved',
+                                  'تم الموافقة على عملية التحويل ',
+                                  $player_ids,"offers",
+                                  ['transaction_id' =>  (int)$TransactionData->id,
+                                  'offer_id'    => (int)$TransactionData->offer_id,
+                                  'campaign_id'    => (int)$TransactionData->campaign_id,
+                                  'type'          =>  1,
+                                  'type_title'	=> 'transaction approve']);
+
+            }
+
+
+            if($TransactionData->offer_user_id){ // send notification to user 
+                $noti_user_id = $TransactionData->offer_user_id;
+                $account_type = 0; //send notification to user 
+            } 
+            else 
+            {
+                $noti_user_id = $TransactionData->user_id;
+                $account_type = $TransactionData->account_type; // send notification to user or influencer
+            }         
+            
+            $player_ids = $this->getUserPlayerIds($noti_user_id);
+            sendNotification($account_type,
+                                'Your transaction approved',
+                                'تم الموافقة على عملية التحويل ',
+                                $player_ids,"offers",
+                                ['transaction_id' =>  (int)$TransactionData->id,
+                                'offer_id'    => (int)$TransactionData->offer_id,
+                                'campaign_id'    => (int)$TransactionData->campaign_id,
+                                'type'          =>  1,
+                                'type_title'	=> 'transaction approve']);
+
+                                  
             
             return response(['msg' => 'approved', 'status' => 'success']);
         }
 
         
+    }
+
+
+    public function getUserPlayerIds( $user_id )
+    {
+        $player_ids = UserPlayerId::where('user_id',$user_id)->pluck('player_id')->toArray();
+        return $player_ids ? $player_ids : null;
     }
 
 }
