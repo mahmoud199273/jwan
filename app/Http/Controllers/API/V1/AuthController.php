@@ -145,6 +145,13 @@ class AuthController extends Controller
     }
 
 
+    public function isUserPhoneExists( $phone , $user_id )
+    {
+        return DB::table('users')->where([['id','<>',$user_id] ,['phone' ,$phone]])->first() ?  true : false ;
+
+    }
+
+
     public function sendVerifyCode( Request $request )
     {
       // atef comment //should also validate if data sent are email.
@@ -160,7 +167,7 @@ class AuthController extends Controller
         if($request->header('Authorization') && $request->header('Authorization') != '' && $request->header('Authorization') != null && $request->header('Authorization') != "null"){
             $user_auth =  $this->getAuthenticatedUser();
 
-            if ($this->isPhoneExists( $request->phone ,$user_auth->id)) {
+            if ($this->isUserPhoneExists( $request->phone ,$user_auth->id)) {
                 return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
             }
 
