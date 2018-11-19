@@ -109,7 +109,8 @@ class AuthController extends Controller
 
              
 
-            if($request->header('Authorization')){ // check for update phone
+            if($request->header('Authorization') && $request->header('Authorization') != '' && $request->header('Authorization') != null && $request->header('Authorization') != "null"){
+                // check for update phone
                 
                 VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],[ 'verified', '0'] ])->update(['verified' => '1']);
 
@@ -156,8 +157,7 @@ class AuthController extends Controller
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_phone'));
         }
 
-        if($request->header('Authorization')){
-
+        if($request->header('Authorization') && $request->header('Authorization') != '' && $request->header('Authorization') != null && $request->header('Authorization') != "null"){
             $user_auth =  $this->getAuthenticatedUser();
 
             if ($this->isPhoneExists( $request->phone ,$user_auth->id)) {
@@ -358,7 +358,7 @@ class AuthController extends Controller
 
             $user->notes        = $request->notes;
 
-            $user->type         = $request->type;
+            $user->type         = (string) $request->type;
 
             $user->facebook     = $request->facebook;
 
