@@ -785,7 +785,7 @@ class AuthController extends Controller
          if ( !$this->isActiveAccount( $credentials,$account_type ) ) {
 
             //return $this->respondUnauthorized( trans('api_msgs.check_credentials') );
-            if($account_type == 1) 
+            if($account_type == '1') 
                 return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials2'));
             else
                 return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials'));     
