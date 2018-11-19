@@ -165,7 +165,7 @@ class CampignsController extends Controller
         $pagination = Campaign::where('user_id' ,$user->id)->orderBy('updated_at','DESC');
         if($request->id) 
         {
-            $pagination->where([['status', '!=', '8'],['status', '!=', '9'],['status', '!=', '4'],['status', '!=', '5']]);
+            $pagination->where([['status', '!=', '0'],['status', '!=', '8'],['status', '!=', '9'],['status', '!=', '4'],['status', '!=', '5']]);
         }
         else
         {
@@ -802,7 +802,10 @@ class CampignsController extends Controller
 
         $this->campaignsTransformer->setFlag(true);
         //$data = Campaign::where('user_id' ,$user->id)->where('status','8')->get();
-        $pagination = Campaign::where('user_id' ,$user->id)->orwhere([['status', '=', '8'],['status', '=', '4']])->paginate($this->getPagination());
+        $pagination = Campaign::where('user_id' ,$user->id)->where(function($q) {
+            $q->where('status', "8")
+              ->orWhere('status', "4");
+        })->paginate($this->getPagination());
         $campaigns =  $this->campaignsTransformer->transformCollection(collect($pagination->items()));
         //$campaigns = $this->campaignsTransformer->transformCollection($data);
         return $this->respondWithPagination($pagination, ['data' => $campaigns ]);
