@@ -137,7 +137,7 @@ class CampignsController extends Controller
     public function show( Request $request , $id )
     {
         $validator = Validator::make( ['id' =>  $request->id ], [
-            'id'    => 'required|exists:campaigns,id',
+            'id'    => 'required|exists:services,id',
         ]);
         
         return $validator->fails() ? $this->setStatusCode(422)->respondWithError('parameters faild validation') :
