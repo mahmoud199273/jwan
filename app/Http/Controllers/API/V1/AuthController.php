@@ -156,8 +156,8 @@ class AuthController extends Controller
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_phone'));
         }
 
-        if($request->header('Authorization')){
-
+        if($request->header('Authorization') && $request->header('Authorization') != '' && $request->header('Authorization') != null && $request->header('Authorization') != "null"){
+            dd($request->header('Authorization'));
             $user_auth =  $this->getAuthenticatedUser();
 
             if ($this->isPhoneExists( $request->phone ,$user_auth->id)) {
