@@ -157,7 +157,6 @@ class AuthController extends Controller
         }
 
         if($request->header('Authorization') && $request->header('Authorization') != '' && $request->header('Authorization') != null && $request->header('Authorization') != "null"){
-            dd($request->header('Authorization'));
             $user_auth =  $this->getAuthenticatedUser();
 
             if ($this->isPhoneExists( $request->phone ,$user_auth->id)) {
