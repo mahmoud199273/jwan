@@ -121,7 +121,7 @@ return [
     'countries'                     => 'الدول',
     'country'                       => 'دولة',
     'natoinalities'                 => 'الجنسيات',
-    'natoinality'                   => 'جنسية',
+    'natoinality'                   => 'الجنسية',
     'areas'                         => 'المناطق',
     'area'                          => ' منطقه ',
     'city'                          => 'مدينة',

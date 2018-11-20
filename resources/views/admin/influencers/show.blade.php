@@ -82,8 +82,40 @@
                 </div>
             </div>
             
+
+            <div class="form-group m-form__group row {{ $errors->has('countries_id') ? 'has-danger' : ''}}">
+                    <label for="countries_id" class="col-2 col-form-label">{{ __('admin.country') }}</label>
+                     <div class="col-9">
+                    <select name="countries_id"  class="form-control m-input">
+                        @if($countries)
+                            @foreach ($countries as $country)
+                                <option value="{{ $country->id }}"
+                                {{ $user->countries_id == $country->id? "selected" : "" }}
+                                > {{ $country->name_ar }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                        {!! $errors->first('countries_id', '<span class="form-control-feedback">:message</span>') !!}
+                    </div>
+                </div>
+    
+                <div class="form-group m-form__group row {{ $errors->has('nationality_id') ? 'has-danger' : ''}}">
+                    <label for="countries_id" class="col-2 col-form-label">{{ __('admin.natoinality') }}</label>
+                     <div class="col-9">
+                    <select name="nationality_id"  class="form-control m-input">
+                        @if($nationalities)
+                            @foreach ($nationalities as $row)
+                                <option value="{{ $row->id }}"
+                                {{ $user->nationality_id == $row->id? "selected" : "" }}    
+                                > {{ $country->name_ar }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                        {!! $errors->first('nationality_id', '<span class="form-control-feedback">:message</span>') !!}
+                    </div>
+                </div>
             
-            <div class="form-group m-form__group row {{ $errors->has('type') ? 'has-danger' : ''}}" disabled="">
+            {{--  <div class="form-group m-form__group row {{ $errors->has('type') ? 'has-danger' : ''}}" disabled="">
                     <label for="countries_id" class="col-2 col-form-label">{{ __('admin.Type') }}</label>
                      <div class="col-9">
                     <select name="type"  class="form-control m-input">
@@ -96,7 +128,7 @@
                     </select>
                         {!! $errors->first('type', '<span class="form-control-feedback">:message</span>') !!}
                     </div>
-            </div>
+            </div>  --}}
 
 
             <div class="form-group m-form__group row {{ $errors->has('account_manger') ? 'has-danger' : ''}}" disabled="">

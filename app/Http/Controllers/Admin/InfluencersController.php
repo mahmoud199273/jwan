@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\User\EditUserRequest;
 use App\Http\Requests\Admin\User\StoreUserRequest;
 use App\User;
 use App\UserPlayerId;
+use App\Nathionality;
 use Illuminate\Http\Request;
 
 
@@ -80,8 +81,8 @@ class InfluencersController extends Controller
     public function create()
     {
         $countries =  Country::all();
-
-        return view('admin.influencers.create',compact('countries'));
+        $nationalities =  Nathionality::all();
+        return view('admin.influencers.create',compact('countries','nationalities'));
     }
 
     /**
@@ -107,7 +108,8 @@ class InfluencersController extends Controller
     {
         $user = User::find($id);
         $countries =  Country::all();
-        return view('admin.influencers.show',compact('user','countries'));
+        $nationalities =  Nathionality::all();
+        return view('admin.influencers.show',compact('user','countries','nationalities'));
     }
 
     /**
@@ -120,8 +122,8 @@ class InfluencersController extends Controller
     {
         $user = User::find($id);
         $countries =  Country::all();
-
-        return view('admin.influencers.edit',compact('user','countries'));
+        $nationalities =  Nathionality::all();
+        return view('admin.influencers.edit',compact('user','countries','nationalities'));
     }
 
     /**

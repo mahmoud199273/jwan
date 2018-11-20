@@ -32,7 +32,10 @@ class EditUserRequest extends BaseRequest
             'instagram'     => 'nullable',
             'snapchat'      => 'nullable',
             'linkedin'      => 'nullable',
-            'youtube'       => 'nullable'
+            'youtube'       => 'nullable',
+            'gender'     => 'nullable',
+            'countries_id'      => 'required',
+            'nationality_id'      => 'nullable',
 
         ];
     }
