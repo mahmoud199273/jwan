@@ -664,6 +664,7 @@ class CampignsController extends Controller
 
             $campaign = DB::table('campaigns')
                      ->whereIn('id',  $skipped)
+                     ->orderBy('updated_at','DESC')
                      ->get();
 
            //dd($campaign);
@@ -698,6 +699,7 @@ class CampignsController extends Controller
 
             $campaign = DB::table('campaigns')
                      ->whereIn('id',  $favorite)
+                     ->orderBy('updated_at','DESC')
                      ->get();
 
             //dd($campaign);

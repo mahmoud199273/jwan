@@ -43,8 +43,7 @@ class UsersController extends Controller
 
              $users   = User::where([['name', 'LIKE', '%' . $query. '%'],['account_type','0']] )
                                      ->orWhere([['phone', 'LIKE', '%' . $query. '%'],['account_type','0']] )
-                                     ->orWhere('email','LIKE','%'.$query.'%')
-
+                                     ->orWhere([['email', 'LIKE', '%' . $query. '%'],['account_type','0']] )
                                      ->paginate(10);
             $users->appends( ['q' => $request->q] );
 
