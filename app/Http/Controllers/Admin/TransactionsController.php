@@ -180,7 +180,7 @@ class TransactionsController extends Controller
         if ( $request->ajax() ) {
             $transaction = Transactions::find( $request->id );
             $transaction->status = $request->status;
-            //$transaction->save();
+            $transaction->save();
 
             $TransactionData = Transactions::select('users.*','transactions.*','campaigns.title','uinf.id as influencer_id','uuser.id as offer_user_id')
                                             ->join('users','users.id','transactions.user_id')
