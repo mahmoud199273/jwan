@@ -129,6 +129,11 @@ class AuthController extends Controller
 
                 if($user->account_type == 1)
                 {
+                    if($user->is_active == 1)
+                    {
+                        $token = JWTAuth::fromUser($user);
+                        return Response::json( compact('token'));
+                    }
                     return $this->respondWithSuccess(trans('api_msgs.success'));
                 }
 
