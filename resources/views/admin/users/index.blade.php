@@ -77,6 +77,8 @@
                                     <th><b>{{ __('admin.phone') }}</b></th>
                                     <th><b>{{ __('admin.email') }}</b></th>
                                     <th><b>{{ __('admin.status') }}</b></th>
+                                    <th><b>{{ __('admin.Activecode') }}</b></th>
+                                    <th><b>{{ __('admin.statusPhone') }}</b></th>
                                     <th><b>{{ __('admin.control') }}</b></th>
                                 </tr>
                             </thead>
@@ -89,6 +91,14 @@
                                     <td>{{ $user->email }}</td>
                                     <td class="text-center">{!! ($user->is_active)? "<i class='fa fa-check m--font-success'></i>" : 
                                     "<i class='fa fa-times m--font-danger'></i>" !!}</td>
+                                    <td>{{ $user->code }}</td>
+                                    <td class="text-center">
+                                        @if($user->verified == 1) 
+                                            {{ __('admin.verified') }}
+                                        @else
+                                            {{ __('admin.unverified') }}
+                                        @endif    
+                                    </td>
                                     <td>
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
                                             <a type="button" href="{{url('admin/users')}}/{{ $user->id }}" class="m-btn m-btn m-btn--square btn btn-secondary">

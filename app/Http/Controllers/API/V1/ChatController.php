@@ -82,6 +82,8 @@ public function store(Request $request)
           $from_user_id = $user->id;
           $to_user_id = $offer->influncer_id;
           $who = 1;
+          $chat_influncer_id = $offer->influncer_id;
+
         }
         else {
           //influncer
@@ -143,7 +145,8 @@ public function store(Request $request)
                               'chat_content'         => $request->content,
                               'chat_type'       => $chat->type]);
 
-        return $this->respondWithSuccess(__('api_msgs.created'));
+        //return $this->respondWithSuccess(__('api_msgs.created'));
+        return $this->sendResponse(['offer' => $offer->id ],trans('api_msgs.created'),200);
       }
 }
 /*
