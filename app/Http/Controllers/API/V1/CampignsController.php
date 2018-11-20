@@ -261,7 +261,7 @@ class CampignsController extends Controller
 
         $campaign->maximum_rate            = $request->maximum_rate;
 
-        $campaign->created_date            = Carbon::now()->addHours(3);
+        $campaign->created_at            = Carbon::now()->addHours(3);
 
         //$campaign->updated_date            = $request->updated_date;
 

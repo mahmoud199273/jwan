@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Admin\User\EditUserRequest;
 use App\Http\Requests\Admin\User\StoreUserRequest;
 use App\User;
+use App\UserPlayerId;
 use Illuminate\Http\Request;
 
 
@@ -174,12 +175,22 @@ class UsersController extends Controller
         
     }
 
+    public function getUserPlayerIds( $user_id )
+    {
+        $player_ids = UserPlayerId::where('user_id',$user_id)->pluck('player_id')->toArray();
+        return $player_ids ? $player_ids : null;
+    }
+
     public function ban( Request $request )
     {
         $user =  User::find( $request->id );
         if ( $request->ajax() ) {
             $user->is_active = '0';
             $user->save();
+
+            $player_ids = $this->getUserPlayerIds($user->id);
+            sendNotification(1,'Your account is suspended,please refer to the admin ','تم ايقاف العضوية برجاء الرجوع الى الادارة',$player_ids,"public",['user_id' =>  (int)$user->id,'type'=>  13,'type_title'	=> 'logout ']);
+
             return response(['msg' => 'banned', 'status' => 'success']);
         }
 
