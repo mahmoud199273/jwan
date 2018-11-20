@@ -6,6 +6,7 @@ use App\Campaign;
 use App\Offer;
 use App\Transformers\BaseTransformer as Transformer;
 use App\Transformers\InfluncerTransformer;
+use Illuminate\Support\Facades\DB;
 use App\User;
 use Carbon\Carbon;
 
