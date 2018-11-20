@@ -180,7 +180,7 @@ class TransactionsController extends Controller
         if ( $request->ajax() ) {
             $transaction = Transactions::find( $request->id );
             $transaction->status = $request->status;
-            $transaction->save();
+            //$transaction->save();
 
             $TransactionData = Transactions::select('users.*','transactions.*','campaigns.title','uinf.id as influencer_id','uuser.id as offer_user_id')
                                             ->join('users','users.id','transactions.user_id')
@@ -188,20 +188,19 @@ class TransactionsController extends Controller
                                             ->leftJoin('offers', 'offers.id', '=', 'transactions.offer_id')
                                             ->leftJoin('users as uinf', 'offers.influncer_id', '=', 'uinf.id')
                                             ->leftJoin('users as uuser', 'offers.user_id', '=', 'uuser.id')
-                                            ->where('transactions.id','23')
-                                            //->where('transactions.id',$request->id)
+                                            //->where('transactions.id','23')
+                                            ->where('transactions.id',$request->id)
                                             ->first();
 
             
             if($TransactionData->account_type == 0 && $request->status == 1 && $TransactionData->campaign_id == 0 && $TransactionData->offer_id == 0)
-            {
+            { // user transaction
                 $user = User::find($TransactionData->user_id);
                 $user->balance = $user->balance + $TransactionData->transaction_amount;
-                //dd($user->balance);
                 $user->save();
             }
             elseif($TransactionData->account_type == 1 && $request->status == 1 && $TransactionData->campaign_id == 0 && $TransactionData->offer_id == 0)
-            {
+            { // influencer transaction
                 $user = User::find($TransactionData->user_id);
                 $user->balance = $user->balance - $TransactionData->transaction_amount;
                 //dd($user->balance);
