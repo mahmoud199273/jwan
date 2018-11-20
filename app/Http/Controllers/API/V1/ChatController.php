@@ -121,11 +121,12 @@ public function store(Request $request)
         $chat->offer_id = $offer->id;
         $chat->created_at   = Carbon::now()->addHours(3);
         $chat->updated_at   = Carbon::now()->addHours(3);
+        $chat->type = (int)$type;
         if($request->content){
           $chat->content = Crypt::encryptString($request->content);
+          $chat->save();
         }  
-        $chat->type = (int)$type;
-        $chat->save();
+        
 
         // push notifications
 
