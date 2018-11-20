@@ -23,7 +23,7 @@ class EditUserRequest extends BaseRequest
             'phone'         => ['required', Rule::unique('users')->ignore($this->id, 'id')],
             'image'         => 'required',
             'email'         => ['required','email', Rule::unique('users')->ignore($this->id, 'id')],
-            'password'      => 'required|string|min:6',
+            //'password'      => 'required|string|min:6',
             'notes'         => 'required',
             'type'          => 'nullable',
             'account_manger'=> 'nullable',

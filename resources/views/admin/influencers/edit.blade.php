@@ -181,7 +181,7 @@
             <div class="form-group m-form__group row {{ $errors->has('gender') ? 'has-danger' : ''}}">
                 <label for="gender" class="col-2 col-form-label">{{ __('admin.gender') }}</label>
                  <div class="col-9">
-                <select name="gender"  class="form-control m-input" disabled>
+                <select name="gender"  class="form-control m-input" >
                    <option value="0"  {{ $user->gender == 1? "selected" : "" }} > {{ __('admin.male') }} </option>
                    <option value="1"  {{ $user->gender == 1? "selected" : "" }} > {{ __('admin.female') }} </option>
                    <option value="2"  {{ $user->gender == 2? "selected" : "" }} > {{ __('admin.general') }} </option>

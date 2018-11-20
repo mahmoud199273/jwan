@@ -62,7 +62,7 @@ public function store(Request $request)
     $validator = Validator::make($request->all() , [
           'campaign_id'    	=> 'required|exists:campaigns,id',
           //'offer_id'    		=> 'required|exists:offfers,id',
-          'content'         => 'required|string',
+          //'content'         => 'required|string',
       ]);
 
       if ($validator->fails()) {
@@ -96,7 +96,9 @@ public function store(Request $request)
             $offer->user_id = $campaign->user_id;
             $offer->campaign_id = $campaign->id;
             $offer->cost = "";
-            $offer->description = $request->content;
+            if($request->content){
+              $offer->description = $request->content;
+            } 
             $offer->status = 1;
             $offer->save();
           }
@@ -119,7 +121,9 @@ public function store(Request $request)
         $chat->offer_id = $offer->id;
         $chat->created_at   = Carbon::now()->addHours(3);
         $chat->updated_at   = Carbon::now()->addHours(3);
-        $chat->content = Crypt::encryptString($request->content);
+        if($request->content){
+          $chat->content = Crypt::encryptString($request->content);
+        }  
         $chat->type = (int)$type;
         $chat->save();
 

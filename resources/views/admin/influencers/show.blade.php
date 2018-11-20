@@ -86,7 +86,7 @@
             <div class="form-group m-form__group row {{ $errors->has('countries_id') ? 'has-danger' : ''}}">
                     <label for="countries_id" class="col-2 col-form-label">{{ __('admin.country') }}</label>
                      <div class="col-9">
-                    <select name="countries_id"  class="form-control m-input">
+                    <select name="countries_id"  class="form-control m-input" disabled>
                         @if($countries)
                             @foreach ($countries as $country)
                                 <option value="{{ $country->id }}"
@@ -102,7 +102,7 @@
                 <div class="form-group m-form__group row {{ $errors->has('nationality_id') ? 'has-danger' : ''}}">
                     <label for="countries_id" class="col-2 col-form-label">{{ __('admin.natoinality') }}</label>
                      <div class="col-9">
-                    <select name="nationality_id"  class="form-control m-input">
+                    <select name="nationality_id"  class="form-control m-input" disabled>
                         @if($nationalities)
                             @foreach ($nationalities as $row)
                                 <option value="{{ $row->id }}"
@@ -134,7 +134,7 @@
             <div class="form-group m-form__group row {{ $errors->has('account_manger') ? 'has-danger' : ''}}" disabled="">
                 <label for="countries_id" class="col-2 col-form-label">{{ __('admin.account_manger') }}</label>
                  <div class="col-9">
-                <select name="account_manger"  class="form-control m-input">
+                <select name="account_manger"  class="form-control m-input" disabled>
                    <option value="0" {{ $user->account_manger == 0? "selected" : "" }} > 
                        {{ __('admin.manager') }} </option>
                    <option value="1" {{ $user->account_manger == 1? "selected" : "" }}>
