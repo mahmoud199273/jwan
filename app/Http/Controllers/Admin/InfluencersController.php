@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Country;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Admin\User\EditUserRequest;
 use App\Http\Requests\Admin\User\StoreUserRequest;
 use App\User;
@@ -23,7 +24,18 @@ class InfluencersController extends Controller
      */
     public function index()
     {
-        $users = User::where('account_type','1')->latest()->paginate(10);
+        $users = User::where('is_active','0')->count();
+        $users = User::select('users.*','v.code','v.verified')
+        ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'), 
+        function($join)
+        {
+            $join->on('users.phone', '=', 'v2.phone');
+        })
+        ->leftJoin('verify_phone_codes as v', function($join)
+        {
+            $join->on('v.id', '=', 'v2.mx');
+            $join->on('v.phone','=','v2.phone');
+        })->where('users.account_type','1')->latest()->paginate(10);
         return view('admin.influencers.index',compact('users'));
     }
 
@@ -34,9 +46,19 @@ class InfluencersController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $users   = User::where([['name', 'LIKE', '%' . $query. '%'],['account_type','1']] )
-                                     ->orWhere([['phone', 'LIKE', '%' . $query. '%'],['account_type','1']] )
-                                     ->orWhere([['email', 'LIKE', '%' . $query. '%'],['account_type','1']] )
+                                    $users   = User::select('users.*','v.code','v.verified')
+                                    ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'), 
+                                    function($join)
+                                    {
+                                        $join->on('users.phone', '=', 'v2.phone');
+                                    })
+                                    ->leftJoin('verify_phone_codes as v', function($join)
+                                    {
+                                        $join->on('v.id', '=', 'v2.mx');
+                                        $join->on('v.phone','=','v2.phone');
+                                     })->where([['users.name', 'LIKE', '%' . $query. '%'],['users.account_type','1']] )
+                                     ->orWhere([['users.phone', 'LIKE', '%' . $query. '%'],['users.account_type','1']] )
+                                     ->orWhere([['users.email', 'LIKE', '%' . $query. '%'],['users.account_type','1']] )
                                      ->paginate(10);
             $users->appends( ['q' => $request->q] );
             if (count ( $users ) > 0){

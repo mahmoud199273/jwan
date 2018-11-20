@@ -106,7 +106,7 @@
                    <option value="0" {{ $user->account_manger == 0? "selected" : "" }} > 
                        {{ __('admin.manager') }} </option>
                    <option value="1" {{ $user->account_manger == 1? "selected" : "" }}>
-                        {{ __('admin.Personal') }} </option>
+                        {{ __('admin.PersonalYou') }} </option>
                 </select>
                     {!! $errors->first('account_manger', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
@@ -142,6 +142,7 @@
                     <select name="gender"  class="form-control m-input" disabled="">
                        <option value="0"  {{ $user->gender == 1? "selected" : "" }} > {{ __('admin.male') }} </option>
                        <option value="1"  {{ $user->gender == 1? "selected" : "" }} > {{ __('admin.female') }} </option>
+                       <option value="2"  {{ $user->gender == 2? "selected" : "" }} > {{ __('admin.general') }} </option>
                     </select>
                         {!! $errors->first('is_active', '<span class="form-control-feedback">:message</span>') !!}
                     </div>

@@ -253,11 +253,12 @@ return [
     'proof_accepted'     => '  دليل الموافقة   ',
     'done'     => '  انتهى',
     "account_manger" => " المسئول عن الحساب ",
-    "manager" => " مدير اعمال ",
+    "manager" => " مدير اعمالك ",
     "Activecode" => "كود التفعيل",
     "statusPhone" => " تفعيل الجوال ",
     "verified" => " مفعل  ",
-    "unverified" => " غير مفعل "
+    "unverified" => " غير مفعل ",
+    "PersonalYou" => "أنت"
 
     /* m.abdelrahman  */ 
 

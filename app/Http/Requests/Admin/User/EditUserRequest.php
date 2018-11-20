@@ -25,7 +25,7 @@ class EditUserRequest extends BaseRequest
             'email'         => ['required','email', Rule::unique('users')->ignore($this->id, 'id')],
             'password'      => 'required|string|min:6',
             'notes'         => 'required',
-            'type'          => 'required',
+            'type'          => 'nullable',
             'account_manger'=> 'nullable',
             'facebook'      => 'nullable',
             'twitter'       => 'nullable',

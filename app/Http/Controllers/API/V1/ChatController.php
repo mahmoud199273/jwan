@@ -10,6 +10,7 @@ use App\Campaign;
 use App\Offer;
 use Hash;
 use App\Notification;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
@@ -116,6 +117,8 @@ public function store(Request $request)
         $chat->to_user_id 	= $to_user_id;
         $chat->campaign_id = $campaign->id;
         $chat->offer_id = $offer->id;
+        $chat->created_at   = Carbon::now()->addHours(3);
+        $chat->updated_at   = Carbon::now()->addHours(3);
         $chat->content = Crypt::encryptString($request->content);
         $chat->type = (int)$type;
         $chat->save();

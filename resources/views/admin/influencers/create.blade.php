@@ -72,7 +72,7 @@
                 </div>
             </div>
 
-             <div class="form-group m-form__group row {{ $errors->has('type') ? 'has-danger' : ''}}">
+             {{--  <div class="form-group m-form__group row {{ $errors->has('type') ? 'has-danger' : ''}}">
                 <label for="countries_id" class="col-2 col-form-label">{{ __('admin.Type') }}</label>
                  <div class="col-9">
                 <select name="type"  class="form-control m-input">
@@ -82,14 +82,14 @@
                 </select>
                     {!! $errors->first('type', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
-            </div>
+            </div>  --}}
 
             <div class="form-group m-form__group row {{ $errors->has('account_manger') ? 'has-danger' : ''}}">
                 <label for="countries_id" class="col-2 col-form-label">{{ __('admin.account_manger') }}</label>
                  <div class="col-9">
                 <select name="account_manger"  class="form-control m-input">
                    <option value="0"> {{ __('admin.manager') }} </option>
-                   <option value="1"> {{ __('admin.Personal') }} </option>
+                   <option value="1"> {{ __('admin.PersonalYou') }} </option>
                 </select>
                     {!! $errors->first('account_manger', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
@@ -141,6 +141,7 @@
                 <select name="gender"  class="form-control m-input">
                    <option value="0"> {{ __('admin.male') }} </option>
                    <option value="1"> {{ __('admin.female') }} </option>
+                   <option value="2"> {{ __('admin.general') }} </option>
                 </select>
                     {!! $errors->first('is_active', '<span class="form-control-feedback">:message</span>') !!}
                 </div>

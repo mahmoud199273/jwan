@@ -26,7 +26,7 @@ class StoreUserRequest extends BaseRequest
             //'gender'     => 'required',
             'account_manger'=> 'nullable',
             'notes'     => 'required',
-            'type'      => 'required',
+            'type'      => 'nullable',
             'facebook'      => 'nullable',
             'twitter'      => 'nullable',
             'instagram'      => 'nullable',
