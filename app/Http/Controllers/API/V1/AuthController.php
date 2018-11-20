@@ -827,7 +827,7 @@ class AuthController extends Controller
 
     public function isPhoneVerified( $phone )
     {
-        $isVerified = VerifyPhoneCode::where([ [ 'phone', $phone ],[ 'verified', '1'] ])->first();
+        $isVerified = VerifyPhoneCode::where([ [ 'phone', $phone ],[ 'verified', '1'] ])->orderBy('id', 'DESC')->first();
     	return $isVerified ? true :false;
     }
 
