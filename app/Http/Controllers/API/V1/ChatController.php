@@ -98,6 +98,10 @@ public function store(Request $request)
             $offer->cost = "";
             if($request->content){
               $offer->description = $request->content;
+            }
+            else 
+            {
+              $offer->description = " تم اضافة عرض جديد ";
             } 
             $offer->status = 1;
             $offer->save();
