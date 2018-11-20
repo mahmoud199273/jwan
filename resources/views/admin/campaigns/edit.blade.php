@@ -46,14 +46,17 @@
                 <div class="form-group m-form__group row {{ $errors->has('user_id') ? 'has-danger' : ''}}">
                         <label for="name" class="col-1 col-form-label">{{ __('admin.user_name') }}</label>
                         <div class="col-9">
-                                <select name="user_id"  class="form-control">
+                            <input type="hidden" name="user_id" value="{{ $campaign->user->id }}" />
+                            <input type="text" class="form-control m-input" 
+                            placeholder="{{ __('admin.title') }}" value="{{ $campaign->user->name }}" disabled/>
+                                {{--  <select name="user_id"  class="form-control">
                                         @if($users)
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}" {{ ($user->id ==  $campaign->user_id)? "selected" : "" }}> 
                                                     {{ $user->name }}</option>
                                             @endforeach
                                         @endif
-                                </select>
+                                </select>  --}}
                             {!! $errors->first('user_id', '<span class="form-control-feedback">:message</span>') !!}
                         </div>
                     </div>
