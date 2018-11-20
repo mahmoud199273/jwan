@@ -145,6 +145,13 @@ class AuthController extends Controller
     }
 
 
+    public function isUserPhoneExists( $phone , $user_id )
+    {
+        return DB::table('users')->where([['id','<>',$user_id] ,['phone' ,$phone]])->first() ?  true : false ;
+
+    }
+
+
     public function sendVerifyCode( Request $request )
     {
       // atef comment //should also validate if data sent are email.
@@ -160,7 +167,7 @@ class AuthController extends Controller
         if($request->header('Authorization') && $request->header('Authorization') != '' && $request->header('Authorization') != null && $request->header('Authorization') != "null"){
             $user_auth =  $this->getAuthenticatedUser();
 
-            if ($this->isPhoneExists( $request->phone ,$user_auth->id)) {
+            if ($this->isUserPhoneExists( $request->phone ,$user_auth->id)) {
                 return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
             }
 
@@ -319,11 +326,11 @@ class AuthController extends Controller
         ]);
 
         if ($this->isPhoneExists( $request->phone )) {
-           return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+           return $this->setStatusCode(409)->respondWithError(trans('api_msgs.phone_exists'));
         }
 
          if ($this->isMailExists( $request->email )) {
-           return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
+           return $this->setStatusCode(408)->respondWithError(trans('api_msgs.email_exists'));
         }
 
 
@@ -464,16 +471,16 @@ class AuthController extends Controller
         ]);
 
         if ($this->isPhoneExists( $request->phone )) {
-           return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+           return $this->setStatusCode(409)->respondWithError(trans('api_msgs.phone_exists'));
         }
 
          if ($this->isMailExists( $request->email )) {
-           return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
+           return $this->setStatusCode(408)->respondWithError(trans('api_msgs.email_exists'));
         }
 
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
-         return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
         }
 
 
@@ -778,7 +785,10 @@ class AuthController extends Controller
          if ( !$this->isActiveAccount( $credentials,$account_type ) ) {
 
             //return $this->respondUnauthorized( trans('api_msgs.check_credentials') );
-            return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials'));
+            if($account_type == '1') 
+                return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials2'));
+            else
+                return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials'));     
 
         }else{
 

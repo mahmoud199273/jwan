@@ -82,7 +82,7 @@ Route::post('influncer/reset/password', 'API\V1\ResetPasswordController@resetPas
 Route::get('user/profile', 'API\V1\UserController@profile');
 
 
-Route::post('user/update/phone','API\V1\UserController@updatePhone');// user update phone
+//Route::post('user/update/phone','API\V1\UserController@updatePhone');// user update phone
 
 
 Route::post('user/update/profile', 'API\V1\UserController@updateProfile');
