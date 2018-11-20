@@ -348,11 +348,11 @@ $('._statusApprove').on('click', function(){
                         data: {'_method':'post','_token': $('meta[name="csrf-token"]').attr('content'),'id':id,'status':status },
                         success: function( msg ) {
                             if ( msg.status === 'success' ) {
-                              //window.location.reload();
+                              window.location.reload();
                              }
                     },
                     error : function(){
-                        //window.location.reload();
+                        window.location.reload();
                     },
                   });
 		  }else {
