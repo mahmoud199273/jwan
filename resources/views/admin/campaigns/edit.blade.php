@@ -101,7 +101,7 @@
 
             
             <div class="form-group m-form__group row {{ $errors->has('facebook') ? 'has-danger' : ''}}">
-                <label for="is_active" class="col-2 col-form-label">{{ __('admin.facebook') }}</label>
+                <label for="facebook" class="col-2 col-form-label">{{ __('admin.facebook') }}</label>
                  <div class="col-9">
                 <select name="facebook"  class="form-control m-input" >
                    <option value="1" {{ $campaign->facebook == 1? "selected" : "" }} > {{ __('admin.yes') }} </option>
@@ -114,7 +114,7 @@
 
             
             <div class="form-group m-form__group row {{ $errors->has('twitter') ? 'has-danger' : ''}}">
-                <label for="is_active" class="col-2 col-form-label">{{ __('admin.twitter') }}</label>
+                <label for="twitter" class="col-2 col-form-label">{{ __('admin.twitter') }}</label>
                  <div class="col-9">
                 <select name="twitter"  class="form-control m-input" >
                    <option value="1" {{ $campaign->twitter == 1? "selected" : "" }} > {{ __('admin.yes') }} </option>
@@ -127,7 +127,7 @@
 
             
             <div class="form-group m-form__group row {{ $errors->has('snapchat') ? 'has-danger' : ''}}">
-                <label for="is_active" class="col-2 col-form-label">{{ __('admin.snapchat') }}</label>
+                <label for="snapchat" class="col-2 col-form-label">{{ __('admin.snapchat') }}</label>
                  <div class="col-9">
                 <select name="snapchat"  class="form-control m-input" >
                    <option value="1" {{ $campaign->snapchat == 1? "selected" : "" }} > {{ __('admin.yes') }} </option>
@@ -140,7 +140,7 @@
 
             
             <div class="form-group m-form__group row {{ $errors->has('youtube') ? 'has-danger' : ''}}">
-                <label for="is_active" class="col-2 col-form-label">{{ __('admin.youtube') }}</label>
+                <label for="youtube" class="col-2 col-form-label">{{ __('admin.youtube') }}</label>
                  <div class="col-9">
                 <select name="youtube"  class="form-control m-input" >
                    <option value="1" {{ $campaign->youtube == 1? "selected" : "" }} > {{ __('admin.yes') }} </option>

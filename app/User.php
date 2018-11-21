@@ -21,10 +21,10 @@ class User extends Authenticatable
     protected $dates = ['deleted_at'];
         
 
-    public function setPasswordAttribute($password)
-    {
-        return $this->attributes['password'] = bcrypt($password);
-    }
+    // public function setPasswordAttribute($password)
+    // {
+    //     return $this->attributes['password'] = bcrypt($password);
+    // }
 
     
             public function area()
