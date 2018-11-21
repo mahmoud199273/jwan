@@ -789,12 +789,18 @@ class AuthController extends Controller
         
          if ( !$this->isActiveAccount( $credentials,$account_type ) ) {
 
-            if($account_type == '1') 
-                return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials2'));
-            else
+            //if($account_type == '1') 
+            //    return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials2'));
+            //else
                 return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials'));     
 
         }else{
+
+
+            if(!$this->CheckActiveAccount( $credentials,$account_type ))
+        {
+            return $this->setStatusCode(405)->respondWithError(trans('api_msgs.check_credentials2'));
+        }
 
             if(!$this->isPhoneVerified($request->input('phone')))
         {
@@ -813,13 +819,24 @@ class AuthController extends Controller
 
 
 
+    public function CheckActiveAccount( array $credentails, $type ) :bool
+    {
+         if (! Auth::attempt(['countries_id' => $credentails['country_id'] , 'phone' => $credentails['phone'] , 'password' => $credentails['password'] ,'is_active'=> '1' ,'account_type' => $type])) {
+            // not active user
+            return false;
+
+        }else{
+
+            return true;
+        }
+    }
 
 
 
 
     public function isActiveAccount( array $credentails, $type ) :bool
     {
-         if (! Auth::attempt(['countries_id' => $credentails['country_id'] , 'phone' => $credentails['phone'] , 'password' => $credentails['password'] ,'is_active'=> '1' ,'account_type' => $type])) {
+         if (! Auth::attempt(['countries_id' => $credentails['country_id'] , 'phone' => $credentails['phone'] , 'password' => $credentails['password'] ,'account_type' => $type])) {
             // not active user
             return false;
 

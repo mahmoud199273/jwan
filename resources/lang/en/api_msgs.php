@@ -12,7 +12,7 @@ return[
    'loggedout'  			        =>  'Logged out successfully',
    'reset_pass_code'  			 =>  'Use this code to reset your password ',
    'reset_sccuess'				 =>  'Password has been reset successfully',
-   'check_credentials2'			 =>  'Please verify your credentials or the admin did not approve your account',
+   'check_credentials2'			 =>  'Your account is not activated from administrator',
    'check_credentials'			=>  'Please check your credentials',
    'reset_password_error' 		 => 	'Please enter a valid phone number',
    'profile_updated'           =>  'Profile updated successfully',
