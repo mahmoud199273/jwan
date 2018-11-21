@@ -45,7 +45,7 @@ class StoreUserRequest extends BaseRequest
         //     $this->offsetSet('image', $image);
         // }
         //$this->offsetSet('type', 'users');
-
+        
         if ($this->password) {
             $password = bcrypt($this->password);
             $this->offsetSet('password', $password);
