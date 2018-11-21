@@ -42,7 +42,7 @@ class EditUserRequest extends BaseRequest
 
     public function persist($id)
     {
-        if ($this->password) {
+        if ($this->password && $this->password !='') {
             $password = bcrypt($this->password);
             $this->offsetSet('password', $password);
         }

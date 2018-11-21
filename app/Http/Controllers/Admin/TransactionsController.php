@@ -96,11 +96,12 @@ class TransactionsController extends Controller
     }
 
 
-    // public function create()
-    // {
-    //     //
-    //     return view('admin.bank_accounts.create');
-    // }
+    public function create()
+    {
+        //
+        $users = User::where('account_type', '1')->get();
+        return view('admin.transactions.create',compact('users'));
+    }
 
     /**
      * Store a newly created resource in storage.
