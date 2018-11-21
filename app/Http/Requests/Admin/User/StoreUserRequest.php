@@ -23,16 +23,18 @@ class StoreUserRequest extends BaseRequest
             'image'         => 'required',
             'email'         => 'required|string|email|unique:users,email',
             'password'      => 'required|string|min:6',
-            //'gender'     => 'required',
+            'gender'     => 'nullable',
             'account_manger'=> 'nullable',
             'notes'     => 'required',
-            'type'      => 'required',
+            'type'      => 'nullable',
             'facebook'      => 'nullable',
             'twitter'      => 'nullable',
             'instagram'      => 'nullable',
             'snapchat'      => 'nullable',
             'linkedin'      => 'nullable',
-            'youtube'      => 'nullable'
+            'youtube'      => 'nullable',
+            'countries_id'      => 'required',
+            'nationality_id'      => 'nullable',
         ];
     }
 

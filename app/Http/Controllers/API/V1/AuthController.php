@@ -129,6 +129,11 @@ class AuthController extends Controller
 
                 if($user->account_type == 1)
                 {
+                    if($user->is_active == 1)
+                    {
+                        $token = JWTAuth::fromUser($user);
+                        return Response::json( compact('token'));
+                    }
                     return $this->respondWithSuccess(trans('api_msgs.success'));
                 }
 
@@ -784,7 +789,6 @@ class AuthController extends Controller
         
          if ( !$this->isActiveAccount( $credentials,$account_type ) ) {
 
-            //return $this->respondUnauthorized( trans('api_msgs.check_credentials') );
             if($account_type == '1') 
                 return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials2'));
             else
@@ -828,7 +832,7 @@ class AuthController extends Controller
 
     public function isPhoneVerified( $phone )
     {
-        $isVerified = VerifyPhoneCode::where([ [ 'phone', $phone ],[ 'verified', '1'] ])->first();
+        $isVerified = VerifyPhoneCode::where([ [ 'phone', $phone ],[ 'verified', '1'] ])->orderBy('id', 'DESC')->first();
     	return $isVerified ? true :false;
     }
 

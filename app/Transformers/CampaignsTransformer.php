@@ -6,6 +6,7 @@ use App\Campaign;
 use App\Offer;
 use App\Transformers\BaseTransformer as Transformer;
 use App\Transformers\InfluncerTransformer;
+use Illuminate\Support\Facades\DB;
 use App\User;
 use Carbon\Carbon;
 
@@ -52,7 +53,7 @@ class CampaignsTransformer extends Transformer
 
             //'image'         => $camapign->($user->image) ?config('app.url').$user->image : null,
 
-            'rate'              => 3,
+            'rate'              => (int) Offer::select(DB::raw("IF( ROUND(SUM(influncer_rate)/COUNT(influncer_rate)), ROUND(SUM(influncer_rate)/COUNT(influncer_rate)), 0 ) as rate"))->where('campaign_id', $campaign->id)->first()->rate,
 
             'file'              => isset($campaign->attachments) ? $campaign->attachments : null,
 

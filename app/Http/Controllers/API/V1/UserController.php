@@ -236,7 +236,7 @@ class UserController extends Controller
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
-        $user = User::find( $user->id );
+            //$user = User::find( $user->id );
         }
         //  if ($this->isPhoneExists( $request->phone ,$user->id)) {
         //    return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
@@ -252,7 +252,9 @@ class UserController extends Controller
             //     $user->phone        =  $request->phone;
             // }
 
+            $user = User::find( $user->id );
 
+            
             $user->email        =  $request->email;
             if (substr( $request->image, 0, 4 ) !== "http") {
                 $user->image        = $request->image;

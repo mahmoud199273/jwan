@@ -26,7 +26,7 @@ class EditNathionalityRequest extends BaseRequest
 
     public function persist($id)
     {
-        Nationalities::find($id)->Update($this->request->all());
+        Nathionalities::find($id)->Update($this->request->all());
     }
 
 

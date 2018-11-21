@@ -24,7 +24,7 @@ class StoreNathionalityRequest extends BaseRequest
 
     public function persist()
     {
-        Nationalities::create($this->request->all());
+        Nathionalities::create($this->request->all());
     }
 
 

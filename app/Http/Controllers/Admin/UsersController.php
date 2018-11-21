@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Country;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Admin\User\EditUserRequest;
 use App\Http\Requests\Admin\User\StoreUserRequest;
 use App\User;
+use App\UserPlayerId;
 use Illuminate\Http\Request;
 
 
@@ -24,7 +26,17 @@ class UsersController extends Controller
     public function index()
     {
         $notification   = User::where('is_active','0')->count();
-        $users = User::where('account_type','0')->latest()->paginate(10);
+        $users = User::select('users.*','v.code','v.verified')
+        ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'), 
+        function($join)
+        {
+            $join->on('users.phone', '=', 'v2.phone');
+        })
+        ->leftJoin('verify_phone_codes as v', function($join)
+        {
+            $join->on('v.id', '=', 'v2.mx');
+            $join->on('v.phone','=','v2.phone');
+        })->where('users.account_type','0')->latest()->paginate(10);
         return view('admin.users.index',compact('users','notification'));
     }
 
@@ -41,13 +53,23 @@ class UsersController extends Controller
                                      ->orWhere([['phone', 'LIKE', '%' . $query. '%'],
                                         ['account_type','0']] )*/
 
-             $users   = User::where([['name', 'LIKE', '%' . $query. '%'],['account_type','0']] )
-                                     ->orWhere([['phone', 'LIKE', '%' . $query. '%'],['account_type','0']] )
-                                     ->orWhere('email','LIKE','%'.$query.'%')
-
+             $users   = User::select('users.*','v.code','v.verified')
+                                    ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'), 
+                                    function($join)
+                                    {
+                                        $join->on('users.phone', '=', 'v2.phone');
+                                    })
+                                    ->leftJoin('verify_phone_codes as v', function($join)
+                                    {
+                                        $join->on('v.id', '=', 'v2.mx');
+                                        $join->on('v.phone','=','v2.phone');
+                                    })
+                                     ->where([['users.name', 'LIKE', '%' . $query. '%'],['users.account_type','0']] )
+                                     ->orWhere([['users.phone', 'LIKE', '%' . $query. '%'],['users.account_type','0']] )
+                                     ->orWhere([['users.email', 'LIKE', '%' . $query. '%'],['users.account_type','0']] )
+                                     ->groupBy('users.phone')
                                      ->paginate(10);
             $users->appends( ['q' => $request->q] );
-
             if (count ( $users ) > 0){
                 return view('admin.users.index',[ 'users' => $users ])->withQuery($query);
             }else{
@@ -67,7 +89,6 @@ class UsersController extends Controller
     public function create()
     {
         $countries =  Country::all();
-
         return view('admin.users.create',compact('countries'));
     }
 
@@ -153,12 +174,22 @@ class UsersController extends Controller
         
     }
 
+    public function getUserPlayerIds( $user_id )
+    {
+        $player_ids = UserPlayerId::where('user_id',$user_id)->pluck('player_id')->toArray();
+        return $player_ids ? $player_ids : null;
+    }
+
     public function ban( Request $request )
     {
         $user =  User::find( $request->id );
         if ( $request->ajax() ) {
             $user->is_active = '0';
             $user->save();
+
+            $player_ids = $this->getUserPlayerIds($user->id);
+            sendNotification(1,'Your account is suspended,please refer to the admin ','تم ايقاف العضوية برجاء الرجوع الى الادارة',$player_ids,"public",['user_id' =>  (int)$user->id,'type'=>  13,'type_title'	=> 'logout ']);
+
             return response(['msg' => 'banned', 'status' => 'success']);
         }
 

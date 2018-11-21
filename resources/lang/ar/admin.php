@@ -121,7 +121,7 @@ return [
     'countries'                     => 'الدول',
     'country'                       => 'دولة',
     'natoinalities'                 => 'الجنسيات',
-    'natoinality'                   => 'جنسية',
+    'natoinality'                   => 'الجنسية',
     'areas'                         => 'المناطق',
     'area'                          => ' منطقه ',
     'city'                          => 'مدينة',
@@ -253,7 +253,13 @@ return [
     'proof_accepted'     => '  دليل الموافقة   ',
     'done'     => '  انتهى',
     "account_manger" => " المسئول عن الحساب ",
-    "manager" => " مدير اعمال "
+    "manager" => " مدير اعمالك ",
+    "Activecode" => "كود التفعيل",
+    "statusPhone" => " تفعيل الجوال ",
+    "verified" => " مفعل  ",
+    "unverified" => " غير مفعل ",
+    "PersonalYou" => "أنت"
+
     /* m.abdelrahman  */ 
 
 ];

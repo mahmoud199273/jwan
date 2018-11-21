@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Country;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Admin\User\EditUserRequest;
 use App\Http\Requests\Admin\User\StoreUserRequest;
 use App\User;
+use App\UserPlayerId;
+use App\Nathionality;
 use Illuminate\Http\Request;
 
 
@@ -23,7 +26,18 @@ class InfluencersController extends Controller
      */
     public function index()
     {
-        $users = User::where('account_type','1')->latest()->paginate(10);
+        $users = User::where('is_active','0')->count();
+        $users = User::select('users.*','v.code','v.verified')
+        ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'), 
+        function($join)
+        {
+            $join->on('users.phone', '=', 'v2.phone');
+        })
+        ->leftJoin('verify_phone_codes as v', function($join)
+        {
+            $join->on('v.id', '=', 'v2.mx');
+            $join->on('v.phone','=','v2.phone');
+        })->where('users.account_type','1')->latest()->paginate(10);
         return view('admin.influencers.index',compact('users'));
     }
 
@@ -34,9 +48,19 @@ class InfluencersController extends Controller
         if ( $query == "") {
             return redirect()->back();
         }else{
-             $users   = User::where([['name', 'LIKE', '%' . $query. '%'],['account_type','1']] )
-                                     ->orWhere([['phone', 'LIKE', '%' . $query. '%'],['account_type','1']] )
-                                     ->orWhere([['email', 'LIKE', '%' . $query. '%'],['account_type','1']] )
+                                    $users   = User::select('users.*','v.code','v.verified')
+                                    ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'), 
+                                    function($join)
+                                    {
+                                        $join->on('users.phone', '=', 'v2.phone');
+                                    })
+                                    ->leftJoin('verify_phone_codes as v', function($join)
+                                    {
+                                        $join->on('v.id', '=', 'v2.mx');
+                                        $join->on('v.phone','=','v2.phone');
+                                     })->where([['users.name', 'LIKE', '%' . $query. '%'],['users.account_type','1']] )
+                                     ->orWhere([['users.phone', 'LIKE', '%' . $query. '%'],['users.account_type','1']] )
+                                     ->orWhere([['users.email', 'LIKE', '%' . $query. '%'],['users.account_type','1']] )
                                      ->paginate(10);
             $users->appends( ['q' => $request->q] );
             if (count ( $users ) > 0){
@@ -57,8 +81,8 @@ class InfluencersController extends Controller
     public function create()
     {
         $countries =  Country::all();
-
-        return view('admin.influencers.create',compact('countries'));
+        $nationalities =  Nathionality::all();
+        return view('admin.influencers.create',compact('countries','nationalities'));
     }
 
     /**
@@ -84,7 +108,8 @@ class InfluencersController extends Controller
     {
         $user = User::find($id);
         $countries =  Country::all();
-        return view('admin.influencers.show',compact('user','countries'));
+        $nationalities =  Nathionality::all();
+        return view('admin.influencers.show',compact('user','countries','nationalities'));
     }
 
     /**
@@ -97,8 +122,8 @@ class InfluencersController extends Controller
     {
         $user = User::find($id);
         $countries =  Country::all();
-
-        return view('admin.influencers.edit',compact('user','countries'));
+        $nationalities =  Nathionality::all();
+        return view('admin.influencers.edit',compact('user','countries','nationalities'));
     }
 
     /**
@@ -141,12 +166,22 @@ class InfluencersController extends Controller
         
     }
 
+    public function getUserPlayerIds( $user_id )
+    {
+        $player_ids = UserPlayerId::where('user_id',$user_id)->pluck('player_id')->toArray();
+        return $player_ids ? $player_ids : null;
+    }
+
     public function ban( Request $request )
     {
         $user =  User::find( $request->id );
         if ( $request->ajax() ) {
             $user->is_active = '0';
             $user->save();
+
+            $player_ids = $this->getUserPlayerIds($user->id);
+            sendNotification(1,'Your account is suspended,please refer to the admin ','تم ايقاف العضوية برجاء الرجوع الى الادارة',$player_ids,"public",['user_id' =>  (int)$user->id,'type'=>  13,'type_title'	=> 'logout ']);
+            
             return response(['msg' => 'banned', 'status' => 'success']);
         }
 

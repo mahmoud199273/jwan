@@ -723,6 +723,7 @@ class OffersController extends Controller
         $offer->influncer_id     = $influncer->id;
         $offer->cost            = $request->cost;
         $offer->description     = $request->description;
+        $offer->created_at   = Carbon::now()->addHours(3);
         $offer->save();
 
         //$request->description

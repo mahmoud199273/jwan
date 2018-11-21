@@ -23,16 +23,19 @@ class EditUserRequest extends BaseRequest
             'phone'         => ['required', Rule::unique('users')->ignore($this->id, 'id')],
             'image'         => 'required',
             'email'         => ['required','email', Rule::unique('users')->ignore($this->id, 'id')],
-            'password'      => 'required|string|min:6',
+            //'password'      => 'required|string|min:6',
             'notes'         => 'required',
-            'type'          => 'required',
+            'type'          => 'nullable',
             'account_manger'=> 'nullable',
             'facebook'      => 'nullable',
             'twitter'       => 'nullable',
             'instagram'     => 'nullable',
             'snapchat'      => 'nullable',
             'linkedin'      => 'nullable',
-            'youtube'       => 'nullable'
+            'youtube'       => 'nullable',
+            'gender'     => 'nullable',
+            'countries_id'      => 'required',
+            'nationality_id'      => 'nullable',
 
         ];
     }

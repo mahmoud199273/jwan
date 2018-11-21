@@ -10,6 +10,7 @@ use App\Campaign;
 use App\Offer;
 use Hash;
 use App\Notification;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
@@ -61,7 +62,7 @@ public function store(Request $request)
     $validator = Validator::make($request->all() , [
           'campaign_id'    	=> 'required|exists:campaigns,id',
           //'offer_id'    		=> 'required|exists:offfers,id',
-          'content'         => 'required|string',
+          //'content'         => 'required|string',
       ]);
 
       if ($validator->fails()) {
@@ -82,6 +83,8 @@ public function store(Request $request)
           $from_user_id = $user->id;
           $to_user_id = $offer->influncer_id;
           $who = 1;
+          $chat_influncer_id = $offer->influncer_id;
+
         }
         else {
           //influncer
@@ -93,7 +96,13 @@ public function store(Request $request)
             $offer->user_id = $campaign->user_id;
             $offer->campaign_id = $campaign->id;
             $offer->cost = "";
-            $offer->description = $request->content;
+            if($request->content){
+              $offer->description = $request->content;
+            }
+            else 
+            {
+              $offer->description = " تم اضافة عرض جديد ";
+            } 
             $offer->status = 1;
             $offer->save();
           }
@@ -114,9 +123,14 @@ public function store(Request $request)
         $chat->to_user_id 	= $to_user_id;
         $chat->campaign_id = $campaign->id;
         $chat->offer_id = $offer->id;
-        $chat->content = Crypt::encryptString($request->content);
+        $chat->created_at   = Carbon::now()->addHours(3);
+        $chat->updated_at   = Carbon::now()->addHours(3);
         $chat->type = (int)$type;
-        $chat->save();
+        if($request->content){
+          $chat->content = Crypt::encryptString($request->content);
+          $chat->save();
+        }  
+        
 
         // push notifications
 
@@ -143,7 +157,8 @@ public function store(Request $request)
                               'chat_content'         => $request->content,
                               'chat_type'       => $chat->type]);
 
-        return $this->respondWithSuccess(__('api_msgs.created'));
+        //return $this->respondWithSuccess(__('api_msgs.created'));
+        return $this->sendResponse(['offer' => $offer->id ],trans('api_msgs.created'),200);
       }
 }
 /*

@@ -261,7 +261,7 @@ class CampignsController extends Controller
 
         $campaign->maximum_rate            = $request->maximum_rate;
 
-        //$campaign->created_date            = $request->created_date;
+        $campaign->created_at            = Carbon::now()->addHours(3);
 
         //$campaign->updated_date            = $request->updated_date;
 
@@ -664,6 +664,7 @@ class CampignsController extends Controller
 
             $campaign = DB::table('campaigns')
                      ->whereIn('id',  $skipped)
+                     ->orderBy('updated_at','DESC')
                      ->get();
 
            //dd($campaign);
@@ -698,6 +699,7 @@ class CampignsController extends Controller
 
             $campaign = DB::table('campaigns')
                      ->whereIn('id',  $favorite)
+                     ->orderBy('updated_at','DESC')
                      ->get();
 
             //dd($campaign);
