@@ -42,9 +42,10 @@ class EditUserRequest extends BaseRequest
 
     public function persist($id)
     {
-        if ($this->password && $this->password !='') {
-            $password = bcrypt($this->password);
+        if ($this->password && $this->password !='' && trim($this->password) != '') {
+            $password = $this->password;
             $this->offsetSet('password', $password);
+            //$user->password = $this->password;
         }
         User::find($id)->Update($this->request->all());
     }

@@ -91,7 +91,7 @@ class AuthController extends Controller
             return $this->setStatusCode(422)->respondWithError('parameters faild validation');
         }
 
-        $code   = VerifyPhoneCode::where([ [ 'code', $request->code ],[ 'verified', '0'] ])->first();
+        $code   = VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],[ 'verified', '0'] ])->first();
 
         if ( !$code ) {
 
@@ -561,7 +561,7 @@ class AuthController extends Controller
 
 
 
-            //$user->is_active    =  '1';
+            $user->is_active    =  '0';
 
             $user->save();
 
