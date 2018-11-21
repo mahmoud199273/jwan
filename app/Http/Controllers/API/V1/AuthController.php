@@ -127,7 +127,7 @@ class AuthController extends Controller
 
                 VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],[ 'verified', '0'] ])->update(['verified' => '1']);
 
-                if($user->account_type == 1)
+                if($user->account_type == 1) //influencer
                 {
                     if($user->is_active == 1)
                     {
@@ -136,7 +136,7 @@ class AuthController extends Controller
                     }
                     return $this->respondWithSuccess(trans('api_msgs.success'));
                 }
-
+                // user
                 $token = JWTAuth::fromUser($user);
 
                 return Response::json( compact('token'));
@@ -290,15 +290,16 @@ class AuthController extends Controller
 
             'email'         => 'required',
 
-            'phone'         => 'required|max:14|min:9',
+            'phone'         => 'required|max:14|min:9|regex:/^[5][0-9]{4,}/',
 
             'country_id'    => 'required',
 
-            'password'      => 'required|string|max:25|min:8',
+            'password'      => 'required|string|max:16|min:8',
 
             'image'         => 'nullable',
 
-            'name'          => 'required|string|max:25|min:2',
+            //'name'          => 'required|string|max:25|min:3',
+            'name'          => 'required|string|min:3',
 
             'notes'         => 'required',
 
@@ -417,13 +418,14 @@ class AuthController extends Controller
 
             'email'         => 'required|unique:users,email',
 
-            'phone'         => 'required|max:14|min:9',
+            'phone'         => 'required|max:14|min:9|regex:/^[5][0-9]{4,}/',
 
-            'password'      => 'required|string|max:25|min:8',
+            'password'      => 'required|string|max:16|min:8',
 
             'image'         => 'nullable',
 
-            'name'          => 'required',
+            //'name'          => 'required',
+            'name'          => 'required|string|min:3',
 
             'gender'        => 'required',
 

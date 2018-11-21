@@ -160,6 +160,8 @@ class InfluencersController extends Controller
             $user = User::find( $request->id );
             $user->is_active = '1';
             $user->save();
+
+            @sendSMS($this->formatPhone($user->phone,$user->countries_id) , __('api_msgs.sms_code_text'));
             return response(['msg' => 'activated', 'status' => 'success']);
         }
 

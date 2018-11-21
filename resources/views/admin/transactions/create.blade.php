@@ -99,7 +99,8 @@
         <div class="form-group m-form__group row {{ $errors->has('transaction_account_number') ? 'has-danger' : ''}}">
             <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.transaction_account_number') }}</label>
             <div class="col-9">
-                <textarea class="form-control m-input" placeholder="{{ __('admin.transaction_account_number') }}" name="privacy_title_ar" ></textarea>
+                    <input type="text" name="transaction_account_number" class="form-control m-input" 
+                    placeholder="{{ __('admin.transaction_account_number') }}" >
                 {!! $errors->first('transaction_account_number', '<span class="form-control-feedback">:message</span>') !!}
             </div>
         </div>
@@ -107,7 +108,8 @@
         <div class="form-group m-form__group row {{ $errors->has('transaction_account_IBAN') ? 'has-danger' : ''}}">
             <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.transaction_account_IBAN') }}</label>
             <div class="col-9">
-                <textarea class="form-control m-input" placeholder="{{ __('admin.transaction_account_IBAN') }}" name="transaction_account_IBAN" ></textarea>
+                <input type="text" name="transaction_account_IBAN" class="form-control m-input" 
+                    placeholder="{{ __('admin.transaction_account_IBAN') }}" >
                 {!! $errors->first('transaction_account_IBAN', '<span class="form-control-feedback">:message</span>') !!}
             </div>
         </div>
@@ -115,33 +117,43 @@
         <div class="form-group m-form__group row {{ $errors->has('transaction_number') ? 'has-danger' : ''}}">
             <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.transaction_number') }}</label>
             <div class="col-9">
-                <textarea class="form-control m-input" placeholder="{{ __('admin.transaction_number') }}" name="transaction_number" ></textarea>
+                <input type="text" name="transaction_number" class="form-control m-input" 
+                    placeholder="{{ __('admin.transaction_number') }}" >
                 {!! $errors->first('transaction_number', '<span class="form-control-feedback">:message</span>') !!}
             </div>
         </div>
 
-        <div class="form-group m-form__group row {{ $errors->has('transaction_date') ? 'has-danger' : ''}}">
-            <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.transaction_date') }}</label>
-            <div class="col-9">
-                <textarea class="form-control m-input" placeholder="{{ __('admin.transaction_date') }}" name="influncer_privacy_title" ></textarea>
-                {!! $errors->first('transaction_date', '<span class="form-control-feedback">:message</span>') !!}
-            </div>
-        </div>
+        
 
-        <div class="form-group m-form__group row {{ $errors->has('transaction_amount') ? 'has-danger' : ''}}">
-            <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.transaction_amount') }}</label>
-            <div class="col-9">
-                <textarea class="form-control m-input" placeholder="{{ __('admin.transaction_amount') }}" name="transaction_amount" ></textarea>
-                {!! $errors->first('transaction_amount', '<span class="form-control-feedback">:message</span>') !!}
-            </div>
-        </div>
+        <div class="form-group m-form__group row {{ $errors->has('image') ? 'has-danger' : ''}}">
+                <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.image') }}</label>
+                <div class="col-9">
+                    <input type="hidden" name="image" id="file" class="form-control m-input" placeholder="{{ __('admin.image') }}">
+                    {{--   upload image div   --}}
+                    <div class="container">
+                            <div class="row" style="padding-top:10px;">
+                              <div class="col-xs-2">
+                                <button id="uploadBtn" class="btn btn-large btn-primary"> اختر ملف </button>
+                              </div>
+                              <div class="col-xs-10">
+                            <div id="progressOuter" class="progress progress-striped active" style="display:none;">
+                              <div id="progressBar" class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                              </div>
+                            </div>
+                              </div>
+                            </div>
+                            <div class="row" style="padding-top:10px;">
+                              <div class="col-xs-10">
+                                <div id="msgBox">
+                                </div>
+                              </div>
+                            </div>
+                            <img src="" id="image_file" width="100" height="100" style="display:none;">
+                        </div>
 
-        <div class="form-group m-form__group row {{ $errors->has('type') ? 'has-danger' : ''}}">
-            <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.type') }}</label>
-            <div class="col-9">
-                <textarea class="form-control m-input" placeholder="{{ __('admin.type') }}" name="type" ></textarea>
-                {!! $errors->first('type', '<span class="form-control-feedback">:message</span>') !!}
-            </div>
+                        {{--   upload image div   --}}
+                    {!! $errors->first('image', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
         </div>
 
 
