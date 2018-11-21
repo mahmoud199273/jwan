@@ -69,6 +69,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th><b>{{ __('admin.campaign_id') }}</b></th>
                                     <th><b>{{ __('admin.title') }}</b></th>
                                     <th><b>{{ __('admin.name') }}</b></th>
                                     <th><b>{{ __('admin.campaign_date') }}</b></th>
@@ -82,6 +83,7 @@
                                 @if($campaigns)
                                 @foreach ($campaigns as $campaign)
                                 <tr>
+                                    <th scope="row">{{ $campaign->id }}</th>
                                     <th scope="row">{{ $campaign->title }}</th>
                                     <th scope="row">{{ $campaign->user->name }}</th>
                                     <th scope="row">{{ $campaign->created_at }}</th>
