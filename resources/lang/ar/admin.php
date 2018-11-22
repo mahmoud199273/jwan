@@ -260,6 +260,8 @@ return [
     "unverified" => " غير مفعل ",
     "PersonalYou" => "أنت",
     "campaign_id" => " رقم الحمله ",
+    "users_transactions" => " تحويلات العملاء ",
+    "influencers_transactions" => " تحويلات المعلنين ",
     'sms_code_text'=>  ' تم تفعيل الحساب الخاص بك على تطبيق سجنفاى ',
 
     /* m.abdelrahman  */ 

@@ -79,7 +79,7 @@ class CampignsController extends Controller
             if ($campaign_ids) {
                 $campaigns->whereNotIn('campaigns.id',$campaign_ids);
             }
-            $campaigns->where('campaigns.status',1)
+            $campaigns->where('campaigns.status','1')
             ->groupBy('campaigns.id')
  
  
@@ -807,7 +807,7 @@ class CampignsController extends Controller
         $pagination = Campaign::where('user_id' ,$user->id)->where(function($q) {
             $q->where('status', "8")
               ->orWhere('status', "4");
-        })->paginate($this->getPagination());
+        })->orderBy("updated_at",'DESC')->paginate($this->getPagination());
         $campaigns =  $this->campaignsTransformer->transformCollection(collect($pagination->items()));
         //$campaigns = $this->campaignsTransformer->transformCollection($data);
         return $this->respondWithPagination($pagination, ['data' => $campaigns ]);

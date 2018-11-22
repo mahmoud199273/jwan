@@ -29,16 +29,26 @@ class TransactionsController extends Controller
         $list = Transactions::where('user_id',$id)->latest()->paginate(10);
          return view('admin.transactions.index',compact('list'));
     }
-    public function index()
+    
+    public function index(Request $request)
     {
-        //
-        //dd("here");
+        
+        if(isset($request->route()->getAction()['account_type'])) // this to show users or influencers transactions
+            $account_type = $request->route()->getAction()['account_type']; //0 users | 1 influencers 
         $list =  Transactions::SELECT('transactions.*','campaigns.title','users.name','offers.cost')
                                     ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
                                     ->leftJoin('campaigns', 'campaigns.id', '=', 'transactions.campaign_id')
-                                    ->leftJoin('offers', 'offers.id', '=', 'transactions.offer_id')
-                    ->orderBy('transactions.id','DESC')
-               ->latest()->paginate(10);
+                                    ->leftJoin('offers', 'offers.id', '=', 'transactions.offer_id');
+                if(isset($account_type)){
+                    $list->where('users.account_type',$account_type);
+                    $list->where('transactions.status','0');
+                } 
+                else {
+                    $list->where('transactions.status','!=','0');
+                }
+                $list->orderBy('transactions.id','DESC');
+                $list->latest();
+                $list = $list->paginate(10);
         // $list = Transactions::latest()->paginate(10);
         //        //->join('users','users.id','transactions.user_id')
         //        //->join('campaigns','campaigns.id','transactions.campaign_id')

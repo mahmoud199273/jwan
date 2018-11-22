@@ -104,6 +104,7 @@ public function store(Request $request)
             $offer->influncer_id = $user->id;
             $offer->user_id = $campaign->user_id;
             $offer->campaign_id = $campaign->id;
+            $offer->created_at   = Carbon::now()->addHours(3);
             $offer->cost = "";
             if($request->content){
               $offer->description = $request->content;

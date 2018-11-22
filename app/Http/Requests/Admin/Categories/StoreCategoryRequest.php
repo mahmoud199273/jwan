@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\Categories;
 
-use App\Models\Admin\Category;
+use App\Category;
 use App\Http\Requests\Admin\BaseRequest;
 
 

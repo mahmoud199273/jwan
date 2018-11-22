@@ -276,6 +276,12 @@ class OffersController extends Controller
             if(!$offer){
                 return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not approved'));
             }
+
+            if((int)$offer->cost > (int)$user->balance)
+            {
+                return $this->setStatusCode(403)->respondWithError(trans('api_msgs.offer_not_pay'));
+            }
+
             $offer->status = "3";
             $offer->save();
             ///////////////////////////////////// payment success or redirect /////////////////////////////////////
