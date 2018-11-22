@@ -161,7 +161,7 @@ class AuthController extends Controller
     {
       // atef comment //should also validate if data sent are email.
         $validator = Validator::make( $request->all(), [
-            'country_id'    => 'required',
+            'country_id'             => 'required',
             'phone'                  => 'required',
         ]);
 
