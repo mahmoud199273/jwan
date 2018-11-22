@@ -198,8 +198,8 @@
                                         @if($row->status==0)
                                             <a type="button" href="javascript:;" data-status="1" data-id = "{{ $row->id }}"
                                                 class="m-btn m-btn m-btn--square btn btn-secondary _statusApprove">
-                                                {{-- تأكيد التحويل --}}
-                                                <i class="fa fa-check m--font-success"></i>
+                                                تأكيد التحويل
+                                                {{-- <i class="fa fa-check m--font-success"></i> --}}
                                             </a>
                                              
 

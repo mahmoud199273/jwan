@@ -31,6 +31,8 @@
 	<link href="{{asset('admin/assets/demo/demo3/base/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{asset('admin/imageuploadify.css')}}" rel="stylesheet" type="text/css" />
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+
 	<!--end::Base Styles -->
 
 	<link rel="shortcut icon" href="{{asset('favicon.ico')}}" /> 
@@ -118,6 +120,7 @@
 		<script type="text/javascript" src="{{asset('frontend/assets/js/validation_localization.js')}}"></script>
       	<script type="text/javascript" src="{{asset('frontend/assets/js/validation/admin_ads.js')}}"></script>
       	<script type="text/javascript" src="{{asset('frontend/assets/js/validation/admin_setting.js')}} "></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 
 
 <script>
@@ -328,7 +331,51 @@
                 }
 		});
     });
-   
+
+{{-- $('._statusApprove').on('click',function(){
+
+	$.confirm({
+    title: 'تأكيد التحويل !',
+    content: '' +
+    '<form action="" class="formName">' +
+    '<div class="form-group">' +
+    '<label>القيمة المحولة</label>' +
+    '<input type="text" placeholder="Your name" class="name form-control" required />' +
+    '</div>' +
+    '</form>',
+    buttons: {
+        formSubmit: {
+            text: 'تأكيد التحويل',
+            btnClass: 'btn-blue',
+            action: function () {
+                var name = this.$content.find('.name').val();
+                if(!name){
+                    $.alert('provide a valid name');
+                    return false;
+                }
+                $.alert('Your name is ' + name);
+            }
+        },
+        cancel: {
+					text: 'الغاء',
+					action: function () {
+					}
+			}
+    },
+    onContentReady: function () {
+        // bind to events
+        var jc = this;
+        this.$content.find('form').on('submit', function (e) {
+            // if the user submits the form by pressing enter in the field.
+            e.preventDefault();
+            jc.$$formSubmit.trigger('click'); // reference the button and click it
+        });
+    }
+});
+
+});		 --}}
+
+
 
 $('._statusApprove').on('click', function(){
         id = $(this).attr('data-id');
