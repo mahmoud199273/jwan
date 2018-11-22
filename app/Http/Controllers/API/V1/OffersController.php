@@ -182,11 +182,11 @@ class OffersController extends Controller
             if(!$offer){
                 return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or approved before'));
             }
-            $userData = User::find($user->id);
-            if($userData->balance<$offer->cost)
-            {
-              return $this->setStatusCode(422)->respondWithError(trans('api_msgs.please charge your account'));
-            }
+            // $userData = User::find($user->id);
+            // if($userData->balance<$offer->cost)
+            // {
+            //   return $this->setStatusCode(422)->respondWithError(trans('api_msgs.please charge your account'));
+            // }
 
             $offer->status = "1";
             $offer->save();
@@ -196,18 +196,18 @@ class OffersController extends Controller
 
 
 
-            $transations = new Transactions;
-            $transations->user_id = $user->id;
-            $transations->amount     = $offer->cost;
-            $transations->direction = 1;
-            $transations->type     = 1;
-            $transations->status     = 0;
-            $transations->campaign_id     = $campaign->id;
-            $transations->offer_id     = $offer->id;
-            $transations->save();
+            // $transations = new Transactions;
+            // $transations->user_id = $user->id;
+            // $transations->amount     = $offer->cost;
+            // $transations->direction = 1;
+            // $transations->type     = 1;
+            // $transations->status     = 0;
+            // $transations->campaign_id     = $campaign->id;
+            // $transations->offer_id     = $offer->id;
+            // $transations->save();
 
-            $user->balance = $userData->balance - $offer->cost;
-            $user->save();
+            // $user->balance = $userData->balance - $offer->cost;
+            // $user->save();
 
             $player_ids = $this->getUserPlayerIds($offer->influncer_id);
             Notification::create(['user_id' => $offer->influncer_id,
@@ -277,7 +277,8 @@ class OffersController extends Controller
                 return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not approved'));
             }
 
-            if((int)$offer->cost > (int)$user->balance)
+            $userData = User::find($user->id);
+            if((int)$offer->cost > (int)$userData->balance)
             {
                 return $this->setStatusCode(403)->respondWithError(trans('api_msgs.offer_not_pay'));
             }
@@ -289,6 +290,20 @@ class OffersController extends Controller
 
 
             $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
+
+
+            $transations = new Transactions;
+            $transations->user_id = $user->id;
+            $transations->amount     = $offer->cost;
+            $transations->direction = 1;
+            $transations->type     = 1;
+            $transations->status     = 0;
+            $transations->campaign_id     = $offer->campaign_id;
+            $transations->offer_id     = $offer->id;
+            $transations->save();
+
+            $user->balance = $userData->balance - $offer->cost;
+            $user->save();
 
             $player_ids = $this->getUserPlayerIds($offer->influncer_id);
             Notification::create(['user_id' => $offer->influncer_id,
