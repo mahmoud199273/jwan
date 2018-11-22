@@ -263,6 +263,10 @@ return [
     "users_transactions" => " تحويلات العملاء ",
     "influencers_transactions" => " تحويلات المعلنين ",
     'sms_code_text'=>  ' تم تفعيل الحساب الخاص بك على تطبيق سجنفاى ',
+    'accout_type'=>  ' نوع الحساب ',
+    'accout_type0'=>  ' شخصى ذكر  ',
+    'accout_type1'=>  ' شخصى انثى ',
+    'accout_type2'=>  ' عام ',
 
     /* m.abdelrahman  */ 
 

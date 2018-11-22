@@ -179,12 +179,12 @@
             </div>
 
             <div class="form-group m-form__group row {{ $errors->has('gender') ? 'has-danger' : ''}}">
-                <label for="gender" class="col-2 col-form-label">{{ __('admin.gender') }}</label>
+                <label for="gender" class="col-2 col-form-label">{{ __('admin.accout_type') }}</label>
                  <div class="col-9">
                 <select name="gender"  class="form-control m-input" >
-                   <option value="0"  {{ $user->gender == 1? "selected" : "" }} > {{ __('admin.male') }} </option>
-                   <option value="1"  {{ $user->gender == 1? "selected" : "" }} > {{ __('admin.female') }} </option>
-                   <option value="2"  {{ $user->gender == 2? "selected" : "" }} > {{ __('admin.general') }} </option>
+                   <option value="0"  {{ $user->gender == 0? "selected" : "" }} > {{ __('admin.accout_type0') }} </option>
+                   <option value="1"  {{ $user->gender == 1? "selected" : "" }} > {{ __('admin.accout_type1') }} </option>
+                   <option value="2"  {{ $user->gender == 2? "selected" : "" }} > {{ __('admin.accout_type2') }} </option>
                 </select>
                     {!! $errors->first('is_active', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
