@@ -10,7 +10,7 @@ class Nathionality extends Model
 	use SoftDeletes;
     protected $dates = ['deleted_at'];
 	protected $table = 'nathionalities';
-
+	protected $guarded = [];
     public function user()
 	{
     	return $this->belongsTo('App\User');

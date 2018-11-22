@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BankAccounts\EditTransactionsRequest;
-use App\Http\Requests\Admin\BankAccounts\StoreTransactionsRequest;
-use App\Transactions;
+use App\Http\Requests\Admin\Transactions\EditTransactionsRequest;
+use App\Http\Requests\Admin\Transactions\StoreTransactionsRequest;
 use App\UserPlayerId;
+use App\Transactions;
+use Carbon\Carbon;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -96,11 +97,12 @@ class TransactionsController extends Controller
     }
 
 
-    // public function create()
-    // {
-    //     //
-    //     return view('admin.bank_accounts.create');
-    // }
+    public function create()
+    {
+        //
+        $users = User::where('account_type', '1')->get();
+        return view('admin.transactions.create',compact('users'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -108,9 +110,61 @@ class TransactionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTransactionsRequest $request)
+    //public function store(StoreTransactionsRequest $request)
+    //public function store(StoreTransactionsRequest $request)
+    public function store(Request $request)
     {
-        $request->persist();
+        //dd($request->user_id);
+        $this->validate($request,[
+            'user_id'                      => 'required',
+            'amount'                       => 'required',
+            'direction'                    => 'nullable',
+            'campaign_id'                  => 'nullable',
+            'offer_id'                     => 'nullable',
+            'status'                       => 'nullable',
+            'image'                        => 'required',
+            'transaction_bank_name'        => 'required',
+            'transaction_account_name'     => 'required',
+            'transaction_account_number'   => 'required',
+            'transaction_account_IBAN'     => 'required',
+            'transaction_number'           => 'required',
+            'transaction_date'             => 'nullable',
+            'transaction_amount'           => 'nullable',
+            'type'                         => 'nullable',
+         ]);
+
+        $transactions =  new Transactions;
+        $transactions->user_id 		= $request->user_id;
+        $transactions->amount 	= $request->amount;
+        $transactions->transaction_amount 	= $request->amount;
+        $transactions->status = 1;
+        $transactions->image = $request->image;
+        $transactions->transaction_bank_name   = $request->transaction_bank_name;
+        $transactions->transaction_account_name   = $request->transaction_account_name;
+        $transactions->transaction_account_number   = $request->transaction_account_number;
+        $transactions->transaction_account_IBAN   = $request->transaction_account_IBAN;
+        $transactions->transaction_number   = $request->transaction_number;
+        $transactions->transaction_date   = Carbon::now()->addHours(3);
+        $transactions->type = 2;
+        $transactions->save();
+
+        $user = User::find($request->user_id);
+        $user->balance = $user->balance - $request->amount;
+        $user->save();
+
+
+        $player_ids = $this->getUserPlayerIds($request->user_id);
+                sendNotification(1,
+                                  'Your transaction approved',
+                                  'تم الموافقة على عملية التحويل ',
+                                  $player_ids,"public",
+                                  ['transaction_id' =>  (int)$transactions->id,
+                                  'offer_id'    => 0,
+                                  'campaign_id'    => 0,
+                                  'type'          =>  1,
+                                  'type_title'	=> 'transaction approve']);
+
+        //$request->persist();
         return redirect()->back()->with('status' , __('admin.created') );
 
     }

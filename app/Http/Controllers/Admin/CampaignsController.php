@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 //use App\Http\Requests\Admin\Complaints\StoreComplaintRequest;
 use App\Http\Requests\Admin\Campaigns\EditCampaignsRequest;
+use Illuminate\Support\Facades\DB;
 use App\Campaign;
+use App\CampaignArea;
+use App\CampaignCategory;
+use App\CampaignCountry;
 use App\User;
 use App\Setting;
 use App\UserPlayerId;
@@ -83,6 +87,7 @@ class campaignsController extends Controller
      */
     public function show($id)
     {
+
         $campaign = Campaign::find($id);
         $users =  User::where('account_type','0')->get();
         return view('admin.campaigns.show',compact('campaign'));
@@ -141,8 +146,28 @@ class campaignsController extends Controller
             $campaign->status = '1';
             $campaign->end_at = $end_date;
             $campaign->save();
-            $player_ids = $this->getUserPlayerIds();
-            sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,
+
+            
+        $campaign_categories = CampaignCategory::where('campaign_id',$request->id)->pluck('category_id')->toArray();
+        $campaign_countries = CampaignCountry::where('campaign_id',$request->id)->pluck('country_id')->toArray();
+        
+        
+            $users = DB::table('users')
+            ->join('user_categories', 'users.id', '=', 'user_categories.user_id')
+            ->join('user_countries', 'users.id', '=', 'user_countries.user_id')
+            ->join('user_player_ids', 'users.id', '=', 'user_player_ids.user_id');
+            if($campaign_categories){
+                $users->whereIn('user_categories.categories_id',$campaign_categories);
+            }
+            if($campaign_countries){
+                $users->whereIn('user_countries.country_id',$campaign_countries);
+            }
+            $users->select('user_player_ids.*');
+            $users->groupBy('users.id');
+            $users->orderBy("updated_at",'DESC');
+
+            $player_ids = $users->pluck('user_player_ids.player_id')->toArray();
+            $result = sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,'public',
                                   ['campaign_id' =>  (int)$request->id,'type'=>  20,'type_title'=> 'new campaign']);
             return response(['msg' => 'approved', 'status' => 'success']);
         }

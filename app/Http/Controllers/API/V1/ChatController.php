@@ -73,8 +73,17 @@ public function store(Request $request)
 
         if($campaign->user_id==$user->id)
         {
+          // user_id
           //owner user
-          $offer = Offer::where([['campaign_id' ,$campaign->id],['user_id',$user->id]])->get()->first();
+          if($request->user_id)
+          {
+            $offer = Offer::where([['campaign_id' ,$campaign->id],['user_id',$user->id],['influncer_id',$request->user_id],['status','!=','2']])->get()->first();
+          }
+          else 
+          {
+            $offer = Offer::where([['campaign_id' ,$campaign->id],['user_id',$user->id],['status','!=','2']])->get()->first();
+          }
+          
           if(!$offer)
           {
             // error you can't start this
@@ -88,7 +97,7 @@ public function store(Request $request)
         }
         else {
           //influncer
-          $offer = Offer::where([['campaign_id' ,$campaign->id],['influncer_id',$user->id]])->get()->first();
+          $offer = Offer::where([['campaign_id' ,$campaign->id],['influncer_id',$user->id],['status','!=','2']])->get()->first();
           if(!$offer)
           {
             $offer = new Offer;

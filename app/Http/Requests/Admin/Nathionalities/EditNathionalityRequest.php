@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Admin\Nathionalities;
 
 use App\Http\Requests\Admin\BaseRequest;
-use App\Models\Admin\Nationalities;
+use App\Nathionality;
 use Illuminate\Validation\Rule;
 
 
@@ -26,7 +26,7 @@ class EditNathionalityRequest extends BaseRequest
 
     public function persist($id)
     {
-        Nathionalities::find($id)->Update($this->request->all());
+        Nathionality::find($id)->Update($this->request->all());
     }
 
 

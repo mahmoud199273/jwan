@@ -21,6 +21,12 @@ class User extends Authenticatable
     protected $dates = ['deleted_at'];
         
 
+    // public function setPasswordAttribute($password)
+    // {
+    //     return $this->attributes['password'] = bcrypt($password);
+    // }
+
+    
             public function area()
             {
                return $this->hasMany('App\Area','area_id','id');

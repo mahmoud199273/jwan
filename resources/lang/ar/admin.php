@@ -258,7 +258,9 @@ return [
     "statusPhone" => " تفعيل الجوال ",
     "verified" => " مفعل  ",
     "unverified" => " غير مفعل ",
-    "PersonalYou" => "أنت"
+    "PersonalYou" => "أنت",
+    "campaign_id" => " رقم الحمله ",
+    'sms_code_text'=>  ' تم تفعيل الحساب الخاص بك على تطبيق سجنفاى ',
 
     /* m.abdelrahman  */ 
 
