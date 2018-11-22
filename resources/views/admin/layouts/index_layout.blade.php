@@ -333,14 +333,17 @@
     });
 
 {{-- $('._statusApprove').on('click',function(){
-
+	status = $(this).attr('data-status');
+	account_type = $(this).attr('data-accounttype');
+	balance = $(this).attr('data-balance');
+	alert(balance);
 	$.confirm({
     title: 'تأكيد التحويل !',
     content: '' +
     '<form action="" class="formName">' +
     '<div class="form-group">' +
     '<label>القيمة المحولة</label>' +
-    '<input type="text" placeholder="Your name" class="name form-control" required />' +
+    '<input type="text" placeholder=" القيمة المحولة " name="amount" class="amount form-control" required />' +
     '</div>' +
     '</form>',
     buttons: {
@@ -348,12 +351,8 @@
             text: 'تأكيد التحويل',
             btnClass: 'btn-blue',
             action: function () {
-                var name = this.$content.find('.name').val();
-                if(!name){
-                    $.alert('provide a valid name');
-                    return false;
-                }
-                $.alert('Your name is ' + name);
+								var amount = this.$content.find('.amount').val();
+								alert(amount);
             }
         },
         cancel: {

@@ -26,7 +26,10 @@ class TransactionsController extends Controller
 
     public function userTransactions(Request  $request  ,$id)
     {
-        $list = Transactions::where('user_id',$id)->latest()->paginate(10);
+        $list = Transactions::SELECT('transactions.*','campaigns.title','users.name','users.account_type','users.balance','offers.cost')
+        ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
+        ->leftJoin('campaigns', 'campaigns.id', '=', 'transactions.campaign_id')
+        ->leftJoin('offers', 'offers.id', '=', 'transactions.offer_id')->where('transactions.user_id',$id)->latest()->paginate(10);
          return view('admin.transactions.index',compact('list'));
     }
     

@@ -92,7 +92,7 @@
                 <select name="nationality_id"  class="form-control m-input">
                     @if($nationalities)
                         @foreach ($nationalities as $row)
-                            <option value="{{ $row->id }}"> {{ $country->name_ar }}</option>
+                            <option value="{{ $row->id }}"> {{ $row->name_ar }}</option>
                         @endforeach
                     @endif
                 </select>

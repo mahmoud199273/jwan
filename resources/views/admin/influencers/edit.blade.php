@@ -99,7 +99,7 @@
                         @foreach ($nationalities as $row)
                             <option value="{{ $row->id }}"
                             {{ $user->nationality_id == $row->id? "selected" : "" }}    
-                            > {{ $country->name_ar }}</option>
+                            > {{ $row->name_ar }}</option>
                         @endforeach
                     @endif
                 </select>
