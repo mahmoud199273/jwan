@@ -36,6 +36,12 @@
 	<!--end::Base Styles -->
 
 	<link rel="shortcut icon" href="{{asset('favicon.ico')}}" /> 
+
+	<style> 
+			select.form-control:not([size]):not([multiple]) {
+				height: 45px !important;
+		}
+	</style>
 </head>
 <!-- end::Head -->
 
