@@ -30,6 +30,8 @@ class campaignsController extends Controller
      */
     public function index()
     {
+$user_player_ids = $this->getUserPlayerIds('264');
+sendNotification(1,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' => '1','type' =>  20,'type_title'  => 'new campaign']);
         
         $campaigns = Campaign::latest()->paginate(10);
         return view('admin.campaigns.index',compact('campaigns'));
