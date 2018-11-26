@@ -29,16 +29,9 @@ class campaignsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getUserPlayerIds2( $user_id )
-    {
-        $player_ids = UserPlayerId::where('user_id',$user_id)->pluck('player_id')->toArray();
-        return $player_ids ? $player_ids : null;
-    }
+    
     public function index()
     {
-$user_player_ids = $this->getUserPlayerIds2('264');
-$result = sendNotification(1,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' => '1','type' =>  20,'type_title'  => 'new campaign']);
-dd($result);        
         $campaigns = Campaign::latest()->paginate(10);
         return view('admin.campaigns.index',compact('campaigns'));
     }
