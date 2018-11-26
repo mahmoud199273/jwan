@@ -181,7 +181,7 @@ return [
     'App_bank_accounts' => 'حسابات التطبيق البنكية',
     'IBAN' => 'رقم الحساب المصرفى الدولي',
     'bank_name' => 'اسم البنك',
-    'transactions'  =>'التحويلات البنكية',
+    'transactions'  =>'تحويلاتى البنكية',
     'amount'=> 'القيمة المحولة',
     'direction'=> 'جهة التحويل',
     'transaction_bank_name'=> 'إسم البنك',
@@ -267,7 +267,8 @@ return [
     'accout_type0'=>  ' شخصى ذكر  ',
     'accout_type1'=>  ' شخصى انثى ',
     'accout_type2'=>  ' عام ',
-
+    'wallet'=>  ' المحفظة ',
+    'make_transactions'  =>' اجراء تحويل بنكى ',
     /* m.abdelrahman  */ 
 
 ];

@@ -147,6 +147,11 @@ class campaignsController extends Controller
             $campaign->end_at = $end_date;
             $campaign->save();
 
+
+
+            $user_player_ids = $this->getUserPlayerIds($campaign->user_id);
+            sendNotification(1,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' =>  (int)$request->id,'type' =>  20,'type_title'  => 'new campaign']);
+
             
         $campaign_categories = CampaignCategory::where('campaign_id',$request->id)->pluck('category_id')->toArray();
         $campaign_countries = CampaignCountry::where('campaign_id',$request->id)->pluck('country_id')->toArray();

@@ -117,6 +117,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::get('transaction/users',['uses' => 'TransactionsController@index', 'account_type' => '0']);
 		Route::get('transaction/influencers',['uses' => 'TransactionsController@index', 'account_type' => '1']);
 		Route::post('/transaction/approve','TransactionsController@approve');
+		Route::post('/transaction/InfluencerTransaction','TransactionsController@InfluencerTransaction');
 		Route::get('transaction/search','TransactionsController@search');
 		Route::get('transactions/{id}/{user}','TransactionsController@userTransactions');
 

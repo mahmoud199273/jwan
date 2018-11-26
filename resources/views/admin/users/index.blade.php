@@ -77,6 +77,7 @@
                                     <th><b>{{ __('admin.phone') }}</b></th>
                                     <th><b>{{ __('admin.email') }}</b></th>
                                     <th><b>{{ __('admin.status') }}</b></th>
+                                    <th><b>{{ __('admin.wallet') }}</b></th>
                                     <th><b>{{ __('admin.Activecode') }}</b></th>
                                     <th><b>{{ __('admin.statusPhone') }}</b></th>
                                     <th><b>{{ __('admin.control') }}</b></th>
@@ -91,6 +92,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td class="text-center">{!! ($user->is_active)? "<i class='fa fa-check m--font-success'></i>" : 
                                     "<i class='fa fa-times m--font-danger'></i>" !!}</td>
+                                    <td>{{ $user->balance }}</td>
                                     <td>{{ $user->code }}</td>
                                     <td class="text-center">
                                         @if($user->verified == 1) 

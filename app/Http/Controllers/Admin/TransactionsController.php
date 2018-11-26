@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Transactions\EditTransactionsRequest;
 use App\Http\Requests\Admin\Transactions\StoreTransactionsRequest;
 use App\UserPlayerId;
 use App\Transactions;
+use App\BankAccounts;
 use Carbon\Carbon;
 use App\User;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class TransactionsController extends Controller
         
         if(isset($request->route()->getAction()['account_type'])) // this to show users or influencers transactions
             $account_type = $request->route()->getAction()['account_type']; //0 users | 1 influencers 
-        $list =  Transactions::SELECT('transactions.*','campaigns.title','users.name','offers.cost')
+        $list =  Transactions::SELECT('transactions.*','campaigns.title','users.name','users.account_type','users.balance','offers.cost')
                                     ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
                                     ->leftJoin('campaigns', 'campaigns.id', '=', 'transactions.campaign_id')
                                     ->leftJoin('offers', 'offers.id', '=', 'transactions.offer_id');
@@ -242,11 +243,57 @@ class TransactionsController extends Controller
         }
     }
 
+    function InfluencerTransaction(Request $request) // make transaction for influencer
+    {
+        if ( $request->ajax() ) {
+            $amount = $request->amount;
+            $influencer_id = $request->id;
+            $user = User::find($influencer_id);
+            if((int)$user->balance >= (int)$amount )
+            {
+                
+                $banckData = BankAccounts::select('bank_accounts.*','banks.name','banks.logo')->join('banks','banks.id','bank_accounts.bank_id')->where('bank_accounts.user_id',$influencer_id)->first();
+                $transactions =  new Transactions;
+                $transactions->user_id 		= $influencer_id;
+                $transactions->amount 	= $request->amount;
+                $transactions->transaction_amount 	= $request->amount;
+                $transactions->status = 1;
+                $transactions->transaction_bank_name   = isset($banckData->name) ? $banckData->name : "" ;
+                $transactions->transaction_account_name   = isset($banckData->account_name) ? $banckData->account_name : "";
+                $transactions->transaction_account_number   = isset($banckData->account_number) ? $banckData->account_number : "";
+                $transactions->transaction_account_IBAN   = isset($banckData->IBAN) ? $banckData->IBAN : "";
+                $transactions->transaction_number   = isset($banckData->account_number) ? $banckData->account_number : "";
+                $transactions->transaction_date   = Carbon::now()->addHours(3);
+                $transactions->type = 2;
+                $transactions->save();
+                
+                $user = User::find($influencer_id);
+                $user->balance = $user->balance - $request->amount;
+                $user->save();
+
+
+                $player_ids = $this->getUserPlayerIds($influencer_id);
+                sendNotification(1,
+                                  'Your transaction approved',
+                                  'تم الموافقة على عملية التحويل ',
+                                  $player_ids,"public",
+                                  ['transaction_id' =>  (int)$transactions->id,
+                                  'offer_id'    => 0,
+                                  'campaign_id'    => 0,
+                                  'type'          =>  1,
+                                  'type_title'	=> 'transaction approve']);
+            }
+            return response(['msg' => 'approved', 'status' => 'success']);
+        }    
+    }
+
      public function approve( Request $request)
     {
         if ( $request->ajax() ) {
+            $amount = $request->amount;
             $transaction = Transactions::find( $request->id );
             $transaction->status = $request->status;
+            if(isset($amount)) $transaction->transaction_amount = $amount;
             $transaction->save();
 
             $TransactionData = Transactions::select('users.*','transactions.*','campaigns.title','uinf.id as influencer_id','uuser.id as offer_user_id')
