@@ -38,7 +38,8 @@ class campaignsController extends Controller
     function testNot()
     {
             $user_player_ids = $this->getUserPlayerIds2('272');
-            sendNotification(1,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' =>'2','type' =>  20,'type_title'  => 'new campaign']);
+            $result = sendNotification(1,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' =>'2','type' =>  20,'type_title'  => 'new campaign']);
+            dd($result);
     }
     public function index()
     {
