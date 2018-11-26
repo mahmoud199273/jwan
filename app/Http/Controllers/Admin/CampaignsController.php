@@ -141,7 +141,7 @@ class campaignsController extends Controller
             $amount = $settings->campaign_period;
 
             $campaign = Campaign::find( $request->id );
-            $end_date =  Carbon::parse($campaign->end_at);
+            $end_date =  Carbon::parse($campaign->end_at)->addHours(3);
             $end_date = $end_date->addDays($amount);
             $campaign->status = '1';
             $campaign->end_at = $end_date;

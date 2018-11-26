@@ -156,6 +156,23 @@
 				</a>
 		</li>
 
+
+		<li class="m-menu__item" aria-haspopup="true" >
+				<a  href="{{url('admin/transaction/users')}}" class="m-menu__link ">
+					<span class="m-menu__item-here"></span>
+					<i class="m-menu__link-icon fa fa-map"></i>
+					<span class="m-menu__link-text">{{ __('admin.users_transactions') }}</span>
+				</a>
+		</li>
+
+		<li class="m-menu__item" aria-haspopup="true" >
+				<a  href="{{url('admin/transaction/influencers')}}" class="m-menu__link ">
+					<span class="m-menu__item-here"></span>
+					<i class="m-menu__link-icon fa fa-map"></i>
+					<span class="m-menu__link-text">{{ __('admin.influencers_transactions') }}</span>
+				</a>
+		</li>
+
 		<li class="m-menu__item" aria-haspopup="true" >
 			<a  href="{{url('admin/pages')}}" class="m-menu__link ">
 				<span class="m-menu__item-here"></span>
