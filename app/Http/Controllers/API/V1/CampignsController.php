@@ -223,7 +223,8 @@ class CampignsController extends Controller
 
             'countries_id'    => 'required',
 
-            'areas_id'      => 'required'
+            //'areas_id'      => 'required'
+            'areas_id'      => 'nullable'
 
 
 
@@ -326,16 +327,20 @@ class CampignsController extends Controller
             }
 
             $areas_id  =$request->areas_id;
+           
+            if($areas_id !== null){
 
-            foreach ($areas_id  as $id) {
-                CampaignArea::create([
+                foreach ($areas_id  as $id) {
+                    CampaignArea::create([
 
-                'campaign_id'       => $campaign->id,
+                    'campaign_id'       => $campaign->id,
 
-                'area_id' => $id
+                    'area_id' => $id
 
 
-                      ]);
+                        ]);
+                }
+
             }
 
             // $player_ids = $this->getUserPlayerIds($to_user_id);
