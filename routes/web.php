@@ -97,6 +97,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::get('complaint/search','ComplaintsController@search');
 
 		Route::resource('campaigns','CampaignsController');
+		Route::get('campaign/testnot','CampaignsController@testNot');
 		Route::post('/campaigns/approved'       , 'CampaignsController@approved');
 		Route::post('/campaigns/approve'       , 'CampaignsController@approve');
 		Route::post('/campaigns/reject'        , 'CampaignsController@reject');
@@ -117,6 +118,7 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::get('transaction/users',['uses' => 'TransactionsController@index', 'account_type' => '0']);
 		Route::get('transaction/influencers',['uses' => 'TransactionsController@index', 'account_type' => '1']);
 		Route::post('/transaction/approve','TransactionsController@approve');
+		Route::post('/transaction/InfluencerTransaction','TransactionsController@InfluencerTransaction');
 		Route::get('transaction/search','TransactionsController@search');
 		Route::get('transactions/{id}/{user}','TransactionsController@userTransactions');
 

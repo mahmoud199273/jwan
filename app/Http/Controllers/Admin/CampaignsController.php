@@ -28,9 +28,22 @@ class campaignsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function getUserPlayerIds2( $user_id )
+    {
+        $player_ids = UserPlayerId::where('user_id',$user_id)->pluck('player_id')->toArray();
+        return $player_ids ? $player_ids : null;
+    }
+
+    function testNot()
+    {
+            $user_player_ids = $this->getUserPlayerIds2('272');
+
+            $result = sendNotification(0,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' =>'2','type' =>  20,'type_title'  => 'new campaign']);
+            dd($result);
+    }
     public function index()
     {
-        
         $campaigns = Campaign::latest()->paginate(10);
         return view('admin.campaigns.index',compact('campaigns'));
     }
@@ -146,6 +159,11 @@ class campaignsController extends Controller
             $campaign->status = '1';
             $campaign->end_at = $end_date;
             $campaign->save();
+
+
+
+            $user_player_ids = $this->getUserPlayerIds($campaign->user_id);
+            sendNotification(1,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' =>  (int)$request->id,'type' =>  20,'type_title'  => 'new campaign']);
 
             
         $campaign_categories = CampaignCategory::where('campaign_id',$request->id)->pluck('category_id')->toArray();

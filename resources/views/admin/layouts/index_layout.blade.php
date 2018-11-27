@@ -336,20 +336,112 @@
 								});
                 }
 		});
-    });
+	});
+	
 
-{{-- $('._statusApprove').on('click',function(){
+$('._transactionApprove').on('click',function(){
+
+	balance = $(this).attr('data-balance');
+	name = $(this).attr('data-name');
+	id = $(this).attr('data-id');
+	var balance_html = '<div class="form-group">' +
+		'<label>محفظة العميل</label>' +
+		'<input value="'+balance+'" type="text" placeholder=" القيمة المحولة " name="balance" class="balance form-control" required disabled />' +
+		'</div>' ;
+	$.confirm({
+		title: ' تحويل بنكى ',
+		content: '' +
+			'<form action="" class="formName">' +
+				'<div class="form-group">' +
+			'<label>العميل '+name+' </label>' +
+			'</div>' +balance_html+
+			  '<div class="form-group">' +
+			'<label>القيمة المحولة</label>' +
+			'<input value="" type="text" placeholder=" القيمة المحولة " name="amount" class="amount form-control" required />' +
+			'</div>' +
+			'</form>',
+			buttons: {
+				formSubmit: {
+					text: 'تأكيد التحويل',
+					btnClass: 'btn-blue',
+					action: function () {
+						var amount = this.$content.find('.amount').val();
+						var balance = this.$content.find('.balance').val();
+						if( !confirm('هل أنت متأكد من أنك تريد المتابعة؟')) {
+							return false;
+		   				}
+						if (!(/^\d+$/.test(amount))) {
+							// Contain numbers only
+							$.dialog({title: 'خطأ !',content: 'يجب ادخال ارقام فقط فى هذه الخانه',rtl: true,type: 'red'});
+							return false;
+						}
+						if(Number(amount) > Number(balance))
+						{
+							$.dialog({title: 'خطأ !',content: 'لا يمكن اتمام عملية التحويل. قسمة التحويل اكبر من محفظة العميل',rtl: true,type: 'red'});
+							return false;
+						}
+						$.ajax({
+							url: '{{url("admin")}}/transaction/InfluencerTransaction',
+							type: 'POST',
+							data: {'_method':'post','_token': $('meta[name="csrf-token"]').attr('content'),'id':id,'amount':amount },
+							success: function( msg ) {
+								if ( msg.status === 'success' ) {
+									window.location.reload();
+								}
+							},
+							error : function(){
+									window.location.reload();
+							},
+						});
+					}
+				},
+				cancel: {
+							text: 'الغاء',
+							action: function () {
+							}
+					}
+			},
+			onContentReady: function () {
+				// bind to events
+				var jc = this;
+				this.$content.find('form').on('submit', function (e) {
+					// if the user submits the form by pressing enter in the field.
+					e.preventDefault();
+					jc.$$formSubmit.trigger('click'); // reference the button and click it
+				});
+			}
+		});	
+
+});
+
+
+$('._statusApprove').on('click',function(){
 	status = $(this).attr('data-status');
 	account_type = $(this).attr('data-accounttype');
 	balance = $(this).attr('data-balance');
-	alert(balance);
+	amount = $(this).attr('data-amount');
+	name = $(this).attr('data-name');
+	id = $(this).attr('data-id');
+	var balance_html = '';
+	if(account_type == 1)
+	{
+		var balance_html = '<div class="form-group">' +
+				'<label>محفظة العميل</label>' +
+				'<input value="'+balance+'" type="text" placeholder=" القيمة المحولة " name="balance" class="balance form-control" required disabled />' +
+				'</div>' ;
+	}
+	
 	$.confirm({
     title: 'تأكيد التحويل !',
     content: '' +
     '<form action="" class="formName">' +
-    '<div class="form-group">' +
+		'<div class="form-group">' +
+    '<label>العميل</label>' +
+    '<input value="'+name+'" type="text" placeholder=" القيمة المحولة " class="form-control" required disabled />' +
+		'</div>' +balance_html+
+	  '<div class="form-group">' +
     '<label>القيمة المحولة</label>' +
-    '<input type="text" placeholder=" القيمة المحولة " name="amount" class="amount form-control" required />' +
+    '<input value="'+amount+'" type="text" placeholder=" القيمة المحولة " name="amount" class="amount form-control" required />' +
     '</div>' +
     '</form>',
     buttons: {
@@ -358,7 +450,33 @@
             btnClass: 'btn-blue',
             action: function () {
 								var amount = this.$content.find('.amount').val();
-								alert(amount);
+								var balance = this.$content.find('.balance').val();
+								if( !confirm('هل أنت متأكد من أنك تريد المتابعة؟')) {
+									return false;
+								}
+								if (!(/^\d+$/.test(amount))) {
+									// Contain numbers only
+									$.dialog({title: 'خطأ !',content: 'يجب ادخال ارقام فقط فى هذه الخانه',rtl: true,type: 'red'});
+									return false;
+								}
+								if(account_type == 1 && Number(amount) > Number(balance))
+								{
+									$.dialog({title: 'خطأ !',content: 'لا يمكن اتمام عملية التحويل. قسمة التحويل اكبر من محفظة العميل',rtl: true,type: 'red'});
+									return false;
+								}
+								$.ajax({
+									url: '{{url("admin")}}/transaction/approve',
+									type: 'POST',
+									data: {'_method':'post','_token': $('meta[name="csrf-token"]').attr('content'),'id':id,'status':status,'amount':amount },
+									success: function( msg ) {
+											if ( msg.status === 'success' ) {
+												window.location.reload();
+											 }
+									},
+									error : function(){
+											window.location.reload();
+									},
+							});
             }
         },
         cancel: {
@@ -378,11 +496,11 @@
     }
 });
 
-});		 --}}
+});		
 
 
 
-$('._statusApprove').on('click', function(){
+{{-- $('._statusApprove').on('click', function(){
         id = $(this).attr('data-id');
         status = $(this).attr('data-status');
         swal({
@@ -417,7 +535,7 @@ $('._statusApprove').on('click', function(){
 								});
                 }
 		});
-    });
+    }); --}}
 
 
 $('._campaignApprove').on('click', function(){

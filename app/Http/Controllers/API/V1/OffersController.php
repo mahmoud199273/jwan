@@ -301,9 +301,13 @@ class OffersController extends Controller
             $transations->campaign_id     = $offer->campaign_id;
             $transations->offer_id     = $offer->id;
             $transations->save();
-
+            
             $user->balance = $userData->balance - $offer->cost;
             $user->save();
+
+            // $influncerData = User::find($offer->influncer_id);
+            // $influncer_balance = $influncerData->balance + $offer->cost;
+            // User::where('id' , $user->id)->whereIn('id', $offer->influncer_id)->update(['balance' => $influncer_balance]);
 
             $player_ids = $this->getUserPlayerIds($offer->influncer_id);
             Notification::create(['user_id' => $offer->influncer_id,
