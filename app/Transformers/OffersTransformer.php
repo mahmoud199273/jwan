@@ -13,6 +13,19 @@ class OffersTransformer extends Transformer
 {
 	public function transform($offer  ) : array
     {
+
+        $status_array = array(0 => 'عرض جديد',
+			1 => 'تم الموافقة على العرض',
+			2 => 'تم رفض العرض',
+			3 => 'تم سداد قيمة العرض على حملة',
+			4 => 'جاري العمل على الحملة',
+            5 => 'تم الانتهاء و توثيق حملة',
+            6 => 'عرض جديد',
+			7 => 'تم قبول التوثيق واغلاق الحملة',
+			8 => 'قام المؤثر بالغاء عرضه على الحملة',
+			9 => 'تم الغاء الحملة');
+            
+
         $offer = Offer::find($offer->id);
 
         return [
@@ -35,8 +48,9 @@ class OffersTransformer extends Transformer
             'description'       => $offer->description,
 
 
-						'status'   => $offer->status,
-
+            'status'   => $offer->status,
+            
+            'status_title'	=> $status_array[(int) $offer->status],
 
 
 						'user_rate'   => $offer->user_rate,
