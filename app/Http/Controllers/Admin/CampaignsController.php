@@ -163,7 +163,7 @@ class campaignsController extends Controller
 
 
             $user_player_ids = $this->getUserSinglePlayerIds($campaign->user_id);
-            sendNotification(1,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' =>  (int)$request->id,'type' =>  20,'type_title'  => 'new campaign']);
+            sendNotification(0,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' =>  (int)$request->id,'type' =>  20,'type_title'  => 'new campaign']);
 
             
         $campaign_categories = CampaignCategory::where('campaign_id',$request->id)->pluck('category_id')->toArray();
