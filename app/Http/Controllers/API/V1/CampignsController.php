@@ -56,6 +56,14 @@ class CampignsController extends Controller
         $influncer_countries = UserCountry::where('user_id',$influncer->id)->pluck('country_id')->toArray();
 
         $influncer_areas = UserArea::where('user_id',$influncer->id)->pluck('area_id')->toArray();
+
+        $areas_campaigns_id = array();
+        if($influncer_areas)
+        {
+            $areas_campaigns_id = Campaign::Select('campaigns.id')->LEFTjoin('campaign_areas','campaign_areas.campaign_id','campaigns.id')->whereNotIn('campaign_areas.area_id',$influncer_areas)->groupBy('campaigns.id')->pluck('campaigns.id')->toArray();
+        }
+        
+        //dd($areas_campaigns_id);
  
  
         //dd($influncer_categories);
@@ -79,11 +87,12 @@ class CampignsController extends Controller
  
             }
 
-            if($influncer_areas){
-                $influncer_areas = implode (",", $influncer_areas);
+            if($areas_campaigns_id){
+                //$influncer_areas = implode (",", $influncer_areas);
                 // $campaigns->select(DB::raw('(case WHEN campaign_areas.area_id is not null THEN campaign_areas.area_id IN ('.$influncer_areas.') ELSE 1 = 1 END)'));
                 
                 //$campaigns->whereRaw("CASE WHEN campaign_areas.area_id is not null THEN campaign_areas.area_id IN ('.$influncer_areas.') ELSE 1=1 END");
+                $campaigns->whereNotIn('campaigns.id',$areas_campaigns_id);
             }
  
  
