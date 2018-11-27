@@ -155,8 +155,9 @@ public function store(Request $request)
                                   'type'          =>  12,
                                   'type_title'  => 'new chat']);
 
-
-        sendNotification($who,
+        if($request->content)
+        {
+          sendNotification($who,
                               'A new message was added',
                               'لديك رساله جديده',
                               $player_ids,"chat",
@@ -166,7 +167,7 @@ public function store(Request $request)
                               'type_title'  => 'new chat',
                               'chat_content'         => $request->content,
                               'chat_type'       => $chat->type]);
-
+        }  
         //return $this->respondWithSuccess(__('api_msgs.created'));
         return $this->sendResponse(['offer' => $offer->id ],trans('api_msgs.created'),200);
       }

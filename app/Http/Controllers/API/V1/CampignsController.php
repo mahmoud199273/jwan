@@ -13,7 +13,9 @@ use App\CampaignCountry;
 use App\InfluncerCampaign;
 use App\UserCategory;
 use App\UserCountry;
+use App\UserArea;
 use App\Setting;
+use App\Offer;
 use App\Notification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -46,10 +48,14 @@ class CampignsController extends Controller
         //$orderBy = 'created_at';
         $orderBy = 'updated_at';
         $influncer_categories = UserCategory::where('user_id',$influncer->id)->pluck('categories_id')->toArray();
+
+        $influncer_campaigns_offered = Offer::where('influncer_id',$influncer->id)->where('status','!=','2')->pluck('campaign_id')->toArray();
  
  
  
         $influncer_countries = UserCountry::where('user_id',$influncer->id)->pluck('country_id')->toArray();
+
+        $influncer_areas = UserArea::where('user_id',$influncer->id)->pluck('area_id')->toArray();
  
  
         //dd($influncer_categories);
@@ -60,7 +66,8 @@ class CampignsController extends Controller
  
             ->join('campaign_countries', 'campaigns.id', '=', 'campaign_countries.campaign_id')
  
-            ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id');
+            ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id')
+            ->LEFTjoin('campaign_areas', 'campaigns.id', '=', 'campaign_areas.campaign_id');
  
             if($influncer_categories){
                 $campaigns->whereIn('campaign_categories.category_id',$influncer_categories);
@@ -71,6 +78,12 @@ class CampignsController extends Controller
                 $campaigns->whereIn('campaign_countries.country_id',$influncer_countries);
  
             }
+
+            if($influncer_areas){
+                $influncer_areas = implode (", ", $influncer_areas);
+                // $campaigns->select(DB::raw('(case WHEN campaign_areas.area_id is not null THEN campaign_areas.area_id IN ('.$influncer_areas.') ELSE 1 = 1 END)'));
+                $campaigns->whereRaw("CASE WHEN campaign_areas.area_id is not null THEN campaign_areas.area_id IN ('.$influncer_areas.') ELSE 1=1 END");
+            }
  
  
             $campaigns->select('campaigns.*');
@@ -78,6 +91,9 @@ class CampignsController extends Controller
  
             if ($campaign_ids) {
                 $campaigns->whereNotIn('campaigns.id',$campaign_ids);
+            }
+            if ($influncer_campaigns_offered) {
+                $campaigns->whereNotIn('campaigns.id',$influncer_campaigns_offered);
             }
             $campaigns->where('campaigns.status','1')
             ->groupBy('campaigns.id')
