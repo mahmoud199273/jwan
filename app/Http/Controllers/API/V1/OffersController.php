@@ -94,6 +94,7 @@ class OffersController extends Controller
                         ->orwhere([['influncer_id',$influncer->id], ['status', '3']])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '4']])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '5']])
+                        ->orwhere([['influncer_id',$influncer->id], ['status', '7'],['influncer_rate',NULL] ])
                         ->orderBy('created_at','DESC')
                         ->paginate($this->getPagination());
 
@@ -117,7 +118,7 @@ class OffersController extends Controller
 
             $pagination = Offer::
                         where([['influncer_id',$influncer->id], ['status', '2']])
-                        ->orwhere([['influncer_id',$influncer->id], ['status', '7']])
+                        ->orwhere([['influncer_id',$influncer->id], ['status', '7'],['influncer_rate','>=','0']])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '8']])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '9']])
                         ->orderBy('created_at','DESC')
@@ -400,14 +401,14 @@ class OffersController extends Controller
             Notification::create(['user_id' => $offer->influncer_id,
                                       'from_user_id' => $user->id,   
                                       'message' => 'Your proof have been approved and finished on '.$campaign->title,
-                                      'message_ar' => 'تم قبول توثيقك واغلاقه لحملة '.$campaign->title,
+                                      'message_ar' => 'تم قبول توثيقك يجب التقييم لكى يتم اغلاق الحمله  '.$campaign->title,
                                       'campaign_id' =>  $campaign->id,
                                       'offer_id'    => $offer->id,
                                       'type'          =>  7,
                                       'type_title'	=> 'finished offer']);
             sendNotification(1,
                                   'Your proof have been approved and finished on '.$campaign->title,
-                                  'تم قبول توثيقك واغلاقه لحملة '.$campaign->title,
+                                  'تم قبول توثيقك يجب التقييم لكى يتم اغلاق الحمله '.$campaign->title,
                                   $player_ids,"offers",
                                   ['campaign_id' =>  (int)$campaign->id,
                                   'offer_id'    => (int)$offer->id,
