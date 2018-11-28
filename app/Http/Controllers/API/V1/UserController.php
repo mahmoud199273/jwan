@@ -88,7 +88,7 @@ class UserController extends Controller
         if ($this->isEmailExists( $request->email ,$user->id)) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
          }
-        
+
 
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
@@ -222,6 +222,8 @@ class UserController extends Controller
 
             'notes'          => 'required',
 
+            'minimumRate'          => 'required',
+
             'account_manger' => 'required'
 
 
@@ -254,7 +256,7 @@ class UserController extends Controller
 
             $user = User::find( $user->id );
 
-            
+
             $user->email        =  $request->email;
             if (substr( $request->image, 0, 4 ) !== "http") {
                 $user->image        = $request->image;
@@ -267,6 +269,8 @@ class UserController extends Controller
             $user->gender        =    $request->gender;
 
             $user->notes         = $request->notes;
+
+            $user->minimumRate         = $request->minimumRate;
 
             $user->countries_id = $request->country_id;
 
@@ -520,7 +524,7 @@ class UserController extends Controller
                 // $pagination =  Notification::where('user_id' , $user->id)
 				// 						->orderBy('updated_at','DESC')
                 // 						->paginate($this->getPagination());
-                
+
                 //DB::raw('CONCAT("[", GROUP_CONCAT(CONCAT({id:", species.id, ", name:", species.name, "})
 //SEPARATOR ", "), "]") AS species')
         $pagination =  Notification::select('notifications.*')
@@ -539,14 +543,14 @@ class UserController extends Controller
 				{
 						$notifications_array = Notification::where('user_id' , $user->id)->whereIn('id', $notifications_array)->update(['is_seen' => '1']);
 				}
-        $notifications =  $this->notificationsTransformer->transformCollection(collect($pagination->items()));       
+        $notifications =  $this->notificationsTransformer->transformCollection(collect($pagination->items()));
         return $this->respondWithPagination($pagination, ['data' => $notifications ]);
     }
 
 
     function influncerUserProfile(Request $request)
     {
-        
+
         $validator = Validator::make( ['id' =>  $request->id ], [
             'id'    => 'required|exists:users,id,deleted_at,NULL',
         ]);
@@ -593,9 +597,9 @@ class UserController extends Controller
 
         if($request->phone == $user->phone)
         {
-            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.nothing_to_update')); 
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.nothing_to_update'));
         }
- 
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
@@ -607,8 +611,8 @@ class UserController extends Controller
         return $this->respondWithSuccess(trans('api_msgs.sms_code_text'));
 
 
-    
-    
+
+
     }
 
 
