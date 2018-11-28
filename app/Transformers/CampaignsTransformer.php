@@ -109,11 +109,11 @@ class CampaignsTransformer extends Transformer
 
         ];
 
-        if($this->user_flag)
+        if($this->user_flag) // influncer app 
         {
             $return_array['user'] = isset($campaign->user()->select('id','name','image')->get()[0]) ? $campaign->user()->select('id','name','image')->get()[0] : null ;
         }
-        if($this->flag)
+        if($this->flag) // user app
         {
             $return_array['influencers']  = User::select('users.id','users.name','users.image')->join('offers', 'offers.influncer_id', '=', 'users.id')->where('offers.campaign_id',$campaign->id)->get();
         }
