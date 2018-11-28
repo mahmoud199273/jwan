@@ -294,7 +294,8 @@ class OffersController extends Controller
 
             $transations = new Transactions;
             $transations->user_id = $user->id;
-            $transations->amount     = $offer->cost;
+            if($offer->cost) $transations->amount     = $offer->cost;
+            else $transations->amount     = 0;
             $transations->direction = 1;
             $transations->type     = 1;
             $transations->status     = 0;
@@ -363,7 +364,10 @@ class OffersController extends Controller
 
             $influncer_transations = new Transactions;
             $influncer_transations->user_id = $offer->influncer_id;
-            $influncer_transations->amount     = $offer->cost;
+            //$influncer_transations->amount     = $offer->cost;
+            if($offer->cost) $influncer_transations->amount     = $offer->cost;
+            else $influncer_transations->amount     = 0;
+            
             $influncer_transations->direction = 0;
             $influncer_transations->type     = 2;
             $influncer_transations->status     = 1;
@@ -575,14 +579,14 @@ class OffersController extends Controller
                     Notification::create(['user_id' => $campaign->user_id,
                                               'from_user_id' => $user->id, 
                                               'message' => 'influner has finished and proofed '.$campaign->title,
-                                              'message_ar' => 'تم الانتهاء وتثيق حملة '.$campaign->title,
+                                              'message_ar' => 'تم الانتهاء و توثيق حملة '.$campaign->title,
                                               'campaign_id' =>  $campaign->id,
                                               'offer_id'    => $offer->id,
                                               'type'          =>  5,
                                               'type_title'	=> 'proofed offer']);
                     sendNotification(0,
                                           'influner has finished and proofed '.$campaign->title,
-                                          'تم الانتهاء وتثيق حملة '.$campaign->title,
+                                          'تم الانتهاء و توثيق حملة '.$campaign->title,
                                           $player_ids,"offers",
                                           ['campaign_id' =>  (int)$campaign->id,
                                           'offer_id'    => (int)$offer->id,
