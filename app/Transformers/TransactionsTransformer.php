@@ -18,26 +18,26 @@ class TransactionsTransformer extends Transformer
 
     function setColor($status,$type)
     {
-        $this->color = "#FFFF00";
+        $this->color = "#F5BC1E"; // yellow min
         if ($status == 0) 
         {
-            $this->color = "#FFFF00";
+            $this->color = "#F5BC1E"; // yellow min 
         } 
         elseif($type == 0 && $status == 1)
         {
-            $this->color = "#008000";
+            $this->color = "#21BDA8"; // green down
         }
         elseif ($type == 1 && $status == 1) 
         {
-            $this->color = "#FF0000";
+            $this->color = "#FF4C44";// red up
         }
         elseif ($type == 3 && $status == 1) 
         {
-            $this->color = "#FF0000";
+            $this->color = "#FF4C44";// red up
         }
         else
         {
-            $this->color = "#008000";  
+            $this->color = "#21BDA8";  // green down
         }
         
         return $this->color;
