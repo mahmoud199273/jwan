@@ -331,7 +331,7 @@ class TransactionsController extends Controller
                                   ['transaction_id' =>  (int)$TransactionData->id,
                                   'offer_id'    => (int)$TransactionData->offer_id,
                                   'campaign_id'    => (int)$TransactionData->campaign_id,
-                                  'type'          =>  1,
+                                  'type'          =>  13,
                                   'type_title'	=> 'transaction approve']);
 
             }
@@ -355,7 +355,7 @@ class TransactionsController extends Controller
                                 ['transaction_id' =>  (int)$TransactionData->id,
                                 'offer_id'    => (int)$TransactionData->offer_id,
                                 'campaign_id'    => (int)$TransactionData->campaign_id,
-                                'type'          =>  1,
+                                'type'          =>  13,
                                 'type_title'	=> 'transaction approve']);
 
                                   
