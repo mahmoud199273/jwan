@@ -77,7 +77,7 @@ class InfluncerTransformer extends Transformer
 
                 'type'          => (int) $user->type,
 
-                'minimum_rate'   => (int) $user->minimum_rate,
+                'minimum_rate'   => $user->minimumRate,
 
                 'facebook'     => $user->facebook,
                 'facebook_followers' => $user->facebook_follwers,
