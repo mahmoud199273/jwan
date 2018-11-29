@@ -52,12 +52,12 @@ class TransactionsTransformer extends Transformer
 
 	public function transform( $transaction  ) : array
     {
-			$status_array = array(0 => 'pending',
-                      			1 => 'approved',
-                      			2 => 'rejected',
-                      			3 => 'finished',
-                      			4 => 'canceled',
-                      			5 => 'closed');
+			$status_array = array(0 => 'فى انتظار الموافقه',
+                      			1 => 'تم الموافقة',
+                      			2 => 'تم الرفض',
+                      			3 => 'تم الإنتهاء من التحويل',
+                      			4 => 'تم الغاءالتحويل',
+                      			5 => 'تم غلق التحويل');
       $direction_array = array(0 => 'In',
                       			1 => 'Out');
       $type_array = array(0 => 'user bank transfer',
