@@ -95,6 +95,8 @@ class OffersController extends Controller
                         ->orwhere([['influncer_id',$influncer->id], ['status', '4']])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '5']])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '7'],['influncer_rate',NULL] ])
+                        ->orwhere([['influncer_id',$influncer->id], ['status', '8'],['influncer_rate',NULL] ])
+                        ->orwhere([['influncer_id',$influncer->id], ['status', '9'],['influncer_rate',NULL] ])
                         ->orderBy('created_at','DESC')
                         ->paginate($this->getPagination());
 
@@ -119,8 +121,10 @@ class OffersController extends Controller
             $pagination = Offer::
                         where([['influncer_id',$influncer->id], ['status', '2']])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '7'],['influncer_rate','>=','0']])
-                        ->orwhere([['influncer_id',$influncer->id], ['status', '8']])
-                        ->orwhere([['influncer_id',$influncer->id], ['status', '9']])
+                        //->orwhere([['influncer_id',$influncer->id], ['status', '8']])
+                        ->orwhere([['influncer_id',$influncer->id], ['status', '8'],['influncer_rate','>=','0']])
+                        ->orwhere([['influncer_id',$influncer->id], ['status', '9'],['influncer_rate','>=','0']])
+                        //->orwhere([['influncer_id',$influncer->id], ['status', '9']])
                         ->orderBy('created_at','DESC')
                         ->paginate($this->getPagination());
 
