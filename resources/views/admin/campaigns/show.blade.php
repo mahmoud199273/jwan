@@ -210,10 +210,12 @@
                 <label for="is_active" class="col-2 col-form-label">{{ __('admin.status') }}</label>
                  <div class="col-9">
                 <select name="is_active"  class="form-control m-input" disabled="">
-                   <option value="0" {{ $campaign->status == 0? "selected" : "" }} > 0</option>
-                   <option value="1" {{ $campaign->status == 1? "selected" : "" }} > 1</option>
-                   <option value="2" {{ $campaign->status == 2? "selected" : "" }} > 2</option>
-                   <option value="3" {{ $campaign->status == 3? "selected" : "" }} > 3</option>
+                   <option value="0" {{ $campaign->status == 0? "selected" : "" }} > {{  __('admin.new_campaign') }}</option>
+                   <option value="1" {{ $campaign->status == 1? "selected" : "" }} > {{  __('admin.campaign_approved') }}</option>
+                   <option value="2" {{ $campaign->status == 2? "selected" : "" }} > {{  __('admin.campaign_rejected') }}</option>
+                   <option value="3" {{ $campaign->status == 3? "selected" : "" }} > {{  __('admin.campaign_finished') }}</option>
+                   <option value="4" {{ $campaign->status == 4? "selected" : "" }} > {{  __('admin.campaign_canceled') }}</option>
+                   <option value="5" {{ $campaign->status == 5? "selected" : "" }} > {{  __('admin.campaign_closed') }}</option>
                    
                 </select>
                     {!! $errors->first('status', '<span class="form-control-feedback">:message</span>') !!}
