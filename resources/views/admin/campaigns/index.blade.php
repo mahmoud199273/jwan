@@ -98,24 +98,12 @@
                                             {{ __('admin.campaign_rejected') }}   
 
                                         @elseif ($campaign->status == 3)
-                                            {{ __('admin.campaign_in_progress') }}
-
-                                        @elseif ($campaign->status == 4)
-                                            {{ __('admin.campaign_Pending_proof') }}
-
-                                        @elseif ($campaign->status == 5)
-                                            {{ __('admin.campaign_Pending_payment') }}
-
-                                        @elseif ($campaign->status == 6)
-                                            {{ __('admin.campaign_Confirmed') }}
-
-                                        @elseif ($campaign->status == 7)
                                             {{ __('admin.campaign_finished') }}
 
-                                        @elseif ($campaign->status == 8)
+                                        @elseif ($campaign->status == 4)
                                             {{ __('admin.campaign_canceled') }}
 
-                                        @elseif ($campaign->status == 9)
+                                        @elseif ($campaign->status == 5)
                                             {{ __('admin.campaign_closed') }}
 
                                         @else

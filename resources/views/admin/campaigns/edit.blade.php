@@ -203,17 +203,27 @@
             <div class="form-group m-form__group row {{ $errors->has('status') ? 'has-danger' : ''}}">
                 <label for="is_active" class="col-2 col-form-label">{{ __('admin.status') }}</label>
                  <div class="col-9">
-                <select name="status"  class="form-control m-input" >
+                <select name="status"  class="form-control m-input">
+                   @if ($campaign->status == 0)
                    <option value="0" {{ $campaign->status == 0? "selected" : "" }} > {{  __('admin.new_campaign') }}</option>
                    <option value="1" {{ $campaign->status == 1? "selected" : "" }} > {{ __('admin.campaign_approved') }}</option>
                    <option value="2" {{ $campaign->status == 2? "selected" : "" }} >  {{ __('admin.campaign_rejected') }}</option>
-                   <option value="3" {{ $campaign->status == 3? "selected" : "" }} > {{ __('admin.campaign_in_progress') }}</option>
+                   @elseif ($campaign->status > 0 && array_key_exists($campaign->status, $campaign_status))
+                    <option value="{{ $campaign->status }}"  "selected"> 
+                        {{ __('admin.'.$campaign_status[$campaign->status]) }}
+                    </option>
+                   @endif 
+
+
+                    
+                   
+                   {{--  <option value="3" {{ $campaign->status == 3? "selected" : "" }} > {{ __('admin.campaign_in_progress') }}</option>
                    <option value="4" {{ $campaign->status == 4? "selected" : "" }} > {{ __('admin.campaign_Pending_proof') }}</option>
                    <option value="5" {{ $campaign->status == 5? "selected" : "" }} >  {{ __('admin.campaign_Pending_payment') }}</option>
                    <option value="6" {{ $campaign->status == 6? "selected" : "" }} > {{ __('admin.campaign_Confirmed') }}</option>
                    <option value="7" {{ $campaign->status == 7? "selected" : "" }} > {{ __('admin.campaign_finished') }}</option>
                    <option value="8" {{ $campaign->status == 8? "selected" : "" }} >  {{ __('admin.campaign_canceled') }}</option>
-                   <option value="9" {{ $campaign->status == 9? "selected" : "" }} > {{ __('admin.campaign_closed') }}</option>
+                   <option value="9" {{ $campaign->status == 9? "selected" : "" }} > {{ __('admin.campaign_closed') }}</option>  --}}
                    
                 </select>
                     {!! $errors->first('status', '<span class="form-control-feedback">:message</span>') !!}

@@ -178,7 +178,7 @@ class AuthController extends Controller
 
             if($request->phone == $user_auth->phone)
             {
-                return $this->setStatusCode(422)->respondWithError(trans('api_msgs.nothing_to_update')); 
+                return $this->setStatusCode(405)->respondWithError(trans('api_msgs.nothing_to_update')); 
             }
         }
 

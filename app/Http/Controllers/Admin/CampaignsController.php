@@ -114,9 +114,16 @@ class campaignsController extends Controller
      */
     public function edit($id)
     {
+        $campaign_status = array(
+                '1' => 'campaign_approved',
+                '2' => 'campaign_rejected',
+                '3' => 'campaign_finished',
+                '4' => 'campaign_canceled',
+                '5' => 'campaign_closed',
+                 );
         $campaign = Campaign::find($id);
         $users =  User::where('account_type','0')->get();
-        return view('admin.campaigns.edit',compact('campaign','users'));
+        return view('admin.campaigns.edit',compact('campaign','users','campaign_status'));
     }
 
     /**
