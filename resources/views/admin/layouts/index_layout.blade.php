@@ -35,7 +35,7 @@
 
 	<!--end::Base Styles -->
 
-	<link rel="shortcut icon" href="{{asset('favicon.ico')}}" /> 
+	<link rel="shortcut icon" href="{{asset('admin/assets/demo/demo3/media/img/logo/logo.png')}}" /> 
 
 	<style> 
 			select.form-control:not([size]):not([multiple]) {
