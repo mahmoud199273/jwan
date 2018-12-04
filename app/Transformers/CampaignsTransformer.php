@@ -88,10 +88,12 @@ class CampaignsTransformer extends Transformer
             'maximum_rate'      => $campaign->maximum_rate,
 
             'created_date'      => Carbon::parse($campaign->created_at)->toDateTimeString(),
+            'created_date_string' => Carbon::createFromTimeStamp(strtotime($campaign->created_at))->diffForHumans() ,
 
             'updated_date'      => Carbon::parse($campaign->updated_at)->toDateTimeString(),
 
             'ended_date'        => $campaign->end_at,
+            'ended_date_string' => Carbon::createFromTimeStamp(strtotime($campaign->end_at))->diffForHumans() ,
 
             'campaign_status'   => (int) $campaign->status,
 

@@ -867,7 +867,7 @@ class OffersController extends Controller
                              $player_ids,"offers",
                              ['campaign_id' =>  (int)$campaign->id,
                              'offer_id'    => (int)$offer->id,
-                             'type'          =>  1,
+                             'type'          =>  14,
                              'type_title'	=> 'update offer',
                              'chat_content'         => $request->description,
                              'chat_type'       => 1]);

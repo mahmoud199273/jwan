@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
+        date_default_timezone_set('Asia/Riyadh');
         $inactive_users=DB::table('users')->where([['is_active','0'],['account_type','0'],['deleted_at',NULL]])->count();
 
         $inactive_influncers=DB::table('users')->where([['is_active','0'],['account_type','1'],['deleted_at',NULL]])->count();
