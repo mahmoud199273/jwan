@@ -91,7 +91,7 @@ class CampaignsTransformer extends Transformer
             'created_date_string' => Carbon::createFromTimeStamp(strtotime($campaign->created_at))->diffForHumans() ,
 
             'updated_date'      => Carbon::parse($campaign->updated_at)->toDateTimeString(),
-            'updated_date'      => Carbon::createFromTimeStamp(strtotime($campaign->updated_at))->diffForHumans() ,
+            'updated_date_string'      => Carbon::createFromTimeStamp(strtotime($campaign->updated_at))->diffForHumans() ,
 
             'ended_date'        => $campaign->end_at,
             'ended_date_string' => Carbon::createFromTimeStamp(strtotime($campaign->end_at))->diffForHumans() ,
