@@ -33,7 +33,7 @@ class FileController extends Controller
         $filePath = "";
         $file_name = time().time().uniqid().'.'.$file->getClientOriginalExtension();
         $fileDir   = base_path() .'/public/assets/uploads/';
-        if(in_array($file->getClientOriginalExtension(), ['jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff','heic','HEIC','webm','mkv','flv','flv','vob','ogg','ogg','ogv','gif','wmv','mp4','m4p','m4p','m4v','mpg','3gp','pdf']))
+        if(in_array($file->getClientOriginalExtension(), ['jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff','heic','HEIC','webm','mkv','flv','flv','vob','ogg','ogg','ogv','gif','wmv','mp4','m4p','m4p','m4v','mpg','3gp','pdf','doc','docx']))
         {
           $upload_file = $file->move($fileDir,$file_name);
           $filePath  = '/public/assets/uploads/'.$file_name;

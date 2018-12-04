@@ -302,28 +302,39 @@ class CampignsController extends Controller
             Attachment::create([
 
                 'campaign_id'       => $campaign->id,
-
-                'file'              => '/public/assets/images/campaign/campaign.png'
-            ]);
+                
+                'file'              => '/public/assets/images/campaign/campaign.png',                'file_type'          => 0,
+                ]);
 
 
         }else{
 
         $files  =$request->files_arr;
 
+        $image_extensions = array('jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff');    
+        $video_extensions = array('heic','HEIC','webm','mkv','flv','flv','vob','ogg','ogg','ogv','gif','wmv','mp4','m4p','m4p','m4v','mpg','3gp');    
+        $pdf_extensions = array('pdf','doc','docx');  
+
+        
             foreach ($files  as $file) {
                 //dd($file['file']);
+                $ext = pathinfo($file['file'], PATHINFO_EXTENSION);
+                $file_type = "0"; // image file 
+                if(in_array($ext,$video_extensions) ) 
+                {
+                    $file_type = "1"; // video file
+                }  
+                elseif(in_array($ext,$pdf_extensions) ) 
+                {
+                    $file_type = "2"; // pdf file
+                }  
                 Attachment::create([
 
                 'campaign_id'       => $campaign->id,
 
-                'file'              => $file['file']
-
-                //'file_type'          => $file['type']
-
-
-
-                      ]);
+                'file'              => $file['file'],
+                'file_type'          => $file_type
+                ]);
             }
         }
 
