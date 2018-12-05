@@ -48,7 +48,7 @@ class OffersController extends Controller
          public function allOffers( Request $request,User $user )
          {
              $influncer =  $this->getAuthenticatedUser();
-             $offers = Offer::where('influncer_id',$influncer->id)->get();
+             $offers = Offer::where('influncer_id',$influncer->id)->orderBy('updated_at','DESC')->get();
             // dd($offers);
              return $this->sendResponse( $this->offersTransformer->transformCollection($offers),trans('lang.read succefully'),200);
          }

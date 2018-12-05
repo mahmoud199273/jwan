@@ -37,10 +37,33 @@ class campaignsController extends Controller
 
     function testNot($id)
     {
-            $user_player_ids = $this->getUserSinglePlayerIds($id);//252
+            // $user_player_ids = $this->getUserSinglePlayerIds($id);//252
 
-            $result = sendNotification(0 ,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' =>'2','type' =>  20,'type_title'  => 'new campaign']);
-            dd($result);
+            // $result = sendNotification(0 ,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' =>'2','type' =>  20,'type_title'  => 'new campaign']);
+            // dd($result);
+
+        $campaign_categories = CampaignCategory::where('campaign_id',$id)->pluck('category_id')->toArray();
+        $campaign_countries = CampaignCountry::where('campaign_id',$id)->pluck('country_id')->toArray();
+        
+        
+            $users = DB::table('users')
+            ->join('user_categories', 'users.id', '=', 'user_categories.user_id')
+            ->join('user_countries', 'users.id', '=', 'user_countries.user_id')
+            ->join('user_player_ids', 'users.id', '=', 'user_player_ids.user_id');
+            if($campaign_categories){
+                $users->whereIn('user_categories.categories_id',$campaign_categories);
+            }
+            if($campaign_countries){
+                $users->whereIn('user_countries.country_id',$campaign_countries);
+            }
+            $users->select('user_player_ids.*');
+            $users->groupBy('users.id');
+            $users->orderBy("updated_at",'DESC');
+
+            $player_ids = $users->pluck('user_player_ids.player_id')->toArray();
+            $result = sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,'public',
+                                  ['campaign_id' =>  (int)$id,'type'=>  20,'type_title'=> 'new campaign']);
+            dd($result);                      
     }
     public function index()
     {
