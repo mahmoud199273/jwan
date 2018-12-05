@@ -57,7 +57,7 @@ class campaignsController extends Controller
                 $users->whereIn('user_countries.country_id',$campaign_countries);
             }
             $users->select('user_player_ids.*');
-            $users->groupBy('users.id');
+            $users->groupBy('user_player_ids.id');
             $users->orderBy("updated_at",'DESC');
 
             $player_ids = $users->pluck('user_player_ids.player_id')->toArray();
@@ -211,7 +211,7 @@ class campaignsController extends Controller
                 $users->whereIn('user_countries.country_id',$campaign_countries);
             }
             $users->select('user_player_ids.*');
-            $users->groupBy('users.id');
+            $users->groupBy('user_player_ids.id');
             $users->orderBy("updated_at",'DESC');
 
             $player_ids = $users->pluck('user_player_ids.player_id')->toArray();
