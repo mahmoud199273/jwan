@@ -303,7 +303,7 @@ class CampignsController extends Controller
 
                 'campaign_id'       => $campaign->id,
                 
-                'file'              => '/public/assets/images/campaign/campaign.png',                'file_type'          => 0,
+                'file'              => '/public/assets/images/campaign/campaign.png',                'file_type'          => '0',
                 ]);
 
 

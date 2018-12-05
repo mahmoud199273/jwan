@@ -35,9 +35,9 @@ class campaignsController extends Controller
         return $player_ids ? $player_ids : null;
     }
 
-    function testNot()
+    function testNot($id)
     {
-            $user_player_ids = $this->getUserSinglePlayerIds('272');
+            $user_player_ids = $this->getUserSinglePlayerIds($id);//252
 
             $result = sendNotification(0 ,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' =>'2','type' =>  20,'type_title'  => 'new campaign']);
             dd($result);

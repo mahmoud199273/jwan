@@ -23,6 +23,7 @@ class NotificationsTransformer extends Transformer
             'offer_id'             => $notification->offer_id,
             'is_seen'             => $notification->is_seen,
             'created_at'             => $notification->created_at,
+            'created_at_string'             => Carbon::createFromTimeStamp(strtotime($notification->created_at))->diffForHumans(),
         ];
 
         $return_array['to'] = User::select('users.id','users.name','users.image')->where('id',$notification->user_id)->first();

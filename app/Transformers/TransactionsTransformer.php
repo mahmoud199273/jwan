@@ -86,13 +86,16 @@ class TransactionsTransformer extends Transformer
             'transaction_account_IBAN'       => $transaction->transaction_account_IBAN,
             'transaction_number'       => $transaction->transaction_number,
             'transaction_date'       => Carbon::parse($transaction->transaction_date)->toDateTimeString(),
+            'transaction_date_string'     => Carbon::createFromTimeStamp(strtotime($transaction->transaction_date))->diffForHumans(),
             'transaction_amount'       => $transaction->transaction_amount,
             'transaction_user_name'           => $transaction->user_name,
             'transaction_user_image'           => $transaction->user_image,
             'transaction_user_id'           => $transaction->transaction_user_id,
             'color'           => $this->setColor((int) $transaction->status,(int) $transaction->type),
             'created_at'       => Carbon::parse($transaction->created_at)->toDateTimeString(),
+            'created_at_string'     => Carbon::createFromTimeStamp(strtotime($transaction->created_at))->diffForHumans(),
             'updated_at'          => Carbon::parse($transaction->updated_at)->toDateTimeString(),
+            'updated_at_string'     => Carbon::createFromTimeStamp(strtotime($transaction->updated_at))->diffForHumans(),
 
 
 

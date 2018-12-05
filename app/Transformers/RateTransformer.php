@@ -21,7 +21,8 @@ class RateTransformer extends Transformer
             'user'          => ['id' =>  $user->id , 'name' =>  $user->name , 'image' => config('app.url').$user->user_image ],
             'rate'          => $rate->rate,
             'comment'       => $rate->comment,
-            'created_at'    => Carbon::parse($rate->created_at)->format('h:m A M-d')
+            'created_at'    => Carbon::parse($rate->created_at)->format('h:m A M-d'),
+            'created_at_string'             => Carbon::createFromTimeStamp(strtotime($rate->created_at))->diffForHumans(),
         ];
     }
 }

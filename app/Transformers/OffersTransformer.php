@@ -59,8 +59,12 @@ class OffersTransformer extends Transformer
 						//'influncer_rate_comment'   => $offer->influncer_rate_comment,
 
             'created_date'      => Carbon::parse($offer->created_at)->toDateTimeString(),
-
+            
+            'created_date_string'      => Carbon::createFromTimeStamp(strtotime($offer->created_at))->diffForHumans(),
+            
             'updated_date'      => Carbon::parse($offer->updated_at)->toDateTimeString(),
+            
+            'updated_date_string'      => Carbon::createFromTimeStamp(strtotime($offer->updated_at))->diffForHumans(),
 
 
         ];
