@@ -405,7 +405,7 @@ class UserController extends Controller
             $user_social->save();
 
             //$user->save();
-            return $this->respondWithSuccess(trans('api_msgs.profile_updated'));
+            return $this->respondWithSuccess(trans('api_msgs.social_admin_approve'));
 
     }
 

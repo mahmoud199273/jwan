@@ -16,6 +16,7 @@ return[
    'check_credentials'			=>  'Please check your credentials',
    'reset_password_error' 		 => 	'Please enter a valid phone number',
    'profile_updated'           =>  'Profile updated successfully',
+   'social_admin_approve'       	=>  'The data has been sent and will be approved by the Admin',
    'password_updated'          =>  'Password updated successfully',
    'wrong_password'            =>  'Old password is incorrect ',
    'msg_sent'                 =>  'Message sent successfully, We will contact you back as soon as possible',

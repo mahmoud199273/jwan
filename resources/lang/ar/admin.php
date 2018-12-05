@@ -269,6 +269,7 @@ return [
     'accout_type2'=>  ' عام ',
     'wallet'=>  ' المحفظة ',
     'make_transactions'  =>' اجراء تحويل بنكى ',
+    'Socail'  =>'بيانات التواصل الاجتماعى',
     /* m.abdelrahman  */ 
 
 ];

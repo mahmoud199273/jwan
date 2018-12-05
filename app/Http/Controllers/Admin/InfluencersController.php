@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Admin\User\EditUserRequest;
 use App\Http\Requests\Admin\User\StoreUserRequest;
 use App\User;
+use App\UserSocial;
 use App\UserPlayerId;
 use App\Nathionality;
 use Illuminate\Http\Request;
@@ -27,7 +28,8 @@ class InfluencersController extends Controller
     public function index()
     {
         $users = User::where('is_active','0')->count();
-        $users = User::select('users.*','v.code','v.verified')
+        $users = User::select('users.*','v.code','v.verified','user_socials.id as social_id')
+        ->LEFTJOIN('user_socials','user_socials.user_id','users.id')
         ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'), 
         function($join)
         {
@@ -188,4 +190,34 @@ class InfluencersController extends Controller
         }
 
     }
+
+    public function InfluencerSocial ($id)
+    {
+        $row = UserSocial::where('user_id',$id)->first();
+        return view('admin.influencers.social',compact('row'));
+    }
+    public function UpdateInfluencerSocial (Request $request , $id)
+    {
+        $user_social = UserSocial::where('id',$id)->first();
+        if($user_social) 
+        {
+            $user =  User::find( $user_social->user_id );
+            $user->facebook = $user_social->facebook;
+            $user->facebook_follwers = $user_social->facebook_follwers;
+            $user->twitter = $user_social->twitter;
+            $user->twitter_follwers = $user_social->twitter_follwers;
+            $user->instgrame = $user_social->instgrame;
+            $user->instgrame_follwers = $user_social->instgrame_follwers;
+            $user->snapchat = $user_social->snapchat;
+            $user->snapchat_follwers = $user_social->snapchat_follwers;
+            $user->linkedin = $user_social->linkedin;
+            $user->linkedin_follwers = $user_social->linkedin_follwers;
+            $user->youtube = $user_social->youtube;
+            $user->youtube_follwers = $user_social->youtube_follwers;
+            $user->save();
+
+            UserSocial::where('id',$id)->delete();
+        }
+        return redirect()->intended(config('app.admin_url').'/influencers');
+    } 
 }
