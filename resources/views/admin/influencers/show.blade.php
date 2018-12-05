@@ -179,6 +179,115 @@
                         {!! $errors->first('is_active', '<span class="form-control-feedback">:message</span>') !!}
                     </div>
             </div>
+
+
+             <div class="form-group m-form__group row {{ $errors->has('facebook') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">Facebook url</label>
+                <div class="col-9">
+                    <input type="text" name="facebook" class="form-control m-input" 
+                           value="{{ $user->facebook }}" disabled>
+                    {!! $errors->first('facebook', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+            
+            <div class="form-group m-form__group row {{ $errors->has('facebook_follwers') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">Facebook Followers</label>
+                <div class="col-9">
+                    <input type="text" name="facebook_follwers" class="form-control m-input" 
+                           value="{{ $user->facebook_follwers }}" disabled>
+                    {!! $errors->first('facebook_follwers', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+            
+            <div class="form-group m-form__group row {{ $errors->has('twitter') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">Twitter url</label>
+                <div class="col-9">
+                    <input type="text" name="twitter" class="form-control m-input" 
+                           value="{{ $user->twitter }}" disabled>
+                    {!! $errors->first('twitter', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row {{ $errors->has('twitter_follwers') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">Twitter follwers</label>
+                <div class="col-9">
+                    <input type="text" name="twitter_follwers" class="form-control m-input" 
+                           value="{{ $user->twitter_follwers }}" disabled>
+                    {!! $errors->first('twitter_follwers', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row {{ $errors->has('instgrame') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">Instgrame url</label>
+                <div class="col-9">
+                    <input type="text" name="instgrame" class="form-control m-input" 
+                           value="{{ $user->instgrame }}" disabled>
+                    {!! $errors->first('instgrame', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row {{ $errors->has('instgrame_follwers') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">Instgrame Follwers</label>
+                <div class="col-9">
+                    <input type="text" name="instgrame_follwers" class="form-control m-input" 
+                           value="{{ $user->instgrame_follwers }}" disabled>
+                    {!! $errors->first('instgrame_follwers', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row {{ $errors->has('snapchat') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">Snapchat url</label>
+                <div class="col-9">
+                    <input type="text" name="snapchat" class="form-control m-input" 
+                           value="{{ $user->snapchat }}" disabled>
+                    {!! $errors->first('snapchat', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row {{ $errors->has('snapchat_follwers') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">Snapchat Followers</label>
+                <div class="col-9">
+                    <input type="text" name="snapchat_follwers" class="form-control m-input" 
+                           value="{{ $user->snapchat_follwers }}" disabled>
+                    {!! $errors->first('snapchat_follwers', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+            
+            <div class="form-group m-form__group row {{ $errors->has('linkedin') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">linkedin</label>
+                <div class="col-9">
+                    <input type="text" name="linkedin" class="form-control m-input" 
+                           value="{{ $user->linkedin }}" disabled>
+                    {!! $errors->first('linkedin', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row {{ $errors->has('linkedin_follwers') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">linkedin Followers</label>
+                <div class="col-9">
+                    <input type="text" name="linkedin_follwers" class="form-control m-input" 
+                           value="{{ $user->linkedin_follwers }}" disabled>
+                    {!! $errors->first('linkedin_follwers', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row {{ $errors->has('youtube') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">Youtube</label>
+                <div class="col-9">
+                    <input type="text" name="youtube" class="form-control m-input" 
+                           value="{{ $user->youtube }}" disabled>
+                    {!! $errors->first('youtube', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row {{ $errors->has('youtube_follwers') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">Youtube Followers</label>
+                <div class="col-9">
+                    <input type="text" name="youtube_follwers" class="form-control m-input" 
+                           value="{{ $user->youtube_follwers }}" disabled>
+                    {!! $errors->first('youtube_follwers', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
     
             <div class="form-group m-form__group row {{ $errors->has('image') ? 'has-danger' : ''}}">
                     <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.image') }}</label>
