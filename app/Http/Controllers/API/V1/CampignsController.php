@@ -106,6 +106,8 @@ class CampignsController extends Controller
                 $campaigns->whereNotIn('campaigns.id',$influncer_campaigns_offered);
             }
             $campaigns->where('campaigns.status','1')
+            //->where(\DB::raw('Date(campaigns.end_at)') ,'>',\DB::raw('NOW()'))
+            ->where('campaigns.end_at','>',Carbon::now()->addHours(3)->toDateTimeString())
             ->groupBy('campaigns.id')
  
  

@@ -75,7 +75,7 @@
                                 <tr>
                                     <th><b>{{ __('admin.name') }}</b></th>
                                     <th><b>{{ __('admin.phone') }}</b></th>
-                                    <th><b>{{ __('admin.email') }}</b></th>
+                                    {{--  <th><b>{{ __('admin.email') }}</b></th>  --}}
                                     <th><b>{{ __('admin.status') }}</b></th>
                                     <th><b>{{ __('admin.wallet') }}</b></th>
                                     <th><b>{{ __('admin.Activecode') }}</b></th>
@@ -89,7 +89,7 @@
                                 <tr>
                                     <th scope="row">{{ $user->name }}</th>
                                     <td>{{ $user->phone }}</td>
-                                    <td>{{ $user->email }}</td>
+                                    {{--  <td>{{ $user->email }}</td>  --}}
                                     <td class="text-center">{!! ($user->is_active)? "<i class='fa fa-check m--font-success'></i>" : 
                                     "<i class='fa fa-times m--font-danger'></i>" !!}</td>
                                     <td>{{ $user->balance }}</td>
@@ -128,6 +128,13 @@
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             {{ __('admin.transactions') }}
                                         </a>
+                                        @if($user->social_id)
+                                        <a type="button" 
+                                            href="{{url('admin/influencers')}}/{{ $user->id }}/social" 
+                                            class="m-btn m-btn m-btn--square btn btn-secondary">
+                                            {{ __('admin.Socail') }}
+                                        </a>
+                                        @endif
 
                                         <a type="button"  data-id = "{{ $user->id }}" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary _remove">

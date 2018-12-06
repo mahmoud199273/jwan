@@ -48,7 +48,7 @@ class OffersController extends Controller
          public function allOffers( Request $request,User $user )
          {
              $influncer =  $this->getAuthenticatedUser();
-             $offers = Offer::where('influncer_id',$influncer->id)->get();
+             $offers = Offer::where('influncer_id',$influncer->id)->orderBy('updated_at','DESC')->get();
             // dd($offers);
              return $this->sendResponse( $this->offersTransformer->transformCollection($offers),trans('lang.read succefully'),200);
          }
@@ -251,8 +251,8 @@ class OffersController extends Controller
 
                     $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
 
-                    $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
-                    Notification::create(['user_id' => $campaign->influncer_id,
+                    $player_ids = $this->getUserPlayerIds($offer->influncer_id);
+                    Notification::create(['user_id' => $offer->influncer_id,
                                               'from_user_id' => $user->id, 
                                               'message' => 'Your offer rejected on '.$campaign->title,
                                               'message_ar' => 'تم رفض عرضك على حملة '.$campaign->title,
@@ -487,8 +487,8 @@ class OffersController extends Controller
 
             $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
 
-            $player_ids = $this->getUserPlayerIds($campaign->influncer_id);
-            Notification::create(['user_id' => $campaign->influncer_id,
+            $player_ids = $this->getUserPlayerIds($offer->influncer_id);
+            Notification::create(['user_id' => $offer->influncer_id,
                                       'from_user_id' => $user->id, 
                                       'message' => 'user has canceled '.$campaign->title,
                                       'message_ar' => 'تم الغاء حملة '.$campaign->title,

@@ -11,6 +11,7 @@ use App\User;
 use App\Campaign;
 use App\Notification;
 use App\UserPlayerId;
+use App\UserSocial;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -364,32 +365,47 @@ class UserController extends Controller
         }
 
             $user = User::find( $user->id );
+            if(!$user)
+            {
+                return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
+            }
 
-            $user->facebook          = $request->facebook;
+            UserSocial::where('user_id', $user->id)->delete();
 
-            $user->facebook_follwers  = $request->facebook_follwers;
+            $user_social = new UserSocial;
 
-            $user->twitter            = $request->twitter;
+            $user_social->user_id          = $user->id;
 
-            $user->twitter_follwers   = $request->twitter_follwers;
+            $user_social->facebook          = $request->facebook;
+            
+            $user_social->facebook_follwers  = $request->facebook_follwers;
 
-            $user->instgrame           = $request->instgrame;
+            $user_social->twitter            = $request->twitter;
 
-            $user->instgrame_follwers  =$request->instgrame_follwers;
+            $user_social->twitter_follwers   = $request->twitter_follwers;
 
-            $user->snapchat            = $request->snapchat;
+            $user_social->instgrame           = $request->instgrame;
 
-            $user->snapchat_follwers   = $request->snapchat_follwers;
+            $user_social->instgrame_follwers  =$request->instgrame_follwers;
 
-            $user->linkedin             = $request->linkedin;
+            $user_social->snapchat            = $request->snapchat;
 
-            $user->linkedin_follwers   = $request->linkedin_follwers;
+            $user_social->snapchat_follwers   = $request->snapchat_follwers;
 
-            $user->youtube             = $request->youtube;
+            $user_social->linkedin             = $request->linkedin;
 
-            $user->youtube_follwers   = $request->youtube_follwers;
-        $user->save();
-        return $this->respondWithSuccess(trans('api_msgs.profile_updated'));
+            $user_social->linkedin_follwers   = $request->linkedin_follwers;
+
+            $user_social->youtube             = $request->youtube;
+
+            $user_social->youtube_follwers   = $request->youtube_follwers;
+
+            
+            //$user = User::find( $user->id );
+            $user_social->save();
+
+            //$user->save();
+            return $this->respondWithSuccess(trans('api_msgs.social_admin_approve'));
 
     }
 
@@ -531,7 +547,8 @@ class UserController extends Controller
                                         ->join('users as to', 'to.id', '=', 'notifications.user_id')
                                         ->leftjoin('users as from', 'from.id', '=', 'notifications.from_user_id')
                                         ->where('notifications.user_id' , $user->id)
-										->orderBy('notifications.updated_at','DESC')
+                                        ->orderBy('notifications.updated_at','DESC')
+                                        ->orderBy('notifications.id', 'DESC')
 										->paginate($this->getPagination());
 
 				$notifications =  $pagination->items();

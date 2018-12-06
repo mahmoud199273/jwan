@@ -83,6 +83,8 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::post('/influencers/activate'       , 'InfluencersController@activate');
 		Route::post('/influencers/ban'            , 'InfluencersController@ban');
 		Route::get('influencer/search','InfluencersController@search');
+		Route::get('influencers/{id}/social','InfluencersController@InfluencerSocial');
+		Route::patch('influencers/{id}/social','InfluencersController@UpdateInfluencerSocial');
 
 		// Route::resource('users','UsersController');
 		// Route::post('/users/activate'       , 'UsersControllers@activate');
