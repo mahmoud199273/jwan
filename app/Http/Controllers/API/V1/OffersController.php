@@ -48,6 +48,11 @@ class OffersController extends Controller
          public function allOffers( Request $request,User $user )
          {
              $influncer =  $this->getAuthenticatedUser();
+
+             if($influncer->account_type != 1)
+             {
+                 return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+             }
              $offers = Offer::where('influncer_id',$influncer->id)->orderBy('updated_at','DESC')->get();
             // dd($offers);
              return $this->sendResponse( $this->offersTransformer->transformCollection($offers),trans('lang.read succefully'),200);
@@ -66,6 +71,11 @@ class OffersController extends Controller
              }
            	$this->setPagination($limit);
             $influncer =  $this->getAuthenticatedUser();
+
+            if($influncer->account_type != 1)
+            {
+                return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+            }
 
             $pagination = Offer::
                         where([['influncer_id',$influncer->id], ['status', '0']])
@@ -88,6 +98,11 @@ class OffersController extends Controller
              }
             $this->setPagination($limit);
             $influncer =  $this->getAuthenticatedUser();
+
+            if($influncer->account_type != 1)
+            {
+                return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+            }
 
             $pagination = Offer::
                         where([['influncer_id',$influncer->id], ['status', '1']])
@@ -117,6 +132,11 @@ class OffersController extends Controller
              }
             $this->setPagination($limit);
             $influncer =  $this->getAuthenticatedUser();
+
+            if($influncer->account_type != 1)
+            {
+                return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+            }
 
             $pagination = Offer::
                         where([['influncer_id',$influncer->id], ['status', '2']])
