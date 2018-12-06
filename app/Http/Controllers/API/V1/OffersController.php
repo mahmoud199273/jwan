@@ -179,7 +179,10 @@ class OffersController extends Controller
     {
     # code...
         $user =  $this->getAuthenticatedUser();
-
+        if($user->account_type != 0)
+        {
+            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+        }
         if ( $request->limit ) {
                 $this->setPagination($request->limit);
             }
@@ -261,6 +264,12 @@ class OffersController extends Controller
                 public function reject(Request $request)
                 {
                     $user =  $this->getAuthenticatedUser();
+
+                    if($user->account_type != 0)
+                    {
+                        return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+                    }
+
                     // security check
                     $offer = Offer::where([['id',$request->id], ['status', "0"]])->get()->first();
                     if(!$offer){
@@ -296,6 +305,11 @@ class OffersController extends Controller
         public function pay(Request $request)
         {
             $user =  $this->getAuthenticatedUser();
+
+            if($user->account_type != 0)
+            {
+                return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+            }
             // security check
             $offer = Offer::where([['id',$request->id], ['status', "1"]])->get()->first();
             if(!$offer){
@@ -360,6 +374,11 @@ class OffersController extends Controller
         public function finish(Request $request)
         {
             $user =  $this->getAuthenticatedUser();
+
+            if($user->account_type != 0)
+            {
+                return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+            }
             // security check
             $validator = Validator::make( $request->all(), [
                 'id'                => 'required|exists:offers,id',
@@ -448,6 +467,11 @@ class OffersController extends Controller
         public function user_rate(Request $request)
         {
             $user =  $this->getAuthenticatedUser();
+
+            if($user->account_type != 0)
+            {
+                return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+            }
             // security check
             $validator = Validator::make( $request->all(), [
                 'id'                => 'required|exists:offers,id',
@@ -490,6 +514,11 @@ class OffersController extends Controller
         public function user_cancel(Request $request)
         {
             $user =  $this->getAuthenticatedUser();
+
+            if($user->account_type != 0)
+            {
+                return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+            }
             // security check should be influncer and owner of request
             $offer = Offer::
                             where([['id',$request->id], ['status', "1"]])
@@ -534,6 +563,12 @@ class OffersController extends Controller
                 public function inprogress(Request $request)
                 {
                     $user =  $this->getAuthenticatedUser();
+
+                    if($user->account_type != 1)
+                    {
+                        return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+                    }
+
                     // security check should be influncer and owner of request
                     $offer = Offer::where([['id',$request->id], ['status', "3"]])->get()->first();
                     if(!$offer){
@@ -588,6 +623,12 @@ class OffersController extends Controller
                 public function proof(Request $request)
                 {
                     $user =  $this->getAuthenticatedUser();
+
+                    if($user->account_type != 1)
+                    {
+                        return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+                    }
+
                     // security check should be influncer and owner of request
                     $offer = Offer::where([['id',$request->id], ['status', "4"]])->get()->first();
                     if(!$offer){
@@ -640,6 +681,12 @@ class OffersController extends Controller
                 public function influncer_cancel(Request $request)
                 {
                     $user =  $this->getAuthenticatedUser();
+
+                    if($user->account_type != 1)
+                    {
+                        return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+                    }
+
                     // security check should be influncer and owner of request
                     $offer = Offer::
                                     where([['id',$request->id], ['status', "0"]])
@@ -704,6 +751,12 @@ class OffersController extends Controller
                 public function influncer_rate(Request $request)
                 {
                     $user =  $this->getAuthenticatedUser();
+
+                    if($user->account_type != 1)
+                    {
+                        return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+                    }
+                    
                     // security check
                     $validator = Validator::make( $request->all(), [
                         'id'                => 'required|exists:offers,id',

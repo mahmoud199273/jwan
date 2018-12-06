@@ -131,6 +131,10 @@ class TransactionsController extends Controller
     public function store( Request $request )
     {
         $user =  $this->getAuthenticatedUser();
+        if($user->account_type != 0)
+        {
+            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+        }
         $validator = Validator::make( $request->all(), [
             'transaction_amount'            => 'required|numeric',
             'transaction_bank_name'         =>  'required',

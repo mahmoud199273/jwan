@@ -53,7 +53,7 @@ class TransactionsTransformer extends Transformer
 	public function transform( $transaction  ) : array
     {
 			$status_array = array(0 => 'فى انتظار الموافقه',
-                      			1 => 'تم الموافقة',
+                      			1 => 'تم بنجاح',
                       			2 => 'تم الرفض',
                       			3 => 'تم الإنتهاء من التحويل',
                       			4 => 'تم الغاءالتحويل',

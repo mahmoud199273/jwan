@@ -19,7 +19,7 @@ class StoreBankAccountsRequest extends BaseRequest
  
         return [
             'user_id'                     => 'required',
-            'bank_id'                     => 'required'
+            'bank_id'                     => 'required',
             'account_name'                => 'required|string',
             'IBAN'                        => 'required',
             'note'                        => 'required',
