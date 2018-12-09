@@ -37,6 +37,9 @@ class EditCampaignsRequest extends BaseRequest
 
     public function persist($id)
     {
+        $this->offsetunset('campaign_categories');
+        $this->offsetunset('campaign_countries');
+        $this->offsetunset('campaign_areas');
         Campaign::find($id)->Update($this->request->all());
     }
 
