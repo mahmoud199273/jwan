@@ -214,6 +214,66 @@ class UserController extends Controller
 
     }
 
+    public function updateInfluncerProfileSettings()
+    {
+        $user =  $this->getAuthenticatedUser();
+
+        if($user->account_type != 1)
+                    {
+                        return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+                    } 
+
+            $validator = Validator::make( $request->all(), [
+                'categories_id'      => 'nullable',
+                'areas_id'      => 'nullable',
+                'countries_id'    => 'nullable',
+            ]);
+
+            $categories_id  =$request->categories_id;
+            if($categories_id !== null){
+                UserCategory::where('user_id', $user->id)->forceDelete();
+                foreach ($categories_id  as $id) {
+                    UserCategory::create([
+
+                    'user_id'       => $user->id,
+
+                    'categories_id' => $id,
+
+
+                        ]);
+                }
+            }
+            $countries_id  =$request->countries_id;
+            if($countries_id !== null){
+                UserCountry::where('user_id', $user->id)->forceDelete();
+                foreach ($countries_id  as $id) {
+                    UserCountry::create([
+
+                    'user_id'       => $user->id,
+
+                    'country_id' => $id,
+
+
+                        ]);
+                }
+            }
+
+            $areas_id  =$request->areas_id;
+            if($areas_id !== null){
+            UserArea::where('user_id', $user->id)->forceDelete();
+            foreach ($areas_id  as $id) {
+                UserArea::create([
+
+                'user_id'       => $user->id,
+
+                'area_id' => $id,
+
+
+                      ]);
+            }
+        }
+    }
+
     public function updateInfluncerProfile(Request $request )
     {
         $user =  $this->getAuthenticatedUser();
@@ -247,9 +307,9 @@ class UserController extends Controller
 
             'account_manger' => 'required',
 
-            'categories_id'      => 'nullable',
+            //'categories_id'      => 'nullable',
 
-            'areas_id'      => 'nullable'
+            //'areas_id'      => 'nullable'
 
 
 
@@ -306,22 +366,22 @@ class UserController extends Controller
 
             $user->save();
 
-        $categories_id  =$request->categories_id;
+        //$categories_id  =$request->categories_id;
 
-        if($categories_id !== null){
-            UserCategory::where('user_id', $user->id)->forceDelete();
-            foreach ($categories_id  as $id) {
+        // if($categories_id !== null){
+        //     UserCategory::where('user_id', $user->id)->forceDelete();
+        //     foreach ($categories_id  as $id) {
 
-                UserCategory::create([
+        //         UserCategory::create([
 
-                'user_id'       => $user->id,
+        //         'user_id'       => $user->id,
 
-                'categories_id' => $id,
+        //         'categories_id' => $id,
 
 
-                      ]);
-            }
-        }
+        //               ]);
+        //     }
+        // }
             /* $countries_id  =$request->countries_id;
 
             foreach ($countries_id  as $id) {
@@ -335,23 +395,23 @@ class UserController extends Controller
                       ]);
             } */
 
-            $areas_id  =$request->areas_id;
+            // $areas_id  =$request->areas_id;
 
-            if($areas_id !== null){
+            // if($areas_id !== null){
 
-                UserArea::where('user_id', $user->id)->forceDelete();
-                foreach ($areas_id  as $id) {
-                    UserArea::create([
+            //     UserArea::where('user_id', $user->id)->forceDelete();
+            //     foreach ($areas_id  as $id) {
+            //         UserArea::create([
 
-                    'user_id'       => $user->id,
+            //         'user_id'       => $user->id,
 
-                    'area_id' => $id,
+            //         'area_id' => $id,
 
 
-                        ]);
-                }
-                
-            }
+            //             ]);
+            //     }
+
+            // }
 
         return $this->respondWithSuccess(trans('api_msgs.profile_updated'));
 
