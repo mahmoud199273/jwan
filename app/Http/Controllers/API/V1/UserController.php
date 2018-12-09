@@ -11,6 +11,9 @@ use App\User;
 use App\Campaign;
 use App\Notification;
 use App\UserPlayerId;
+use App\UserCategory;
+use App\UserCountry;
+use App\UserArea;
 use App\UserSocial;
 use Hash;
 use Illuminate\Http\Request;
@@ -214,7 +217,7 @@ class UserController extends Controller
 
     }
 
-    public function updateInfluncerProfileSettings()
+    public function updateInfluncerProfileSettings(Request $request)
     {
         $user =  $this->getAuthenticatedUser();
 
@@ -272,6 +275,7 @@ class UserController extends Controller
                       ]);
             }
         }
+        return $this->respondWithSuccess(trans('api_msgs.profile_updated'));
     }
 
     public function updateInfluncerProfile(Request $request )
