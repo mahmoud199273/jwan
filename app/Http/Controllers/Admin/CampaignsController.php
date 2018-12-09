@@ -183,7 +183,7 @@ class campaignsController extends Controller
         $request->persist($id);
 
             if($categories_id !== null){
-                CampaignCategory::where('campaign_id', $id)->delete();
+                CampaignCategory::where('campaign_id', $id)->forceDelete();
                 foreach ($categories_id  as $category_id) {
                     CampaignCategory::firstOrCreate([
 
@@ -196,7 +196,7 @@ class campaignsController extends Controller
                 }
             }
             if($countries_id !== null){
-                CampaignCountry::where('campaign_id', $id)->delete();
+                CampaignCountry::where('campaign_id', $id)->forceDelete();
                 foreach ($countries_id  as $country_id) {
                     CampaignCountry::firstOrCreate([
 
@@ -210,7 +210,7 @@ class campaignsController extends Controller
             }
            
             if($areas_id !== null){
-                CampaignArea::where('campaign_id', $id)->delete();
+                CampaignArea::where('campaign_id', $id)->forceDelete();
                 foreach ($areas_id  as $area_id) {
                     CampaignArea::firstOrCreate([
 

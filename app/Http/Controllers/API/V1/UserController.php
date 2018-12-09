@@ -243,7 +243,13 @@ class UserController extends Controller
 
             'minimumRate'          => 'required',
 
-            'account_manger' => 'required'
+            'nationality_id'   => 'required',
+
+            'account_manger' => 'required',
+
+            'categories_id'      => 'nullable',
+
+            'areas_id'      => 'nullable'
 
 
 
@@ -281,7 +287,10 @@ class UserController extends Controller
                 $user->image        = $request->image;
             }
 
-
+            if($request->nationality_id)
+            {
+                $user->nationality_id         =  $request->nationality_id;
+            }
 
             $user->name         =  $request->name;
 
@@ -297,8 +306,10 @@ class UserController extends Controller
 
             $user->save();
 
-        /*$categories_id  =$request->categories_id;
-            //dd($categories_id);
+        $categories_id  =$request->categories_id;
+
+        if($categories_id !== null){
+            UserCategory::where('user_id', $user->id)->forceDelete();
             foreach ($categories_id  as $id) {
 
                 UserCategory::create([
@@ -310,7 +321,8 @@ class UserController extends Controller
 
                       ]);
             }
-            $countries_id  =$request->countries_id;
+        }
+            /* $countries_id  =$request->countries_id;
 
             foreach ($countries_id  as $id) {
                 UserCountry::create([
@@ -321,20 +333,25 @@ class UserController extends Controller
 
 
                       ]);
-            }
+            } */
 
             $areas_id  =$request->areas_id;
 
-            foreach ($areas_id  as $id) {
-                UserArea::create([
+            if($areas_id !== null){
 
-                'user_id'       => $user->id,
+                UserArea::where('user_id', $user->id)->forceDelete();
+                foreach ($areas_id  as $id) {
+                    UserArea::create([
 
-                'area_id' => $id,
+                    'user_id'       => $user->id,
+
+                    'area_id' => $id,
 
 
-                      ]);
-            }*/
+                        ]);
+                }
+                
+            }
 
         return $this->respondWithSuccess(trans('api_msgs.profile_updated'));
 
