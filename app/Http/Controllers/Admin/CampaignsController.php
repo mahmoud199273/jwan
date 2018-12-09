@@ -132,9 +132,12 @@ class campaignsController extends Controller
         $countries =  Country::all();
         $areas = Area::all();
         $categories = Category::all();
-        $campaign_categories = $campaign->categories->pluck('id');
-        $campaign_countries = $campaign->countries->pluck('id');
-        $campaign_areas = $campaign->areas->pluck('id');
+        // $campaign_categories = $campaign->categories->pluck('id');
+        // $campaign_countries = $campaign->countries->pluck('id');
+        // $campaign_areas = $campaign->areas->pluck('id');
+        $campaign_categories = CampaignCategory::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('category_id');
+        $campaign_countries =  CampaignCountry::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('country_id');
+        $campaign_areas = CampaignArea::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('area_id');
         return view('admin.campaigns.show',compact('campaign','countries','areas','categories','campaign_categories','campaign_countries','campaign_areas'));
     }
 
@@ -158,9 +161,10 @@ class campaignsController extends Controller
         $countries =  Country::all();
         $areas = Area::all();
         $categories = Category::all();
-        $campaign_categories = $campaign->categories->pluck('id');
-        $campaign_countries = $campaign->countries->pluck('id');
-        $campaign_areas = $campaign->areas->pluck('id');
+        //$campaign_categories = $campaign->categories->pluck('id');
+        $campaign_categories = CampaignCategory::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('category_id');
+        $campaign_countries =  CampaignCountry::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('country_id');
+        $campaign_areas = CampaignArea::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('area_id');
         return view('admin.campaigns.edit',compact('campaign','users','campaign_status','countries','areas','categories','campaign_categories','campaign_countries','campaign_areas'));
     }
 
@@ -179,6 +183,7 @@ class campaignsController extends Controller
         $request->persist($id);
 
             if($categories_id !== null){
+                CampaignCategory::where('campaign_id', $id)->delete();
                 foreach ($categories_id  as $category_id) {
                     CampaignCategory::firstOrCreate([
 
@@ -191,6 +196,7 @@ class campaignsController extends Controller
                 }
             }
             if($countries_id !== null){
+                CampaignCountry::where('campaign_id', $id)->delete();
                 foreach ($countries_id  as $country_id) {
                     CampaignCountry::firstOrCreate([
 
@@ -204,7 +210,7 @@ class campaignsController extends Controller
             }
            
             if($areas_id !== null){
-
+                CampaignArea::where('campaign_id', $id)->delete();
                 foreach ($areas_id  as $area_id) {
                     CampaignArea::firstOrCreate([
 

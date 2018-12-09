@@ -32,6 +32,9 @@ class EditCampaignsRequest extends BaseRequest
             'description'                       => 'required',
             'scenario'                          => 'required',
             'status'                            => 'required',
+            'campaign_areas'                  => 'required',
+            'campaign_countries'              => 'required',
+            'campaign_categories'             => 'required',
         ];
     }
 

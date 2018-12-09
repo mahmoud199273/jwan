@@ -16,6 +16,6 @@ class CampaignCountry extends Model
   
    public function country()
    {
-   	 return $this->belongsToMany('App\Country','country_id','id');
+   	 return $this->belongsToMany('App\Country','country_id','id')->whereNull('campaign_countries.deleted_at')->withTimestamps();
    }
 }

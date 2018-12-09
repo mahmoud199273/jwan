@@ -98,7 +98,7 @@
                 </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
+            <div class="form-group m-form__group row {{ $errors->has('campaign_countries') ? 'has-danger' : ''}}">
                 <label for="name" class="col-1 col-form-label"> {{ __('admin.countries') }}  </label>
                 <div class="col-9">
                    <select name="campaign_countries[]" class="mt-multiselect btn btn-default" multiple="multiple" data-label="left" data-select-all="true" data-width="100%" data-filter="true" >
@@ -107,11 +107,12 @@
                         </option>
                        @endforeach
                     </select>
+                    {!! $errors->first('campaign_countries', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
 
-            <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
+            <div class="form-group m-form__group row {{ $errors->has('campaign_categories') ? 'has-danger' : ''}}">
                 <label for="name" class="col-1 col-form-label"> {{ __('admin.categories') }}  </label>
                 <div class="col-9">
                    <select name="campaign_categories[]" class="mt-multiselect btn btn-default" multiple="multiple" data-label="left" data-select-all="true" data-width="100%" data-filter="true" >
@@ -120,11 +121,12 @@
                         </option>
                        @endforeach
                     </select>
+                    {!! $errors->first('campaign_categories', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
             
-            <div class="form-group m-form__group row {{ $errors->has('name') ? 'has-danger' : ''}}">
+            <div class="form-group m-form__group row {{ $errors->has('campaign_areas') ? 'has-danger' : ''}}">
                 <label for="name" class="col-1 col-form-label"> {{ __('admin.areas') }}  </label>
                 <div class="col-9">
                    <select name="campaign_areas[]" class="mt-multiselect btn btn-default" multiple="multiple" data-label="left" data-select-all="true" data-width="100%" data-filter="true" >
@@ -133,6 +135,7 @@
                         </option>
                        @endforeach
                     </select>
+                    {!! $errors->first('campaign_areas', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
