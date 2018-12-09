@@ -63,7 +63,7 @@ class campaignsController extends Controller
             $player_ids = $users->pluck('user_player_ids.player_id')->toArray();
             $result = sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,'public',
                                   ['campaign_id' =>  (int)$id,'type'=>  20,'type_title'=> 'new campaign']);
-            dd($result);                      
+            dd($player_ids,$result);                      
     }
     public function index()
     {

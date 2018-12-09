@@ -41,6 +41,11 @@ class CampignsController extends Controller
     public function index( Request $request )
     {
         $influncer =  $this->getAuthenticatedUser();
+        
+        if($influncer->account_type != 1)
+        {
+            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+        }
 
         $campaign_ids = InfluncerCampaign::where('influncer_id',$influncer->id)->pluck('campaign_id')->toArray();
          //dd($campaign_ids);
@@ -488,6 +493,11 @@ class CampignsController extends Controller
     {
         $user =  $this->getAuthenticatedUser();
 
+        if($user->account_type != 0)
+        {
+            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+        }
+
         $settings = Setting::first();
 
 
@@ -535,6 +545,11 @@ class CampignsController extends Controller
         {
             $user =  $this->getAuthenticatedUser();
 
+            if($user->account_type != 0)
+            {
+                return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+            }
+
             $validator = Validator::make( $request->all(), [
                 'id'                => 'required|exists:campaigns,id',
             ]);
@@ -563,6 +578,11 @@ class CampignsController extends Controller
             public function cancelCampaign( Request $request )
             {
                 $user =  $this->getAuthenticatedUser();
+                
+                if($user->account_type != 0)
+                {
+                    return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+                }
 
                 $validator = Validator::make( $request->all(), [
                     'id'                => 'required|exists:campaigns,id',
@@ -698,6 +718,10 @@ class CampignsController extends Controller
         {
             $user =  $this->getAuthenticatedUser();
 
+            if($user->account_type != 1)
+            {
+                return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+            }
             $skipped = DB::table('influncer_campaigns')
                      ->where([['status', '=', '0'],
                         ['influncer_id',$user->id],
@@ -732,6 +756,11 @@ class CampignsController extends Controller
 
         {
             $user =  $this->getAuthenticatedUser();
+
+            if($user->account_type != 1)
+            {
+                return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+            }
 
             $favorite = DB::table('influncer_campaigns')
                      ->where([['status', '=','1'],
@@ -840,6 +869,12 @@ class CampignsController extends Controller
     public function archiveCampaigns(Request $request)
     {
         $user =  $this->getAuthenticatedUser();
+
+        if($user->account_type != 0)
+        {
+            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+        }
+        
         $this->campaignsTransformer->setFlag(true);
         
         if ( $request->limit ) {

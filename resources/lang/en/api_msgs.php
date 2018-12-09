@@ -34,6 +34,7 @@ return[
    'canceled'            => 'Campaign has been canceled',
    'nothing_to_update'            => 'There is no changes. nothing to update',
    'offer_not_pay'				=>  ' There is not enough balance to pay for the offer ',
+   'not_authorized'				=>  ' You are not authorized to perform this operation ',
 
 
 

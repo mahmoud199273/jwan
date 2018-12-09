@@ -44,6 +44,10 @@ class UserController extends Controller
     {
 
         $user =  $this->getAuthenticatedUser();
+        if($user->account_type != 0)
+                    {
+                        return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+                    }
 
         return $this->respond(['data' => $this->profileTransformer->transform($user) ]);
     }
@@ -53,6 +57,11 @@ class UserController extends Controller
     public function influncerProfile( Request $request )
     {
         $influncer =  $this->getAuthenticatedUser();
+
+        if($influncer->account_type != 1)
+                    {
+                        return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+                    }
         return $this->respond(['data' => $this->influncerTransformer->transform($influncer) ]);
     }
 
@@ -63,6 +72,10 @@ class UserController extends Controller
 
 
         $user =  $this->getAuthenticatedUser();
+        if($user->account_type != 0)
+                    {
+                        return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+                    }
 
         $validator = Validator::make( $request->all(), [
             'name'         => 'required|string|max:50|min:2',
@@ -205,6 +218,11 @@ class UserController extends Controller
     {
         $user =  $this->getAuthenticatedUser();
 
+        if($user->account_type != 1)
+                    {
+                        return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+                    } 
+
         $validator = Validator::make( $request->all(), [
             'name'     => 'required|string|max:50|min:2',
             'email'    => 'required|string',
@@ -326,6 +344,11 @@ class UserController extends Controller
     public function updateFollowers(Request $request)
     {
         $user =  $this->getAuthenticatedUser();
+
+        if($user->account_type != 1)
+                    {
+                        return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+                    } 
 
         $validator = Validator::make( $request->all(), [
 

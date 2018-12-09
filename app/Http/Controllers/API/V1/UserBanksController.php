@@ -53,9 +53,10 @@ class UserBanksController extends Controller
     {
         $user =  $this->getAuthenticatedUser();
 
-        // if($user->account_type == '0'){
-        //     return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the right to be here'));
-        // }
+        if($user->account_type != 1)
+        {
+            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+        }
 
             $data = BankAccounts::select('bank_accounts.*','banks.name','banks.name_ar')->join('banks','banks.id','bank_accounts.bank_id')->where([['user_id' ,$user->id]])->get();
             $bankaccounts = $this->bankaccounttransformer->transformCollection($data);
@@ -71,6 +72,11 @@ class UserBanksController extends Controller
     public function store( Request $request )
     {
         $user =  $this->getAuthenticatedUser();
+
+        if($user->account_type != 1)
+        {
+            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+        }
 
         // if($user->account_type == '0'){
         //     return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the right to be here'));
