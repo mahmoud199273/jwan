@@ -128,7 +128,7 @@
                 </div>
             </div>
             
-            <div class="form-group m-form__group row {{ $errors->has('linkedin') ? 'has-danger' : ''}}">
+            {{-- <div class="form-group m-form__group row {{ $errors->has('linkedin') ? 'has-danger' : ''}}">
                 <label for="name" class="col-2 col-form-label">linkedin</label>
                 <div class="col-9">
                     <input type="text" name="linkedin" class="form-control m-input" 
@@ -162,7 +162,7 @@
                            value="{{ $row->youtube_follwers }}" disabled>
                     {!! $errors->first('youtube_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
-            </div>
+            </div> --}}
 
 
 

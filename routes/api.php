@@ -120,6 +120,7 @@ Route::post('influncer/update/player_id','API\V1\UserController@updatePlayerId')
 Route::get('influncer/profile', 'API\V1\UserController@influncerProfile');
 
 Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerProfile');
+Route::post('influncer/update/profile/target', 'API\V1\UserController@updateInfluncerProfileSettings');
 Route::post('influncer/update/phone','API\V1\UserController@updatePhone');// influencer update phone
 
 

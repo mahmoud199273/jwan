@@ -112,7 +112,8 @@ class OffersController extends Controller
                         ->orwhere([['influncer_id',$influncer->id], ['status', '7'],['influncer_rate',NULL] ])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '8'],['influncer_rate',NULL] ])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '9'],['influncer_rate',NULL] ])
-                        ->orderBy('created_at','DESC')
+                        ->orderBy('updated_at','DESC')
+                        ->orderBy('id','DESC')
                         ->paginate($this->getPagination());
 
             $offers =  $this->offersTransformer->transformCollection(collect($pagination->items()));
@@ -145,7 +146,8 @@ class OffersController extends Controller
                         ->orwhere([['influncer_id',$influncer->id], ['status', '8'],['influncer_rate','>=','0']])
                         ->orwhere([['influncer_id',$influncer->id], ['status', '9'],['influncer_rate','>=','0']])
                         //->orwhere([['influncer_id',$influncer->id], ['status', '9']])
-                        ->orderBy('created_at','DESC')
+                        ->orderBy('updated_at','DESC')
+                        ->orderBy('id','DESC')
                         ->paginate($this->getPagination());
 
             $offers =  $this->offersTransformer->transformCollection(collect($pagination->items()));
@@ -423,7 +425,8 @@ class OffersController extends Controller
             $influncer->balance = $influncer->balance+$offer->cost;
             $influncer->save();
 
-
+            if(strlen($request->comment)!=0)
+            {
             $chat = new Chat;
             $chat->from_user_id	= $offer->user_id;
             $chat->to_user_id = $offer->influncer_id;
@@ -434,6 +437,7 @@ class OffersController extends Controller
             $chat->content = Crypt::encryptString($request->comment);
             $chat->type = 1;
             $chat->save();
+            }
             ///////////////////////////////////// payment success or redirect /////////////////////////////////////
 
 
@@ -492,7 +496,8 @@ class OffersController extends Controller
             $offer->user_rate_comment = $request->comment;
             $offer->save();
 
-
+            if(strlen($request->comment)!=0)
+            {
             $chat = new Chat;
             $chat->from_user_id	= $offer->influncer_id;
             $chat->to_user_id = $offer->user_id;
@@ -503,6 +508,7 @@ class OffersController extends Controller
             $chat->content = Crypt::encryptString($request->comment);
             $chat->type = 1;
             $chat->save();
+            }
             ///////////////////////////////////// payment success or redirect /////////////////////////////////////
             //////////////////// new push /////////////////////////////////////
             return $this->respondWithSuccess(trans('api_msgs.updated'));
@@ -777,7 +783,8 @@ class OffersController extends Controller
                     $offer->influncer_rate_comment = $request->comment;
                     $offer->save();
 
-
+                    if(strlen($request->comment)!=0)
+                    {
                     $chat = new Chat;
                     $chat->from_user_id	= $offer->influncer_id;
                     $chat->to_user_id = $offer->user_id;
@@ -788,6 +795,7 @@ class OffersController extends Controller
                     $chat->content = Crypt::encryptString($request->comment);
                     $chat->type = 1;
                     $chat->save();
+                    }
                     ///////////////////////////////////// payment success or redirect /////////////////////////////////////
                     //////////////////// new push /////////////////////////////////////
                     return $this->respondWithSuccess(trans('api_msgs.updated'));
@@ -834,7 +842,8 @@ class OffersController extends Controller
         $offer->save();
 
         //$request->description
-
+        if(strlen($request->description)!=0)
+        {
         $chat = new Chat;
         $chat->from_user_id	= $influncer->id;
         $chat->to_user_id = $campaign->user_id;
@@ -845,6 +854,7 @@ class OffersController extends Controller
         $chat->content = Crypt::encryptString($request->description);
         $chat->type = 1;
         $chat->save();
+        }
 
 
         $player_ids = $this->getUserPlayerIds($campaign->user_id);

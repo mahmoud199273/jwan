@@ -32,11 +32,17 @@ class EditCampaignsRequest extends BaseRequest
             'description'                       => 'required',
             'scenario'                          => 'required',
             'status'                            => 'required',
+            'campaign_areas'                  => 'required',
+            'campaign_countries'              => 'required',
+            'campaign_categories'             => 'required',
         ];
     }
 
     public function persist($id)
     {
+        $this->offsetunset('campaign_categories');
+        $this->offsetunset('campaign_countries');
+        $this->offsetunset('campaign_areas');
         Campaign::find($id)->Update($this->request->all());
     }
 

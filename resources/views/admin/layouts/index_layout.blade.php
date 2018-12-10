@@ -27,6 +27,7 @@
 
 
 	<link href="{{asset('admin/assets/vendors/base/vendors.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{asset('admin/assets/vendors/base/bootstrap-multiselect.css')}}" rel="stylesheet" type="text/css" />
 
 	<link href="{{asset('admin/assets/demo/demo3/base/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{asset('admin/imageuploadify.css')}}" rel="stylesheet" type="text/css" />
@@ -112,6 +113,8 @@
         <script src="{{asset('admin/default/assets/demo/default/custom/crud/forms/widgets/bootstrap-datepicker.js')}}" type="text/javascript"></script>
 
 		<script src="{{asset('admin/assets/demo/default/custom/components/base/sweetalert2.js')}}" type="text/javascript"></script>
+		<script src="{{asset('admin/assets/demo/default/custom/components/base/bootstrap-multiselect.js')}}" type="text/javascript"></script>
+		<script src="{{asset('admin/assets/demo/default/custom/components/base/components-bootstrap-multiselect.min.js')}}" type="text/javascript"></script>
 
 
 		<script type="text/javascript"> base_url = "{{url('admin')}}"; </script>

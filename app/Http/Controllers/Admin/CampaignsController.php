@@ -13,6 +13,9 @@ use App\CampaignCountry;
 use App\User;
 use App\Setting;
 use App\UserPlayerId;
+use App\Country;
+use App\Category;
+use App\Area;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -126,7 +129,16 @@ class campaignsController extends Controller
 
         $campaign = Campaign::find($id);
         $users =  User::where('account_type','0')->get();
-        return view('admin.campaigns.show',compact('campaign'));
+        $countries =  Country::all();
+        $areas = Area::all();
+        $categories = Category::all();
+        // $campaign_categories = $campaign->categories->pluck('id');
+        // $campaign_countries = $campaign->countries->pluck('id');
+        // $campaign_areas = $campaign->areas->pluck('id');
+        $campaign_categories = CampaignCategory::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('category_id');
+        $campaign_countries =  CampaignCountry::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('country_id');
+        $campaign_areas = CampaignArea::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('area_id');
+        return view('admin.campaigns.show',compact('campaign','countries','areas','categories','campaign_categories','campaign_countries','campaign_areas'));
     }
 
     /**
@@ -146,7 +158,14 @@ class campaignsController extends Controller
                  );
         $campaign = Campaign::find($id);
         $users =  User::where('account_type','0')->get();
-        return view('admin.campaigns.edit',compact('campaign','users','campaign_status'));
+        $countries =  Country::all();
+        $areas = Area::all();
+        $categories = Category::all();
+        //$campaign_categories = $campaign->categories->pluck('id');
+        $campaign_categories = CampaignCategory::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('category_id');
+        $campaign_countries =  CampaignCountry::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('country_id');
+        $campaign_areas = CampaignArea::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('area_id');
+        return view('admin.campaigns.edit',compact('campaign','users','campaign_status','countries','areas','categories','campaign_categories','campaign_countries','campaign_areas'));
     }
 
     /**
@@ -158,7 +177,52 @@ class campaignsController extends Controller
      */
     public function update(EditCampaignsRequest $request, $id)
     {
+        $areas_id = $request->campaign_areas;
+        $categories_id = $request->campaign_categories;
+        $countries_id = $request->campaign_countries;
         $request->persist($id);
+
+            if($categories_id !== null){
+                CampaignCategory::where('campaign_id', $id)->forceDelete();
+                foreach ($categories_id  as $category_id) {
+                    CampaignCategory::firstOrCreate([
+
+                    'campaign_id'       => $id,
+
+                    'category_id' => $category_id
+
+
+                        ]);
+                }
+            }
+            if($countries_id !== null){
+                CampaignCountry::where('campaign_id', $id)->forceDelete();
+                foreach ($countries_id  as $country_id) {
+                    CampaignCountry::firstOrCreate([
+
+                    'campaign_id'       => $id,
+
+                    'country_id' => $country_id
+
+
+                        ]);
+                }
+            }
+           
+            if($areas_id !== null){
+                CampaignArea::where('campaign_id', $id)->forceDelete();
+                foreach ($areas_id  as $area_id) {
+                    CampaignArea::firstOrCreate([
+
+                    'campaign_id'       => $id,
+
+                    'area_id' => $area_id
+
+
+                        ]);
+                }
+
+            }
         return redirect()->back()->with('status' , __('admin.updated') );
     }
 
