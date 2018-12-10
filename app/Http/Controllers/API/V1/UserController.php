@@ -351,10 +351,10 @@ class UserController extends Controller
                 $user->image        = $request->image;
             }
 
-            if($request->nationality_id)
-            {
+            //if($request->nationality_id)
+            //{
                 $user->nationality_id         =  $request->nationality_id;
-            }
+            //}
 
             $user->name         =  $request->name;
 
