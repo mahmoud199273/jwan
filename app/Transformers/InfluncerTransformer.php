@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Country;
 use App\Offer;
 use App\Notification;
+use App\Nathionality;
 
 class InfluncerTransformer extends Transformer
 {
@@ -71,6 +72,8 @@ class InfluncerTransformer extends Transformer
                 'balance' => $user->balance,
 
                 'nationality_id'   =>(int) $user->nationality_id,
+                'nationality'   =>Nathionality::select('id','name','name_ar')
+                                ->where('id',$user->nationality_id)->first(),
 
 
                 'account_manger' => (int) $user->account_manger,
