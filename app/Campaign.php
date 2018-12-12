@@ -13,7 +13,7 @@ class Campaign extends Model
     protected $guarded = array();
       		public function attachments()
             {
-               return $this->hasMany('App\Attachment','campaign_id','id');
+               return $this->hasMany('App\Attachment','campaign_id','id')->orderBy('file_type','asc');
             }
 
 

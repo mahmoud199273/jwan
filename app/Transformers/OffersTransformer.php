@@ -37,7 +37,7 @@ class OffersTransformer extends Transformer
                                 ->where('id',$offer->influncer_id)
                                 ->get()[0],
 
-            'influncer_rate'    => 3,
+            //'influncer_rate'    => 3,
 
             'user'              => isset($offer->user()->select('id','name','image')->get()[0]) ? $offer->user()->select('id','name','image')->get()[0] : null,
 
