@@ -51,9 +51,9 @@ class TransactionsController extends Controller
     public function index(Request $request)
     {
         $user =  $this->getAuthenticatedUser();
-        // if ( $request->limit ) {
-        //   $this->setPagination($request->limit);
-        // }
+        if ( $request->limit ) {
+          $this->setPagination($request->limit);
+        }
 
         if($user->account_type == 0) // user transactions 
         {
@@ -72,11 +72,11 @@ class TransactionsController extends Controller
                                     ->leftJoin('offers', 'offers.id', '=', 'transactions.offer_id')
                                     ->leftJoin('users as u', 'offers.'.$join_column, '=', 'u.id')
                                     ->orderBy('transactions.id','DESC')
-                                    ->get();
-                                    //->paginate($this->getPagination());
+                                    //->get();
+                                    ->paginate($this->getPagination());
         $transations['balance'] = $user->balance;      
-        $transations['transactions'] = $this->transactionstransformer->transformCollection($pagination);   
-        return $this->sendResponse($transations,trans('lang.read succefully'),200);
+        // $transations['transactions'] = $this->transactionstransformer->transformCollection($pagination);   
+        // return $this->sendResponse($transations,trans('lang.read succefully'),200);
 
 
         //$this->transactionstransformer->setFlag(true);           
