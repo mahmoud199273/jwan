@@ -22,7 +22,7 @@
                         'app_id' => "$app_id",
                         'include_player_ids' =>  $player_id,
                         'data' => $data,
-                        'filters' => $daTags,
+                        //'filters' => $daTags,
                         'contents' => $content,
                         'content_available' => true
                         );
