@@ -72,9 +72,13 @@ class TransactionsController extends Controller
                                     ->leftJoin('offers', 'offers.id', '=', 'transactions.offer_id')
                                     ->leftJoin('users as u', 'offers.'.$join_column, '=', 'u.id')
                                     ->orderBy('transactions.id','DESC')
+                                    //->get();
                                     ->paginate($this->getPagination());
+        $transations['balance'] = $user->balance;      
+        // $transations['transactions'] = $this->transactionstransformer->transformCollection($pagination);   
+        // return $this->sendResponse($transations,trans('lang.read succefully'),200);
 
-        $transations['balance'] = $user->balance;          
+
         //$this->transactionstransformer->setFlag(true);           
         $transations['transactions'] =  $this->transactionstransformer->transformCollection(collect($pagination->items()));
         // foreach ($notifications as $key => $value) {
@@ -84,6 +88,7 @@ class TransactionsController extends Controller
         // {
         //     $notifications_array = Notification::where('user_id' , $user->id)->whereIn('id', $notifications_array)->update(['is_seen' => '1']);
         // }
+        //return $this->sendResponse($pagination,trans('lang.read succefully'),200);
         return $this->respondWithPagination($pagination, ['data' => $transations ]);
     }
 

@@ -302,9 +302,8 @@ class CampignsController extends Controller
         //$campaign->status            = $request->status;
 
         $campaign->user_id          = $user->id;
-
         $campaign->save();
-
+        
         if(!$request->files_arr){
             Attachment::create([
 
@@ -327,9 +326,16 @@ class CampignsController extends Controller
                 //dd($file['file']);
                 $ext = pathinfo($file['file'], PATHINFO_EXTENSION);
                 $file_type = "0"; // image file 
+                $no_image_flag = 0;
+                $videoThumnb = '';
+                if(in_array($ext,$image_extensions))
+                {
+                    $no_image_flag = 1;
+                }
                 if(in_array($ext,$video_extensions) ) 
                 {
                     $file_type = "1"; // video file
+                    //$videoThumnb = VideoThumbnail::createThumbnail(storage_path($file['file']), storage_path('/public/assets/uploads/'), time().'.jpg', 2, 600, 600);
                 }  
                 elseif(in_array($ext,$pdf_extensions) ) 
                 {
@@ -341,6 +347,17 @@ class CampignsController extends Controller
 
                 'file'              => $file['file'],
                 'file_type'          => $file_type
+                ]);
+            }
+
+            if(!$no_image_flag)
+            {
+                Attachment::create([
+
+                'campaign_id'       => $campaign->id,
+
+                'file'              => '/public/assets/images/campaign/campaign.png',
+                'file_type'          => "0"
                 ]);
             }
         }

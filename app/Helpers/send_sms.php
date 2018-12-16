@@ -3,9 +3,12 @@
 function sendSMS( $numbers , $msg = 'welcome to Signify app')
 {
 
-		$userAccount   = '966554554681';
-		$passAccount   = '3419118asd';
-		$sender        = '0554554681'; 
+		// $userAccount   = '966554554681';
+		// $passAccount   = '3419118asd';
+		// $sender        = '0554554681'; 
+		$userAccount   = '966501566199';
+		$passAccount   = 'fkg3;lf$#vdGU1';
+		$sender        = 'signify'; 
 		$MsgID         = 1;
 		$timeSend      = 0; 
 		$dateSend	   = 0;	 

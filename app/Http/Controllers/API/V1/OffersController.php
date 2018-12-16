@@ -253,6 +253,7 @@ class OffersController extends Controller
                                   'تم الموافقة على عرضك على حملة '.$campaign->title,
                                   $player_ids,"offers",
                                   ['campaign_id' =>  (int)$campaign->id,
+                                  'campaign_title' => $campaign->title,
                                   'offer_id'    => (int)$offer->id,
                                   'type'          =>  1,
                                   'type_title'	=> 'offer approved']);
@@ -297,6 +298,7 @@ class OffersController extends Controller
                                           $player_ids,"offers",
                                           ['campaign_id' =>  (int)$campaign->id,
                                           'offer_id'    => (int)$offer->id,
+                                          'campaign_title' => $campaign->title,
                                           'type'          =>  2,
                                           'type_title'	=> 'rejected offer']);
 
@@ -366,6 +368,7 @@ class OffersController extends Controller
                                   $player_ids,"offers",
                                   ['campaign_id' =>  (int)$campaign->id,
                                   'offer_id'    => (int)$offer->id,
+                                  'campaign_title' => $campaign->title,
                                   'type'          =>  3,
                                   'type_title'	=> 'paid offer']);
             //////////////////// new push /////////////////////////////////////
@@ -459,6 +462,7 @@ class OffersController extends Controller
                                   $player_ids,"offers",
                                   ['campaign_id' =>  (int)$campaign->id,
                                   'offer_id'    => (int)$offer->id,
+                                  'campaign_title' => $campaign->title,
                                   'type'          =>  7,
                                   'type_title'	=> 'finished offer',
                                   'chat_content'         => $request->comment,
@@ -557,6 +561,7 @@ class OffersController extends Controller
                                   $player_ids,"offers",
                                   ['campaign_id' =>  (int)$campaign->id,
                                   'offer_id'    => (int)$offer->id,
+                                  'campaign_title' => $campaign->title,
                                   'type'          =>  9,
                                   'type_title'	=> 'canceled offer']);
             //////////////////// new push /////////////////////////////////////
@@ -603,6 +608,7 @@ class OffersController extends Controller
                                           $player_ids,"offers",
                                           ['campaign_id' =>  (int)$campaign->id,
                                           'offer_id'    => (int)$offer->id,
+                                          'campaign_title' => $campaign->title,
                                           'type'          =>  4,
                                           'type_title'	=> 'inprogress offer']);
                     //////////////////// new push /////////////////////////////////////
@@ -662,6 +668,7 @@ class OffersController extends Controller
                                           $player_ids,"offers",
                                           ['campaign_id' =>  (int)$campaign->id,
                                           'offer_id'    => (int)$offer->id,
+                                          'campaign_title' => $campaign->title,
                                           'type'          =>  5,
                                           'type_title'	=> 'proofed offer']);
                     //////////////////// new push /////////////////////////////////////
@@ -728,6 +735,7 @@ class OffersController extends Controller
                                           $player_ids,"offers",
                                           ['campaign_id' =>  (int)$campaign->id,
                                           'offer_id'    => (int)$offer->id,
+                                          'campaign_title' => $campaign->title,
                                           'type'          =>  8,
                                           'type_title'	=> 'canceled offer']);
                     //////////////////// new push /////////////////////////////////////
@@ -872,6 +880,7 @@ class OffersController extends Controller
 															$player_ids,"offers",
 															['campaign_id' =>  (int)$campaign->id,
                               'offer_id'    => (int)$offer->id,
+                              'campaign_title' => $campaign->title,
                               'type'          =>  0,
                               'type_title'	=> 'new offer',
                               'chat_content'         => $request->description,
@@ -950,6 +959,7 @@ class OffersController extends Controller
                              $player_ids,"offers",
                              ['campaign_id' =>  (int)$campaign->id,
                              'offer_id'    => (int)$offer->id,
+                             'campaign_title' => $campaign->title,
                              'type'          =>  14,
                              'type_title'	=> 'update offer',
                              'chat_content'         => $request->description,

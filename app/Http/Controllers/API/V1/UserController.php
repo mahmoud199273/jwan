@@ -262,8 +262,9 @@ class UserController extends Controller
             }
 
             $areas_id  =$request->areas_id;
-            if($areas_id !== null){
             UserArea::where('user_id', $user->id)->forceDelete();
+
+            if($areas_id !== null){
             foreach ($areas_id  as $id) {
                 UserArea::create([
 
