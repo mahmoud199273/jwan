@@ -193,7 +193,6 @@ class CampignsController extends Controller
         if ( $request->limit ) {
                 $this->setPagination($request->limit);
             }
-
         //$data = Campaign::where('user_id' ,$user->id)->get();
         $pagination = Campaign::where('user_id' ,$user->id)->orderBy('updated_at','DESC');
         if($request->id) 
@@ -205,7 +204,7 @@ class CampignsController extends Controller
             $pagination->where([['status', '!=', '8'],['status', '!=', '4']]);
         }
         $pagination = $pagination->paginate($this->getPagination());
-        
+        //dd($pagination);
         $campaigns = $this->campaignsTransformer->transformCollection(collect($pagination->items()));
         //return $this->sendResponse($campaigns, trans('lang.campaigns read succesfully'),200);
         return $this->respondWithPagination($pagination, ['data' => $campaigns ]);    
