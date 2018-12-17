@@ -27,7 +27,7 @@
 	<link href="{{asset('admin/assets/demo/default/base/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
 
 	<!--end::Base Styles -->
-	<link rel="shortcut icon" href="{{ config('app.url') }}/public/favicon.ico" />
+	<link rel="shortcut icon" href="{{ config('app.url') }}/favicon.ico" />
 </head>
 
 <!-- end::Head -->
