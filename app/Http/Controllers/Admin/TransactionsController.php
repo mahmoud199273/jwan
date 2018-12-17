@@ -260,6 +260,7 @@ class TransactionsController extends Controller
                 $transactions->status = 1;
                 $transactions->transaction_bank_name   = isset($banckData->name) ? $banckData->name : "" ;
                 $transactions->transaction_account_name   = isset($banckData->account_name) ? $banckData->account_name : "";
+                $transactions->image = isset($banckData->logo) ? $banckData->logo : "";
                 $transactions->transaction_account_number   = isset($banckData->account_number) ? $banckData->account_number : "";
                 $transactions->transaction_account_IBAN   = isset($banckData->IBAN) ? $banckData->IBAN : "";
                 $transactions->transaction_number   = isset($banckData->account_number) ? $banckData->account_number : "";
