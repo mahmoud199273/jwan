@@ -252,13 +252,13 @@ class TransactionsController extends Controller
             if((int)$user->balance >= (int)$amount )
             {
                 
-                $banckData = BankAccounts::select('bank_accounts.*','banks.name','banks.logo')->join('banks','banks.id','bank_accounts.bank_id')->where('bank_accounts.user_id',$influencer_id)->first();
+                $banckData = BankAccounts::select('bank_accounts.*','banks.name','banks.name_ar','banks.logo')->join('banks','banks.id','bank_accounts.bank_id')->where('bank_accounts.user_id',$influencer_id)->first();
                 $transactions =  new Transactions;
                 $transactions->user_id 		= $influencer_id;
                 $transactions->amount 	= $request->amount;
                 $transactions->transaction_amount 	= $request->amount;
                 $transactions->status = 1;
-                $transactions->transaction_bank_name   = isset($banckData->name) ? $banckData->name : "" ;
+                $transactions->transaction_bank_name   = isset($banckData->name) ? $banckData->name_ar : "" ;
                 $transactions->transaction_account_name   = isset($banckData->account_name) ? $banckData->account_name : "";
                 $transactions->image = isset($banckData->logo) ? $banckData->logo : "";
                 $transactions->transaction_account_number   = isset($banckData->account_number) ? $banckData->account_number : "";
