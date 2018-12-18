@@ -3,6 +3,7 @@
 namespace App\Transformers;
 use App\Transformers\BaseTransformer as Transformer;
 use App\User;
+use App\Campaign;
 use App\Notification;
 use Carbon\Carbon;
 
@@ -20,6 +21,7 @@ class NotificationsTransformer extends Transformer
             'type'             => $notification->type,
             'type_title'             => $notification->type_title,
             'campaign_id'             => $notification->campaign_id,
+            'campaign_title'          => Campaign::where('id', $notification->campaign_id)->first()->title,
             'offer_id'             => $notification->offer_id,
             'is_seen'             => $notification->is_seen,
             'created_at'             => $notification->created_at,
