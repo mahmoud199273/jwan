@@ -129,7 +129,7 @@
                                         </a>
 
                                         <a type="button"  data-id = "{{ $user->id }}" 
-                                            class="m-btn m-btn m-btn--square btn btn-secondary _remove">
+                                            class="m-btn m-btn m-btn--square btn btn-secondary _removeUser">
                                             <i class="flaticon-delete-1 m--font-danger"></i>
                                         </a>
                                     </div>

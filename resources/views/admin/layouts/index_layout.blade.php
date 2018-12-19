@@ -36,7 +36,7 @@
 
 	<!--end::Base Styles -->
 
-	<link rel="shortcut icon" href="{{asset('admin/assets/demo/demo3/media/img/logo/logo.png')}}" /> 
+	<link rel="shortcut icon" href="{{asset('favicon.png')}}" /> 
 
 	<style> 
 			select.form-control:not([size]):not([multiple]) {
@@ -145,6 +145,57 @@
         id = $(this).attr('data-id');
         swal({
 		  title: 'هل تريد الاستمرار؟',
+		  confirmButtonText:  'نعم',
+		  cancelButtonText:  'لا',
+		  showCancelButton: true,
+		  showCloseButton: true,
+		  target: document.getElementById('rtl-container')
+		}).then((result) => {
+		  if (result.value) {
+			       $.ajax({
+                        url: '{{url("admin")}}/{{ isset($route)? $route : "" }}/'+ id,
+                        type: 'POST',
+                        data: {'_method':'delete','_token': $('meta[name="csrf-token"]').attr('content') },
+                        success: function( msg ) {
+                            if ( msg.status === 'success' ) {
+                            	swal({
+								  position: 'center',
+								  type: 'success',
+								  title: 'تم الحذف بنجاح',
+								  showConfirmButton: false,
+								  timer: 2000
+								});
+                              window.location.reload();
+                             }
+                    },
+                    error : function(){
+                        swal({
+								  position: 'center',
+								  type: 'error',
+								  title: "تم الالغاء",
+								  showConfirmButton: false,
+								  timer: 2000
+								});
+                        window.location.reload();
+                    },
+                  });
+		  }else {
+                    swal({
+								  position: 'center',
+								  type: 'error',
+								  title: "تم الالغاء",
+								  showConfirmButton: false,
+								  timer: 2000
+								});
+                }
+		});
+    });
+
+
+	$('._removeUser').on('click', function(){
+        id = $(this).attr('data-id');
+        swal({
+		  title: ' سوف يتم ايقاف هذا العضو ولن يستطيع الدخول للتطبيق للتحكم فى حملاته او العروض هل تريد الاستمرار ؟',
 		  confirmButtonText:  'نعم',
 		  cancelButtonText:  'لا',
 		  showCancelButton: true,

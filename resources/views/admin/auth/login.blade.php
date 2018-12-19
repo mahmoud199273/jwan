@@ -27,7 +27,7 @@
 	<link href="{{asset('admin/assets/demo/default/base/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
 
 	<!--end::Base Styles -->
-	<link rel="shortcut icon" href="{{ config('app.url') }}/public/favicon.ico" />
+	<link rel="shortcut icon" href="{{ config('app.url') }}/favicon.ico" />
 </head>
 
 <!-- end::Head -->
@@ -42,7 +42,7 @@
 				<div class="m-login__container">
 					<div class="m-login__logo">
 						<a href="#">
-							<img src="{{asset('logo.png')}}">
+							<img src="{{asset('assets/logo.png')}}">
 						</a>
 					</div>
 					<div class="m-login__signin">

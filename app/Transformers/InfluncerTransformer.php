@@ -32,8 +32,9 @@ class InfluncerTransformer extends Transformer
             return [
                 'id'            => (int) $user->id,
                 'name'          => $user->name,
-                'rate'          => 3,
+                'rate'          => (int) Offer::select(DB::raw("IF( ROUND(SUM(user_rate)/COUNT(user_rate)) , ROUND(SUM(user_rate)/COUNT(user_rate)), 0 ) as rate"))->where('influncer_id', $user->id)->first()->rate,
                 'image'         => ($user->image) ?config('app.url').$user->image : null,
+                'gender'        => (int) $user->gender,
                 'notes'         => $user->notes,
                 'type'          => (int) $user->type,
                 'facebook'     => $user->facebook,
