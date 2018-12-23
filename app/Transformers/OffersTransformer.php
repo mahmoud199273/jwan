@@ -23,7 +23,7 @@ class OffersTransformer extends Transformer
             6 => 'عرض جديد',
 			7 => ' تم قبول التوثيق ',
 			8 => 'قام المؤثر بالغاء عرضه على الحملة',
-			9 => 'تم الغاء الحملة');
+			9 => 'قام المعلن بالغاء العرض');
             
 
         $offer = Offer::find($offer->id);
