@@ -79,7 +79,9 @@ class TransactionsController extends Controller
         // return $this->sendResponse($transations,trans('lang.read succefully'),200);
 
 
-        //$this->transactionstransformer->setFlag(true);           
+        if($user->account_type == 1) {
+            $this->transactionstransformer->setInfluncerFlag(true);           
+        }
         $transations['transactions'] =  $this->transactionstransformer->transformCollection(collect($pagination->items()));
         // foreach ($notifications as $key => $value) {
         //     $notifications_array[] = $value->id;

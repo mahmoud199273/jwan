@@ -7,6 +7,7 @@ use App\Offer;
 use App\Transformers\BaseTransformer as Transformer;
 use App\Transformers\InfluncerTransformer;
 use App\User;
+use App\Setting;
 use Carbon\Carbon;
 
 
@@ -43,10 +44,10 @@ class TransactionsTransformer extends Transformer
         return $this->color;
     }
     //
-    // function setUserFlag($user_flag)
-    // {
-    //     $this->user_flag = $user_flag; // set true to show influencers in campaigns list
-    // }
+    function setInfluncerFlag($flag)
+    {
+        $this->flag = $flag; // set true to show influencers in campaigns list
+    }
 
 
 
@@ -63,14 +64,13 @@ class TransactionsTransformer extends Transformer
       $type_array = array(0 => 'user bank transfer',
                       			1 => 'approved offer (pending)',
                           2 => 'finished offer (in influncer)');
-        // $campaign = Campaign::find($campaign->id);
+        //$campaign = Campaign::find($campaign->id);
+        $settings = Setting::first();
+        $commission = (int)$settings->commission;
+
         $return_array =  [
         	'id'       			=> (int) $transaction->id,
             'user_id'           => (int) $transaction->user_id,
-            'amount'            => $transaction->amount,
-            'cost'              => round((($transaction->amount * 95) / 100), 2), //(int)(($transaction->amount * 95) / 100),
-            'vat'               => round((($transaction->amount * 5) / 100), 2), //(int) ($transaction->amount * 5) / 100,
-            'commission'        => round((($transaction->amount * 10) / 100), 2),
             'campaign_id'       => (int) $transaction->campaign_id,
             'campaign_title'       => $transaction->title,
             'offer_id'       => (int) $transaction->offer_id,
@@ -120,14 +120,21 @@ class TransactionsTransformer extends Transformer
 
         ];
 
-        // if($this->user_flag)
-        // {
-        //     $return_array['user'] = isset($campaign->user()->select('id','name','image')->get()[0]) ? $campaign->user()->select('id','name','image')->get()[0] : null ;
-        // }
-        // if($this->flag)
-        // {
-        //     $return_array['influencers']  = User::select('users.id','users.name','users.image')->join('offers', 'offers.influncer_id', '=', 'users.id')->where('offers.campaign_id',$campaign->id)->get();
-        // }
+        if($this->flag) // influencer transactions
+        {
+            $return_array['amount'] = $transaction->amount;
+            $return_array['cost']   = $transaction->amount; 
+            $return_array['vat'] = 0; 
+            $return_array['commission'] = 0;
+        }
+        else 
+        {
+            $return_array['amount']           = $transaction->amount;
+            $return_array['cost']            = round((($transaction->amount * 95) / 100), 2); //(int)(($transaction->amount * 95) / 100),
+            $return_array['vat']              = round((($transaction->amount * 5) / 100), 2); //(int) ($transaction->amount * 5) / 100,
+            $return_array['commission']       = round((($transaction->amount * $commission) / 100), 2);
+        }
+        
 
         return $return_array;
     }
