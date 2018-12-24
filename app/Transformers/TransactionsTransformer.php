@@ -64,7 +64,7 @@ class TransactionsTransformer extends Transformer
       $type_array = array(0 => 'user bank transfer',
                       			1 => 'approved offer (pending)',
                           2 => 'finished offer (in influncer)');
-        $campaign = Campaign::find($campaign->id);
+        //$campaign = Campaign::find($campaign->id);
         $settings = Setting::first();
         $commission = (int)$settings->commission;
 
