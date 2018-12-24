@@ -10,6 +10,7 @@ use App\Chat;
 use App\Campaign;
 use App\Notification;
 use App\Transactions;
+use App\Setting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -321,7 +322,27 @@ class OffersController extends Controller
             }
 
             $userData = User::find($user->id);
-            if((int)$offer->cost > (int)$userData->balance)
+
+            $settings = Setting::first();
+            $commission = (int)$settings->commission; // app commission value in percentage
+
+            // offer cost before add commission or tax
+            $total_offer_value =(int)$offer->cost; 
+
+            // get commission value of offer
+            $offer_commission = round((($total_offer_value * $commission) / 100), 2); 
+
+            // offer cost after add commission vlaue
+            $total_offer_value = $total_offer_value + $offer_commission ; 
+
+            // get tax value from offer cost 
+            $offer_tax = round((($total_offer_value * 5) / 100), 2);
+
+            // final offer cost after add commission and tax values
+            $total_offer_value = $total_offer_value + $offer_tax ;
+            
+            //if((int)$offer->cost > (int)$userData->balance)
+            if($total_offer_value > (int)$userData->balance)
             {
                 return $this->setStatusCode(403)->respondWithError(trans('api_msgs.offer_not_pay'));
             }
@@ -344,9 +365,11 @@ class OffersController extends Controller
             $transations->status     = 0;
             $transations->campaign_id     = $offer->campaign_id;
             $transations->offer_id     = $offer->id;
+            $transations->transaction_amount     = $total_offer_value;
             $transations->save();
             
-            $user->balance = $userData->balance - $offer->cost;
+            //$user->balance = $userData->balance - $offer->cost;
+            $user->balance = $userData->balance - $total_offer_value;
             $user->save();
 
             // $influncerData = User::find($offer->influncer_id);
