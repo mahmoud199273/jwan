@@ -7,6 +7,7 @@ use App\Offer;
 use App\Transformers\BaseTransformer as Transformer;
 use App\Transformers\InfluncerTransformer;
 use App\User;
+use App\Setting;
 use Carbon\Carbon;
 
 
@@ -63,14 +64,17 @@ class TransactionsTransformer extends Transformer
       $type_array = array(0 => 'user bank transfer',
                       			1 => 'approved offer (pending)',
                           2 => 'finished offer (in influncer)');
-        // $campaign = Campaign::find($campaign->id);
+        $campaign = Campaign::find($campaign->id);
+        $settings = Setting::first();
+        $commission = (int)$settings->commission;
+
         $return_array =  [
         	'id'       			=> (int) $transaction->id,
             'user_id'           => (int) $transaction->user_id,
             'amount'            => $transaction->amount,
             'cost'              => round((($transaction->amount * 95) / 100), 2), //(int)(($transaction->amount * 95) / 100),
             'vat'               => round((($transaction->amount * 5) / 100), 2), //(int) ($transaction->amount * 5) / 100,
-            'commission'        => round((($transaction->amount * 10) / 100), 2),
+            'commission'        => round((($transaction->amount * $commission) / 100), 2),
             'campaign_id'       => (int) $transaction->campaign_id,
             'campaign_title'       => $transaction->title,
             'offer_id'       => (int) $transaction->offer_id,
