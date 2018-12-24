@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-    protected $fillable = ['campaign_period'];
+	protected $table = "settings";
+    protected $fillable = ['campaign_period','commission'];
 }

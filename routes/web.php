@@ -130,6 +130,8 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 
 		Route::resource('aboutApp','AboutappController');
 
+		Route::resource('settings','SettingsController');
+
 		//Route::get('offers/{id}', 'OffersController@campaigns');
 
 		Route::resource('offers','OffersController');
