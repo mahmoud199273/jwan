@@ -67,9 +67,10 @@ class TransactionsTransformer extends Transformer
         $return_array =  [
         	'id'       			=> (int) $transaction->id,
             'user_id'           => (int) $transaction->user_id,
-            'amount'       => $transaction->amount,
-            'cost'       => round((($transaction->amount * 95) / 100), 2), //(int)(($transaction->amount * 95) / 100),
-            'vat'       => round((($transaction->amount * 5) / 100), 2), //(int) ($transaction->amount * 5) / 100,
+            'amount'            => $transaction->amount,
+            'cost'              => round((($transaction->amount * 95) / 100), 2), //(int)(($transaction->amount * 95) / 100),
+            'vat'               => round((($transaction->amount * 5) / 100), 2), //(int) ($transaction->amount * 5) / 100,
+            'commission'        => round((($transaction->amount * 10) / 100), 2),
             'campaign_id'       => (int) $transaction->campaign_id,
             'campaign_title'       => $transaction->title,
             'offer_id'       => (int) $transaction->offer_id,
