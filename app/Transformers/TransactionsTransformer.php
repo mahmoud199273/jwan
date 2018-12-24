@@ -71,7 +71,6 @@ class TransactionsTransformer extends Transformer
         $return_array =  [
         	'id'       			=> (int) $transaction->id,
             'user_id'           => (int) $transaction->user_id,
-            
             'campaign_id'       => (int) $transaction->campaign_id,
             'campaign_title'       => $transaction->title,
             'offer_id'       => (int) $transaction->offer_id,
