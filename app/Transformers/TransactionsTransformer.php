@@ -132,22 +132,21 @@ class TransactionsTransformer extends Transformer
 
             if($transaction->offer_id !=0 && (int)$transaction->transaction_amount > (int)$transaction->amount)
             {
-                $vat = round((($transaction->transaction_amount * 5) / 100), 2);
-                $amount_after_vat = (int)$transaction->transaction_amount - $vat;
 
-                $commission_value = round((($amount_after_vat * $commission) / 100), 2);  
+                $commission_vat_value = (int)$transaction->transaction_amount - (int)$transaction->amount;
+                $commission_value = round((($transaction->amount * $commission) / 100), 2);
+                $vat = $commission_vat_value - $commission_value;
 
-                $cost = $amount_after_vat - $commission_value;
 
-                $return_array['amount']          = $transaction->transaction_amount;
-                $return_array['cost']            = $cost; //(int)(($transaction->amount * 95) / 100),
+                $return_array['amount']           = $transaction->transaction_amount;
+                $return_array['cost']             = $transaction->amount; //(int)(($transaction->amount * 95) / 100),
                 $return_array['vat']              = $vat; //(int) ($transaction->amount * 5) / 100,
                 $return_array['commission']       = $commission_value;
             }
             else 
             {
                 $return_array['amount']           = $transaction->amount;
-                $return_array['cost']            = round((($transaction->amount * 95) / 100), 2); //(int)(($transaction->amount * 95) / 100),
+                $return_array['cost']             = round((($transaction->amount * 95) / 100), 2); //(int)(($transaction->amount * 95) / 100),
                 $return_array['vat']              = round((($transaction->amount * 5) / 100), 2); //(int) ($transaction->amount * 5) / 100,
                 $return_array['commission']       = round((($transaction->amount * $commission) / 100), 2);
             }
