@@ -106,8 +106,10 @@ class TransactionsController extends Controller
         else // influencer transactions
         {
             $join_column = "user_id";
+            $this->transactionstransformer->setInfluncerFlag(true);           
         }
         
+
         $validator = Validator::make( ['id' =>  $request->id ], [
             'id'    => 'required|exists:transactions,id,deleted_at,NULL',
         ]);
@@ -122,6 +124,7 @@ class TransactionsController extends Controller
                                     ->leftJoin('offers', 'offers.id', '=', 'transactions.offer_id')
                                     ->leftJoin('users as u', 'offers.'.$join_column, '=', 'u.id')->first();
         if ( !empty ( $data ) ) {
+            
             $transaction = $this->transactionstransformer->transform($data);
             return $this->sendResponse($transaction,trans('lang.read succefully'),200);
         }else{
