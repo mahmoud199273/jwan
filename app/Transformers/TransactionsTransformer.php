@@ -133,7 +133,7 @@ class TransactionsTransformer extends Transformer
             if($transaction->offer_id !=0 && (int)$transaction->transaction_amount > (int)$transaction->amount)
             {
                 $vat = round((($transaction->transaction_amount * 5) / 100), 2);
-                $amount_after_vat = int($transaction->transaction_amount) - $vat;
+                $amount_after_vat = (int)$transaction->transaction_amount - $vat;
 
                 $commission_value = round((($amount_after_vat * $commission) / 100), 2);  
 
