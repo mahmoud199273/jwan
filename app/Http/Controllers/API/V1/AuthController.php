@@ -798,17 +798,18 @@ class AuthController extends Controller
 
         }else{
 
+            if(!$this->isPhoneVerified($request->input('phone')))
+        {
+            //return $this->respondUnauthorized( trans('api_msgs.activate_msg') );
+            return $this->setStatusCode(403)->respondWithError(trans('api_msgs.activate_msg'));
+        }    
 
             if(!$this->CheckActiveAccount( $credentials,$account_type ))
         {
             return $this->setStatusCode(405)->respondWithError(trans('api_msgs.check_credentials2'));
         }
 
-            if(!$this->isPhoneVerified($request->input('phone')))
-        {
-            //return $this->respondUnauthorized( trans('api_msgs.activate_msg') );
-            return $this->setStatusCode(403)->respondWithError(trans('api_msgs.activate_msg'));
-        }    
+            
             return $this->generateToken( $request->only('phone','password') );
 
         }
