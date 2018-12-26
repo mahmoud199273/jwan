@@ -67,6 +67,7 @@ class TransactionsTransformer extends Transformer
         //$campaign = Campaign::find($campaign->id);
         $settings = Setting::first();
         $commission = (int)$settings->commission;
+        $tax = (int)$settings->tax;
 
         $return_array =  [
         	'id'       			=> (int) $transaction->id,
@@ -147,7 +148,7 @@ class TransactionsTransformer extends Transformer
             {
                 $return_array['amount']           = $transaction->amount;
                 $return_array['cost']             = round((($transaction->amount * 95) / 100), 2); //(int)(($transaction->amount * 95) / 100),
-                $return_array['vat']              = round((($transaction->amount * 5) / 100), 2); //(int) ($transaction->amount * 5) / 100,
+                $return_array['vat']              = round((($transaction->amount * $tax) / 100), 2); //(int) ($transaction->amount * $tax) / 100,
                 $return_array['commission']       = 0;
             }
 

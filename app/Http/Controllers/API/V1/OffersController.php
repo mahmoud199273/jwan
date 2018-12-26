@@ -325,6 +325,7 @@ class OffersController extends Controller
 
             $settings = Setting::first();
             $commission = (int)$settings->commission; // app commission value in percentage
+            $tax = (int)$settings->tax; // app tax value in percentage
 
             // offer cost before add commission or tax
             $total_offer_value =(int)$offer->cost; 
@@ -336,7 +337,7 @@ class OffersController extends Controller
             $total_offer_value = $total_offer_value + $offer_commission ; 
 
             // get tax value from offer cost 
-            $offer_tax = round((($total_offer_value * 5) / 100), 2);
+            $offer_tax = round((($total_offer_value * $tax) / 100), 2);
 
             // final offer cost after add commission and tax values
             $total_offer_value = $total_offer_value + $offer_tax ;
