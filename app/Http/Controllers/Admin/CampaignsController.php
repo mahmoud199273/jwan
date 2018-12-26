@@ -38,13 +38,14 @@ class campaignsController extends Controller
         return $player_ids ? $player_ids : null;
     }
 
+    
     function testNot($id)
     {
             // $user_player_ids = $this->getUserSinglePlayerIds($id);//252
 
             // $result = sendNotification(0 ,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' =>'2','type' =>  20,'type_title'  => 'new campaign']);
             // dd($result);
-
+        
         $campaign_categories = CampaignCategory::where('campaign_id',$id)->pluck('category_id')->toArray();
         $campaign_countries = CampaignCountry::where('campaign_id',$id)->pluck('country_id')->toArray();
         
