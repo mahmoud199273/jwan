@@ -487,8 +487,8 @@ class AuthController extends Controller
         }
 
         if ($validator->fails()) {
-            return $this->setStatusCode(422)->respondWithError($validator->messages()->first());
-            //return $this->setStatusCode(422)->respondWithError($validator->messages());
+            //return $this->setStatusCode(422)->respondWithError($validator->messages()->first());
+            return $this->setStatusCode(422)->respondWithError($validator->messages());
             //return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
         }
 
