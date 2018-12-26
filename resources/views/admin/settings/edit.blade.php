@@ -26,7 +26,7 @@
                     <i class="la la-gear"></i>
                 </span>
                 <h3 class="m-portlet__head-text">
-                   {{ __('admin.edit') }} 
+                   {{ __('admin.edit') }} | {{ __('admin.setting') }} 
                 </h3>
             </div>
         </div>
@@ -69,6 +69,15 @@
                 <div class="col-9">
                     <input type="text" class="form-control m-input" placeholder="{{ __('admin.commission') }}" name="commission" value="{{ $row->commission }}">
                     {!! $errors->first('commission', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+
+
+            <div class="form-group m-form__group row {{ $errors->has('tax') ? 'has-danger' : ''}}">
+                <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.tax') }}</label>
+                <div class="col-9">
+                    <input type="text" class="form-control m-input" placeholder="{{ __('admin.tax') }}" name="tax" value="{{ $row->tax }}">
+                    {!! $errors->first('tax', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 

@@ -18,8 +18,9 @@ class EditSettingRequest extends BaseRequest
    public function rules()
     {
         return [
-            'campaign_period'              => 'required',
-            'commission'                   => 'required',
+            'campaign_period'               => 'required',
+            'commission'                    => 'required',
+            'tax'                           => 'required',
             
         ];
     }
