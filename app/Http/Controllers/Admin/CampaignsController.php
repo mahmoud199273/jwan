@@ -45,7 +45,7 @@ class campaignsController extends Controller
 
             // $result = sendNotification(0 ,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' =>'2','type' =>  20,'type_title'  => 'new campaign']);
             // dd($result);
-        $result = sendSMS('966512512512', __('api_msgs.sms_code_text'));
+        $result = sendSMS($id, __('api_msgs.sms_code_text'));
         dd($result);
         $campaign_categories = CampaignCategory::where('campaign_id',$id)->pluck('category_id')->toArray();
         $campaign_countries = CampaignCountry::where('campaign_id',$id)->pluck('country_id')->toArray();
