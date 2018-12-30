@@ -107,7 +107,7 @@ class ResetPasswordController extends Controller
     {
         $country_code = Country::where('id',$country_id)->first();
         
-        if($country_code) $country_code = $country_code->code;
+        if($country_code) $country_code = $country_code;
         else $country_code = "966";
         
         $is_valid_phone = preg_match('/^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/', $phone);
