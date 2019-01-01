@@ -197,6 +197,7 @@ class AuthController extends Controller
         $current_time   = Carbon::now();
         $created_at     = $current_time->toDateTimeString();
         $expired_at     = $current_time->addHours(24)->toDateTimeString();
+        VerifyPhoneCode::where('phone', $phone)->delete();
         DB::table('verify_phone_codes')->insert([
 		         'phone'         => $phone ,
                    'code'          => $verify_code ,

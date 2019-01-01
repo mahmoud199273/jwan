@@ -81,6 +81,15 @@
                 </div>
             </div>
 
+
+            <div class="form-group m-form__group row {{ $errors->has('min_balance') ? 'has-danger' : ''}}">
+                <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.min_balance') }}</label>
+                <div class="col-9">
+                    <input type="text" class="form-control m-input" placeholder="{{ __('admin.min_balance') }}" name="min_balance" value="{{ $row->min_balance }}">
+                    {!! $errors->first('min_balance', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+
           
 
             <!-- <div class="form-group m-form__group row {{ $errors->has('logo') ? 'has-danger' : ''}}">

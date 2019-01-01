@@ -21,6 +21,7 @@ class EditSettingRequest extends BaseRequest
             'campaign_period'               => 'required',
             'commission'                    => 'required',
             'tax'                           => 'required',
+            'min_balance'                   => 'required',
             
         ];
     }

@@ -240,6 +240,18 @@ class OffersController extends Controller
             // $user->balance = $userData->balance - $offer->cost;
             // $user->save();
 
+            $chat_content = 'تم الموافقة على عرضك على حملة '.$campaign->title;
+            $chat = new Chat;
+            $chat->from_user_id	= $user->id;
+            $chat->to_user_id = $offer->influncer_id;
+            $chat->offer_id = $offer->id;
+            $chat->campaign_id = $campaign->id;
+            $chat->created_at   = Carbon::now()->addHours(3);
+            $chat->updated_at   = Carbon::now()->addHours(3);
+            $chat->content = Crypt::encryptString('تم الموافقة على عرضك على حملة '.$campaign->title);
+            $chat->type = 1;
+            $chat->save();
+
             $player_ids = $this->getUserPlayerIds($offer->influncer_id);
             Notification::create(['user_id' => $offer->influncer_id,
                                       'from_user_id' => $user->id,  
@@ -284,6 +296,18 @@ class OffersController extends Controller
 
                     $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
 
+                    $chat_content = 'تم رفض عرضك على حملة '.$campaign->title;
+                    $chat = new Chat;
+                    $chat->from_user_id	= $user->id;
+                    $chat->to_user_id = $offer->influncer_id;
+                    $chat->offer_id = $offer->id;
+                    $chat->campaign_id = $campaign->id;
+                    $chat->created_at   = Carbon::now()->addHours(3);
+                    $chat->updated_at   = Carbon::now()->addHours(3);
+                    $chat->content = Crypt::encryptString($chat_content);
+                    $chat->type = 1;
+                    $chat->save();
+
                     $player_ids = $this->getUserPlayerIds($offer->influncer_id);
                     Notification::create(['user_id' => $offer->influncer_id,
                                               'from_user_id' => $user->id, 
@@ -324,7 +348,17 @@ class OffersController extends Controller
             $userData = User::find($user->id);
 
             $settings = Setting::first();
-            $commission = (int)$settings->commission; // app commission value in percentage
+            //$commission = (int)$settings->commission; // app commission value in percentage
+
+            // app commission value in percentage
+            if($user->user_commission)
+            {
+                $commission = (int)$user->user_commission; // if there user commission use it 
+            }
+            else
+            {
+                $commission = (int)$settings->commission; // if there not user commission use commission in settings 
+            }
             $tax = (int)$settings->tax; // app tax value in percentage
 
             // offer cost before add commission or tax
@@ -347,7 +381,8 @@ class OffersController extends Controller
             {
                 return $this->setStatusCode(403)->respondWithError(trans('api_msgs.offer_not_pay'));
             }
-
+            
+            
             $offer->status = "3";
             $offer->save();
             ///////////////////////////////////// payment success or redirect /////////////////////////////////////
@@ -376,6 +411,18 @@ class OffersController extends Controller
             // $influncerData = User::find($offer->influncer_id);
             // $influncer_balance = $influncerData->balance + $offer->cost;
             // User::where('id' , $user->id)->whereIn('id', $offer->influncer_id)->update(['balance' => $influncer_balance]);
+
+            $chat_content = 'تم سداد قيمة عرضك على حملة '.$campaign->title;
+            $chat = new Chat;
+            $chat->from_user_id	= $user->id;
+            $chat->to_user_id = $offer->influncer_id;
+            $chat->offer_id = $offer->id;
+            $chat->campaign_id = $campaign->id;
+            $chat->created_at   = Carbon::now()->addHours(3);
+            $chat->updated_at   = Carbon::now()->addHours(3);
+            $chat->content = Crypt::encryptString($chat_content);
+            $chat->type = 1;
+            $chat->save();
 
             $player_ids = $this->getUserPlayerIds($offer->influncer_id);
             Notification::create(['user_id' => $offer->influncer_id,
@@ -570,18 +617,30 @@ class OffersController extends Controller
 
             $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
 
+            $chat_content = 'تم الغاء عرضك على حملة '.$campaign->title;
+            $chat = new Chat;
+            $chat->from_user_id	= $user->id;
+            $chat->to_user_id = $offer->influncer_id;
+            $chat->offer_id = $offer->id;
+            $chat->campaign_id = $campaign->id;
+            $chat->created_at   = Carbon::now()->addHours(3);
+            $chat->updated_at   = Carbon::now()->addHours(3);
+            $chat->content = Crypt::encryptString($chat_content);
+            $chat->type = 1;
+            $chat->save();
+
             $player_ids = $this->getUserPlayerIds($offer->influncer_id);
             Notification::create(['user_id' => $offer->influncer_id,
                                       'from_user_id' => $user->id, 
                                       'message' => 'user has canceled '.$campaign->title,
-                                      'message_ar' => 'تم الغاء حملة '.$campaign->title,
+                                      'message_ar' => 'تم الغاء عرضك على حملة '.$campaign->title,
                                       'campaign_id' =>  $campaign->id,
                                       'offer_id'    => $offer->id,
                                       'type'          =>  9,
                                       'type_title'	=> 'canceled offer']);
             sendNotification(1,
                                   'user has canceled '.$campaign->title,
-                                  'تم الغاء حملة '.$campaign->title,
+                                  'تم الغاء عرضك على حملة '.$campaign->title,
                                   $player_ids,"offers",
                                   ['campaign_id' =>  (int)$campaign->id,
                                   'offer_id'    => (int)$offer->id,
@@ -613,9 +672,19 @@ class OffersController extends Controller
                     $offer->save();
                     ///////////////////////////////////// payment success or redirect /////////////////////////////////////
 
-
-
                     $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
+
+                    $chat_content = 'جاري العمل على الحملة '.$campaign->title;
+                    $chat = new Chat;
+                    $chat->from_user_id	= $campaign->user_id;
+                    $chat->to_user_id = $user->id;
+                    $chat->offer_id = $offer->id;
+                    $chat->campaign_id = $campaign->id;
+                    $chat->created_at   = Carbon::now()->addHours(3);
+                    $chat->updated_at   = Carbon::now()->addHours(3);
+                    $chat->content = Crypt::encryptString($chat_content);
+                    $chat->type = 1;
+                    $chat->save();
 
                     $player_ids = $this->getUserPlayerIds($campaign->user_id);
                     Notification::create(['user_id' => $campaign->user_id,
@@ -676,6 +745,18 @@ class OffersController extends Controller
 
 
                     $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
+
+                    $chat_content = 'تم الانتهاء و توثيق حملة '.$campaign->title;
+                    $chat = new Chat;
+                    $chat->from_user_id	= $campaign->user_id;
+                    $chat->to_user_id = $user->id;
+                    $chat->offer_id = $offer->id;
+                    $chat->campaign_id = $campaign->id;
+                    $chat->created_at   = Carbon::now()->addHours(3);
+                    $chat->updated_at   = Carbon::now()->addHours(3);
+                    $chat->content = Crypt::encryptString($chat_content);
+                    $chat->type = 1;
+                    $chat->save();
 
                     $player_ids = $this->getUserPlayerIds($campaign->user_id);
                     Notification::create(['user_id' => $campaign->user_id,
@@ -743,6 +824,19 @@ class OffersController extends Controller
 
 
                     $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
+
+                    $chat_content = 'قام المؤثر بالغاء عرضه على '.$campaign->title;
+                    $chat = new Chat;
+                    $chat->from_user_id	= $campaign->user_id;
+                    $chat->to_user_id = $user->id;
+                    $chat->offer_id = $offer->id;
+                    $chat->campaign_id = $campaign->id;
+                    $chat->created_at   = Carbon::now()->addHours(3);
+                    $chat->updated_at   = Carbon::now()->addHours(3);
+                    $chat->content = Crypt::encryptString($chat_content);
+                    $chat->type = 1;
+                    $chat->save();
+
 
                     $player_ids = $this->getUserPlayerIds($campaign->user_id);
                     Notification::create(['user_id' => $campaign->user_id,
@@ -850,7 +944,17 @@ class OffersController extends Controller
 
             'cost'             =>'nullable',
 
-            'description'      =>'required'
+            'description'      =>'required',
+
+            'facebook'          => 'nullable',
+
+            'twitter'           => 'nullable',
+
+            'snapchat'          => 'nullable',
+
+            'youtube'           => 'nullable',
+
+            'instgrame'         => 'nullable',
         ]);
 
         if($this->influncerHasOffer($influncer->id,$request->campaign_id)){
@@ -866,11 +970,16 @@ class OffersController extends Controller
 
         $offer = new Offer;
         $offer->campaign_id     = $request->campaign_id;
-        $offer->user_id = $campaign->user_id;
-        $offer->influncer_id     = $influncer->id;
+        $offer->user_id         = $campaign->user_id;
+        $offer->influncer_id    = $influncer->id;
         $offer->cost            = $request->cost;
         $offer->description     = $request->description;
-        $offer->created_at   = Carbon::now()->addHours(3);
+        $offer->facebook        = $request->facebook;
+        $offer->twitter         = $request->twitter;
+        $offer->snapchat        = $request->snapchat;
+        $offer->youtube         = $request->youtube;
+        $offer->instgrame       = $request->instgrame;
+        $offer->created_at      = Carbon::now()->addHours(3);
         $offer->save();
 
         //$request->description

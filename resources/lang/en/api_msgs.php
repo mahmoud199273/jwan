@@ -35,7 +35,8 @@ return[
    'nothing_to_update'            => 'There is no changes. nothing to update',
    'offer_not_pay'				=>  ' There is not enough balance to pay for the offer ',
    'not_authorized'				=>  ' You are not authorized to perform this operation ',
-
+   'campaign_balance'            => ' You can not add a campaign because the amount in your wallet is less than the minimum amount required ',
+   'currency'            => ' SR ',
 
 
 

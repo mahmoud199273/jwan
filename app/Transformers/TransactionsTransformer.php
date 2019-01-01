@@ -66,7 +66,18 @@ class TransactionsTransformer extends Transformer
                           2 => 'finished offer (in influncer)');
         //$campaign = Campaign::find($campaign->id);
         $settings = Setting::first();
-        $commission = (int)$settings->commission;
+        
+        $user = User::find($transaction->user_id);
+
+        if($user->user_commission)
+        {
+            $commission = (int)$user->user_commission;
+        }
+        else
+        {
+            $commission = (int)$settings->commission;
+        }
+        
         $tax = (int)$settings->tax;
 
         $return_array =  [

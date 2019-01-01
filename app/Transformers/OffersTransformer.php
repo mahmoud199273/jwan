@@ -47,6 +47,16 @@ class OffersTransformer extends Transformer
 
             'description'       => $offer->description,
 
+            'facebook'          => $offer->facebook,
+            
+            'twitter'           => $offer->twitter,
+            
+            'snapchat'          => $offer->snapchat,
+            
+            'youtube'           => $offer->youtube,
+            
+            'instgrame'         => $offer->instgrame,
+
 
             'status'   => $offer->status,
             

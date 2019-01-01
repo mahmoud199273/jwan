@@ -222,6 +222,15 @@ class CampignsController extends Controller
 
         }
 
+        $settings = Setting::first();
+
+        //dd((int)$user->balance,(int) $settings->min_balance);
+
+        if((int)$user->balance < (int) $settings->min_balance)
+        {
+            return $this->setStatusCode(405)->respondWithError(trans('api_msgs.campaign_balance').(int)$settings->min_balance.trans('api_msgs.currency'));
+        }
+
         $validator = Validator::make( $request->all(), [
 
             'title'             => 'required',
