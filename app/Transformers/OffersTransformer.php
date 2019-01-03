@@ -110,7 +110,7 @@ class OffersTransformer extends Transformer
 
             'commission'                => $offer_commission,
 
-            'commission'                => $offer_tax,
+            'tax'                => $offer_tax,
 
             'total_offer_cost'          => $total_offer_value,
 
