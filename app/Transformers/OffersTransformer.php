@@ -5,6 +5,7 @@ use App\Offer;
 use App\Transformers\BaseTransformer as Transformer;
 use App\Transformers\InfluncerTransformer;
 use App\User;
+use App\Setting;
 use Carbon\Carbon;
 
 
@@ -27,6 +28,37 @@ class OffersTransformer extends Transformer
             
 
         $offer = Offer::find($offer->id);
+
+        $settings = Setting::first();
+        
+        $user = User::find($offer->user_id);
+
+        if($user->user_commission)
+        {
+            $commission = (int)$user->user_commission;
+        }
+        else
+        {
+            $commission = (int)$settings->commission;
+        }
+        
+        $tax = (int)$settings->tax;
+
+
+        // offer cost before add commission or tax
+        $total_offer_value =(int)$offer->cost; 
+
+            // get commission value of offer
+        $offer_commission = round((($total_offer_value * $commission) / 100), 2); 
+
+            // offer cost after add commission vlaue
+        $total_offer_value = $total_offer_value + $offer_commission ; 
+
+            // get tax value from offer cost 
+        $offer_tax = round((($total_offer_value * $tax) / 100), 2);
+
+            // final offer cost after add commission and tax values
+        $total_offer_value = $total_offer_value + $offer_tax ;
 
         return [
         	'id'       			=> (int) $offer->id,
@@ -63,18 +95,24 @@ class OffersTransformer extends Transformer
             'status_title'	=> $status_array[(int) $offer->status],
 
 
-						'user_rate'   => $offer->user_rate,
+			'user_rate'   => $offer->user_rate,
 						//'user_rate_comment'   => $offer->user_rate_comment,
-						'influncer_rate'   => $offer->influncer_rate,
+			'influncer_rate'   => $offer->influncer_rate,
 						//'influncer_rate_comment'   => $offer->influncer_rate_comment,
 
             'created_date'      => Carbon::parse($offer->created_at)->toDateTimeString(),
             
             'created_date_string'      => Carbon::createFromTimeStamp(strtotime($offer->created_at))->diffForHumans(),
             
-            'updated_date'      => Carbon::parse($offer->updated_at)->toDateTimeString(),
+            'updated_date'          => Carbon::parse($offer->updated_at)->toDateTimeString(),
             
             'updated_date_string'      => Carbon::createFromTimeStamp(strtotime($offer->updated_at))->diffForHumans(),
+
+            'commission'                => $offer_commission,
+
+            'commission'                => $offer_tax,
+
+            'total_offer_cost'          => $total_offer_value,
 
 
         ];

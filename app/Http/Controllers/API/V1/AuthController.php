@@ -755,6 +755,7 @@ class AuthController extends Controller
     //   {
     //     $check_input = 'phone';
     //   }
+    
       if(strpos($request->server("REQUEST_URI"), '/user/login'))
       {
           $account_type = '0';
