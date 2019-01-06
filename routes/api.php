@@ -215,7 +215,8 @@ Route::get('/influncer/offer/{id}','API\V1\OffersController@show');
 Route::get('/user/offer/{id}','API\V1\OffersController@show');
 
 Route::get('/user/campaign/offer/approve/{id}','API\V1\OffersController@approve');
-Route::get('/user/campaign/offer/pay/{id}','API\V1\OffersController@pay');
+//Route::get('/user/campaign/offer/pay/{id}','API\V1\OffersController@pay');
+Route::post('/user/campaign/offer/pay','API\V1\OffersController@pay');
 Route::get('/user/campaign/offer/reject/{id}','API\V1\OffersController@reject');
 //Route::post('/user/campaign/offer/finish/{id}','API\V1\OffersController@finish');
 Route::post('/user/campaign/offer/finish','API\V1\OffersController@finish');

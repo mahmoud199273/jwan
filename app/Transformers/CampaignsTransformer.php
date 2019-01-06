@@ -44,8 +44,11 @@ class CampaignsTransformer extends Transformer
         $campaign = Campaign::find($campaign->id);
 
         $past = Carbon::parse($campaign->end_at)->isPast();
+
+        $offers_count = Offer::where('campaign_id',$campaign->id)->count();
+        
         $ended_date_string = "تاريخ الحملة انتهى";
-        if($past && (int) $campaign->status == 0)
+        if($past && (int) $campaign->status == 0 && $offers_count == 0)
         {
             $ended_date_string = "تاريخ الحملة انتهى ولم يتم التعامل معاها";
         }
@@ -101,14 +104,13 @@ class CampaignsTransformer extends Transformer
             'updated_date_string'      => Carbon::createFromTimeStamp(strtotime($campaign->updated_at))->subHour('3')->diffForHumans() ,
 
             'ended_date'        => $campaign->end_at,
-            //'ended_date_string' => Carbon::createFromTimeStamp(strtotime($campaign->end_at))->diffForHumans() ,
-            'ended_date_string' => $ended_date_string,
+            'ended_date_string' => Carbon::createFromTimeStamp(strtotime($campaign->end_at))->diffForHumans() ,
+            //'ended_date_string' => $ended_date_string,
 
             'campaign_status'   => (int) $campaign->status,
 
             'status'   => (int) $campaign->status,
-			'status_title'	=> $status_array[(int) $campaign->status],
-
+            
             //'categories' => isset($campaign->categories) ? $campaign->categories : null,
 
             //'countries' => isset($campaign->countries) ? $campaign->countries : null,
@@ -120,6 +122,14 @@ class CampaignsTransformer extends Transformer
 
         ];
 
+        if($past) 
+        {
+            $return_array['status_title'] = $ended_date_string;
+        }
+        else 
+        {
+            $return_array['status_title'] = $status_array[(int) $campaign->status];
+        }
         
 
         if($this->user_flag) // influncer app 

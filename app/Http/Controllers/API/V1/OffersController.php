@@ -339,6 +339,11 @@ class OffersController extends Controller
             {
                 return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
             }
+
+            $validator = Validator::make( $request->all(), [
+                'id'                => 'required|exists:offers,id',
+            ]);
+
             // security check
             $offer = Offer::where([['id',$request->id], ['status', "1"]])->get()->first();
             if(!$offer){
