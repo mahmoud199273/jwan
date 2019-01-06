@@ -341,7 +341,19 @@ class OffersController extends Controller
             }
 
             $validator = Validator::make( $request->all(), [
-                'id'                => 'required|exists:offers,id',
+                'id'                        => 'required|exists:offers,id',
+                'sdk_token'                 => 'nullable',
+                'merchant_reference'        => 'nullable',
+                'card_holder_name'          => 'nullable',
+                'card_number'               => 'nullable',
+                'authorization_code'        => 'nullable',
+                'response_code'             => 'nullable',
+                'payment_option'            => 'nullable',
+                'fort_id'                   => 'nullable',
+                'amount'                    => 'nullable',
+                'eci'                       => 'nullable',
+                'customer_ip'               => 'nullable',
+                'command'                   => 'nullable',
             ]);
 
             // security check
@@ -382,7 +394,7 @@ class OffersController extends Controller
             $total_offer_value = $total_offer_value + $offer_tax ;
             
             //if((int)$offer->cost > (int)$userData->balance)
-            if($total_offer_value > (int)$userData->balance)
+            if($total_offer_value > (int)$userData->balance && !$request->fort_id)
             {
                 return $this->setStatusCode(403)->respondWithError(trans('api_msgs.offer_not_pay'));
             }
@@ -406,13 +418,48 @@ class OffersController extends Controller
             $transations->status     = 0;
             $transations->campaign_id     = $offer->campaign_id;
             $transations->offer_id     = $offer->id;
-            $transations->transaction_amount     = $total_offer_value;
+
+            if($request->amount) $transations->transaction_amount     = $request->amount;
+            else $transations->transaction_amount     = $total_offer_value;
+
+            // payfort response
+            if($request->card_holder_name){
+                $transations->card_holder_name     = $request->card_holder_name;
+                $transations->transaction_account_name     = $request->card_holder_name;
+            }    
+            if($request->sdk_token) 
+                $transations->sdk_token     = $request->sdk_token;
+            if($request->merchant_reference) 
+                $transations->merchant_reference     = $request->merchant_reference;
+            if($request->card_number){ 
+                $transations->card_number     = $request->card_number;
+                $transations->transaction_account_number     = $request->transaction_account_number;
+            }    
+            if($request->authorization_code) 
+                $transations->authorization_code     = $request->authorization_code;
+            if($request->response_code) 
+                $transations->response_code     = $request->response_code;
+            if($request->payment_option) 
+                $transations->payment_option     = $request->payment_option;
+            if($request->fort_id) 
+                $transations->fort_id     = $request->fort_id;
+            if($request->eci) 
+                $transations->eci     = $request->eci;
+            if($request->customer_ip) 
+                $transations->customer_ip     = $request->customer_ip;
+            if($request->command) 
+                $transations->command     = $request->command;
+            // payfort response
+
             $transations->save();
             
             //$user->balance = $userData->balance - $offer->cost;
-            $user->balance = $userData->balance - $total_offer_value;
-            $user->save();
-
+            if(!$request->fort_id)
+            {
+                $user->balance = $userData->balance - $total_offer_value;
+                $user->save();
+            }
+            
             // $influncerData = User::find($offer->influncer_id);
             // $influncer_balance = $influncerData->balance + $offer->cost;
             // User::where('id' , $user->id)->whereIn('id', $offer->influncer_id)->update(['balance' => $influncer_balance]);
@@ -979,11 +1026,11 @@ class OffersController extends Controller
         $offer->influncer_id    = $influncer->id;
         $offer->cost            = $request->cost;
         $offer->description     = $request->description;
-        $offer->facebook        = $request->facebook;
-        $offer->twitter         = $request->twitter;
-        $offer->snapchat        = $request->snapchat;
-        $offer->youtube         = $request->youtube;
-        $offer->instgrame       = $request->instgrame;
+        if($request->facebook) $offer->facebook        = $request->facebook;
+        if($request->twitter) $offer->twitter         = $request->twitter;
+        if($request->snapchat) $offer->snapchat        = $request->snapchat;
+        if($request->youtube) $offer->youtube         = $request->youtube;
+        if($request->instgrame) $offer->instgrame       = $request->instgrame;
         $offer->created_at      = Carbon::now()->addHours(3);
         $offer->save();
 
