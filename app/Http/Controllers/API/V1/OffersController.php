@@ -361,7 +361,7 @@ class OffersController extends Controller
             if(!$offer){
                 return $this->setStatusCode(422)->respondWithError(trans('api_msgs.offer is not found or not approved'));
             }
-
+            dd("here");
             $userData = User::find($user->id);
 
             $settings = Setting::first();
