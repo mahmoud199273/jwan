@@ -398,7 +398,6 @@ class OffersController extends Controller
             {
                 return $this->setStatusCode(403)->respondWithError(trans('api_msgs.offer_not_pay'));
             }
-            dd("here");
             
             $offer->status = "3";
             $offer->save();
