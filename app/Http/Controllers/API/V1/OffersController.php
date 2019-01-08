@@ -1088,7 +1088,18 @@ class OffersController extends Controller
 
        $validator = Validator::make( $request->all(), [
           'id'                => 'required|exists:offers,id',
+          
           'cost'             =>'required',
+
+          'facebook'          => 'nullable',
+
+          'twitter'           => 'nullable',
+
+          'snapchat'          => 'nullable',
+
+          'youtube'           => 'nullable',
+
+          'instgrame'         => 'nullable',
        ]);
 
        // if($this->influncerHasOffer($influncer->id,$request->campaign_id)){
@@ -1108,6 +1119,12 @@ class OffersController extends Controller
        {
          $offer->description     = $request->description;
        }
+        if($request->facebook) $offer->facebook        = $request->facebook;
+        if($request->twitter) $offer->twitter         = $request->twitter;
+        if($request->snapchat) $offer->snapchat        = $request->snapchat;
+        if($request->youtube) $offer->youtube         = $request->youtube;
+        if($request->instgrame) $offer->instgrame       = $request->instgrame;
+
        $offer->save();
 
        //$request->description
