@@ -1119,11 +1119,11 @@ class OffersController extends Controller
        {
          $offer->description     = $request->description;
        }
-        if($request->facebook) $offer->facebook        = $request->facebook;
-        if($request->twitter) $offer->twitter         = $request->twitter;
-        if($request->snapchat) $offer->snapchat        = $request->snapchat;
-        if($request->youtube) $offer->youtube         = $request->youtube;
-        if($request->instgrame) $offer->instgrame       = $request->instgrame;
+        $offer->facebook        = $request->facebook;
+        $offer->twitter         = $request->twitter;
+        $offer->snapchat        = $request->snapchat;
+        $offer->youtube         = $request->youtube;
+        $offer->instgrame       = $request->instgrame;
 
        $offer->save();
 
