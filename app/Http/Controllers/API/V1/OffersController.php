@@ -1130,8 +1130,7 @@ class OffersController extends Controller
        //$request->description
        //$campaign = Campaign::where('id', $request->campaign_id)->get();
        $campaign = Campaign::find($offer->campaign_id);
-       if(strlen($request->description)!=0)
-       {
+       
          $chat = new Chat;
          $chat->from_user_id	= $influncer->id;
          $chat->to_user_id = $campaign->user_id;
@@ -1139,10 +1138,18 @@ class OffersController extends Controller
          $chat->campaign_id = $campaign->id;
          $chat->created_at   = Carbon::now()->addHours(3);
          $chat->updated_at   = Carbon::now()->addHours(3);
-         $chat->content = Crypt::encryptString($request->description);
+         if(strlen($request->description)!=0)
+        {    
+           $desc = 'يوجد تعديل جديد على عرض حملة '.$campaign->title." ".$request->description; 
+           $chat->content = Crypt::encryptString($desc);
+        }
+        else
+        {
+            $chat->content = Crypt::encryptString('يوجد تعديل جديد على عرض حملة '.$campaign->title);
+        }   
          $chat->type = 1;
          $chat->save();
-       }
+       
 
 
        $player_ids = $this->getUserPlayerIds($campaign->user_id);
