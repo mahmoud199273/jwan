@@ -62,7 +62,7 @@ class ResetPasswordController extends Controller
     {
         if($type == 1)
         {
-            $lastsms = ResetPassword::where('phone', $phone)->orderBy('id', 'DESC')->first();
+            $lastsms = ResetPassword::where('phone', $phone)->orderBy('created_at', 'DESC')->first();
         }
         else 
         {
