@@ -799,10 +799,18 @@ class AuthController extends Controller
         
          if ( !$this->isActiveAccount( $credentials,$account_type ) ) {
 
-            //if($account_type == '1') 
-            //    return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials2'));
-            //else
+            
+            // block user after number of attempts
             User::where('phone',$request->phone)->increment('login_attempts');
+
+            $userdata = User::where('phone',$request->phone)->first();
+
+            if($userdata->login_attempts >= 5)
+            {
+                $userdata->block = '1';
+                $userdata->block_time = Carbon::now()->addHours(1);
+                $userdata->save();
+            }
             
             return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials'));     
 
