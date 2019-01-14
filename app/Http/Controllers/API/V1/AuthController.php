@@ -845,6 +845,7 @@ class AuthController extends Controller
     public function ClearBlock($phone)
     {
         $userdata = User::where('phone',$phone)->first();
+        $userdata->login_attempts = '0';
         $userdata->block = '0';
         $userdata->block_time = NULL;
         $userdata->save();
