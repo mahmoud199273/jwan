@@ -134,7 +134,7 @@
                                         <a type="button" 
                                             href="{{url('admin/transactions')}}/{{ $user->id }}/transaction" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
-                                            {{ __('admin.transactions') }} {{$ispast}}
+                                            {{ __('admin.transactions') }} 
                                         </a>
 
                                         <a type="button"  data-id = "{{ $user->id }}" 
