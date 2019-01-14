@@ -803,9 +803,9 @@ class AuthController extends Controller
             // block user after number of attempts
             User::where('phone',$request->phone)->increment('login_attempts');
 
-            $userdata = User::where('phone',$request->phone)->where('block','0')->first();
+            $userdata = User::where('phone',$request->phone)->first();
 
-            if($userdata->login_attempts >= 5)
+            if($userdata->login_attempts >= 5 && $userdata->block == "0")
             {
                 $userdata->block = '1';
                 $userdata->block_time = Carbon::now()->addHours(1);
