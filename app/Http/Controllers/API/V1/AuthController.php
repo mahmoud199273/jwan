@@ -842,7 +842,7 @@ class AuthController extends Controller
     }
 
 
-    public function FunctionName($phone)
+    public function ClearBlock($phone)
     {
         $userdata = User::where('phone',$phone)->first();
         $userdata->block = '0';
