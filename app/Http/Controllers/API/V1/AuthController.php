@@ -846,7 +846,7 @@ class AuthController extends Controller
 
     public function isBlocked($phone)
     {
-        $isBlocked = User::where([ [ 'phone1', $phone ],[ 'block', '1'] , ['block_time','>=', Carbon::now()]])->first();
+        $isBlocked = User::where([ [ 'phone', $phone ],[ 'block', '1'] , ['block_time','>=', Carbon::now()]])->first();
     	return $isBlocked ? true :false;
     }
 
