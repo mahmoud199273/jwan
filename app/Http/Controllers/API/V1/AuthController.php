@@ -25,6 +25,8 @@ class AuthController extends Controller
 {
 
 
+    
+
   	function __construct( Request $request ){
 
         App::setlocale($request->lang);
@@ -800,7 +802,9 @@ class AuthController extends Controller
             //if($account_type == '1') 
             //    return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials2'));
             //else
-                return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials'));     
+            User::where('phone',$request->phone)->increment('login_attempts');
+            
+            return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials'));     
 
         }else{
 
@@ -973,7 +977,6 @@ class AuthController extends Controller
             ], 500);
         }
     }*/
-
 
 
 
