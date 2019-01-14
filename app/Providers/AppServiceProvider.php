@@ -18,10 +18,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(UrlGenerator $url)
     {
         //
-        if(env('REDIRECT_HTTPS'))
-        {
+        //if(env('REDIRECT_HTTPS'))
+        //{
             $url->forceSchema('https');
-        }
+        //}
         Schema::defaultStringLength(191);
         //date_default_timezone_set('Asia/Riyadh');
         $inactive_users=DB::table('users')->where([['is_active','0'],['account_type','0'],['deleted_at',NULL]])->count();
