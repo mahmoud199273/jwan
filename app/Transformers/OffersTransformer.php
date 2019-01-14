@@ -65,13 +65,13 @@ class OffersTransformer extends Transformer
 
             //'influncer'         => isset( $offer->influncer) ? $offer->influncer :null,
 
-            'influncer'         => User::select('id','name','image')
+            'influncer'         => User::select('id','name','image','email')
                                 ->where('id',$offer->influncer_id)
                                 ->get()[0],
 
             //'influncer_rate'    => 3,
 
-            'user'              => isset($offer->user()->select('id','name','image')->get()[0]) ? $offer->user()->select('id','name','image')->get()[0] : null,
+            'user'              => isset($offer->user()->select('id','name','image','email')->get()[0]) ? $offer->user()->select('id','name','image')->get()[0] : null,
 
             'campaign'          => isset($offer->campaign) ? $offer->campaign :null ,
 

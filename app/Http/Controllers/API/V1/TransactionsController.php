@@ -145,17 +145,57 @@ class TransactionsController extends Controller
         {
             return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
         }
-        $validator = Validator::make( $request->all(), [
-            'transaction_amount'            => 'required|numeric',
-            'transaction_bank_name'         =>  'required',
-            'transaction_account_name'      =>  'required',
-            'transaction_account_number'    =>  'required',
-            'transaction_account_IBAN'      =>  'required',
-            'transaction_number'            =>  'required',
-            'transaction_date'              =>  'required',
-            'image'                         => 'required'
-        ]);
+        // $validator = Validator::make( $request->all(), [
+        //     'transaction_amount'            => 'required|numeric',
+        //     'transaction_bank_name'         =>  'required',
+        //     'transaction_account_name'      =>  'required',
+        //     'transaction_account_number'    =>  'required',
+        //     'transaction_account_IBAN'      =>  'required',
+        //     'transaction_number'            =>  'required',
+        //     'transaction_date'              =>  'required',
+        //     'image'                         => 'required'
+        // ]);
 
+        $rules = [
+            'transaction_amount'            => 'required|numeric'
+        ];
+
+        if($request->fort_id)
+        {
+            $rules = [
+                'transaction_amount'            => 'required|numeric',
+                'sdk_token'                     => 'nullable',
+                'merchant_reference'            => 'nullable',
+                'card_holder_name'              => 'nullable',
+                'card_number'                   => 'nullable',
+                'authorization_code'            => 'nullable',
+                'response_code'                 => 'nullable',
+                'payment_option'                => 'nullable',
+                'fort_id'                       => 'nullable',
+                'amount'                        => 'nullable',
+                'eci'                           => 'nullable',
+                'customer_ip'                   => 'nullable',
+                'command'                       => 'nullable',
+            ];
+            
+        }
+        else
+        {
+            $rules = [
+                'transaction_amount'            => 'required|numeric',
+                'transaction_bank_name'         => 'required',
+                'transaction_account_name'      => 'required',
+                'transaction_account_number'    => 'required',
+                'transaction_account_IBAN'      => 'required',
+                'transaction_number'            => 'required',
+                'transaction_date'              => 'required',
+                'image'                         => 'required',
+            ];
+        }
+
+
+        $validator = Validator::make(Input::all(), $rules);
+        
 
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages());
@@ -171,24 +211,53 @@ class TransactionsController extends Controller
 
         $transations = new Transactions;
         $transations->user_id = $user->id;
-        $transations->transaction_bank_name     = $request->transaction_bank_name;
-        $transations->transaction_account_name            = $request->transaction_account_name;
-        $transations->transaction_account_number     = $request->transaction_account_number;
-        $transations->transaction_account_IBAN     = $request->transaction_account_IBAN;
-        $transations->transaction_number     = $request->transaction_number;
-        $transations->transaction_date = Carbon::parse($request->transaction_date);
-        $transations->transaction_amount     = $request->transaction_amount;
-        $transations->image     = $request->image;
+        if($request->fort_id) // payfort online payment
+        {
+            $transations->card_holder_name     = $request->card_holder_name;
+            $transations->transaction_account_name     = $request->card_holder_name;
+            $transations->sdk_token     = $request->sdk_token;
+            $transations->merchant_reference     = $request->merchant_reference;
+            $transations->card_number     = $request->card_number;
+            $transations->transaction_account_number     = $request->transaction_account_number;
+            $transations->authorization_code     = $request->authorization_code;
+            $transations->response_code     = $request->response_code;
+            $transations->payment_option     = $request->payment_option;
+            $transations->fort_id     = $request->fort_id;
+            $transations->eci     = $request->eci;
+            $transations->customer_ip     = $request->customer_ip;
+            $transations->command     = $request->command;
+            $transations->status       = "1";
 
+        }
+        else 
+        {
+            $transations->transaction_bank_name     = $request->transaction_bank_name;
+            $transations->transaction_account_name            = $request->transaction_account_name;
+            $transations->transaction_account_number     = $request->transaction_account_number;
+            $transations->transaction_account_IBAN     = $request->transaction_account_IBAN;
+            $transations->transaction_number     = $request->transaction_number;
+            $transations->transaction_date = Carbon::parse($request->transaction_date);
+            $transations->transaction_amount     = $request->transaction_amount;
+            $transations->image     = $request->image;
+            $transations->status       = 0;
+        }
+        
         $transations->direction    = 0;
         $transations->type         = 0;
-        $transations->status       = 0;
         $transations->campaign_id  = 0;
         $transations->offer_id     = 0;
         $transations->amount       = $request->transaction_amount;
 
 
         $transations->save();
+
+
+        if($request->fort_id) // payfort online payment
+        {
+            $userData = User::find($user->id);
+            $user->balance = $userData->balance + $request->transaction_amount;
+            $user->save();
+        }
 
         return $this->respondWithSuccess(trans('api_msgs.created'));
 
