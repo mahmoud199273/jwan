@@ -195,7 +195,7 @@ class AuthController extends Controller
 
     public function LastSmS($phone)
     {
-        $lastsms = VerifyPhoneCode::where('phone', $phone)->first();
+        $lastsms = VerifyPhoneCode::where('phone', $phone)->orderBy('id', 'DESC')->first();
         
         if($lastsms)
         {
