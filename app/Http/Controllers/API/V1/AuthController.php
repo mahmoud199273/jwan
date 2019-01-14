@@ -803,7 +803,7 @@ class AuthController extends Controller
             // block user after number of attempts
             User::where('phone',$request->phone)->increment('login_attempts');
 
-            $userdata = User::where('phone',$request->phone)->first();
+            $userdata = User::where('phone',$request->phone)->where('block','0')->first();
 
             if($userdata->login_attempts >= 5)
             {
@@ -814,7 +814,13 @@ class AuthController extends Controller
             
             return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials'));     
 
-        }else{
+        }
+        else
+        {
+            if(!$this->isBlocked($request->input('phone')))
+            {
+                return $this->setStatusCode(406)->respondWithError(trans('api_msgs.blocked_user'));
+            }
 
             if(!$this->isPhoneVerified($request->input('phone')))
         {
@@ -838,7 +844,11 @@ class AuthController extends Controller
 
 
 
-
+    public function isBlocked($phone)
+    {
+        $isBlocked = User::where([ [ 'phone', $phone ],[ 'block', '1'] , ['block_time','>=', Carbon::now()]])->first();
+    	return $isBlocked ? true :false;
+    }
 
     public function CheckActiveAccount( array $credentails, $type ) :bool
     {

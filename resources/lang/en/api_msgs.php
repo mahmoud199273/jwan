@@ -37,6 +37,7 @@ return[
    'not_authorized'				=>  ' You are not authorized to perform this operation ',
    'campaign_balance'            => ' You can not add a campaign because the amount in your wallet is less than the minimum amount required ',
    'currency'            => ' SR ',
+   'blocked_user'            => ' Your account is blocked due to many login attempts. please try again after 1 hour ',
 
 
 
