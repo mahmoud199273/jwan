@@ -817,7 +817,7 @@ class AuthController extends Controller
         }
         else
         {
-            if(!$this->isBlocked($request->input('phone')))
+            if($this->isBlocked($request->input('phone')))
             {
                 return $this->setStatusCode(406)->respondWithError(trans('api_msgs.blocked_user'));
             }
@@ -846,7 +846,7 @@ class AuthController extends Controller
 
     public function isBlocked($phone)
     {
-        $isBlocked = User::where([ [ 'phone', $phone ],[ 'block', '1'] , ['block_time','>=', Carbon::now()]])->first();
+        $isBlocked = User::where([ [ 'phone', $phone ],[ 'block', '1'] , ['block_time','>', Carbon::now()]])->first();
     	return $isBlocked ? true :false;
     }
 
