@@ -833,7 +833,7 @@ class AuthController extends Controller
             return $this->setStatusCode(405)->respondWithError(trans('api_msgs.check_credentials2'));
         }
 
-            
+            $this->ClearBlock($request->input('phone')); // remove block attempts
             return $this->generateToken( $request->only('phone','password') );
 
         }
@@ -842,7 +842,13 @@ class AuthController extends Controller
     }
 
 
-
+    public function FunctionName($phone)
+    {
+        $userdata = User::where('phone',$phone)->first();
+        $userdata->block = '0';
+        $userdata->block_time = NULL;
+        $userdata->save();
+    }
 
     public function isBlocked($phone)
     {
@@ -945,7 +951,7 @@ class AuthController extends Controller
 
             return $this->respondForbidden('token_invalid');
         }
-
+        
         return $this->respond(['token' =>$token]);
     }
 
