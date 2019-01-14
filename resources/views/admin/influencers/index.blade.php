@@ -122,6 +122,13 @@
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             <i class="fa fa-edit m--font-info"></i>
                                         </a>
+                                        @php $ispast = \Carbon\Carbon::parse($user->block_time)->isPast() @endphp
+                                        @if($user->block == 1 && !$ispast)
+                                        <a type="button"  data-id = "{{ $user->id }}" 
+                                                class="m-btn m-btn m-btn--square btn btn-secondary _unblock">
+                                               الغاء الحظر
+                                        </a>
+                                        @endif
 
                                         <a type="button" 
                                             href="{{url('admin/transactions')}}/{{ $user->id }}/transaction" 

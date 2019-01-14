@@ -219,5 +219,21 @@ class InfluencersController extends Controller
             UserSocial::where('id',$id)->delete();
         }
         return redirect()->intended(config('app.admin_url').'/influencers');
-    } 
+    }
+    
+    
+    public function unblock(Request $request)
+    {
+        $user =  User::find( $request->id );
+        if ( $request->ajax() ) {
+            $user->login_attempts = '0';
+            $user->block = '0';
+            $user->block_time = NULL;
+            $user->save();
+
+           
+            return response(['msg' => 'unblocked', 'status' => 'success']);
+        }
+    }
+    
 }

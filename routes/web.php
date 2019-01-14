@@ -77,11 +77,13 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::resource('users','UsersController');
 		Route::post('/users/activate'       , 'UsersController@activate');
 		Route::post('/users/ban'            , 'UsersController@ban');
+		Route::post('/users/unblock'            , 'UsersController@unblock');
 		Route::get('/user/search'           , 'UsersController@search');
 
 		Route::resource('influencers','InfluencersController');
 		Route::post('/influencers/activate'       , 'InfluencersController@activate');
 		Route::post('/influencers/ban'            , 'InfluencersController@ban');
+		Route::post('/influencers/unblock'            , 'InfluencersController@unblock');
 		Route::get('influencer/search','InfluencersController@search');
 		Route::get('influencers/{id}/social','InfluencersController@InfluencerSocial');
 		Route::patch('influencers/{id}/social','InfluencersController@UpdateInfluencerSocial');
