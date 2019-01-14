@@ -193,22 +193,44 @@ class AuthController extends Controller
         return $this->respondWithSuccess(trans('api_msgs.sms_code_text'));
     }
 
+    public function LastSmS($phone)
+    {
+        $lastsms = VerifyPhoneCode::where('phone', $phone)->first();
+        
+        if($lastsms)
+        {
+            if($lastsms->created_at->diffInSeconds(Carbon::now()) < 30)
+            {
+                return true;
+            }
+            else 
+            {
+                return false;    # code...
+            }
+        }
+        return false;
+    }
+    
 	public function createVerificationCode( $phone,$country_id )
     {
-        $verify_code    = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
-        $current_time   = Carbon::now();
-        $created_at     = $current_time->toDateTimeString();
-        $expired_at     = $current_time->addHours(24)->toDateTimeString();
-        VerifyPhoneCode::where('phone', $phone)->delete();
-        DB::table('verify_phone_codes')->insert([
-		         'phone'         => $phone ,
-                   'code'          => $verify_code ,
-		         'created_at'    => $created_at,
-		        'expired_at'    => $expired_at
-	                                            ]);
-        //send message to mobile
-        //@sendSMS($phone , __('api_msgs.sms_code_text').$verify_code );
-        @sendSMS($this->formatPhone($phone,$country_id) , __('api_msgs.sms_code_text').$verify_code );
+        $lastSmS = $this->LastSmS($phone); // check if message send and not passed 30 second
+        if(!$lastSmS)
+        {
+            $verify_code    = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
+            $current_time   = Carbon::now();
+            $created_at     = $current_time->toDateTimeString();
+            $expired_at     = $current_time->addHours(24)->toDateTimeString();
+            VerifyPhoneCode::where('phone', $phone)->delete();
+            DB::table('verify_phone_codes')->insert([
+                    'phone'         => $phone ,
+                    'code'          => $verify_code ,
+                    'created_at'    => $created_at,
+                    'expired_at'    => $expired_at
+                                                    ]);
+            //send message to mobile
+            //@sendSMS($phone , __('api_msgs.sms_code_text').$verify_code );
+            @sendSMS($this->formatPhone($phone,$country_id) , __('api_msgs.sms_code_text').$verify_code );
+        }
     }
 
 

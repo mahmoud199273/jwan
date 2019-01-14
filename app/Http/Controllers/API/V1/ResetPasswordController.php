@@ -58,7 +58,31 @@ class ResetPasswordController extends Controller
 
 
 
-
+    public function LastSmS($phone,$type=1) // type = 1 tabel forget | type = 2 table verify
+    {
+        if($type == 1)
+        {
+            $lastsms = ResetPassword::where('phone', $phone)->first();
+        }
+        else 
+        {
+            $lastsms = VerifyPhoneCode::where('phone', $phone)->first();
+        }
+         
+        
+        if($lastsms)
+        {
+            if($lastsms->created_at->diffInSeconds(Carbon::now()) < 30)
+            {
+                return true;
+            }
+            else 
+            {
+                return false;    # code...
+            }
+        }
+        return false;
+    }
 
 
 
@@ -76,9 +100,14 @@ class ResetPasswordController extends Controller
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_phone'));
         }
 
-        //create reset password code
-        $this->createToken( $request->phone,$request->country_id );
+        
 
+        $lastSmS = $this->LastSmS($request->phone,1); // check if message send and not passed 30 second
+        if(!$lastSmS)
+        {
+            //create reset password code
+            $this->createToken( $request->phone,$request->country_id );
+        }
         return $this->respondCreated(trans('api_msgs.code_sent'));
     }
 
@@ -219,9 +248,12 @@ class ResetPasswordController extends Controller
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_phone'));
         }
 
-        //create verify phone code
-        $this->createVerifyToken( $request->phone );
-
+        $lastSmS = $this->LastSmS($request->phone,2); // check if message send and not passed 30 second
+        if(!$lastSmS)
+        {
+            //create verify phone code
+            $this->createVerifyToken( $request->phone );
+        }
         return $this->respondCreated(trans('api_msgs.code_sent'));
     }
 
