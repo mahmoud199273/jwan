@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\UrlGenerator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,9 +15,13 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(UrlGenerator $url)
     {
         //
+        if(env('REDIRECT_HTTPS'))
+        {
+            $url->forceSchema('https');
+        }
         Schema::defaultStringLength(191);
         //date_default_timezone_set('Asia/Riyadh');
         $inactive_users=DB::table('users')->where([['is_active','0'],['account_type','0'],['deleted_at',NULL]])->count();
