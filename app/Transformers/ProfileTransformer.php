@@ -32,7 +32,7 @@ class ProfileTransformer extends Transformer
             return [
                 'id'            => (int) $user->id,
                 'name'          => $user->name,
-                'rate'          => (int) Offer::select(DB::raw("IF( ROUND(SUM(influncer_rate)/COUNT(influncer_rate)) , ROUND(SUM(influncer_rate)/COUNT(influncer_rate)), 0 ) as rate"))->where('influncer_id', $user->id)->first()->rate,
+                'rate'          => (int) Offer::select(DB::raw("IF( ROUND(SUM(influncer_rate)/COUNT(influncer_rate)) , ROUND(SUM(influncer_rate)/COUNT(influncer_rate)), 0 ) as rate"))->where('user_id', $user->id)->first()->rate,
                 'image'         => ($user->image) ?config('app.url').$user->image : null,
                 'notes'         => $user->notes,
                 'type'          => (int) $user->type,
