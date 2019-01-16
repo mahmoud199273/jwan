@@ -827,11 +827,13 @@ class AuthController extends Controller
 
             $userdata = User::where('phone',$request->phone)->first();
 
-            if($userdata->login_attempts >= 5 && $userdata->block == "0")
-            {
-                $userdata->block = '1';
-                $userdata->block_time = Carbon::now()->addHours(1);
-                $userdata->save();
+            if($userdata){
+                if($userdata->login_attempts >= 5 && $userdata->block == "0")
+                {
+                    $userdata->block = '1';
+                    $userdata->block_time = Carbon::now()->addHours(1);
+                    $userdata->save();
+                }
             }
             
             return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials'));     
