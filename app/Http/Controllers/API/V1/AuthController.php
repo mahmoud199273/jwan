@@ -240,7 +240,15 @@ class AuthController extends Controller
                                                     ]);
             //send message to mobile
             //@sendSMS($phone , __('api_msgs.sms_code_text').$verify_code );
-            @sendSMS($this->formatPhone($phone,$country_id) , __('api_msgs.sms_code_text').$verify_code );
+            if($account_type == '1')
+            {
+                $sms_message = $verify_code.__('api_msgs.sms_code_text_influncer');
+            }
+            else 
+            {
+                $sms_message = $verify_code.__('api_msgs.sms_code_text_client');
+            }
+            @sendSMS($this->formatPhone($phone,$country_id) , $sms_message );
         }
     }
 
