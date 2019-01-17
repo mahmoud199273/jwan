@@ -101,7 +101,7 @@ class AuthController extends Controller
             $account_type = $request->header('account_type');
         }
 
-        $code   = VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],['account_type1',$account_type],[ 'verified', '0'] ])->first();
+        $code   = VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],['account_type',$account_type],[ 'verified', '0'] ])->first();
 
         if ( !$code ) {
 
