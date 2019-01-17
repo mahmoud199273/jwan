@@ -95,7 +95,13 @@ class AuthController extends Controller
             return $this->setStatusCode(422)->respondWithError('parameters faild validation');
         }
 
-        $code   = VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],[ 'verified', '0'] ])->first();
+        $account_type = '0';
+        if($request->header('account_type'))
+        {
+            $account_type = $request->header('account_type');
+        }
+
+        $code   = VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],['account_type',$account_type],[ 'verified', '0'] ])->first();
 
         if ( !$code ) {
 
@@ -116,7 +122,7 @@ class AuthController extends Controller
             if($request->header('Authorization') && $request->header('Authorization') != '' && $request->header('Authorization') != null && $request->header('Authorization') != "null"){
                 // check for update phone
                 
-                VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],[ 'verified', '0'] ])->update(['verified' => '1']);
+                VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],['account_type',$account_type],[ 'verified', '0'] ])->update(['verified' => '1']);
 
                 $user_auth =  $this->getAuthenticatedUser();
                 User::where([[ 'id', $user_auth->id] ])->update(['phone' => $code->phone]);
@@ -125,11 +131,11 @@ class AuthController extends Controller
             //VerifyPhoneCode::where('id', $user->id)->where('id', $user->id)
             //return $this->respondWithSuccess('sucess');
 
-            $user = User::where('phone', $code->phone)->first();
+            $user = User::where('phone', $code->phone)->where('account_type',$account_type)->first();
             if($user)
             {
 
-                VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],[ 'verified', '0'] ])->update(['verified' => '1']);
+                VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],['account_type',$account_type],[ 'verified', '0'] ])->update(['verified' => '1']);
 
                 if($user->account_type == 1) //influencer
                 {
@@ -186,16 +192,20 @@ class AuthController extends Controller
             }
         }
 
-
+        $account_type = '0';
+        if($request->header('account_type'))
+        {
+            $account_type = $request->header('account_type');
+        }
         //create verify phone code
-        $this->createVerificationCode( $request->phone,$request->country_id );
+        $this->createVerificationCode( $request->phone,$request->country_id , $account_type );
 
         return $this->respondWithSuccess(trans('api_msgs.sms_code_text'));
     }
 
-    public function LastSmS($phone)
+    public function LastSmS($phone,$account_type)
     {
-        $lastsms = VerifyPhoneCode::where('phone', $phone)->orderBy('id', 'DESC')->first();
+        $lastsms = VerifyPhoneCode::where('phone', $phone)->where('account_type',$account_type)->orderBy('id', 'DESC')->first();
         
         if($lastsms)
         {
@@ -211,9 +221,9 @@ class AuthController extends Controller
         return false;
     }
     
-	public function createVerificationCode( $phone,$country_id )
+	public function createVerificationCode( $phone,$country_id , $account_type='0' )
     {
-        $lastSmS = $this->LastSmS($phone); // check if message send and not passed 30 second
+        $lastSmS = $this->LastSmS($phone,$account_type); // check if message send and not passed 30 second
         if(!$lastSmS)
         {
             $verify_code    = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
@@ -223,6 +233,7 @@ class AuthController extends Controller
             VerifyPhoneCode::where('phone', $phone)->delete();
             DB::table('verify_phone_codes')->insert([
                     'phone'         => $phone ,
+                    'account_type'  => $account_type ,
                     'code'          => $verify_code ,
                     'created_at'    => $created_at,
                     'expired_at'    => $expired_at
@@ -234,9 +245,9 @@ class AuthController extends Controller
     }
 
 
-    public function isPhoneExists( $phone )
+    public function isPhoneExists( $phone , $account_type )
     {
-        return User::where('phone',$phone)->first() ? true : false;
+        return User::where('phone',$phone)->where('account_type',$account_type)->first() ? true : false;
     }
 
     public function isMailExists( $email )
@@ -358,7 +369,7 @@ class AuthController extends Controller
 
         ]);
 
-        if ($this->isPhoneExists( $request->phone )) {
+        if ($this->isPhoneExists( $request->phone , '0' )) {
            return $this->setStatusCode(409)->respondWithError(trans('api_msgs.phone_exists'));
         }
 
@@ -427,7 +438,7 @@ class AuthController extends Controller
             $user->save();
 
 
-           $this->createVerificationCode( arTOen($request->phone),$request->country_id );
+           $this->createVerificationCode( arTOen($request->phone),$request->country_id , '0' );
 
             //$token = JWTAuth::fromUser($user);
 
@@ -505,7 +516,7 @@ class AuthController extends Controller
 
         ]);
 
-        if ($this->isPhoneExists( $request->phone )) {
+        if ($this->isPhoneExists( $request->phone , '1' )) {
            return $this->setStatusCode(409)->respondWithError(trans('api_msgs.phone_exists'));
         }
 
@@ -637,7 +648,7 @@ class AuthController extends Controller
         }
 
 
-            $this->createVerificationCode( arTOen($request->phone),$request->country_id );
+            $this->createVerificationCode( arTOen($request->phone),$request->country_id , '1' );
 
             return $this->respondWithSuccess(trans('api_msgs.success'));
             //$token = JWTAuth::fromUser($user);
@@ -690,7 +701,7 @@ class AuthController extends Controller
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
         }
         
-        if ($this->isPhoneExists( $request->phone )) {
+        if ($this->isPhoneExists( $request->phone , '0' )) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
         }
  
@@ -823,9 +834,9 @@ class AuthController extends Controller
 
             
             // block user after number of attempts
-            User::where('phone',$request->phone)->increment('login_attempts');
+            User::where('phone',$request->phone)->where('account_type',$account_type)->increment('login_attempts');
 
-            $userdata = User::where('phone',$request->phone)->first();
+            $userdata = User::where('phone',$request->phone)->where('account_type',$account_type)->first();
 
             if($userdata){
                 if($userdata->login_attempts >= 5 && $userdata->block == "0")
@@ -841,12 +852,12 @@ class AuthController extends Controller
         }
         else
         {
-            if($this->isBlocked($request->input('phone')))
+            if($this->isBlocked($request->input('phone'),$account_type))
             {
                 return $this->setStatusCode(406)->respondWithError(trans('api_msgs.blocked_user'));
             }
 
-            if(!$this->isPhoneVerified($request->input('phone')))
+            if(!$this->isPhoneVerified($request->input('phone'),$account_type))
         {
             //return $this->respondUnauthorized( trans('api_msgs.activate_msg') );
             return $this->setStatusCode(403)->respondWithError(trans('api_msgs.activate_msg'));
@@ -857,7 +868,7 @@ class AuthController extends Controller
             return $this->setStatusCode(405)->respondWithError(trans('api_msgs.check_credentials2'));
         }
 
-            $this->ClearBlock($request->input('phone')); // remove block attempts
+            $this->ClearBlock($request->input('phone'),$account_type); // remove block attempts
             return $this->generateToken( $request->only('phone','password') );
 
         }
@@ -866,18 +877,18 @@ class AuthController extends Controller
     }
 
 
-    public function ClearBlock($phone)
+    public function ClearBlock($phone,$account_type='0')
     {
-        $userdata = User::where('phone',$phone)->first();
+        $userdata = User::where('phone',$phone)->where('account_type',$account_type)->first();
         $userdata->login_attempts = '0';
         $userdata->block = '0';
         $userdata->block_time = NULL;
         $userdata->save();
     }
 
-    public function isBlocked($phone)
+    public function isBlocked($phone,$account_type='0')
     {
-        $isBlocked = User::where([ [ 'phone', $phone ],[ 'block', '1'] , ['block_time','>', Carbon::now()]])->first();
+        $isBlocked = User::where([ [ 'phone', $phone ],[ 'account_type', $account_type ],[ 'block', '1'] , ['block_time','>', Carbon::now()]])->first();
     	return $isBlocked ? true :false;
     }
 
@@ -909,9 +920,9 @@ class AuthController extends Controller
     }
 
 
-    public function isPhoneVerified( $phone )
+    public function isPhoneVerified( $phone , $account_type = '0' )
     {
-        $isVerified = VerifyPhoneCode::where([ [ 'phone', $phone ],[ 'verified', '1'] ])->orderBy('id', 'DESC')->first();
+        $isVerified = VerifyPhoneCode::where([ [ 'phone', $phone ],[ 'account_type', $account_type ],[ 'verified', '1'] ])->orderBy('id', 'DESC')->first();
     	return $isVerified ? true :false;
     }
 

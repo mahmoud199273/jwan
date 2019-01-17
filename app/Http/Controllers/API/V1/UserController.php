@@ -524,9 +524,9 @@ class UserController extends Controller
         return User::where([['id','<>',$user_id] ,['email' ,$email]])->first() ?  true : false ;
     }
 
-    public function isPhoneExists( $phone , $user_id )
+    public function isPhoneExists( $phone , $user_id , $account_type = '0')
     {
-        return DB::table('users')->where([['id','<>',$user_id] ,['phone' ,$phone]])->first() ?  true : false ;
+        return DB::table('users')->where([['id','<>',$user_id] ,['phone' ,$phone] ,['account_type' ,$account_type]])->first() ?  true : false ;
 
     }
 
@@ -717,7 +717,13 @@ class UserController extends Controller
         ]);
 
 
-        if ($this->isPhoneExists( $request->phone ,$user->id)) {
+        $account_type = '0';
+        if($request->header('account_type'))
+        {
+            $account_type = $request->header('account_type');
+        }
+
+        if ($this->isPhoneExists( $request->phone ,$user->id , $account_type)) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
         }
 
@@ -733,7 +739,7 @@ class UserController extends Controller
         }
 
 
-        app('App\Http\Controllers\API\V1\AuthController')->createVerificationCode($request->phone,$user->countries_id);
+        app('App\Http\Controllers\API\V1\AuthController')->createVerificationCode($request->phone,$user->countries_id,$account_type);
 
         return $this->respondWithSuccess(trans('api_msgs.sms_code_text'));
 

@@ -58,15 +58,15 @@ class ResetPasswordController extends Controller
 
 
 
-    public function LastSmS($phone,$type=1) // type = 1 tabel forget | type = 2 table verify
+    public function LastSmS($phone,$type=1,$account_type='0') // type = 1 tabel forget | type = 2 table verify
     {
         if($type == 1)
         {
-            $lastsms = ResetPassword::where('phone', $phone)->orderBy('created_at', 'DESC')->first();
+            $lastsms = ResetPassword::where('phone', $phone)->where('account_type',$account_type)->orderBy('created_at', 'DESC')->first();
         }
         else 
         {
-            $lastsms = VerifyPhoneCode::where('phone', $phone)->orderBy('id', 'DESC')->first();
+            $lastsms = VerifyPhoneCode::where('phone', $phone)->where('account_type',$account_type)->orderBy('id', 'DESC')->first();
         }
          
         
@@ -100,13 +100,17 @@ class ResetPasswordController extends Controller
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_phone'));
         }
 
-        
+        $account_type = '0';
+        if($request->header('account_type'))
+        {
+            $account_type = $request->header('account_type');
+        }
 
-        $lastSmS = $this->LastSmS($request->phone,1); // check if message send and not passed 30 second
+        $lastSmS = $this->LastSmS($request->phone,1,$account_type); // check if message send and not passed 30 second
         if(!$lastSmS)
         {
             //create reset password code
-            $this->createToken( $request->phone,$request->country_id );
+            $this->createToken( $request->phone,$request->country_id,$account_type );
         }
         return $this->respondCreated(trans('api_msgs.code_sent'));
     }
@@ -115,7 +119,7 @@ class ResetPasswordController extends Controller
 
 
 
-    public function createToken( $phone,$country_id )
+    public function createToken( $phone,$country_id,$account_type )
     {
         $token    = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
         $current_time   = Carbon::now();
@@ -123,6 +127,7 @@ class ResetPasswordController extends Controller
         $expired_at     = $current_time->addHours(1)->toDateTimeString();
         DB::table('phone_forget_password')->insert([
                    'phone'         => $phone ,
+                   'account_type'  => $account_type ,
                    'token'         => $token ,
                    'created_at'    => $created_at,
                    'expired_at'    => $expired_at
@@ -197,6 +202,14 @@ class ResetPasswordController extends Controller
             'password'              => 'required|string|max:25|min:8'
         ]);
 
+
+        $account_type = '0';
+        if($request->header('account_type'))
+        {
+            $account_type = $request->header('account_type');
+        }
+
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('parameters faild validation');
         }
@@ -219,7 +232,7 @@ class ResetPasswordController extends Controller
             ResetPassword::where([ [ 'token', $request->code ],[ 'used', '0'] ])->update(['used' => '1']);
 
             //update the password
-           $this->updatePassword( $code->phone , $request->password );
+           $this->updatePassword( $code->phone , $request->password , $account_type );
 
             return $this->respondWithSuccess(trans('api_msgs.reset_sccuess'));
         }
@@ -228,9 +241,9 @@ class ResetPasswordController extends Controller
     }
 
 
-    public function updatePassword(  $phone , $password )
+    public function updatePassword(  $phone , $password , $account_type='0')
     {
-        User::where('phone' , $phone )->update(['password' => bcrypt($password)]);
+        User::where('phone' , $phone )->where('account_type',$account_type)->update(['password' => bcrypt($password)]);
     }
 
 
@@ -244,20 +257,28 @@ class ResetPasswordController extends Controller
             'phone'                  => 'required|max:14|min:9|exists:users',
         ]);
 
+
+        $account_type = '0';
+        if($request->header('account_type'))
+        {
+            $account_type = $request->header('account_type');
+        }
+
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_phone'));
         }
 
-        $lastSmS = $this->LastSmS($request->phone,2); // check if message send and not passed 30 second
+        $lastSmS = $this->LastSmS($request->phone,2,$account_type); // check if message send and not passed 30 second
         if(!$lastSmS)
         {
             //create verify phone code
-            $this->createVerifyToken( $request->phone );
+            $this->createVerifyToken( $request->phone ,$account_type );
         }
         return $this->respondCreated(trans('api_msgs.code_sent'));
     }
 
-    public function createVerifyToken( $phone )
+    public function createVerifyToken( $phone,$account_type )
     {
         $token    = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
         $current_time   = Carbon::now();
@@ -265,7 +286,8 @@ class ResetPasswordController extends Controller
         $expired_at     = $current_time->addHours(1)->toDateTimeString();
         DB::table('verify_phone_codes')->insert([
                    'phone'         => $phone ,
-                   'code'         => $token ,
+                   'account_type'  => $account_type ,
+                   'code'          => $token ,
                    'created_at'    => $created_at,
                    'expired_at'    => $expired_at
                                                 ]);
