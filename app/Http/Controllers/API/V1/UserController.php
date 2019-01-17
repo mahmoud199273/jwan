@@ -716,7 +716,7 @@ class UserController extends Controller
             'phone'      => 'required',
         ]);
 
-
+        dd($request->headers->all());
         $account_type = '0';
         if($request->header('account_type'))
         {
