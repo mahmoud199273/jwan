@@ -94,7 +94,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('parameters faild validation');
         }
-        dd($request->header('account_type'));
+        
         $account_type = '0';
         if($request->header('account_type'))
         {
