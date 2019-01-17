@@ -247,6 +247,15 @@
                 </div>
             </div>
             
+            <div class="form-group m-form__group row">
+                <label for="example-text-input" class="col-2 col-form-label"> {{ __('admin.commission') }} </label>
+                <div class="col-9">
+                    <input type="text" name="user_commission" 
+                                class="form-control m-input" placeholder="{{ __('admin.commission') }}" >
+                    <span style="font-size:16px;color:red"> ملحوظة : اذا تركت القيمة فارغة سيتم التعامل بمبلغ العمولة من الاعدادات </span>
+                </div>
+            </div>
+            
             {{-- <div class="form-group m-form__group row {{ $errors->has('linkedin') ? 'has-danger' : ''}}">
                 <label for="name" class="col-2 col-form-label">linkedin</label>
                 <div class="col-9">

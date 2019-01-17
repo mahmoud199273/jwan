@@ -252,6 +252,13 @@
                     {!! $errors->first('snapchat_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
+
+            <div class="form-group m-form__group row">
+                    <label for="example-text-input" class="col-2 col-form-label"> {{ __('admin.commission') }} </label>
+                    <div class="col-9">
+                        <input type="text" name="user_commission" class="form-control m-input" placeholder="{{ __('admin.commission') }}" value="{{ $user->user_commission }}" disabled>
+                    </div>
+            </div>
             
             {{-- <div class="form-group m-form__group row {{ $errors->has('linkedin') ? 'has-danger' : ''}}">
                 <label for="name" class="col-2 col-form-label">linkedin</label>
