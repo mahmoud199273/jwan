@@ -718,9 +718,9 @@ class UserController extends Controller
 
         
         $account_type = '0';
-        if($request->header('account_type'))
+        if($request->header('account-type'))
         {
-            $account_type = $request->header('account_type');
+            $account_type = $request->header('account-type');
         }
 
         if ($this->isPhoneExists( $request->phone ,$user->id , $account_type)) {

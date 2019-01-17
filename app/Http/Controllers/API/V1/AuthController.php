@@ -193,9 +193,9 @@ class AuthController extends Controller
         }
 
         $account_type = '0';
-        if($request->header('account_type'))
+        if($request->header('account-type'))
         {
-            $account_type = $request->header('account_type');
+            $account_type = $request->header('account-type');
         }
         //create verify phone code
         $this->createVerificationCode( $request->phone,$request->country_id , $account_type );

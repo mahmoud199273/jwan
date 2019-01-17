@@ -101,9 +101,9 @@ class ResetPasswordController extends Controller
         }
 
         $account_type = '0';
-        if($request->header('account_type'))
+        if($request->header('account-type'))
         {
-            $account_type = $request->header('account_type');
+            $account_type = $request->header('account-type');
         }
 
         $lastSmS = $this->LastSmS($request->phone,1,$account_type); // check if message send and not passed 30 second
@@ -204,9 +204,9 @@ class ResetPasswordController extends Controller
 
 
         $account_type = '0';
-        if($request->header('account_type'))
+        if($request->header('account-type'))
         {
-            $account_type = $request->header('account_type');
+            $account_type = $request->header('account-type');
         }
 
 
@@ -259,9 +259,9 @@ class ResetPasswordController extends Controller
 
 
         $account_type = '0';
-        if($request->header('account_type'))
+        if($request->header('account-type'))
         {
-            $account_type = $request->header('account_type');
+            $account_type = $request->header('account-type');
         }
 
 
