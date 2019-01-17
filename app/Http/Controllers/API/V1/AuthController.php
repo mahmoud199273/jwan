@@ -94,11 +94,11 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('parameters faild validation');
         }
-        
+        dd($request->headers->all());
         $account_type = '0';
-        if($request->header('account_type'))
+        if($request->header('account-type'))
         {
-            $account_type = $request->header('account_type');
+            $account_type = $request->header('account-type');
         }
 
         $code   = VerifyPhoneCode::where([ [ 'code', $request->code ],['phone',$request->phone],['account_type',$account_type],[ 'verified', '0'] ])->first();
