@@ -560,10 +560,11 @@ class OffersController extends Controller
             {
                 $commission = (int)$settings->commission; // if there not user commission use commission in settings 
             }
+            // get offer commission from influncer
             $offer_cost = $offer->cost;
             $offer_commission = round((($offer_cost * $commission) / 100), 2);
             $total_offer_value = $offer->cost - $offer_commission;
-            
+
             $influncer->balance = $influncer->balance+$total_offer_value;
             $influncer->save();
 
