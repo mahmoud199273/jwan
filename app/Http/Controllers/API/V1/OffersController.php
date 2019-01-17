@@ -368,21 +368,22 @@ class OffersController extends Controller
             //$commission = (int)$settings->commission; // app commission value in percentage
 
             // app commission value in percentage
-            if($user->user_commission)
-            {
-                $commission = (int)$user->user_commission; // if there user commission use it 
-            }
-            else
-            {
-                $commission = (int)$settings->commission; // if there not user commission use commission in settings 
-            }
+            // if($user->user_commission)
+            // {
+            //     $commission = (int)$user->user_commission; // if there user commission use it 
+            // }
+            // else
+            // {
+            //     $commission = (int)$settings->commission; // if there not user commission use commission in settings 
+            // }
             $tax = (int)$settings->tax; // app tax value in percentage
 
             // offer cost before add commission or tax
             $total_offer_value =(int)$offer->cost; 
 
             // get commission value of offer
-            $offer_commission = round((($total_offer_value * $commission) / 100), 2); 
+            //$offer_commission = round((($total_offer_value * $commission) / 100), 2); 
+            $offer_commission = 0; 
 
             // offer cost after add commission vlaue
             $total_offer_value = $total_offer_value + $offer_commission ; 
@@ -546,8 +547,24 @@ class OffersController extends Controller
             $influncer_transations->offer_id     = $offer->id;
             $influncer_transations->save();
 
+
+
             $influncer = User::find($offer->influncer_id);
-            $influncer->balance = $influncer->balance+$offer->cost;
+            $settings = Setting::first();
+            // app commission value in percentage
+            if($influncer->user_commission)
+            {
+                $commission = (int)$influncer->user_commission; // if there user commission use it 
+            }
+            else
+            {
+                $commission = (int)$settings->commission; // if there not user commission use commission in settings 
+            }
+            $offer_cost = $offer->cost;
+            $offer_commission = round((($offer_cost * $commission) / 100), 2);
+            $total_offer_value = $offer->cost - $offer_commission;
+            
+            $influncer->balance = $influncer->balance+$total_offer_value;
             $influncer->save();
 
             if(strlen($request->comment)!=0)
