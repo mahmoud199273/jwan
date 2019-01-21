@@ -116,7 +116,7 @@ class TransactionsController extends Controller
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError('paramters failed validation');
         }
-        $data =  Transactions::SELECT('transactions.*', 'campaigns.title','u.name as user_name','u.image as user_image')
+        $data =  Transactions::SELECT('transactions.*', 'campaigns.title','u.name as user_name','u.image as user_image','u.id as transaction_user_id')
                                     ->where('transactions.id', $request->id)
                                     ->where('transactions.user_id', $user->id)
                                     ->join('users', 'users.id', '=', 'transactions.user_id')
