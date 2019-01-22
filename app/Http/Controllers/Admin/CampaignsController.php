@@ -49,7 +49,7 @@ class campaignsController extends Controller
         //dd($result);
         $campaign_categories = CampaignCategory::where('campaign_id',$id)->pluck('category_id')->toArray();
         $campaign_countries = CampaignCountry::where('campaign_id',$id)->pluck('country_id')->toArray();
-        $campaign_areas = CampaignArea::where('campaign_id',$id)->pluck('country_id')->toArray();
+        $campaign_areas = CampaignArea::where('campaign_id',$id)->pluck('area_id')->toArray();
         
             $users = DB::table('users')
             ->join('user_categories', 'users.id', '=', 'user_categories.user_id')
@@ -268,7 +268,7 @@ class campaignsController extends Controller
         $campaign_categories = CampaignCategory::where('campaign_id',$request->id)->pluck('category_id')->toArray();
         $campaign_countries = CampaignCountry::where('campaign_id',$request->id)->pluck('country_id')->toArray();
 
-        $campaign_areas = CampaignArea::where('campaign_id',$request->id)->pluck('country_id')->toArray();
+        $campaign_areas = CampaignArea::where('campaign_id',$request->id)->pluck('area_id')->toArray();
         
         
             $users = DB::table('users')
