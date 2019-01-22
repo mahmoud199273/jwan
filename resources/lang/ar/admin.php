@@ -206,6 +206,8 @@ return [
     'transaction_canceled' => 'تم إلغاء التحويل',
     'transaction_closed' => 'تم إعلاق التحويل',
     'campaign_title'    => 'عنوان الحملة',
+    'offers_num'        => 'عدد العروض',
+    'chat_num'          => 'عدد الرسائل',
 
     /* m.abdelrahman  */
     'Business manager'=>'مدير اعمال',

@@ -16,6 +16,7 @@ use App\UserPlayerId;
 use App\Country;
 use App\Category;
 use App\Area;
+use App\Offer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -72,7 +73,10 @@ class campaignsController extends Controller
     }
     public function index()
     {
+
         $campaigns = Campaign::latest()->paginate(10);
+        // $offers_count = Offer::where('campaign_id',$id)->count();
+
         return view('admin.campaigns.index',compact('campaigns'));
     }
 
@@ -130,6 +134,7 @@ class campaignsController extends Controller
     {
 
         $campaign = Campaign::find($id);
+        // $campaigns = Campaign::all();
         $users =  User::where('account_type','0')->get();
         $countries =  Country::all();
         $areas = Area::all();
@@ -140,7 +145,9 @@ class campaignsController extends Controller
         $campaign_categories = CampaignCategory::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('category_id');
         $campaign_countries =  CampaignCountry::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('country_id');
         $campaign_areas = CampaignArea::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('area_id');
-        return view('admin.campaigns.show',compact('campaign','countries','areas','categories','campaign_categories','campaign_countries','campaign_areas'));
+        $offers = Offer::where('campaign_id',$id)->get();
+        // dd($offers->toArray());
+        return view('admin.campaigns.show',compact('campaign','countries','areas','categories','campaign_categories','campaign_countries','campaign_areas','offers'));
     }
 
     /**

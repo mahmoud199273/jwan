@@ -75,7 +75,8 @@
                                     <th><b>{{ __('admin.campaign_date') }}</b></th>
                                     <th><b>{{ __('admin.status') }}</b></th>
                                     <th><b>{{ __('admin.approved')}}</b></th>
-                                    
+                                    <th><b>{{ __('admin.offers_num')}}</b></th>
+                                    <th><b>{{ __('admin.chat_num')}}</b></th>
                                     <th><b>{{ __('admin.control') }}</b></th>
                                 </tr>
                             </thead>
@@ -111,8 +112,13 @@
                                         @endif
                                     </th>
 
+
                                      <td class="text-center">{!! ($campaign->status)? "<i class='fa fa-check m--font-success'></i>" : 
                                     "<i class='fa fa-times m--font-danger'></i>" !!}</td>
+
+                                     <th scope="row">{{$campaign->offers->count()}}</th>
+
+                                     <th scope="row">{{$campaign->chats->groupby('offer_id')->count()}}</th>
                                     
                                     <td>
                                         <div class="btn-group mr-2" role="group" aria-label="First group">
