@@ -13,7 +13,7 @@
 					$app_id = "b424f52b-e243-411c-81b0-b3cc568470b2";
 					$auth_key = "YTJiZDk1OGUtZmYxMy00ZWMyLWI1YTUtNDcxODVkNjQzNWJm";
       }
-       $daTags = array(array("key" => "$tag_key", "relation" => "=", "value" => 1),);
+       //$daTags = array(array("key" => "$tag_key", "relation" => "=", "value" => 1),);
         $content = array(
                          "en" => $msg,
                          "ar" => $msg_ar

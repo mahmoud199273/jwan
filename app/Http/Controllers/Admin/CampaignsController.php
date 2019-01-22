@@ -264,17 +264,23 @@ class campaignsController extends Controller
             
         $campaign_categories = CampaignCategory::where('campaign_id',$request->id)->pluck('category_id')->toArray();
         $campaign_countries = CampaignCountry::where('campaign_id',$request->id)->pluck('country_id')->toArray();
+
+        $campaign_areas = CampaignArea::where('campaign_id',$request->id)->pluck('country_id')->toArray();
         
         
             $users = DB::table('users')
             ->join('user_categories', 'users.id', '=', 'user_categories.user_id')
             ->join('user_countries', 'users.id', '=', 'user_countries.user_id')
+            ->LEFTjoin('user_areas', 'users.id', '=', 'user_areas.user_id')
             ->join('user_player_ids', 'users.id', '=', 'user_player_ids.user_id');
             if($campaign_categories){
                 $users->whereIn('user_categories.categories_id',$campaign_categories);
             }
             if($campaign_countries){
                 $users->whereIn('user_countries.country_id',$campaign_countries);
+            }
+            if($campaign_areas){
+                $users->whereIn('user_areas.area_id',$campaign_areas);
             }
             $users->select('user_player_ids.*');
             $users->groupBy('user_player_ids.id');
