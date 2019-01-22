@@ -46,21 +46,25 @@ class campaignsController extends Controller
 
             // $result = sendNotification(0 ,'Your campaign has been approved','تم الموافقة على عرض الحملة ',$user_player_ids,"public",['campaign_id' =>'2','type' =>  20,'type_title'  => 'new campaign']);
             // dd($result);
-        $result = sendSMS($id, __('api_msgs.sms_code_text'));
-        dd($result);
+        //$result = sendSMS($id, __('api_msgs.sms_code_text'));
+        //dd($result);
         $campaign_categories = CampaignCategory::where('campaign_id',$id)->pluck('category_id')->toArray();
         $campaign_countries = CampaignCountry::where('campaign_id',$id)->pluck('country_id')->toArray();
-        
+        $campaign_areas = CampaignArea::where('campaign_id',$id)->pluck('area_id')->toArray();
         
             $users = DB::table('users')
             ->join('user_categories', 'users.id', '=', 'user_categories.user_id')
             ->join('user_countries', 'users.id', '=', 'user_countries.user_id')
+            ->LEFTjoin('user_areas', 'users.id', '=', 'user_areas.user_id')
             ->join('user_player_ids', 'users.id', '=', 'user_player_ids.user_id');
             if($campaign_categories){
                 $users->whereIn('user_categories.categories_id',$campaign_categories);
             }
             if($campaign_countries){
                 $users->whereIn('user_countries.country_id',$campaign_countries);
+            }
+            if($campaign_areas){
+                $users->whereIn('user_areas.area_id',$campaign_areas);
             }
             $users->select('user_player_ids.*');
             $users->groupBy('user_player_ids.id');
@@ -271,11 +275,14 @@ class campaignsController extends Controller
             
         $campaign_categories = CampaignCategory::where('campaign_id',$request->id)->pluck('category_id')->toArray();
         $campaign_countries = CampaignCountry::where('campaign_id',$request->id)->pluck('country_id')->toArray();
+
+        $campaign_areas = CampaignArea::where('campaign_id',$request->id)->pluck('area_id')->toArray();
         
         
             $users = DB::table('users')
             ->join('user_categories', 'users.id', '=', 'user_categories.user_id')
             ->join('user_countries', 'users.id', '=', 'user_countries.user_id')
+            ->LEFTjoin('user_areas', 'users.id', '=', 'user_areas.user_id')
             ->join('user_player_ids', 'users.id', '=', 'user_player_ids.user_id');
             if($campaign_categories){
                 $users->whereIn('user_categories.categories_id',$campaign_categories);
@@ -283,11 +290,15 @@ class campaignsController extends Controller
             if($campaign_countries){
                 $users->whereIn('user_countries.country_id',$campaign_countries);
             }
+            if($campaign_areas){
+                $users->whereIn('user_areas.area_id',$campaign_areas);
+            }
             $users->select('user_player_ids.*');
             $users->groupBy('user_player_ids.id');
             $users->orderBy("updated_at",'DESC');
 
             $player_ids = $users->pluck('user_player_ids.player_id')->toArray();
+            //dd($player_ids);
             $result = sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,'public',
                                   ['campaign_id' =>  (int)$request->id,'type'=>  20,'type_title'=> 'new campaign']);
             return response(['msg' => 'approved', 'status' => 'success']);
