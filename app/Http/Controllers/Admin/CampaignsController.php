@@ -63,7 +63,7 @@ class campaignsController extends Controller
                 $users->whereIn('user_countries.country_id',$campaign_countries);
             }
             if($campaign_areas){
-                $users->whereIn('user_areas.area_id',$campaign_areas);
+                //$users->whereIn('user_areas.area_id',$campaign_areas);
             }
             $users->select('user_player_ids.*');
             $users->groupBy('user_player_ids.id');
