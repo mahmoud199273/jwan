@@ -97,7 +97,7 @@ class CampignsController extends Controller
                 // $campaigns->select(DB::raw('(case WHEN campaign_areas.area_id is not null THEN campaign_areas.area_id IN ('.$influncer_areas.') ELSE 1 = 1 END)'));
                 
                 //$campaigns->whereRaw("CASE WHEN campaign_areas.area_id is not null THEN campaign_areas.area_id IN ('.$influncer_areas.') ELSE 1=1 END");
-                $campaigns->whereNotIn('campaigns.id',$areas_campaigns_id);
+                //$campaigns->whereNotIn('campaigns.id',$areas_campaigns_id);
             }
  
  
