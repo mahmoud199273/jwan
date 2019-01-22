@@ -54,6 +54,7 @@ class campaignsController extends Controller
             $users = DB::table('users')
             ->join('user_categories', 'users.id', '=', 'user_categories.user_id')
             ->join('user_countries', 'users.id', '=', 'user_countries.user_id')
+            ->LEFTjoin('user_areas', 'users.id', '=', 'user_areas.user_id')
             ->join('user_player_ids', 'users.id', '=', 'user_player_ids.user_id');
             if($campaign_categories){
                 $users->whereIn('user_categories.categories_id',$campaign_categories);
