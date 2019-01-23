@@ -90,6 +90,15 @@ class User extends Authenticatable
             {
                return $this->hasMany('App\Offer','user_id','id');
             }
+      public function user_chat()
+            {
+               return $this->hasMany('App\Chat','from_user_id','id');
+            }
+
+    public function influncer_chat()
+            {
+               return $this->hasMany('App\Chat','to_user_id','id');
+            }
 
     protected $casts = [
         'gender' => 'string',

@@ -262,7 +262,6 @@
             <h5 class="text-center">معلومات العروض</h5>
 
             <div class="tab-pane active" id="pending" role="tabpanel">
-
                 @foreach($offers as $offer)
                 
 
@@ -285,9 +284,10 @@
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
                          عرض المحادثة
                         </button>
-                        @foreach($chats as $chat)
-                        @if($chat)
-                        <!-- Modal -->
+
+                        
+
+                       <!-- Modal -->
                         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -298,8 +298,36 @@
                                 </button>
                               </div>
                               <div class="modal-body">
-                                <ul>
-                                    
+                                <ul class="list-group">
+                                    @foreach($offer->chat as $chat)
+                                    @if($chat)
+                                    @php 
+                                        $float="float:right";
+                                        if(isset($chat->from_user->account_type) &&$chat->from_user->account_type == "1") $float="float:left";
+                                    @endphp
+                                    <li class="list-group-item pull-left" style="{{$float}}">
+                                         <img src="{{url('')}}{{ str_replace('public/', '',isset( $chat->campaign->user->image))  }}" id="image_file" class="img-responsive img-circle" 
+                                         alt=" {{ isset($chat->from_user->name)? $chat->from_user->name : '' }} "> &nbsp;
+                                         @php 
+                                           $content = Crypt::decryptString($chat->content)
+                                         @endphp
+
+                                         @if(strpos($content,'public/assets/uploads'))
+                                         <span>
+                                         <img src="{{url('')}}{{ str_replace('public/', '',isset( $content))  }}" id="image_file" class="img-responsive" width="50px" height="50px">
+
+                                         @else
+
+                                         {{$content}}
+                                     </span>
+
+                                         @endif
+
+
+                                     </li>
+                                     @endif
+                                     @endforeach
+
 
 
                                 </ul> 
@@ -312,8 +340,7 @@
                             </div>
                           </div>
                         </div>
-                        @endif
-                        @endforeach
+                        
                                                         
                     </div>
 

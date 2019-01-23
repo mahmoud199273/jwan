@@ -151,10 +151,10 @@ class campaignsController extends Controller
         $campaign_countries =  CampaignCountry::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('country_id');
         $campaign_areas = CampaignArea::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('area_id');
         $offers = Offer::where('campaign_id',$id)->get();
-        // dd($offers->toArray());
-        $chats = Chat::where('campaign_id',$id)->get();
-        // dd($chat->toarray());
-        return view('admin.campaigns.show',compact('campaign','countries','areas','categories','campaign_categories','campaign_countries','campaign_areas','offers','chats'));
+        //dd($offers[0]->chat->toArray());
+        //$chats = Chat::where('campaign_id',$id)->get();
+        // dd($chats->toarray());
+        return view('admin.campaigns.show',compact('campaign','countries','areas','categories','campaign_categories','campaign_countries','campaign_areas','offers'));
     }
 
     /**

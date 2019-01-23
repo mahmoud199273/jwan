@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Offer extends Model
 {
 
-
+ 
 	use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $guarded = array();
@@ -26,6 +26,11 @@ class Offer extends Model
      public function influncer()
     {
         return $this->belongsTo('App\User','influncer_id','id');
+    }
+
+    public function chat()
+    {
+        return $this->hasMany('App\Chat','offer_id','id');
     }
     
 
