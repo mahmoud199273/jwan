@@ -132,6 +132,14 @@ class TransactionsTransformer extends Transformer
 
         ];
 
+        if($transaction->fort_id )
+        {
+            if($transaction->payment_option == "VISA") 
+                $return_array['image'] = "/public/assets/visa.png";
+            else
+               $return_array['image'] = "/public/assets/mastercard.png";     
+        }
+
         if($this->flag) // influencer transactions
         {
             $return_array['amount'] = $transaction->amount;
