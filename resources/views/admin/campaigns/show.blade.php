@@ -299,7 +299,7 @@
                               </div>
                               <div class="modal-body">
                                 <ul>
-                                    <li> {{Crypt::decrypt($chat->content)}}</li>
+                                    <li> <!-- {{Crypt::decrypt($chat->content)}} --></li>
 
 
                                 </ul> 
