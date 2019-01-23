@@ -268,7 +268,7 @@
 
                         <div class="form-group m-form__group row {{ $errors->has('image') ? 'has-danger' : ''}}">
                     <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.image') }}</label>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                        <!--  <img src="{{url('')}}{{ str_replace('public/', '', $offer->influncer->image) }}" 
                             alt="{{ $offer->influncer->name }}" width="150" height="150" max-width="150" max-height="150" class="form-control"> -->
 
@@ -279,6 +279,45 @@
                                                          </span>
                                                         
                     </div>
+
+                     <div class="col-md-2">
+<!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                         عرض المحادثة
+                        </button>
+                        @foreach($chats as $chat)
+                        @if($chat)
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">تفاصيل المحادثة</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <ul>
+                                    <li> {{Crypt::decrypt($chat->content)}}</li>
+
+
+                                </ul> 
+                               
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+                                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        @endif
+                        @endforeach
+                                                        
+                    </div>
+
+
                      </div>
 
                     </hr>
@@ -309,6 +348,14 @@
 </div>
 
 <!--end::Portlet-->
+<script type="text/javascript">
+
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+
+
+</script>
 
 
 
