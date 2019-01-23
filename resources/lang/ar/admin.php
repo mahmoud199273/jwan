@@ -211,9 +211,9 @@ return [
 
     /* m.abdelrahman  */
     'Business manager'=>'مدير اعمال',
-    'Personal'=>' حساب شخصى ',
-    'Government'=>' قطاع حكومى / قطاع شبه حكومي ',
-    'Private sector'=>' قطاع خاص ',
+    'Personal'=>'  شخصى ',
+    'Government'=>' ممثل جهة حكومية ',
+    'Private sector'=>' ممثل لشركة او مؤسسة ',
     'Account manager'=>' مدير حساب',
     'Type'=>' نوع الحساب ',
     'flag'=>' علم الدولة ',
@@ -270,8 +270,8 @@ return [
     "influencers_transactions" => " تحويلات المعلنين ",
     'sms_code_text'=>  ' تم تفعيل الحساب الخاص بك على تطبيق سجنفاى ',
     'accout_type'=>  ' نوع الحساب ',
-    'accout_type0'=>  ' شخصى ذكر  ',
-    'accout_type1'=>  ' شخصى انثى ',
+    'accout_type0'=>  '  ذكر  ',
+    'accout_type1'=>  '  انثى ',
     'accout_type2'=>  ' عام ',
     'wallet'=>  ' المحفظة ',
     'make_transactions'  =>' اجراء تحويل بنكى ',
