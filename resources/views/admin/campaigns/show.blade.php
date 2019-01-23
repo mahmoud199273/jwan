@@ -307,14 +307,14 @@
                                     @endphp
                                     <li class="list-group-item pull-left" style="{{$float}}">
                                          <img src="{{url('')}}{{ str_replace('public/', '',isset( $chat->campaign->user->image))  }}" id="image_file" class="img-responsive img-circle" 
-                                         alt=" {{ isset($chat->from_user->name)? $chat->from_user->name : '' }} "> &nbsp;
+                                         alt=" {{ isset($chat->from_user->name)? $chat->from_user->name : '' }} " width="50px" height="50px"> &nbsp;
                                          @php 
                                            $content = Crypt::decryptString($chat->content)
                                          @endphp
 
                                          @if(strpos($content,'public/assets/uploads'))
                                          <span>
-                                         <img src="{{url('')}}{{ str_replace('public/', '',isset( $content))  }}" id="image_file" class="img-responsive" width="50px" height="50px">
+                                         <img src="{{url('')}}{{ str_replace('public/', '',isset( $content))  }}" id="image_file" class="img-responsive" width="150px" height="150px">
 
                                          @else
 
