@@ -74,7 +74,7 @@ class CampignsController extends Controller
 
         }
         
-        //dd($areas_campaigns_id);
+        dd($areas_campaigns_id);
  
  
         //dd($influncer_categories);
