@@ -125,7 +125,7 @@ class CampignsController extends Controller
  
              $result = $campaigns->get();
             //dd($campaigns);
-        if()    
+            
         return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('lang.read succefully'),200);
     }
 
