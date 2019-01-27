@@ -46,7 +46,7 @@ class CampaignsTransformer extends Transformer
 
         if(!$campaign)
         {
-            return [];
+            return false;
         }
 
         if($campaign) $past = Carbon::parse($campaign->end_at)->isPast();
