@@ -32,7 +32,7 @@ class CampaignsTransformer extends Transformer
     
 	public function transform($campaign  ) : array
     {
-
+       
 			$status_array = array(0 => 'new',
 			1 => 'approved',
 			2 => 'rejected',
@@ -43,9 +43,12 @@ class CampaignsTransformer extends Transformer
 			5 => 'closed');
         $campaign = Campaign::find($campaign->id);
 
-        $past = Carbon::parse($campaign->end_at)->isPast();
 
-        $offers_count = Offer::where('campaign_id',$campaign->id)->count();
+        if($campaign) $past = Carbon::parse($campaign->end_at)->isPast();
+        else $past = false;
+
+        $offers_count = 0;
+        if($campaign)$offers_count = Offer::where('campaign_id',$campaign->id)->count();
         
         $ended_date_string = "تاريخ الحملة انتهى";
         if($past && (int) $campaign->status == 0 && $offers_count == 0)
@@ -111,13 +114,7 @@ class CampaignsTransformer extends Transformer
 
             'status'   => (int) $campaign->status,
             
-            //'categories' => isset($campaign->categories) ? $campaign->categories : null,
-
-            //'countries' => isset($campaign->countries) ? $campaign->countries : null,
-
-            //'areas' => isset($campaign->areas) ? $campaign->areas : null,
-
-			'is_extened'	=> isset($campaign->is_extened) ? $campaign->is_extened : 0
+            'is_extened'	=> isset($campaign->is_extened) ? $campaign->is_extened : 0
 
 
         ];
