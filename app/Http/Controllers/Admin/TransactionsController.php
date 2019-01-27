@@ -175,7 +175,7 @@ class TransactionsController extends Controller
                                   ['transaction_id' =>  (int)$transactions->id,
                                   'offer_id'    => 0,
                                   'campaign_id'    => 0,
-                                  'type'          =>  1,
+                                  'type'          =>  14,
                                   'type_title'	=> 'transaction approve']);
 
         //$request->persist();
@@ -281,7 +281,7 @@ class TransactionsController extends Controller
                                   ['transaction_id' =>  (int)$transactions->id,
                                   'offer_id'    => 0,
                                   'campaign_id'    => 0,
-                                  'type'          =>  1,
+                                  'type'          =>  14,
                                   'type_title'	=> 'transaction approve']);
             }
             return response(['msg' => 'approved', 'status' => 'success']);
