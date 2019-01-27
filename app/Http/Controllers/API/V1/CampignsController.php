@@ -99,7 +99,7 @@ class CampignsController extends Controller
                 // $campaigns->select(DB::raw('(case WHEN campaign_areas.area_id is not null THEN campaign_areas.area_id IN ('.$influncer_areas.') ELSE 1 = 1 END)'));
                 //$influncer_areas = implode(',',$influncer_areas);
                 //$campaigns->whereRaw("CASE WHEN campaign_areas.area_id is not null THEN campaign_areas.area_id IN ('.$influncer_areas.') ELSE 1=1 END");
-                $campaigns->ORwhereIn('campaigns.id',$areas_campaigns_id);
+                $campaigns->whereIn('campaigns.id',$areas_campaigns_id);
             }
  
  
@@ -115,6 +115,7 @@ class CampignsController extends Controller
             $campaigns->where('campaigns.status','1')
             //->where(\DB::raw('Date(campaigns.end_at)') ,'>',\DB::raw('NOW()'))
             ->where('campaigns.end_at','>',Carbon::now()->addHours(3)->toDateTimeString())
+            ->whereNull('campaigns.deleted_at')
             ->groupBy('campaigns.id')
  
  
@@ -123,7 +124,7 @@ class CampignsController extends Controller
              ->orderBy($orderBy,'DESC');
  
  
-             $result = $campaigns->whereNull('campaigns.deleted_at')->get();
+             $result = $campaigns->get();
             //dd($campaigns);
             
         return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('lang.read succefully'),200);

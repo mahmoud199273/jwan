@@ -114,13 +114,7 @@ class CampaignsTransformer extends Transformer
 
             'status'   => (int) $campaign->status,
             
-            //'categories' => isset($campaign->categories) ? $campaign->categories : null,
-
-            //'countries' => isset($campaign->countries) ? $campaign->countries : null,
-
-            //'areas' => isset($campaign->areas) ? $campaign->areas : null,
-
-			'is_extened'	=> isset($campaign->is_extened) ? $campaign->is_extened : 0
+            'is_extened'	=> isset($campaign->is_extened) ? $campaign->is_extened : 0
 
 
         ];
