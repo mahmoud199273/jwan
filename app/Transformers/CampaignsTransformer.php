@@ -43,7 +43,8 @@ class CampaignsTransformer extends Transformer
 			5 => 'closed');
         $campaign = Campaign::find($campaign->id);
 
-        $past = Carbon::parse($campaign->end_at)->isPast();
+        if($campaign->end_at) $past = Carbon::parse($campaign->end_at)->isPast();
+        else $past = false;
 
         $offers_count = Offer::where('campaign_id',$campaign->id)->count();
         
