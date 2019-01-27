@@ -32,7 +32,10 @@ class CampaignsTransformer extends Transformer
     
 	public function transform($campaign  ) : array
     {
-
+        if(!$campaign)
+        {
+            return [];
+        }
 			$status_array = array(0 => 'new',
 			1 => 'approved',
 			2 => 'rejected',
@@ -45,7 +48,7 @@ class CampaignsTransformer extends Transformer
 
         if($campaign) $past = Carbon::parse($campaign->end_at)->isPast();
         else $past = false;
-        
+
         $offers_count = 0;
         if($campaign)$offers_count = Offer::where('campaign_id',$campaign->id)->count();
         
