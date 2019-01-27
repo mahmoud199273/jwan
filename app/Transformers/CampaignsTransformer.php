@@ -45,8 +45,9 @@ class CampaignsTransformer extends Transformer
 
         if($campaign) $past = Carbon::parse($campaign->end_at)->isPast();
         else $past = false;
-
-        $offers_count = Offer::where('campaign_id',$campaign->id)->count();
+        
+        $offers_count = 0;
+        if($campaign)$offers_count = Offer::where('campaign_id',$campaign->id)->count();
         
         $ended_date_string = "تاريخ الحملة انتهى";
         if($past && (int) $campaign->status == 0 && $offers_count == 0)
