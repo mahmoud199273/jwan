@@ -18,11 +18,11 @@ class StoreUserRequest extends BaseRequest
     {
 
         return [
-            'name'          => 'required|string',
-            'phone'         => 'required|unique:users,phone',
+            'name'          => 'required|string|min:3',
+            'phone'         => 'required|min:9|unique:users,phone',
             'image'         => 'required',
             'email'         => 'required|string|email|unique:users,email',
-            'password'      => 'required|string|min:6',
+            'password'      => 'required|string|min:8|max:16',
             'gender'     => 'nullable',
             'account_manger'=> 'nullable',
             'notes'     => 'required',

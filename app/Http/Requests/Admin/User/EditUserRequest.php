@@ -19,11 +19,11 @@ class EditUserRequest extends BaseRequest
     {
 
         return [
-            'name'          => 'required|string',
-            'phone'         => ['required', Rule::unique('users')->ignore($this->id, 'id')],
+            'name'          => 'required|string|min:3',
+            'phone'         => ['required','min:9', Rule::unique('users')->ignore($this->id, 'id')],
             'image'         => 'required',
             'email'         => ['required','email', Rule::unique('users')->ignore($this->id, 'id')],
-            //'password'      => 'required|string|min:6',
+            'password'      => 'sometimes|nullable|min:8|max:16',
             'notes'         => 'required',
             'type'          => 'nullable',
             'account_manger'=> 'nullable',

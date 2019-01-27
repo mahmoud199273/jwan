@@ -33,7 +33,7 @@
     </div>
 
     <!--begin::Form-->
-    <form class="m-form" action="{{url('admin/influencers')}}/{{ $user->id }}" method="post" enctype="multipart/form-data">
+    <form class="m-form" action="{{url('admin/influencers')}}/{{ $user->id }}" method="post" enctype="multipart/form-data" name="myForm">
        
               {{ csrf_field() }}
               <input type="hidden" name="account_type" value="1" />
@@ -68,7 +68,7 @@
             <div class="form-group m-form__group row {{ $errors->has('phone') ? 'has-danger' : ''}}">
                 <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.phone') }}</label>
                 <div class="col-9">
-                    <input type="text" class="form-control m-input" 
+                    <input type="text" class="form-control m-input allownumericwithoutdecimal" 
                             placeholder="{{ __('admin.phone') }}" name="phone" value="{{ $user->phone }}">
                     {!! $errors->first('phone', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
@@ -202,8 +202,8 @@
             <div class="form-group m-form__group row {{ $errors->has('facebook_follwers') ? 'has-danger' : ''}}">
                 <label for="name" class="col-2 col-form-label">Facebook Followers</label>
                 <div class="col-9">
-                    <input type="text" name="facebook_follwers" class="form-control m-input" 
-                           value="{{ $user->facebook_follwers }}">
+                    <input type="number" name="facebook_follwers" class="form-control m-input allownumericwithoutdecimal" 
+                           value="{{ $user->facebook_follwers }}" >
                     {!! $errors->first('facebook_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
@@ -220,7 +220,7 @@
             <div class="form-group m-form__group row {{ $errors->has('twitter_follwers') ? 'has-danger' : ''}}">
                 <label for="name" class="col-2 col-form-label">Twitter follwers</label>
                 <div class="col-9">
-                    <input type="text" name="twitter_follwers" class="form-control m-input" 
+                    <input type="number" name="twitter_follwers" class="form-control m-input allownumericwithoutdecimal" 
                            value="{{ $user->twitter_follwers }}">
                     {!! $errors->first('twitter_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
@@ -238,7 +238,7 @@
             <div class="form-group m-form__group row {{ $errors->has('instgrame_follwers') ? 'has-danger' : ''}}">
                 <label for="name" class="col-2 col-form-label">Instgrame Follwers</label>
                 <div class="col-9">
-                    <input type="text" name="instgrame_follwers" class="form-control m-input" 
+                    <input type="number" name="instgrame_follwers" class="form-control m-input allownumericwithoutdecimal" 
                            value="{{ $user->instgrame_follwers }}">
                     {!! $errors->first('instgrame_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
@@ -256,7 +256,7 @@
             <div class="form-group m-form__group row {{ $errors->has('snapchat_follwers') ? 'has-danger' : ''}}">
                 <label for="name" class="col-2 col-form-label">Snapchat Followers</label>
                 <div class="col-9">
-                    <input type="text" name="snapchat_follwers" class="form-control m-input" 
+                    <input type="number" name="snapchat_follwers" class="form-control m-input allownumericwithoutdecimal" 
                            value="{{ $user->snapchat_follwers }}">
                     {!! $errors->first('snapchat_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
@@ -283,7 +283,7 @@
             <div class="form-group m-form__group row {{ $errors->has('linkedin_follwers') ? 'has-danger' : ''}}">
                 <label for="name" class="col-2 col-form-label">linkedin Followers</label>
                 <div class="col-9">
-                    <input type="text" name="linkedin_follwers" class="form-control m-input" 
+                    <input type="number" name="linkedin_follwers" class="form-control m-input allownumericwithoutdecimal" 
                            value="{{ $user->linkedin_follwers }}">
                     {!! $errors->first('linkedin_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
@@ -301,7 +301,7 @@
             <div class="form-group m-form__group row {{ $errors->has('youtube_follwers') ? 'has-danger' : ''}}">
                 <label for="name" class="col-2 col-form-label">Youtube Followers</label>
                 <div class="col-9">
-                    <input type="text" name="youtube_follwers" class="form-control m-input" 
+                    <input type="number" name="youtube_follwers" class="form-control m-input allownumericwithoutdecimal" 
                            value="{{ $user->youtube_follwers }}" >
                     {!! $errors->first('youtube_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
@@ -356,5 +356,6 @@
 </div>
 
 <!--end::Portlet-->
+
 
 @endsection

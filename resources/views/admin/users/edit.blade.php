@@ -68,7 +68,7 @@
             <div class="form-group m-form__group row {{ $errors->has('phone') ? 'has-danger' : ''}}">
                 <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.phone') }}</label>
                 <div class="col-9">
-                    <input type="text" class="form-control m-input" 
+                    <input type="text" class="form-control m-input allownumericwithoutdecimal" 
                             placeholder="{{ __('admin.phone') }}" name="phone" value="{{ $user->phone }}">
                     {!! $errors->first('phone', '<span class="form-control-feedback">:message</span>') !!}
                 </div>

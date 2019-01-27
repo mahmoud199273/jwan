@@ -736,6 +736,21 @@ $('._campaignApprove').on('click', function(){
 	</script>
 
 
+<script type="text/javascript">
+
+$(".allownumericwithoutdecimal").on("keypress keyup blur",function (e) {    
+           if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+        //display error message
+        //$("#errmsg").html("Digits Only").show().fadeOut("slow");
+               return false;
+    }
+        });
+
+
+</script>
+
+
+
 	</body>
 	<!-- end::Body -->
 	</html>

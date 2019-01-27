@@ -29,7 +29,7 @@ class EditCampaignsRequest extends BaseRequest
             'male'                              => 'required',
             'female'                            => 'required',
             'general'                           => 'required',
-            'description'                       => 'required',
+            'description'                       => 'required|min:16',
             'scenario'                          => 'required',
             'status'                            => 'required',
             'campaign_areas'                  => 'required',
