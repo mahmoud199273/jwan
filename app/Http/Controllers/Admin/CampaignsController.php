@@ -79,7 +79,8 @@ class campaignsController extends Controller
     public function index()
     {
 
-        $campaigns = Campaign::latest()->paginate(10);
+        $campaigns = Campaign::latest();
+        dd($campaigns->toArray());
         // $offers_count = Offer::where('campaign_id',$id)->count();
 
         return view('admin.campaigns.index',compact('campaigns'));
