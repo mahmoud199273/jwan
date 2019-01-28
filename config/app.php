@@ -52,9 +52,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://127.0.0.1:8000'),
-    'admin_url' => env('APP_URL', 'http://127.0.0.1:8000')."/admin",
-    'admin_login_url' => env('APP_URL', 'http://127.0.0.1:8000')."/admin/login",
+    'url' => env('APP_URL', 'https://signifyads.com'),
+    'admin_url' => env('APP_URL', 'https://signifyads.com')."/admin",
+    'admin_login_url' => env('APP_URL', 'https://signifyads.com')."/admin/login",
 
     /*
     |--------------------------------------------------------------------------
