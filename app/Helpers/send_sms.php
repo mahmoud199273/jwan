@@ -30,6 +30,6 @@ function sendSMS( $numbers , $msg = 'welcome to Signify app')
 		curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $stringToPost);
-		//$result = curl_exec($ch);
-		//return $result;
+		$result = curl_exec($ch);
+		return $result;
 	}
