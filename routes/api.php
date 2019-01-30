@@ -31,7 +31,7 @@ Route::middleware('jwt.auth')->get('/users', function (Request $request) {
 
 //Route::post('user/{id}/','APIRegisterController@updateProfile');
 
-Route::group(['prefix' => 'v1/ar'], function() {
+Route::group(['prefix' => 'v1/{lang}'], function() {
 
 // App Meta Data
 
