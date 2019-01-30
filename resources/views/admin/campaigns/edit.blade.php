@@ -2,6 +2,7 @@
 
 @section('content')
 
+
 @if( session('status') )
 <div class="m-alert m-alert--icon m-alert--air alert alert-success alert-dismissible fade show" role="alert">
     <div class="m-alert__icon">
@@ -247,7 +248,10 @@
                 <select name="status"  class="form-control m-input">
                    @if ($campaign->status == 0)
                    <option value="0" {{ $campaign->status == 0? "selected" : "" }} > {{  __('admin.new_campaign') }}</option>
-                   <option value="1" {{ $campaign->status == 1? "selected" : "" }} > {{ __('admin.campaign_approved') }}</option>
+                   <option value="1" {{ $campaign->status == 1? "selected" : "" }}> {{ __('admin.campaign_approved') }}
+                    
+                   
+                 </option>
                    <option value="2" {{ $campaign->status == 2? "selected" : "" }} >  {{ __('admin.campaign_rejected') }}</option>
                    @elseif ($campaign->status > 0 && array_key_exists($campaign->status, $campaign_status))
                     <option value="{{ $campaign->status }}"  "selected"> 

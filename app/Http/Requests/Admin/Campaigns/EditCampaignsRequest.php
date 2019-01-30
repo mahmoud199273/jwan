@@ -19,7 +19,7 @@ class EditCampaignsRequest extends BaseRequest
     {
 
         return [
-            'title'                             => 'required',
+            'title'                             => 'required|min:3',
             'user_id'                           => 'required',
             'facebook'                          => 'required',
             'twitter'                           => 'required',
@@ -29,12 +29,13 @@ class EditCampaignsRequest extends BaseRequest
             'male'                              => 'required',
             'female'                            => 'required',
             'general'                           => 'required',
-            'description'                       => 'required|min:16',
+            'description'                       => 'required|min:15',
             'scenario'                          => 'required',
             'status'                            => 'required',
             'campaign_areas'                  => 'required',
             'campaign_countries'              => 'required',
             'campaign_categories'             => 'required',
+            'maximum_rate'                    => 'required|numeric|min:500|max:20000'
         ];
     }
 

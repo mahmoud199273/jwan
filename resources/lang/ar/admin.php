@@ -208,6 +208,9 @@ return [
     'campaign_title'    => 'عنوان الحملة',
     'offers_num'        => 'عدد العروض',
     'chat_num'          => 'عدد الرسائل',
+    'maximum_rate'      => 'الحد الأقصى',
+    'minimumRate'           => 'الحد الأدنى',
+
 
     /* m.abdelrahman  */
     'Business manager'=>'مدير اعمال',

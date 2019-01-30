@@ -22,6 +22,7 @@ class StoreUserRequest extends BaseRequest
             'phone'         => 'required|min:9|unique:users,phone',
             'image'         => 'required',
             'email'         => 'required|string|email|unique:users,email',
+            'minimumRate'   => 'sometimes|nullable|min:500|max:20000',
             'password'      => 'required|string|min:8|max:16',
             'gender'     => 'nullable',
             'account_manger'=> 'nullable',
