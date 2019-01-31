@@ -853,8 +853,7 @@ class AuthController extends Controller
         //dd($credentials);
 
         
-         //if ( !$this->isActiveAccount( $credentials,$account_type ) ) {
-         if (1!=1) {
+         if ( !$this->isActiveAccount( $credentials,$account_type ) ) {
 
             
             // block user after number of attempts
