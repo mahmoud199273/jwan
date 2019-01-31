@@ -711,7 +711,7 @@ class AuthController extends Controller
     {
         $validator = Validator::make( $request->all(), [
             'phone'         => 'required',
-            'email'         => 'required'
+            'email'         => 'required|email|unique:users'
         ]);
 
         if ($this->isMailExists( $request->email )) {
