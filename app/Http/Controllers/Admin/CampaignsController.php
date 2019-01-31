@@ -187,6 +187,55 @@ class campaignsController extends Controller
         return view('admin.campaigns.edit',compact('campaign','users','campaign_status','countries','areas','categories','campaign_categories','campaign_countries','campaign_areas'));
     }
 
+
+    public function UpdateCamapign($id)
+    {
+            $settings = Setting::first();
+            $amount = $settings->campaign_period;
+
+            $campaign = Campaign::find( $id );
+            $end_date =  Carbon::parse($campaign->end_at)->addHours(3);
+            $end_date = $end_date->addDays($amount);
+            //$campaign->status = '1';
+            $campaign->end_at = $end_date;
+            $campaign->save();
+
+            
+
+            $user_player_ids = $this->getUserSinglePlayerIds($campaign->user_id);
+            sendNotification(0,'Your campaign has been approved','تم تفعيل الحملة الخاصه بك',$user_player_ids,"public",['campaign_id' =>  (int)$id,'type' =>  20,'type_title'  => 'new campaign']);
+
+            
+        $campaign_categories = CampaignCategory::where('campaign_id',$id)->pluck('category_id')->toArray();
+        $campaign_countries = CampaignCountry::where('campaign_id',$id)->pluck('country_id')->toArray();
+
+        $campaign_areas = CampaignArea::where('campaign_id',$id)->pluck('area_id')->toArray();
+        
+        
+            $users = DB::table('users')
+            ->join('user_categories', 'users.id', '=', 'user_categories.user_id')
+            ->join('user_countries', 'users.id', '=', 'user_countries.user_id')
+            ->LEFTjoin('user_areas', 'users.id', '=', 'user_areas.user_id')
+            ->join('user_player_ids', 'users.id', '=', 'user_player_ids.user_id');
+            if($campaign_categories){
+                $users->whereIn('user_categories.categories_id',$campaign_categories);
+            }
+            if($campaign_countries){
+                $users->whereIn('user_countries.country_id',$campaign_countries);
+            }
+            if($campaign_areas){
+                $users->whereIn('user_areas.area_id',$campaign_areas);
+            }
+            $users->select('user_player_ids.*');
+            $users->groupBy('user_player_ids.id');
+            $users->orderBy("updated_at",'DESC');
+
+            $player_ids = $users->pluck('user_player_ids.player_id')->toArray();
+            //dd($player_ids);
+            sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,'public',
+                                  ['campaign_id' =>  (int)$id,'type'=>  20,'type_title'=> 'new campaign']);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -199,6 +248,10 @@ class campaignsController extends Controller
         $areas_id = $request->campaign_areas;
         $categories_id = $request->campaign_categories;
         $countries_id = $request->campaign_countries;
+        $status = $request->status;
+        $campaign = Campaign::find( $id );
+
+
         $request->persist($id);
 
             if($categories_id !== null){
@@ -242,6 +295,17 @@ class campaignsController extends Controller
                 }
 
             }
+
+        if($campaign->status == 0 && $status == 1) // set campiagn end date and send
+        {
+            $this->UpdateCamapign($id);
+        }elseif($campaign->status == 0 && $status == 2){
+            
+            $user_player_ids = $this->getUserSinglePlayerIds($campaign->user_id);
+            sendNotification(0,'Your campaign has been rejected','تم رفض الحملة الخاصه بك',$user_player_ids,"public",['campaign_id' =>  (int)$id,'type' =>  22,'type_title'  => 'rejected campaign']);
+
+        }   
+            
         return redirect()->back()->with('status' , __('admin.updated') );
     }
 
@@ -261,6 +325,7 @@ class campaignsController extends Controller
 
     public function approve( Request $request)
     {
+        
         if ( $request->ajax() ) {
 
             $settings = Setting::first();
@@ -273,7 +338,7 @@ class campaignsController extends Controller
             $campaign->end_at = $end_date;
             $campaign->save();
 
-
+            
 
             $user_player_ids = $this->getUserSinglePlayerIds($campaign->user_id);
             sendNotification(0,'Your campaign has been approved','تم تفعيل الحملة الخاصه بك',$user_player_ids,"public",['campaign_id' =>  (int)$request->id,'type' =>  20,'type_title'  => 'new campaign']);
@@ -312,6 +377,8 @@ class campaignsController extends Controller
 
         
     }
+
+
 
     public function getUserPlayerIds()
     {

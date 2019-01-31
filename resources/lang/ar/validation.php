@@ -171,7 +171,9 @@ return [
         'time'                  => 'الوقت',
         'available'             => 'مُتاح',
         'size'                  => 'الحجم',
-        'minimumRate'           => 'الحد الادنى',
+        'minimumRate'           => 'الحد الأدنى',
         'rate'                  => 'التقييم',
+        'code'                  => 'الكود',
+        'maximum_rate'          => 'الحد الأقصى',
     ],
 ];

@@ -19,6 +19,7 @@ class EditAreaRequest extends BaseRequest
     {
 
         return [
+            'countries_id'                   => 'required',
             'name_ar'                        => 'required|string',
             'name'                           => 'required|string',
         ];

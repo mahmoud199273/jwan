@@ -41,7 +41,8 @@ class CampignsContrller extends Controller
         $influncer =  $this->getAuthenticatedUser();
 
         $campaign_ids = InfluncerCampaign::where('influncer_id',$influncer->id)->pluck('campaign_id')->toArray();
-         //dd($campaign_ids);
+        
+         // dd($campaign_ids);
 
         $orderBy = 'created_at';
         $influncer_categories = UserCategory::where('user_id',$influncer->id)->pluck('categories_id')->toArray();

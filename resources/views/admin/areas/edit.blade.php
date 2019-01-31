@@ -56,9 +56,9 @@
 
 
         <div class="form-group m-form__group row {{ $errors->has('countries_id') ? 'has-danger' : ''}}">
-                <label for="city_id" class="col-1 col-form-label">{{ __('admin.city') }}</label>
+                <label for="countries_id" class="col-1 col-form-label">{{ __('admin.country') }}</label>
                  <div class="col-9">
-                <select name="city_id"  class="form-control">
+                <select name="countries_id"  class="form-control">
                     @if($countries)
                         @foreach ($countries as $country)
                             <option value="{{ $country->id }}" {{ ($country->id ==  $area->countries_id)? "selected" : "" }}> 
