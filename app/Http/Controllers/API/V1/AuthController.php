@@ -932,7 +932,8 @@ class AuthController extends Controller
 
     public function isActiveAccount( array $credentails, $type ) :bool
     {
-         if (! Auth::attempt(['countries_id' => $credentails['country_id'] , 'phone' => $credentails['phone'] , 'password' => $credentails['password'] ,'account_type' => $type])) {
+         //if (! Auth::attempt(['countries_id' => $credentails['country_id'] , 'phone' => $credentails['phone'] , 'password' => $credentails['password'] ,'account_type' => $type])) {
+         if (! Auth::attempt(['countries_id' => $credentails['country_id'] , 'phone' => $credentails['phone']  ,'account_type' => $type])) {
             // not active user
             return false;
 
