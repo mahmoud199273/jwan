@@ -19,7 +19,7 @@ class StoreUserRequest extends BaseRequest
 
         return [
             'name'          => 'required|string|min:3',
-            'phone'         => 'required|min:9|unique:users,phone',
+            'phone'         => 'required|min:9|unique:users,phone|unique:users,account_type',
             'image'         => 'required',
             'email'         => 'required|string|email|unique:users,email',
             'minimumRate'   => 'sometimes|nullable|min:500|max:20000',
