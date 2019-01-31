@@ -870,7 +870,7 @@ class AuthController extends Controller
                 }
             }
             
-            return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials'));     
+            //return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials'));     
 
         }
         else
