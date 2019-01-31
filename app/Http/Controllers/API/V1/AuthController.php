@@ -853,7 +853,7 @@ class AuthController extends Controller
         //dd($credentials);
 
         
-         if ( !$this->isActiveAccount( $credentials,$account_type ) ) {
+         if ($this->isActiveAccount( $credentials,$account_type ) ) {
 
             
             // block user after number of attempts
@@ -870,8 +870,7 @@ class AuthController extends Controller
                 }
             }
             
-            //return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials'));     
-            // stop check
+            return $this->setStatusCode(401)->respondWithError(trans('api_msgs.check_credentials'));     
 
         }
         else
