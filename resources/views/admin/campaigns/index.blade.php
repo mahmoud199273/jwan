@@ -119,7 +119,7 @@
                                      <th scope="row">{{$campaign->offers->count()}}</th>
 
                                      <th scope="row">
-                                     {{$campaign->chats->groupby('chats.offer_id')->count()}}
+                                     {{$campaign->chats->groupby('offer_id')->count()}}
                                      
                                      </th>
                                     
