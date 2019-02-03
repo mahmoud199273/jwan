@@ -118,7 +118,10 @@
 
                                      <th scope="row">{{$campaign->offers->count()}}</th>
 
-                                     <th scope="row">{{$campaign->chats->groupby('offer_id')->count()}}</th>
+                                     <th scope="row">
+                                     {{$campaign->chats->groupby('chats.offer_id')->count()}}
+                                     
+                                     </th>
                                     
                                     <td>
                                         <div class="btn-group mr-2" role="group" aria-label="First group">

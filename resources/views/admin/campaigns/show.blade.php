@@ -281,14 +281,14 @@
 
                      <div class="col-md-2">
 <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong{{$offer->id}}">
                          عرض المحادثة
                         </button>
 
                         
 
                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal fade" id="exampleModalLong{{$offer->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
