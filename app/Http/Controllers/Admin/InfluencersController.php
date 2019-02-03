@@ -11,6 +11,7 @@ use App\User;
 use App\UserSocial;
 use App\UserPlayerId;
 use App\Nathionality;
+use App\VerifyPhoneCode;
 use Illuminate\Http\Request;
 
 
@@ -96,6 +97,16 @@ class InfluencersController extends Controller
     public function store(StoreUserRequest $request)
     {
         $request->persist();
+
+        $code = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
+        $phone = $request->phone;
+        $verify = new VerifyPhoneCode;
+        $verify->phone = $phone;
+        $verify->account_type = '1';
+        $verify->code = $code;
+        $verify->verified = '1';
+        $verify->save();
+
         return redirect()->back()->with('status' , __('admin.created') );
 
     }
