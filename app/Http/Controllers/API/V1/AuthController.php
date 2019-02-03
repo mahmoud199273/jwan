@@ -687,10 +687,19 @@ class AuthController extends Controller
     public function checkPhone( Request $request )
     {
         $validator = Validator::make( $request->all(), [
-            'phone'         => 'required|unique:users'
+            'phone'         => 'required'
         ]);
 
         if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
+        }
+        $account_type = '0';
+        if($request->header('account-type'))
+        {
+            $account_type = $request->header('account-type');
+        }
+        
+        if ($this->isPhoneExists( $request->phone , $account_type )) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
         }
         return $this->respondWithSuccess('success');
@@ -701,15 +710,21 @@ class AuthController extends Controller
      public function checkData( Request $request )
     {
         $validator = Validator::make( $request->all(), [
-            'phone'         => 'required|unique:users',
-            'email'         => 'required|unique:users'
+            'phone'         => 'required',
+            'email'         => 'required|email|unique:users'
         ]);
 
         if ($this->isMailExists( $request->email )) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.email_exists'));
         }
+
+        $account_type = '0';
+        if($request->header('account-type'))
+        {
+            $account_type = $request->header('account-type');
+        }
         
-        if ($this->isPhoneExists( $request->phone , '0' )) {
+        if ($this->isPhoneExists( $request->phone , $account_type )) {
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
         }
  
