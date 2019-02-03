@@ -241,7 +241,7 @@ return [
     'scenario'     => ' سيناريو ',
     'yes'     => ' نعم ',
     'no'     => ' لا ',
-    'general'     => ' عام ',
+    'general'     => 'حساب عام',
     'maximum_rate'     => ' الحد الأقصى للتقييم ',
     'pages'     => ' الصفحات ',
     'bank_accounts'     => ' الحسابات البنكية ',
