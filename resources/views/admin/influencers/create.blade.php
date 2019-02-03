@@ -188,7 +188,7 @@
                 <label for="name" class="col-2 col-form-label">Facebook Followers</label>
                 <div class="col-9">
                     <input type="number" name="facebook_follwers" class="form-control m-input allownumericwithoutdecimal" 
-                           value="{{ old('facebook_follwers') }}">
+                           value="{{ old('facebook_follwers') }}" placeholder="{{ __('admin.facebook_follwers') }}">
                     {!! $errors->first('facebook_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
@@ -197,17 +197,17 @@
                 <label for="name" class="col-2 col-form-label">Twitter url</label>
                 <div class="col-9">
                     <input type="text" name="twitter" class="form-control m-input" 
-                           value="{{ old('twitter') }}">
+                           value="{{ old('twitter') }}"  placeholder="twitter">
                     {!! $errors->first('twitter', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('twitter_follwers') ? 'has-danger' : ''}}">
+            <div class="form-group m-form__group row {{ $errors->has('twitter_followers') ? 'has-danger' : ''}}">
                 <label for="name" class="col-2 col-form-label">Twitter follwers</label>
                 <div class="col-9">
                     <input type="number" name="twitter_follwers" class="form-control m-input allownumericwithoutdecimal" 
-                           value="{{ old('twitter_follwers') }}">
-                    {!! $errors->first('twitter_follwers', '<span class="form-control-feedback">:message</span>') !!}
+                           value="{{ old('twitter_follwers') }}"  placeholder="{{ __('admin.twitter_follwers') }}">
+                    {!! $errors->first('twitter_followers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
@@ -251,7 +251,7 @@
                 <label for="example-text-input" class="col-2 col-form-label"> {{ __('admin.commission') }} </label>
                 <div class="col-9">
                     <input type="text" name="user_commission" 
-                                class="form-control m-input" placeholder="{{ __('admin.commission') }}" >
+                                class="form-control m-input allownumericwithoutdecimal" placeholder="{{ __('admin.commission') }}" >
                     <span style="font-size:16px;color:red"> ملحوظة : اذا تركت القيمة فارغة سيتم التعامل بمبلغ العمولة من الاعدادات </span>
                 </div>
             </div>

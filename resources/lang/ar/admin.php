@@ -210,6 +210,8 @@ return [
     'chat_num'          => 'عدد الرسائل',
     'maximum_rate'      => 'الحد الأقصى',
     'minimumRate'           => 'الحد الأدنى',
+    'facebook_follwers'  => 'عدد متابعين الفيسبوك',
+    'twitter_follwers'   => 'عدد متابعين تويتر',
 
 
     /* m.abdelrahman  */
@@ -224,7 +226,7 @@ return [
     'active'     => 'مفعل',
     'male'     => 'ذكر',
     'female'     => 'أنثى',
-    'notes'     => 'ملاحطات',
+    'notes'     => 'نبذة مختصرة',
     'facebook'     => 'facebook',
     'twitter'     => 'twitter',
     'instagram'     => 'instagram',

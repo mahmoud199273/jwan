@@ -266,7 +266,7 @@
                 <label for="example-text-input" class="col-2 col-form-label"> {{ __('admin.commission') }} </label>
                 <div class="col-9">
                     <input type="text" name="user_commission" 
-                                class="form-control m-input" placeholder="{{ __('admin.commission') }}" value="{{ $user->user_commission }}">
+                                class="form-control m-input allownumericwithoutdecimal" placeholder="{{ __('admin.commission') }}" value="{{ $user->user_commission }}">
                     <span style="font-size:16px;color:red"> ملحوظة : اذا تركت القيمة فارغة سيتم التعامل بمبلغ العمولة من الاعدادات </span>
                 </div>
             </div>
