@@ -135,7 +135,7 @@
         <!--  chat modal of offers -->  
 
 
-        <h5 class="text-center">معلومات العروض</h5>
+       <!--  <h5 class="text-center">معلومات العروض</h5>
 
             <div class="tab-pane active" id="pending" role="tabpanel">
                 
@@ -143,8 +143,8 @@
                         <div class="form-group m-form__group row {{ $errors->has('image') ? 'has-danger' : ''}}">
                     <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.image') }}</label>
                     <div class="col-md-6">
-                       <!--  <img src="{{url('')}}{{ str_replace('public/', '', $offer->influncer->image) }}" 
-                            alt="{{ $offer->influncer->name }}" width="150" height="150" max-width="150" max-height="150" class="form-control"> -->
+                        <img src="{{url('')}}{{ str_replace('public/', '', $offer->influncer->image) }}" 
+                            alt="{{ $offer->influncer->name }}" width="150" height="150" max-width="150" max-height="150" class="form-control">
 
                             <img src="{{url('')}}{{ str_replace('public/', '', $offer->influncer->image)  }}" id="image_file" width="100" height="100" >
 
@@ -152,9 +152,9 @@
                                                          {{$offer->influncer->name}}:&nbsp; {{$offer->description }}
                                                          </span>
                                                         
-                    </div>
+                    </div> -->
 
-                     <div class="col-md-2">
+                     <div class="">
 <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong{{$offer->id}}">
                          عرض المحادثة
