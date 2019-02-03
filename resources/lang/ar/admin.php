@@ -242,7 +242,7 @@ return [
     'yes'     => ' نعم ',
     'no'     => ' لا ',
     'general'     => ' عام ',
-    'maximum_rate'     => ' الحد الأقصى للتقيم ',
+    'maximum_rate'     => ' الحد الأقصى للتقييم ',
     'pages'     => ' الصفحات ',
     'bank_accounts'     => ' الحسابات البنكية ',
     'bank_account'     => ' الحساب البنكى  ',
