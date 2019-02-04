@@ -117,6 +117,11 @@
                                                 <i class="fa fa-check m--font-success"></i>
                                             </a>
                                             @endif
+                                            
+                                             <a type="button" href="{{url('admin/influencers')}}/{{ $user->id }}" class="m-btn m-btn m-btn--square btn btn-secondary">
+                                                <i class="fa fa-eye m--font-primary"></i>
+                                            </a>
+
                                             <a type="button" 
                                             href="{{url('admin/influencers')}}/{{ $user->id }}/edit" 
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
