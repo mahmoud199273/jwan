@@ -167,7 +167,7 @@
                 <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.instagram') }}</label>
                 <div class="col-9">
                     <input type="text" name="instgrame" 
-                                class="form-control m-input" value="{{ $user->instgrame }}">
+                                class="form-control m-input" value="{{ $user->instgrame }}" placeholder="instagram">
                     {!! $errors->first('instagram', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
