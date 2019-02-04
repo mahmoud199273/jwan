@@ -203,7 +203,7 @@
             </div>
 
             <div class="form-group m-form__group row {{ $errors->has('twitter_followers') ? 'has-danger' : ''}}">
-                <label for="name" class="col-2 col-form-label">Twitter follwers</label>
+                <label for="name" class="col-2 col-form-label">Twitter followers</label>
                 <div class="col-9">
                     <input type="number" name="twitter_follwers" class="form-control m-input allownumericwithoutdecimal" 
                            value="{{ old('twitter_follwers') }}"  placeholder="{{ __('admin.twitter_followers') }}">
@@ -221,7 +221,7 @@
             </div>
 
             <div class="form-group m-form__group row {{ $errors->has('instagram_follwers') ? 'has-danger' : ''}}">
-                <label for="name" class="col-2 col-form-label">Instagram Follwers</label>
+                <label for="name" class="col-2 col-form-label">Instagram Followers</label>
                 <div class="col-9">
                     <input type="number" name="instgrame_follwers" class="form-control m-input allownumericwithoutdecimal" 
                            value="{{ old('instgrame_follwers') }}" placeholder="{{ __('admin.instagram_follwers') }}">

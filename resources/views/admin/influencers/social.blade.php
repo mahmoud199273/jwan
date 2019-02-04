@@ -84,7 +84,7 @@
             </div>
 
             <div class="form-group m-form__group row {{ $errors->has('twitter_follwers') ? 'has-danger' : ''}}">
-                <label for="name" class="col-2 col-form-label">Twitter follwers</label>
+                <label for="name" class="col-2 col-form-label">Twitter followers</label>
                 <div class="col-9">
                     <input type="text" name="twitter_follwers" class="form-control m-input" 
                            value="{{ $row->twitter_follwers }}" disabled>
@@ -102,7 +102,7 @@
             </div>
 
             <div class="form-group m-form__group row {{ $errors->has('instgrame_follwers') ? 'has-danger' : ''}}">
-                <label for="name" class="col-2 col-form-label">Instgrame Follwers</label>
+                <label for="name" class="col-2 col-form-label">Instgram Followers</label>
                 <div class="col-9">
                     <input type="text" name="instgrame_follwers" class="form-control m-input" 
                            value="{{ $row->instgrame_follwers }}" disabled>
