@@ -100,7 +100,7 @@
             <div class="form-group m-form__group row {{ $errors->has('type') ? 'has-danger' : ''}}" disabled="">
                     <label for="countries_id" class="col-2 col-form-label">{{ __('admin.Type') }}</label>
                      <div class="col-9">
-                    <select name="type"  class="form-control m-input">
+                    <select name="type"  class="form-control m-input" disabled="">
                        <option value="0" {{ $user->type == 0? "selected" : "" }} > 
                            {{ __('admin.Government') }} </option>
                        <option value="1" {{ $user->type == 1? "selected" : "" }}>
