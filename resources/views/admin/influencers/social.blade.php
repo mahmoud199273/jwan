@@ -93,7 +93,7 @@
             </div>
 
             <div class="form-group m-form__group row {{ $errors->has('instgrame') ? 'has-danger' : ''}}">
-                <label for="name" class="col-2 col-form-label">Instgrame url</label>
+                <label for="name" class="col-2 col-form-label">Instgram url</label>
                 <div class="col-9">
                     <input type="text" name="instgrame" class="form-control m-input" 
                            value="{{ $row->instgrame }}" disabled>
