@@ -184,12 +184,12 @@
                 </div>
             </div>
             
-            <div class="form-group m-form__group row {{ $errors->has('facebook_follwers') ? 'has-danger' : ''}}">
+            <div class="form-group m-form__group row {{ $errors->has('facebook_followers') ? 'has-danger' : ''}}">
                 <label for="name" class="col-2 col-form-label">Facebook Followers</label>
                 <div class="col-9">
                     <input type="number" name="facebook_follwers" class="form-control m-input allownumericwithoutdecimal" 
-                           value="{{ old('facebook_follwers') }}" placeholder="{{ __('admin.facebook_follwers') }}">
-                    {!! $errors->first('facebook_follwers', '<span class="form-control-feedback">:message</span>') !!}
+                           value="{{ old('facebook_follwers') }}" placeholder="{{ __('admin.facebook_followers') }}">
+                    {!! $errors->first('facebook_followers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
             
@@ -206,26 +206,26 @@
                 <label for="name" class="col-2 col-form-label">Twitter follwers</label>
                 <div class="col-9">
                     <input type="number" name="twitter_follwers" class="form-control m-input allownumericwithoutdecimal" 
-                           value="{{ old('twitter_follwers') }}"  placeholder="{{ __('admin.twitter_follwers') }}">
+                           value="{{ old('twitter_follwers') }}"  placeholder="{{ __('admin.twitter_followers') }}">
                     {!! $errors->first('twitter_followers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('instgrame') ? 'has-danger' : ''}}">
-                <label for="name" class="col-2 col-form-label">Instgrame url</label>
+            <div class="form-group m-form__group row {{ $errors->has('instagram') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">instagram url</label>
                 <div class="col-9">
-                    <input type="text" name="instgrame" class="form-control m-input" 
-                           value="{{ old('instgrame') }}">
-                    {!! $errors->first('instgrame', '<span class="form-control-feedback">:message</span>') !!}
+                    <input type="text" name="instagram" class="form-control m-input" 
+                           value="{{ old('instagram') }}"  placeholder="{{ __('admin.instagram') }}">
+                    {!! $errors->first('instagram', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('instgrame_follwers') ? 'has-danger' : ''}}">
-                <label for="name" class="col-2 col-form-label">Instgrame Follwers</label>
+            <div class="form-group m-form__group row {{ $errors->has('instagram_follwers') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">Instagram Follwers</label>
                 <div class="col-9">
                     <input type="number" name="instgrame_follwers" class="form-control m-input allownumericwithoutdecimal" 
-                           value="{{ old('instgrame_follwers') }}">
-                    {!! $errors->first('instgrame_follwers', '<span class="form-control-feedback">:message</span>') !!}
+                           value="{{ old('instgrame_follwers') }}" placeholder="{{ __('admin.instagram_follwers') }}">
+                    {!! $errors->first('instagram_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
@@ -233,7 +233,7 @@
                 <label for="name" class="col-2 col-form-label">Snapchat url</label>
                 <div class="col-9">
                     <input type="text" name="snapchat" class="form-control m-input" 
-                           value="{{ old('snapchat') }}">
+                           value="{{ old('snapchat') }}" placeholder="{{ __('snapchat') }}">
                     {!! $errors->first('snapchat', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
@@ -242,7 +242,7 @@
                 <label for="name" class="col-2 col-form-label">Snapchat Followers</label>
                 <div class="col-9">
                     <input type="number" name="snapchat_follwers" class="form-control m-input allownumericwithoutdecimal" 
-                           value="{{ old('snapchat_follwers') }}">
+                           value="{{ old('snapchat_follwers') }}" placeholder="{{ __('admin.snapchat_follwers') }}">
                     {!! $errors->first('snapchat_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
@@ -260,7 +260,7 @@
                 <label for="name" class="col-2 col-form-label">linkedin</label>
                 <div class="col-9">
                     <input type="text" name="linkedin" class="form-control m-input" 
-                           value="{{ old('linkedin') }}">
+                           value="{{ old('linkedin') }}" placeholder="{{ __('admin.instagram_follwers') }}">
                     {!! $errors->first('linkedin', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
@@ -269,7 +269,7 @@
                 <label for="name" class="col-2 col-form-label">linkedin Followers</label>
                 <div class="col-9">
                     <input type="number" name="linkedin_follwers" class="form-control m-input allownumericwithoutdecimal" 
-                           value="{{ old('linkedin_follwers') }}">
+                           value="{{ old('linkedin_follwers') }}" placeholder="{{ __('admin.instagram_follwers') }}">
                     {!! $errors->first('linkedin_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
@@ -278,7 +278,7 @@
                 <label for="name" class="col-2 col-form-label">Youtube</label>
                 <div class="col-9">
                     <input type="text" name="youtube" class="form-control m-input" 
-                           value="{{ old('youtube') }}">
+                           value="{{ old('youtube') }}" placeholder="{{ __('admin.instagram_follwers') }}">
                     {!! $errors->first('youtube', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
@@ -287,7 +287,7 @@
                 <label for="name" class="col-2 col-form-label">Youtube Followers</label>
                 <div class="col-9">
                     <input type="number" name="youtube_follwers" class="form-control m-input allownumericwithoutdecimal" 
-                           value="{{ old('youtube_follwers') }}">
+                           value="{{ old('youtube_follwers') }}" placeholder="{{ __('admin.instagram_follwers') }}">
                     {!! $errors->first('youtube_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div> --}}

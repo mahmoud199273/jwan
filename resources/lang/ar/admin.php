@@ -210,8 +210,10 @@ return [
     'chat_num'          => 'عدد الرسائل',
     'maximum_rate'      => 'الحد الأقصى',
     'minimumRate'           => 'الحد الأدنى',
-    'facebook_follwers'  => 'عدد متابعين الفيسبوك',
-    'twitter_follwers'   => 'عدد متابعين تويتر',
+    'facebook_followers'  => 'عدد متابعين الفيسبوك',
+    'twitter_followers'   => 'عدد متابعين تويتر',
+    'instagram_follwers' => 'عدد متابعين إنستجرام',
+    'snapchat_follwers'  => 'عدد متابعين سناب',
 
 
     /* m.abdelrahman  */

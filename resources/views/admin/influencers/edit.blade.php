@@ -194,17 +194,17 @@
                 <label for="name" class="col-2 col-form-label">Facebook url</label>
                 <div class="col-9">
                     <input type="text" name="facebook" class="form-control m-input" 
-                           value="{{ $user->facebook }}">
+                           value="{{ $user->facebook }}" placeholder="facebook">
                     {!! $errors->first('facebook', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
             
-            <div class="form-group m-form__group row {{ $errors->has('facebook_follwers') ? 'has-danger' : ''}}">
+            <div class="form-group m-form__group row {{ $errors->has('facebook_followers') ? 'has-danger' : ''}}">
                 <label for="name" class="col-2 col-form-label">Facebook Followers</label>
                 <div class="col-9">
                     <input type="number" name="facebook_follwers" class="form-control m-input allownumericwithoutdecimal" 
-                           value="{{ $user->facebook_follwers }}" >
-                    {!! $errors->first('facebook_follwers', '<span class="form-control-feedback">:message</span>') !!}
+                           value="{{ $user->facebook_follwers }}" placeholder="{{ __('admin.facebook_followers') }}">
+                    {!! $errors->first('facebook_followers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
             
@@ -212,35 +212,35 @@
                 <label for="name" class="col-2 col-form-label">Twitter url</label>
                 <div class="col-9">
                     <input type="text" name="twitter" class="form-control m-input" 
-                           value="{{ $user->twitter }}">
+                           value="{{ $user->twitter }}" placeholder="twitter">
                     {!! $errors->first('twitter', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('twitter_follwers') ? 'has-danger' : ''}}">
-                <label for="name" class="col-2 col-form-label">Twitter follwers</label>
+            <div class="form-group m-form__group row {{ $errors->has('twitter_followers') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">Twitter followers</label>
                 <div class="col-9">
                     <input type="number" name="twitter_follwers" class="form-control m-input allownumericwithoutdecimal" 
-                           value="{{ $user->twitter_follwers }}">
-                    {!! $errors->first('twitter_follwers', '<span class="form-control-feedback">:message</span>') !!}
+                           value="{{ $user->twitter_follwers }}" placeholder="{{ __('admin.twitter_followers') }}">
+                    {!! $errors->first('twitter_followers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('instgrame') ? 'has-danger' : ''}}">
-                <label for="name" class="col-2 col-form-label">Instgrame url</label>
+            <div class="form-group m-form__group row {{ $errors->has('instagram') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">Instagram url</label>
                 <div class="col-9">
-                    <input type="text" name="instgrame" class="form-control m-input" 
-                           value="{{ $user->instgrame }}">
-                    {!! $errors->first('instgrame', '<span class="form-control-feedback">:message</span>') !!}
+                    <input type="text" name="instagram" class="form-control m-input" 
+                           value="{{ $user->instagram }}" placeholder="{{ __('admin.instagram') }}">
+                    {!! $errors->first('instagram', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
-            <div class="form-group m-form__group row {{ $errors->has('instgrame_follwers') ? 'has-danger' : ''}}">
-                <label for="name" class="col-2 col-form-label">Instgrame Follwers</label>
+            <div class="form-group m-form__group row {{ $errors->has('instagram_follwers') ? 'has-danger' : ''}}">
+                <label for="name" class="col-2 col-form-label">Instagram Follwers</label>
                 <div class="col-9">
                     <input type="number" name="instgrame_follwers" class="form-control m-input allownumericwithoutdecimal" 
-                           value="{{ $user->instgrame_follwers }}">
-                    {!! $errors->first('instgrame_follwers', '<span class="form-control-feedback">:message</span>') !!}
+                           value="{{ $user->instgrame_follwers }}" placeholder="{{ __('admin.instagram_follwers') }}">
+                    {!! $errors->first('instagram_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
 
@@ -248,7 +248,7 @@
                 <label for="name" class="col-2 col-form-label">Snapchat url</label>
                 <div class="col-9">
                     <input type="text" name="snapchat" class="form-control m-input" 
-                           value="{{ $user->snapchat }}">
+                           value="{{ $user->snapchat }}" placeholder="snapchat">
                     {!! $errors->first('snapchat', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
@@ -257,7 +257,7 @@
                 <label for="name" class="col-2 col-form-label">Snapchat Followers</label>
                 <div class="col-9">
                     <input type="number" name="snapchat_follwers" class="form-control m-input allownumericwithoutdecimal" 
-                           value="{{ $user->snapchat_follwers }}">
+                           value="{{ $user->snapchat_follwers }}" placeholder="{{ __('admin.snapchat_follwers') }}">
                     {!! $errors->first('snapchat_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
