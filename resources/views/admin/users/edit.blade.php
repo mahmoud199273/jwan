@@ -166,8 +166,8 @@
             <div class="form-group m-form__group row {{ $errors->has('instagram') ? 'has-danger' : ''}}">
                 <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.instagram') }}</label>
                 <div class="col-9">
-                    <input type="text" name="instagram" 
-                                class="form-control m-input" placeholder="{{ __('admin.instagram') }}" value="{{ $user->instagram }}">
+                    <input type="text" name="instgrame" 
+                                class="form-control m-input" value="{{ $user->instgrame }}">
                     {!! $errors->first('instagram', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
