@@ -156,6 +156,14 @@ class UsersController extends Controller
     public function update(EditUserRequest $request, $id)
     {
         $request->persist($id);
+        $code = rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9);
+        $phone = $request->phone;
+        $verify = new VerifyPhoneCode;
+        $verify->phone = $phone;
+        $verify->account_type = '1';
+        $verify->code = $code;
+        $verify->verified = '1';
+        $verify->save();
         return redirect()->back()->with('status' , __('admin.updated') );
     }
 
