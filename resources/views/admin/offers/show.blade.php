@@ -180,16 +180,23 @@
                                         $float="float:right";
                                         if(isset($chat->from_user->account_type) &&$chat->from_user->account_type == "1") $float="float:left";
                                     @endphp
-                                    <li class="chat_container list-group-item pull-left" style="{{$float}}">
-                                         <img src="{{url('/')}}{{ str_replace('public/', '',isset( $chat->from_user->image) ? $chat->from_user->image : '')  }}" id="image_file" class="img-responsive img-circle" 
-                                         alt=" {{ isset($chat->from_user->name)? $chat->from_user->name : '' }} " width="50px" height="50px"> &nbsp;
+                                    <li class="list-group-item pull-left" style="{{$float}}">
+                                         {{--<img src="{{url('/')}}{{ str_replace('public/', '',isset( $chat->from_user->image) ? $chat->from_user->image : '')  }}" id="image_file" class="img-responsive img-circle" 
+                                         alt=" {{ isset($chat->from_user->name)? $chat->from_user->name : '' }} " width="50px" height="50px">--}} &nbsp;
+                                           <div id="image_file" class="chat_photo img-responsive img-circle" style="background-image: url('{{url('/')}}{{ str_replace('public/', '',$content)  }}');"></div>
+
+
+
+
+
                                          @php 
                                            $content = Crypt::decryptString($chat->content)
                                          @endphp
 
                                          @if(strpos($content,'public/assets/uploads'))
                                          <span>
-                                            <div id="image_file" class="chat_photoimg-responsive" style="background-image: url('{{url('/')}}{{ str_replace('public/', '',$content)  }}');"></div>                            
+                                         <img src="{{url('/')}}{{ str_replace('public/', '',$content)  }}" id="image_file" class="img-responsive" width="150px" height="150px">
+
                                          @else
 
                                          {{$content}}

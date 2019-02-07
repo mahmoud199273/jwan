@@ -51,8 +51,9 @@
 			display: inline-block;
 		}
 		.chat_container{
-display: flex;
-align-items: center;
+			float: left;
+			display: flex;
+			align-items: center;
 		}
 	</style>
 </head>
