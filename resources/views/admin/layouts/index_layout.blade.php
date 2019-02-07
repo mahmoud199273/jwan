@@ -49,6 +49,7 @@
 			background-position: center center;
 			border-radius: 4px;
 			display: inline-block;
+			margin-left: 10px;
 		}
 		.chat_container{
 			float: left;

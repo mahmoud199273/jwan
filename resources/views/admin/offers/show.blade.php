@@ -182,8 +182,8 @@
                                     @endphp
                                     <li class="chat_container list-group-item pull-left" style="{{$float}}">
                                          {{--<img src="{{url('/')}}{{ str_replace('public/', '',isset( $chat->from_user->image) ? $chat->from_user->image : '')  }}" id="image_file" class="img-responsive img-circle" 
-                                         alt=" {{ isset($chat->from_user->name)? $chat->from_user->name : '' }} " width="50px" height="50px">--}} &nbsp;
-                                           <div id="image_file" class="chat_photo img-responsive img-circle" style="background-image: url('{{url('/')}}{{ str_replace('public/', '',isset( $chat->from_user->image) ? $chat->from_user->image : '')  }}');"></div>
+                                         alt=" {{ isset($chat->from_user->name)? $chat->from_user->name : '' }} " width="50px" height="50px">--}} 
+                                           <div id="image_file" class="chat_photo img-responsive img-circle" style="background-image: url('{{url('/')}}{{ str_replace('public/', '',isset( $chat->from_user->image) ? $chat->from_user->image : '')  }}');"></div> &nbsp;
 
 
 
