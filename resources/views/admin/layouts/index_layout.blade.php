@@ -42,6 +42,18 @@
 			select.form-control:not([size]):not([multiple]) {
 				height: 45px !important;
 		}
+		.chat_photo{
+			width: 50px;
+			height: 50px;
+			background-size: cover;
+			background-position: center center;
+			border-radius: 4px;
+			display: inline-block;
+		}
+		.chat_container{
+display: flex;
+align-items: center;
+		}
 	</style>
 </head>
 <!-- end::Head -->
