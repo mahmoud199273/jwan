@@ -164,7 +164,7 @@
                     </div>
                     <div class="col-9">
                             <button type="submit" class="btn btn-brand">{{ __('admin.save') }}</button>
-                        <a type="reset" href="{{url('admin/offers')}}" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
+                        <a type="reset" href="{{url('admin/offers')}}/{{ $offer->campaign->id }}/campaign" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
                     </div>
                 </div>
             </div>
