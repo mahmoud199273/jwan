@@ -78,7 +78,7 @@
                                 <tr>
                                     <th scope="row">{{ optional($row->influncer)->name}}</th>
                                     <th scope="row">{{ optional($row->user)->name }}</th>
-                                    <th scope="row">{{ $row->campaign->title }}</th>
+                                    <th scope="row">{{ isset($row->campaign->title) }}</th>
                                     <th scope="row">{{ $row->cost }}</th>
                                     <th scope="row">
                                         @if ($row->status == 0)
