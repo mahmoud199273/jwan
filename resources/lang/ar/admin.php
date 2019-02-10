@@ -66,7 +66,7 @@ return [
     'address'                       => 'العنوان',
     'description'                   => ' الوصف بالانجليزية ',
     'description_ar'                => ' الوصف بالعربية ',
-    'desc'                           => ' الوصف  ',
+    'desc'                           => 'الوصف',
     'contract_image'                => 'صورة الصك العقار',
     'property_images'               => 'صور العقار',
     'city'                          => 'المدينة',
