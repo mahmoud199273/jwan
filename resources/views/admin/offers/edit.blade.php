@@ -109,9 +109,9 @@
             </div>
            
             <div class="form-group m-form__group row {{ $errors->has('description') ? 'has-danger' : ''}}">
-                <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.description') }}</label>
+                <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.desc') }}</label>
                 <div class="col-9">
-                    <textarea class="form-control m-input" placeholder="{{ __('admin.description') }}" name="description" >{{ $offer->description }}</textarea>
+                    <textarea class="form-control m-input" placeholder="{{ __('admin.desc') }}" name="description" >{{ $offer->description }}</textarea>
                     {!! $errors->first('description', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
