@@ -444,7 +444,7 @@ class CampignsController extends Controller
     }
 
 
-   /* public function update( Request $request )
+    public function update( Request $request )
     {
         $user =  $this->getAuthenticatedUser();
 
@@ -520,7 +520,7 @@ class CampignsController extends Controller
 
         return $this->respondWithSuccess(trans('api_msgs.updated'));
 
-    }*/
+    }
 
     public function extendCampaign( Request $request )
     {
@@ -555,7 +555,7 @@ class CampignsController extends Controller
         }
         elseif($campaign->is_extened== '1')
         {
-            return $this->setStatusCode(422)->respondWithError('Already extended before');
+            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.Already extended before'));
         }
         else {
           $end_date =  Carbon::parse($campaign->end_at);
