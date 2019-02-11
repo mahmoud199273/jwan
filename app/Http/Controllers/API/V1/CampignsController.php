@@ -448,10 +448,14 @@ class CampignsController extends Controller
     {
         $user =  $this->getAuthenticatedUser();
 
-        $validator = Validator::make( $request->all(), [
-            'id'                => 'required|exists:campaigns,id',
+         if($user->account_type == '1'){
+             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the rigtt to be here'));
 
-            'title'             => 'required',
+        }
+
+        $validator = Validator::make( $request->all(), [
+           'title'             => 'required',
+
 
             'facebook'          => 'required',
 
@@ -475,6 +479,15 @@ class CampignsController extends Controller
 
             'maximum_rate'      => 'required',
 
+            'files_arr'         => 'nullable',
+
+            'categories_id'     => 'required',
+
+            'countries_id'    => 'required',
+
+            //'areas_id'      => 'required'
+            'areas_id'      => 'nullable'
+
 
 
 
@@ -482,40 +495,144 @@ class CampignsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->setStatusCode(422)->respondWithError($validator->messages());
-            return $this->setStatusCode(422)->respondWithError('parameters faild validation');
+            return $this->setStatusCode(422)->respondWithError($validator->messages()->first());
+            
         }
 
         $campaign = Campaign::find( $request->id );
-
+        
         $campaign->title            = $request->title;
 
-        $campaign->facebook         = $request->facebook;
+        $campaign->facebook            = $request->facebook;
 
-        $campaign->twitter          = $request->twitter;
+        $campaign->twitter            = $request->twitter;
 
-        $campaign->snapchat         = $request->snapchat;
+        $campaign->snapchat            = $request->snapchat;
 
-        $campaign->youtube          = $request->youtube;
+        $campaign->youtube            = $request->youtube;
 
-        $campaign->instgrame        = $request->instgrame;
+        $campaign->instgrame            = $request->instgrame;
 
-        $campaign->male             = $request->male;
+        $campaign->male            = $request->male;
 
-        $campaign->female           = $request->female;
+        $campaign->female            = $request->female;
 
-        $campaign->general          = $request->general;
+        $campaign->general            = $request->general;
 
-        $campaign->description      = $request->description;
+        $campaign->description            = $request->description;
 
-        $campaign->scenario         = $request->scenario;
+        $campaign->scenario            = $request->scenario;
 
-        $campaign->maximum_rate     = $request->maximum_rate;
+        $campaign->maximum_rate            = $request->maximum_rate;
 
+        // $campaign->created_at            = Carbon::now()->addHours(3);
+
+        $campaign->updated_date            = Carbon::now()->addHours(3);
+
+        //$campaign->status            = $request->status;
 
         $campaign->user_id          = $user->id;
-
         $campaign->save();
+        
+        if(!$request->files_arr){
+            Attachment::updateOrCreate([
+
+                'campaign_id'       => $campaign->id,
+                
+                'file'              => '/public/assets/images/campaign/campaign.png',                'file_type'          => '0',
+                ]);
+
+
+        }else{
+
+        $files  =$request->files_arr;
+
+        $image_extensions = array('jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff');    
+        $video_extensions = array('heic','HEIC','webm','mkv','flv','flv','vob','ogg','ogg','ogv','gif','wmv','mp4','m4p','m4p','m4v','mpg','3gp');    
+        $pdf_extensions = array('pdf','doc','docx');  
+
+        
+            foreach ($files  as $file) {
+                //dd($file['file']);
+                $ext = pathinfo($file['file'], PATHINFO_EXTENSION);
+                $file_type = "0"; // image file 
+                $no_image_flag = 0;
+                $videoThumnb = '';
+                if(in_array($ext,$image_extensions))
+                {
+                    $no_image_flag = 1;
+                }
+                if(in_array($ext,$video_extensions) ) 
+                {
+                    $file_type = "1"; // video file
+                    //$videoThumnb = VideoThumbnail::createThumbnail(storage_path($file['file']), storage_path('/public/assets/uploads/'), time().'.jpg', 2, 600, 600);
+                }  
+                elseif(in_array($ext,$pdf_extensions) ) 
+                {
+                    $file_type = "2"; // pdf file
+                }  
+                Attachment::updateOrCreate([
+
+                'campaign_id'       => $campaign->id,
+
+                'file'              => $file['file'],
+                'file_type'          => $file_type
+                ]);
+            }
+
+            if(!$no_image_flag)
+            {
+                Attachment::updateOrCreate([
+
+                'campaign_id'       => $campaign->id,
+
+                'file'              => '/public/assets/images/campaign/campaign.png',
+                'file_type'          => "0"
+                ]);
+            }
+        }
+
+             $categories_id  =$request->categories_id;
+
+            foreach ($categories_id  as $id) {
+                CampaignCategory::updateOrCreate([
+
+                'campaign_id'       => $campaign->id,
+
+                'category_id' => $id
+
+
+                      ]);
+            }
+            $countries_id  =$request->countries_id;
+
+            foreach ($countries_id  as $id) {
+                CampaignCountry::updateOrCreate([
+
+                'campaign_id'       => $campaign->id,
+
+                'country_id' => $id
+
+
+                      ]);
+            }
+
+            $areas_id  =$request->areas_id;
+           
+            if($areas_id !== null){
+
+                foreach ($areas_id  as $id) {
+                    CampaignArea::updateOrCreate([
+
+                    'campaign_id'       => $campaign->id,
+
+                    'area_id' => $id
+
+
+                        ]);
+                }
+
+            }
 
 
         return $this->respondWithSuccess(trans('api_msgs.updated'));
