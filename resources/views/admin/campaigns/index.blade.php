@@ -125,7 +125,7 @@
                                      </th>
 
                                      <th scope="row">
-                                     {{$campaign->offers->count()}}
+                                     {{$campaign->offers->groupby('influncer_id')->count()}}
                                      
                                      </th>
                                     
