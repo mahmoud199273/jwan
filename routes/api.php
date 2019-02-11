@@ -155,6 +155,8 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
 
  Route::post('/user/add/campaign','API\V1\CampignsController@store');
 
+ Route::post('/user/update/campaign','API\V1\CampignsController@update');
+
  Route::get('/user/archive/campaign','API\V1\CampignsController@archiveCampaigns');
 
  Route::get('/user/campaigns','API\V1\CampignsController@allCampaigns');
