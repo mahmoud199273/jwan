@@ -138,6 +138,16 @@ class CampaignsTransformer extends Transformer
             $return_array['influencers']  = User::select('users.id','users.name','users.image')->join('offers', 'offers.influncer_id', '=', 'users.id')->where('offers.campaign_id',$campaign->id)->get();
         }
 
+
+          if($this->flag == false) // user app
+        {
+            $return_array['categories']  = $campaign->categories;
+
+            $return_array['countries']   = $campaign->countries;
+
+            $return_array['areas']       = $campaign->areas;
+        }
+
         return $return_array;
     }
 

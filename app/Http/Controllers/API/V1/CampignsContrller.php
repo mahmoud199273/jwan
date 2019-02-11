@@ -139,6 +139,7 @@ class CampignsContrller extends Controller
         $validator = Validator::make( ['id' =>  $request->id ], [
             'id'    => 'required|exists:campaigns,id',
         ]);
+        $this->campaignsTransformer->setFlag(3);
         return $validator->fails() ? $this->setStatusCode(422)->respondWithError('parameters faild validation') :
                                         $this->sendResponse( $this->campaignsTransformer->transform(Campaign::find($request->id)),
                                             trans('lang.read succefully'),200);
