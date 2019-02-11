@@ -443,6 +443,17 @@ class CampignsController extends Controller
 
     }
 
+      public function isUserOwnCampaign( $user_id,$id)
+    {
+        return Campaign::where('user_id',$user_id)->where('id',$id)->first() ? true : false;
+    }
+
+     public function isCampaignApproved( $campaign_id)
+    {
+        return Campaign::where('id',$campaign_id)->where('status','0')->first() ? true : false;
+    }
+
+
 
     public function update( Request $request )
     {
@@ -454,7 +465,10 @@ class CampignsController extends Controller
         }
 
         $validator = Validator::make( $request->all(), [
-           'title'             => 'required',
+
+            'id'                => 'required|exists:campaigns,id',
+
+            'title'             => 'required',
 
 
             'facebook'          => 'required',
@@ -494,13 +508,22 @@ class CampignsController extends Controller
 
         ]);
 
+         if (!$this->isUserOwnCampaign($user->id,$request->id)) {
+            
+           return $this->setStatusCode(409)->respondWithError(trans('api_msgs.this campaign is not for you'));
+        }
+
+         if (!$this->isCampaignApproved( $request->id)) {
+           return $this->setStatusCode(409)->respondWithError(trans('api_msgs.you can not update this campaign'));
+        }
+
         if ($validator->fails()) {
             return $this->setStatusCode(422)->respondWithError($validator->messages()->first());
             
         }
 
         $campaign = Campaign::find( $request->id );
-        
+
         $campaign->title            = $request->title;
 
         $campaign->facebook            = $request->facebook;
@@ -527,7 +550,7 @@ class CampignsController extends Controller
 
         // $campaign->created_at            = Carbon::now()->addHours(3);
 
-        $campaign->updated_date            = Carbon::now()->addHours(3);
+        $campaign->updated_at            = Carbon::now()->addHours(3);
 
         //$campaign->status            = $request->status;
 
@@ -535,7 +558,8 @@ class CampignsController extends Controller
         $campaign->save();
         
         if(!$request->files_arr){
-            Attachment::updateOrCreate([
+            Attachment::where('campaign_id', $campaign->id)->forceDelete();
+            Attachment::firstOrNew([
 
                 'campaign_id'       => $campaign->id,
                 
@@ -571,7 +595,7 @@ class CampignsController extends Controller
                 {
                     $file_type = "2"; // pdf file
                 }  
-                Attachment::updateOrCreate([
+                Attachment::firstOrNew([
 
                 'campaign_id'       => $campaign->id,
 
@@ -582,7 +606,7 @@ class CampignsController extends Controller
 
             if(!$no_image_flag)
             {
-                Attachment::updateOrCreate([
+                Attachment::create([
 
                 'campaign_id'       => $campaign->id,
 
@@ -593,9 +617,10 @@ class CampignsController extends Controller
         }
 
              $categories_id  =$request->categories_id;
+             CampaignCategory::where('campaign_id',$campaign->id)->forceDelete();
 
             foreach ($categories_id  as $id) {
-                CampaignCategory::updateOrCreate([
+                CampaignCategory::create([
 
                 'campaign_id'       => $campaign->id,
 
@@ -605,9 +630,9 @@ class CampignsController extends Controller
                       ]);
             }
             $countries_id  =$request->countries_id;
-
+            CampaignCountry::where('campaign_id', $campaign->id)->forceDelete();
             foreach ($countries_id  as $id) {
-                CampaignCountry::updateOrCreate([
+                CampaignCountry::create([
 
                 'campaign_id'       => $campaign->id,
 
@@ -618,11 +643,11 @@ class CampignsController extends Controller
             }
 
             $areas_id  =$request->areas_id;
-           
+           CampaignArea::where('campaign_id', $campaign->id)->forceDelete();
             if($areas_id !== null){
 
                 foreach ($areas_id  as $id) {
-                    CampaignArea::updateOrCreate([
+                    CampaignArea::create([
 
                     'campaign_id'       => $campaign->id,
 
