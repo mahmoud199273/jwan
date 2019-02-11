@@ -8,6 +8,7 @@ use App\Transformers\BaseTransformer as Transformer;
 use App\Transformers\InfluncerTransformer;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Area;
 use Carbon\Carbon;
 
 
@@ -145,7 +146,15 @@ class CampaignsTransformer extends Transformer
 
             $return_array['countries']   = $campaign->countries;
 
-            $return_array['areas']       = $campaign->areas;
+            for($i=0;$i<count($return_array['countries']);$i++){
+
+                
+                 $areas = Area::select('areas.*')->join('campaign_areas', 'campaign_areas.area_id', '=', 'areas.id')->where('areas.countries_id',$return_array['countries'][$i]['id'])->where('campaign_areas.campaign_id',$campaign->id)->groupby('areas.id')->get()->toArray();
+                  $return_array['countries'][$i]['areas'] = $areas ;
+                  //dd($return_array['countries'][$i]); 
+
+            }
+            // //$return_array['areas']   = $campaign->areas;
         }
 
         return $return_array;
