@@ -77,6 +77,7 @@
                                     <th><b>{{ __('admin.approved')}}</b></th>
                                     <th><b>{{ __('admin.offers_num')}}</b></th>
                                     <th><b>{{ __('admin.chat_num')}}</b></th>
+                                    <th><b>{{ __('admin.influncer_num')}}</b></th>
                                     <th><b>{{ __('admin.control') }}</b></th>
                                 </tr>
                             </thead>
@@ -120,6 +121,11 @@
 
                                      <th scope="row">
                                      {{$campaign->chats->groupby('offer_id')->count()}}
+                                     
+                                     </th>
+
+                                     <th scope="row">
+                                     {{$campaign->offers->count()}}
                                      
                                      </th>
                                     
