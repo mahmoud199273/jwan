@@ -214,6 +214,7 @@ return [
     'twitter_followers'   => 'عدد متابعين تويتر',
     'instagram_follwers' => 'عدد متابعين إنستجرام',
     'snapchat_follwers'  => 'عدد متابعين سناب',
+    'influncer_num'      => 'عدد المؤثرين',
 
 
     /* m.abdelrahman  */
