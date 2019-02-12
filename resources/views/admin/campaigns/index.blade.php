@@ -147,6 +147,16 @@
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             {{ __('admin.offers') }}
                                         </a>
+                                        @if($campaign->offers->count() == 0) 
+                                          
+
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                             {{ __('admin.suggest_manual') }}
+                                            </button>
+                                        
+
+
+                                          @endif
                                          @if($campaign->status==0)
                                             <a type="button" href="javascript:;" data-status="1" data-id = "{{ $campaign->id }}"
                                                 class="m-btn m-btn m-btn--square btn btn-secondary _campaignApprove">
@@ -180,6 +190,31 @@
     <!--end::Portlet-->
 </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLongTitle">{{ __('admin.influencers')}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+       <div class="modal-body">
+
+
+
+                                   
+                                   
+        </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">إغلاق</button>
+                                   <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+       </div>
+   </div>
+   </div> 
+</div>
+
 
 <div class="container">
     <div class="text-center">

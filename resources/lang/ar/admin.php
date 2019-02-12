@@ -215,6 +215,7 @@ return [
     'instagram_follwers' => 'عدد متابعين إنستجرام',
     'snapchat_follwers'  => 'عدد متابعين سناب',
     'influncer_num'      => 'عدد المؤثرين',
+    'suggest_manual' => 'اقترح يدويا',
 
 
     /* m.abdelrahman  */
