@@ -7,7 +7,66 @@
 
  
 	<div class="m-stack__item m-topbar__nav-wrapper">
-		<ul class="m-topbar__nav m-nav m-nav--inline">		
+		<ul class="m-topbar__nav m-nav m-nav--inline">	
+			<li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width" m-dropdown-toggle="click" m-dropdown-persistent="1" aria-expanded="true">
+				<a href="#" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
+					<span class="m-nav__link-badge m-badge m-badge--accent">
+						{{$not_num = $inactive_influncers + $inactive_campaigns + $inactive_transactions}}
+						
+
+					</span>
+					<span class="m-nav__link-icon"><i class="flaticon-alert-2"></i></span>
+				</a>
+				<div class="m-dropdown__wrapper" style="z-index: 101;margin-right: -300px;">
+					<span class="m-dropdown__arrow m-dropdown__arrow--center" style="left: 60px; right: auto;"></span>
+					<div class="m-dropdown__inner">
+						<div class="m-dropdown__header m--align-center" style="background: url(./assets/app/media/img/misc/notification_bg.jpg); background-size: cover;">
+							<span class="m-dropdown__header-title">{{$not_num = $inactive_influncers + $inactive_campaigns + $inactive_transactions}} New</span>
+							<span class="m-dropdown__header-subtitle">User Notifications</span>
+						</div>
+						<div class="m-dropdown__body">				
+							<div class="m-dropdown__content">
+							<div class="m-list-timeline m-list-timeline--skin-light">
+									<div class="m-list-timeline__items">
+
+									@if($inactive_influncers > 0)
+									
+									  <div class="m-list-timeline__item">
+														<span class="m-list-timeline__badge m-list-timeline__badge--state1-success"></span>
+														<a href="{{url('admin/influencers')}}" class="m-list-timeline__text">لديك مؤثر جديد </a>
+														<span class="m-list-timeline__time"></span>
+									  </div>
+									  
+									  @endif
+
+
+									  @if($inactive_campaigns > 0)
+									  <div class="m-list-timeline__item">
+														<span class="m-list-timeline__badge m-list-timeline__badge--state1-success"></span>
+														<a href="{{url('admin/campaigns')}}" class="m-list-timeline__text">لديك حملة جديدة </a>
+														<!-- <span class="m-list-timeline__time">Just now</span> -->
+									  </div>
+									  @endif
+
+
+
+									  @if($inactive_transactions > 0)
+									  <div class="m-list-timeline__item">
+														<span class="m-list-timeline__badge m-list-timeline__badge--state1-success"></span>
+														<a href="{{url('admin/transactions')}}" class="m-list-timeline__text">لديك تحويل بنكي جديد </a>
+														<!-- <span class="m-list-timeline__time">Just now</span> -->
+									  </div>
+									  @endif
+
+
+									</div>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+
 			<li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
 				<a href="#" class="m-nav__link m-dropdown__toggle">
 					<span class="m-topbar__userpic">
