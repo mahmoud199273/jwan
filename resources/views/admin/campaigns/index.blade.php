@@ -84,7 +84,7 @@
                             <tbody>
                                 @if($campaigns)
                                 @foreach ($campaigns as $campaign)
-                                <tr @if(!$campaign->offers) bgcolor="#ff9d9d" @endif>
+                                <tr  bgcolor="@if($campaign->offers->count() == 0) #ff9d9d  @endif">
                                     <th scope="row">{{ $campaign->id }}</th>
                                     <th scope="row">{{ $campaign->title }}</th>
                                     <th scope="row">{{ $campaign->user->name }}</th>
