@@ -33,7 +33,7 @@
 									
 									  <div class="m-list-timeline__item">
 														<span class="m-list-timeline__badge m-list-timeline__badge--state1-success"></span>
-														<a href="{{url('admin/influencers')}}" class="m-list-timeline__text">لديك مؤثر جديد </a>
+														<a href="{{url('admin/influencers')}}" class="m-list-timeline__text">لديك {{$inactive_influncers}} من المؤثرين الجدد </a>
 														<span class="m-list-timeline__time"></span>
 									  </div>
 									  
@@ -43,7 +43,7 @@
 									  @if($inactive_campaigns > 0)
 									  <div class="m-list-timeline__item">
 														<span class="m-list-timeline__badge m-list-timeline__badge--state1-success"></span>
-														<a href="{{url('admin/campaigns')}}" class="m-list-timeline__text">لديك حملة جديدة </a>
+														<a href="{{url('admin/campaigns')}}" class="m-list-timeline__text">لديك {{$inactive_campaigns}} من الحملات الجديدة </a>
 														<!-- <span class="m-list-timeline__time">Just now</span> -->
 									  </div>
 									  @endif
@@ -53,7 +53,7 @@
 									  @if($inactive_transactions > 0)
 									  <div class="m-list-timeline__item">
 														<span class="m-list-timeline__badge m-list-timeline__badge--state1-success"></span>
-														<a href="{{url('admin/transactions')}}" class="m-list-timeline__text">لديك تحويل بنكي جديد </a>
+														<a href="{{url('admin/transaction/users')}}" class="m-list-timeline__text">لديك {{$inactive_transactions}}  من التحويلات البنكية للعملاء </a>
 														<!-- <span class="m-list-timeline__time">Just now</span> -->
 									  </div>
 									  @endif
