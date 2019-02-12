@@ -61,7 +61,7 @@
 									   @if($userSocial > 0)
 									  <div class="m-list-timeline__item">
 														<span class="m-list-timeline__badge m-list-timeline__badge--state1-success"></span>
-														<a href="{{url('admin/transaction/users')}}" class="m-list-timeline__text">لديك {{$userSocial}}  من المؤثرين قاموا بتعديل جمهور المتابعين </a>
+														<a href="{{url('admin/influencers')}}" class="m-list-timeline__text">لديك {{$userSocial}}  من المؤثرين قاموا بتعديل جمهور المتابعين </a>
 														<!-- <span class="m-list-timeline__time">Just now</span> -->
 									  </div>
 									  @endif
