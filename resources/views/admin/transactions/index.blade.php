@@ -1,4 +1,4 @@
-@extends('admin.layouts.index_layout' , ['title' => __('admin.transactions') ,'route' => 'transactions'])
+@extends('admin.layouts.index_layout' , ['title' => __('admin.users_transactions') ,'route' => 'transactions'])
 
 @section('content')
 
@@ -52,7 +52,7 @@
                                 <i class="fa fa-map"></i>
                             </span>
                             <h3 class="m-portlet__head-text">
-                                {{ __('admin.transactions') }}  
+                                {{ __('admin.users_transactions') }}  
                             </h3>
                         </div>
                     </div>

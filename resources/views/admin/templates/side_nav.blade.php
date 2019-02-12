@@ -143,15 +143,7 @@
 				<a  href="{{url('admin/transactions')}}" class="m-menu__link ">
 					<span class="m-menu__item-here"></span>
 					<i class="m-menu__link-icon fa fa-map"></i>
-					@if($inactive_transactions > 0)
-						<big class="badge badge-danger">
-				
-							{{$inactive_transactions}}
-
-
-
-						</big>
-					@endif
+					
 					<span class="m-menu__link-text">{{ __('admin.transactions') }}</span>
 				</a>
 		</li>
@@ -161,6 +153,15 @@
 				<a  href="{{url('admin/transaction/users')}}" class="m-menu__link ">
 					<span class="m-menu__item-here"></span>
 					<i class="m-menu__link-icon fa fa-map"></i>
+					@if($inactive_transactions > 0)
+						<big class="badge badge-danger">
+				
+							{{$inactive_transactions}}
+
+
+
+						</big>
+					@endif
 					<span class="m-menu__link-text">{{ __('admin.users_transactions') }}</span>
 				</a>
 		</li>
