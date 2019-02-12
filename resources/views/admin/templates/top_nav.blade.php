@@ -11,7 +11,7 @@
 			<li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width" m-dropdown-toggle="click" m-dropdown-persistent="1" aria-expanded="true">
 				<a href="#" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
 					<span class="m-nav__link-badge m-badge m-badge--accent">
-						{{$not_num = $inactive_influncers + $inactive_campaigns + $inactive_transactions}}
+						{{$not_num = $inactive_influncers + $inactive_campaigns + $inactive_transactions + $userSocial}}
 						
 
 					</span>
@@ -54,6 +54,14 @@
 									  <div class="m-list-timeline__item">
 														<span class="m-list-timeline__badge m-list-timeline__badge--state1-success"></span>
 														<a href="{{url('admin/transaction/users')}}" class="m-list-timeline__text">لديك {{$inactive_transactions}}  من التحويلات البنكية للعملاء </a>
+														<!-- <span class="m-list-timeline__time">Just now</span> -->
+									  </div>
+									  @endif
+
+									   @if($userSocial > 0)
+									  <div class="m-list-timeline__item">
+														<span class="m-list-timeline__badge m-list-timeline__badge--state1-success"></span>
+														<a href="{{url('admin/transaction/users')}}" class="m-list-timeline__text">لديك {{$userSocial}}  من المؤثرين قاموا بتعديل جمهور المتابعين </a>
 														<!-- <span class="m-list-timeline__time">Just now</span> -->
 									  </div>
 									  @endif
