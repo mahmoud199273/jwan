@@ -335,6 +335,7 @@ class campaignsController extends Controller
             $end_date =  Carbon::parse($campaign->end_at)->addHours(3);
             $end_date = $end_date->addDays($amount);
             $campaign->status = '1';
+            $campaign->class = $request->class;
             $campaign->end_at = $end_date;
             $campaign->save();
 

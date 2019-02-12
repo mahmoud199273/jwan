@@ -298,8 +298,18 @@
 
      $('._activate').on('click', function(){
         id = $(this).attr('data-id');
+        var inputOptions = new Promise(function(resolve) {
+		    resolve({
+		      'D': 'D',
+		      'c': 'C',
+		      'B': 'B',
+		      'A': 'A'
+		    });
+		});
         swal({
 		  title: 'هل تريد الاستمرار؟',
+		  input: 'radio',
+  		  inputOptions: inputOptions, 
 		  confirmButtonText:  'نعم',
 		  cancelButtonText:  'لا',
 		  showCancelButton: true,
@@ -310,7 +320,7 @@
 		           $.ajax({
                         url: '{{url("admin")}}/{{ isset($route)? $route : "" }}/activate',
                         type: 'POST',
-                        data: {'_method':'post','_token': $('meta[name="csrf-token"]').attr('content'),'id':id },
+                        data: {'_method':'post','_token': $('meta[name="csrf-token"]').attr('content'),'id':id,"class" : result.value },
                         success: function( msg ) {
                             if ( msg.status === 'success' ) {
                               window.location.reload();
@@ -645,9 +655,19 @@ $('._statusApprove').on('click',function(){
 
 $('._campaignApprove').on('click', function(){
         id = $(this).attr('data-id');
+         var inputOptions = new Promise(function(resolve) {
+		    resolve({
+		      'D': 'D',
+		      'c': 'C',
+		      'B': 'B',
+		      'A': 'A'
+		    });
+		});
         status = $(this).attr('data-status');
         swal({
 		  title: 'هل تريد الاستمرار؟',
+		  input: 'radio',
+  		  inputOptions: inputOptions,
 		  confirmButtonText:  'نعم',
 		  cancelButtonText:  'لا',
 		  showCancelButton: true,
@@ -658,7 +678,7 @@ $('._campaignApprove').on('click', function(){
 		           $.ajax({
                         url: '{{url("admin")}}/campaigns/approve',
                         type: 'POST',
-                        data: {'_method':'post','_token': $('meta[name="csrf-token"]').attr('content'),'id':id,'status':status },
+                        data: {'_method':'post','_token': $('meta[name="csrf-token"]').attr('content'),'id':id,'status':status,"class" : result.value },
                         success: function( msg ) {
                             if ( msg.status === 'success' ) {
                               window.location.reload();
