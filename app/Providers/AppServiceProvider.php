@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
         $inactive_campaigns=DB::table('campaigns')->where([['status','0'],['deleted_at',NULL]])->count();
 
          $inactive_transactions=DB::table('transactions')->where([['status','0'],['deleted_at',NULL]])->count();
+         $userSocial = DB::table('user_socials')->count();
         
         View::share('inactive_users', $inactive_users);
 
@@ -34,6 +35,8 @@ class AppServiceProvider extends ServiceProvider
         View::share('inactive_campaigns', $inactive_campaigns);
 
         View::share('inactive_transactions', $inactive_transactions);
+
+        View::share('userSocial', $userSocial);
     }
 
     /**
