@@ -186,6 +186,7 @@ class InfluencersController extends Controller
         if ( $request->ajax() ) {
             $user = User::find( $request->id );
             $user->is_active = '1';
+            $user->class = $request->class;
             $user->save();
 
             @sendSMS($this->formatPhone($user->phone,$user->countries_id) , __('api_msgs.active_sms'));
