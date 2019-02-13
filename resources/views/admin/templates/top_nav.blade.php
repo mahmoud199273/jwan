@@ -21,7 +21,7 @@
 					<span class="m-dropdown__arrow m-dropdown__arrow--center" style="left: 60px; right: auto;"></span>
 					<div class="m-dropdown__inner">
 						<div class="m-dropdown__header m--align-center" style="background: url(./assets/app/media/img/misc/notification_bg.jpg); background-size: cover;">
-							<span class="m-dropdown__header-title">{{$not_num = $inactive_influncers + $inactive_campaigns + $inactive_transactions}} New</span>
+							<span class="m-dropdown__header-title">{{$not_num = $inactive_influncers + $inactive_campaigns + $inactive_transactions +$userSocial}} New</span>
 							<span class="m-dropdown__header-subtitle">User Notifications</span>
 						</div>
 						<div class="m-dropdown__body">				

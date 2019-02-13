@@ -150,7 +150,7 @@
                                         @if($campaign->offers->count() == 0) 
                                           
 
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">
                                              {{ __('admin.suggest_manual') }}
                                             </button>
                                         
