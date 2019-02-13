@@ -46,7 +46,7 @@ return[
       'Already extended before'  => 'تم تمديد الحملة سابقا',
       'you can not update this campaign'  => 'لا يمكنك تعديل الحملة',
       'this campaign is not for you'     => 'هذه الحملة ليست لك',
-      'your account is activated as influencer in signify app and you can start using the app and produce your offers to customers'  => 'تم تفعيل حسابك كمؤثر في تطبيق سيجنيفاي ويمكنك البدء في استخدلم التطبيق وتقديم العروض للعملاء',
+      'active_sms'  => 'تم تفعيل حسابك كمؤثر في تطبيق سيجنيفاي ويمكنك البدء في استخدلم التطبيق وتقديم العروض للعملاء',
       ''            => '',
       ''            => ''
 

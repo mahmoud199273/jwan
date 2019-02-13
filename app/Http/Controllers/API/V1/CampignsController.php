@@ -368,7 +368,7 @@ class CampignsController extends Controller
                 ]);
             }
 
-            if(!$no_image_flag)
+            if($no_image_flag != 1)
             {
                 Attachment::create([
 

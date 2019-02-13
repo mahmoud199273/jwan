@@ -84,7 +84,7 @@
                             <tbody>
                                 @if($campaigns)
                                 @foreach ($campaigns as $campaign)
-                                <tr  bgcolor="@if($campaign->offers->count() == 0) #ff9d9d  @endif">
+                                <tr  bgcolor="@if($campaign->offers->count() == 0 && $campaign->byadmin->count() == 0) #ff9d9d  @endif">
                                     <th scope="row">{{ $campaign->id }}</th>
                                     <th scope="row">{{ $campaign->title }}</th>
                                     <th scope="row">{{ $campaign->user->name }}</th>
@@ -147,15 +147,13 @@
                                             class="m-btn m-btn m-btn--square btn btn-secondary">
                                             {{ __('admin.offers') }}
                                         </a>
-                                        @if($campaign->offers->count() == 0) 
+                                        @if($campaign->offers->count() == 0 && $campaign->byadmin->count() == 0) 
                                           
 
-                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">
+                                            <button type="button" class="btn btn-info show_influncers" data-campaign="{{$campaign->id}}">
                                              {{ __('admin.suggest_manual') }}
                                             </button>
-                                        
-
-
+                                           
                                           @endif
                                          @if($campaign->status==0)
                                             <a type="button" href="javascript:;" data-status="1" data-id = "{{ $campaign->id }}"
@@ -191,29 +189,43 @@
 </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-       <div class="modal-content">
-           <div class="modal-header">
+
+<div class="modal fade" id="modelWindow" role="dialog">
+            <div class="modal-dialog modal-sm vertical-align-center">
+              <div class="modal-content">
+                <div class="modal-header">
              <h5 class="modal-title" id="exampleModalLongTitle">{{ __('admin.influencers')}}</h5>
              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
             </button>
-        </div>
-       <div class="modal-body">
-
-
-
-                                   
-                                   
-        </div>
-             <div class="modal-footer">
+                </div>
+                  <form class="m-form" action="{{url('admin/select/influncers')}}" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                   
+                
+                        {{ csrf_field() }}
+                    <input type="hidden" name="campaign_id" id="influencers_campaign_id" value= "">
+                  
+                    @foreach ($influencers as $influncer)
+                     <input type="checkbox" name="influencers[]" value="{{$influncer->id}}"> &nbsp; {{$influncer->name}} <br><br>
+                     @endforeach
+                  
+                     
+                
+                </div>
+                <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">إغلاق</button>
-                                   <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-       </div>
-   </div>
-   </div> 
-</div>
+                          <button type="submit" class="btn btn-primary">Save changes</button>
+
+                           
+                </div>
+                </form> 
+                
+              </div>
+            </div>
+        </div>
+
+
 
 
 <div class="container">

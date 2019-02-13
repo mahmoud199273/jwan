@@ -62,6 +62,12 @@ class Campaign extends Model
          return $this->hasMany('App\Offer','campaign_id','id');
         }
 
+         public function byadmin()
+        {
+
+         return $this->hasMany('App\InfluencerCampaignsByAdmin','campaign_id','id');
+        }
+
            public function chats() 
         {
 
