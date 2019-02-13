@@ -180,6 +180,15 @@
                     </div>
             </div>
 
+            <div class="form-group m-form__group row {{ $errors->has('minimumRate') ? 'has-danger' : ''}}">
+                <label for="minimumRate" class="col-2 col-form-label">{{__('admin.minimumRate')}}</label>
+                <div class="col-9">
+                    <input type="text" name="minimumRate" class="form-control m-input" 
+                           value="{{ $user->minimumRate }}" placeholder="{{__('admin.minimumRate')}}" disabled>
+                    {!! $errors->first('minimumRate', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+
 
              <div class="form-group m-form__group row {{ $errors->has('facebook') ? 'has-danger' : ''}}">
                 <label for="name" class="col-2 col-form-label">Facebook url</label>
