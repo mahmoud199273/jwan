@@ -22,7 +22,7 @@ class StoreUserRequest extends BaseRequest
             'phone'         => 'required|min:9|digits:9|regex:/^[5][0-9]{4,}/|unique:users,phone|unique:users,account_type',
             'image'         => 'required',
             'email'         => 'required|string|email|unique:users,email',
-            'minimumRate'   => 'sometimes|nullable|min:500|max:20000',
+            'minimumRate'   => 'sometimes|nullable|numeric|min:500|max:20000',
             'password'      => 'required|string|min:8|max:16',
             'gender'     => 'nullable',
             'account_manger'=> 'nullable',
