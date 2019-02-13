@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-//use App\Http\Requests\Admin\Complaints\StoreComplaintRequest;
-use App\Http\Requests\Admin\Campaigns\EditCampaignsRequest;
-use Illuminate\Support\Facades\DB;
+use App\Area;
 use App\Campaign;
 use App\CampaignArea;
 use App\CampaignCategory;
 use App\CampaignCountry;
-use App\User;
-use App\Setting;
-use App\UserPlayerId;
-use App\Country;
 use App\Category;
-use App\Area;
-use App\Offer;
 use App\Chat;
+use App\Country;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Campaigns\EditCampaignsRequest;
+use App\InfluencerCampaignsByAdmin;
+use App\Offer;
+use App\Setting;
+use App\User;
+use App\UserPlayerId;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class campaignsController extends Controller
@@ -80,10 +80,12 @@ class campaignsController extends Controller
     {
 
         $campaigns = Campaign::latest()->paginate(10);
-        
-        // $offers_count = Offer::where('campaign_id',$id)->count();
 
-        return view('admin.campaigns.index',compact('campaigns'));
+        $influencers = User::where('account_type','1')->get();
+        
+        $admin_camp = InfluencerCampaignsByAdmin::all();
+
+        return view('admin.campaigns.index',compact('campaigns','influencers','admin_camp'));
     }
 
 
@@ -414,6 +416,31 @@ class campaignsController extends Controller
             return response(['msg' => 'banned', 'status' => 'success']);
         }
 
+    }
+
+    public function selectInfluencer(Request $request)
+    {
+
+        // dd(20);
+        $campaign_id = $request->campaign_id;
+        $infuncers = $request->influencers; 
+
+        // dd($infuncers);
+
+         if($infuncers !== null){
+
+             foreach($infuncers as $id){
+            InfluencerCampaignsByAdmin::create([
+
+                'campaign_id'       => $campaign_id,
+                'Influencer_id'     => $id
+                ]);
+             }
+
+        }
+
+         return redirect('/admin/campaigns');
+        
     }
 
 

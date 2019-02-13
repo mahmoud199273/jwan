@@ -653,6 +653,14 @@ $('._statusApprove').on('click',function(){
     }); --}}
 
 
+$(".show_influncers").on('click',function(){
+	var campaign = $(this).attr('data-campaign');
+	$("#influencers_campaign_id").val(campaign);
+	$("#modelWindow").modal('show');
+	//$('#modelWindow').show();
+
+});
+
 $('._campaignApprove').on('click', function(){
         id = $(this).attr('data-id');
          var inputOptions = new Promise(function(resolve) {

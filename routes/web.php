@@ -104,6 +104,9 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::resource('campaigns','CampaignsController');
 		Route::get('campaign/testnot/{id}','CampaignsController@testNot');
 		Route::post('/campaigns/approved'       , 'CampaignsController@approved');
+
+		Route::post('/select/influncers' , 'CampaignsController@selectInfluencer');
+
 		Route::post('/campaigns/approve'       , 'CampaignsController@approve');
 		Route::post('/campaigns/reject'        , 'CampaignsController@reject');
 		Route::get('/campaign/search','CampaignsController@search');
