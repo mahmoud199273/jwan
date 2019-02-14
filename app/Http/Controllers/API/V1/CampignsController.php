@@ -612,7 +612,7 @@ class CampignsController extends Controller
         $campaign->save();
         
         Attachment::where('campaign_id', $campaign->id)->forceDelete();
-        
+
         if(!$request->files_arr){
             
             // Attachment::firstOrNew([
@@ -651,7 +651,7 @@ class CampignsController extends Controller
                 {
                     $file_type = "2"; // pdf file
                 }  
-                Attachment::firstOrNew([
+                Attachment::create([
 
                 'campaign_id'       => $campaign->id,
 
