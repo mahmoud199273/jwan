@@ -37,6 +37,7 @@ class EditUserRequest extends BaseRequest
             'gender'     => 'nullable',
             'countries_id'      => 'required',
             'nationality_id'      => 'nullable',
+            'class'                =>'nullable' 
 
         ];
     }

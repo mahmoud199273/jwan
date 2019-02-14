@@ -36,6 +36,7 @@ class StoreUserRequest extends BaseRequest
             'youtube'      => 'nullable',
             'countries_id'      => 'required',
             'nationality_id'      => 'nullable',
+            'class'                =>'nullable'
         ];
     }
 

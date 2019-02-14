@@ -246,6 +246,19 @@
                     {!! $errors->first('snapchat_follwers', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
+
+            <div class="form-group m-form__group row {{ $errors->has('class') ? 'has-danger' : ''}}">
+                <label for="class" class="col-2 col-form-label">{{ __('admin.class') }}</label>
+                 <div class="col-9">
+                <select name="class"  class="form-control m-input" >
+                   <option value="A" > A  </option>
+                   <option value="B" > B  </option>
+                   <option value="C" > C  </option>
+                   <option value="D" > D  </option>
+                </select>
+                    {!! $errors->first('class', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
             
             <div class="form-group m-form__group row">
                 <label for="example-text-input" class="col-2 col-form-label"> {{ __('admin.commission') }} </label>
