@@ -319,6 +319,19 @@
                 </div>
             </div> --}}
 
+            <div class="form-group m-form__group row {{ $errors->has('class') ? 'has-danger' : ''}}">
+                <label for="class" class="col-2 col-form-label">{{ __('admin.class') }}</label>
+                 <div class="col-9">
+                <select name="class"  class="form-control m-input" >
+                   <option value="A" {{ $user->class == 'A'? "selected" : "" }} > A  </option>
+                   <option value="B" {{ $user->class == 'B'? "selected" : "" }} > B  </option>
+                   <option value="C" {{ $user->class == 'C'? "selected" : "" }} > C  </option>
+                   <option value="D" {{ $user->class == 'D'? "selected" : "" }} > D  </option>
+                </select>
+                    {!! $errors->first('class', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
+
             <div class="form-group m-form__group row {{ $errors->has('image') ? 'has-danger' : ''}}">
                     <label for="example-text-input" class="col-2 col-form-label">{{ __('admin.image') }}</label>
                     <div class="col-9">
