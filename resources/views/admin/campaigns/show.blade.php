@@ -259,6 +259,17 @@
                     {!! $errors->first('status', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
+
+            <div class="form-group m-form__group row {{ $errors->has('class') ? 'has-danger' : ''}}">
+                <label for="class" class="col-2 col-form-label">{{ __('admin.class') }}</label>
+                 <div class="col-9">
+                <select name="class"  class="form-control m-input" disabled="">
+                   <option value="{{$campaign->class}}">{{$campaign->class}} </option>
+                   
+                </select>
+                    {!! $errors->first('class', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
             
    
 
