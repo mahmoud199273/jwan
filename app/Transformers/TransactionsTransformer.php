@@ -166,8 +166,10 @@ class TransactionsTransformer extends Transformer
             else 
             {
                 $return_array['amount']           = $transaction->amount;
-                $return_array['cost']             = round((($transaction->amount * 95) / 100), 2); //(int)(($transaction->amount * 95) / 100),
-                $return_array['vat']              = round((($transaction->amount * $tax) / 100), 2); //(int) ($transaction->amount * $tax) / 100,
+                //$return_array['cost']             = round((($transaction->amount * 95) / 100), 2); //(int)(($transaction->amount * 95) / 100),
+                $return_array['cost']             = $transaction->amount; //(int)(($transaction->amount * 95) / 100),
+                $return_array['vat']              = 0; //(int) ($transaction->amount * $tax) / 100,
+                //$return_array['vat']              = round((($transaction->amount * $tax) / 100), 2); //(int) ($transaction->amount * $tax) / 100,
                 $return_array['commission']       = 0;
             }
 
