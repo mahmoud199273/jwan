@@ -148,6 +148,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Pawlox\VideoThumbnail\VideoThumbnailServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -220,6 +221,7 @@ return [
         //'Mobily'    => abdullahobaid\mobilywslaraval\Mobily::class,
         'JWTAuth'=>'Tymon\JWTAuth\Facades\JWTAuth',
         'JWTFactory'=>'Tymon\JWTAuth\Facades\JWTFactory',
+        'VideoThumbnail' => Pawlox\VideoThumbnail\Facade\VideoThumbnail::class,
 
     ],
 
