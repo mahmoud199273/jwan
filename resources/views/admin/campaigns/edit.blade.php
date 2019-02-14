@@ -274,6 +274,32 @@
                     {!! $errors->first('status', '<span class="form-control-feedback">:message</span>') !!}
                 </div>
             </div>
+
+           <!--  <div class="form-group m-form__group row {{ $errors->has('class') ? 'has-danger' : ''}}">
+                <label for="class" class="col-2 col-form-label">{{ __('admin.class') }}</label>
+                 <div class="col-9">
+                <select name="class"  class="form-control m-input">
+                   <option value="A">A </option>
+                   <option value="B">B</option>
+                   <option value="C">C </option>
+                   <option value="D">D</option>
+                </select>
+                    {!! $errors->first('class', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div> -->
+
+             <div class="form-group m-form__group row {{ $errors->has('class') ? 'has-danger' : ''}}">
+                <label for="class" class="col-2 col-form-label">{{ __('admin.class') }}</label>
+                 <div class="col-9">
+                <select name="class"  class="form-control m-input" >
+                   <option value="A" {{ $campaign->class == 'A'? "selected" : "" }} > A  </option>
+                   <option value="B" {{ $campaign->class == 'B'? "selected" : "" }} > B  </option>
+                   <option value="C" {{ $campaign->class == 'C'? "selected" : "" }} > C  </option>
+                   <option value="D" {{ $campaign->class == 'D'? "selected" : "" }} > D  </option>
+                </select>
+                    {!! $errors->first('class', '<span class="form-control-feedback">:message</span>') !!}
+                </div>
+            </div>
            
    
 

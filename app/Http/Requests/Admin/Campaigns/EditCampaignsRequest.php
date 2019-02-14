@@ -35,7 +35,8 @@ class EditCampaignsRequest extends BaseRequest
             'campaign_areas'                  => 'required',
             'campaign_countries'              => 'required',
             'campaign_categories'             => 'required',
-            'maximum_rate'                    => 'required|numeric|min:500|max:20000'
+            'maximum_rate'                    => 'required|numeric|min:500|max:20000',
+            'class'                           => 'nullable'
         ];
     }
 
