@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Http\Controllers\API\V1\BaseController as Controller;
-use App\Transformers\CampaignsTransformer;
-use App\User;
-use App\Campaign;
 use App\Attachment;
+use App\Campaign;
 use App\CampaignArea;
 use App\CampaignCategory;
 use App\CampaignCountry;
+use App\Http\Controllers\API\V1\BaseController as Controller;
 use App\InfluncerCampaign;
+use App\Notification;
+use App\Offer;
+use App\Setting;
+use App\Transformers\CampaignsTransformer;
+use App\User;
+use App\UserArea;
 use App\UserCategory;
 use App\UserCountry;
-use App\UserArea;
-use App\Setting;
-use App\Offer;
-use App\Notification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Pawlox\VideoThumbnail\Facade\VideoThumbnail;
+// use Pawlox\VideoThumbnail\VideoThumbnail;
 
 class CampignsController extends Controller
 {
@@ -323,12 +325,13 @@ class CampignsController extends Controller
         $campaign->save();
         
         if(!$request->files_arr){
-            Attachment::create([
+            // Attachment::create([
 
-                'campaign_id'       => $campaign->id,
+            // 'campaign_id'       => $campaign->id,
                 
-                'file'              => '/public/assets/images/campaign/campaign.png',                'file_type'          => '0',
-                ]);
+            // 'file' => '/public/assets/images/campaign/campaign.png', 
+            //                'file_type'     => '0',
+            //     ]);
 
 
         }else{
@@ -352,8 +355,57 @@ class CampignsController extends Controller
                 }
                 if(in_array($ext,$video_extensions) ) 
                 {
+                    $thumbName = time().'.png';
                     $file_type = "1"; // video file
-                    //$videoThumnb = VideoThumbnail::createThumbnail(storage_path($file['file']), storage_path('/public/assets/uploads/'), time().'.jpg', 2, 600, 600);
+                    // $videoThumnb = VideoThumbnail::createThumbnail(storage_path($file['file']), storage_path('public/assets/uploads'),$thumbName , 2, 600, 600);
+                    
+                    $thumb = VideoThumbnail::createThumbnail(public_path($file['file']), public_path("assets/uploads"), $thumbName, 3, 600, 600);
+
+                      // dd($thumb);      
+                    $thumbPath = '/public/assets/uploads/'.$thumbName;
+                    // dd($thumb,$thumbPath);
+                    // dd(file_get_contents(public_path("assets/uploads/")));
+
+                    $frame = 10;
+// choose file name 
+                    $movie = $file['file'];
+
+                    // dd($movie);
+                    // choose thumbnail name 
+                    $thumbnail = $thumbName;
+                    // dd($thumbName);
+
+                    // make an instance of the class 
+                    // $mov = new ffmpeg_movie($movie);
+
+                    // dd($mov);
+
+                    // get the frame defined above 
+                    // $frame = $mov->getFrame($frame);
+
+                    // if ($frame) {
+                    //     $gd_image = $frame->toGDImage();
+
+                    //     if ($gd_image) {
+                    //         imagepng($gd_image, $thumbnail);
+                    //         imagedestroy($gd_image);
+                    //         echo '<img src="'.$thumbnail.'">';
+                    //     }
+                    // }
+                    // if($videoThumnb){
+                    //     dd($thumbPath);    
+                    // }else{
+                    //     dd('error');
+                    // }
+                    
+                Attachment::create([
+
+                'campaign_id'       => $campaign->id,
+                
+                'file'              => $thumbPath,               
+                'file_type' => '0',
+                ]);
+
                 }  
                 elseif(in_array($ext,$pdf_extensions) ) 
                 {
@@ -370,13 +422,13 @@ class CampignsController extends Controller
 
             if($no_image_flag != 1)
             {
-                Attachment::create([
+                // Attachment::create([
 
-                'campaign_id'       => $campaign->id,
+                // 'campaign_id'       => $campaign->id,
 
-                'file'              => '/public/assets/images/campaign/campaign.png',
-                'file_type'          => "0"
-                ]);
+                // 'file'              => '/public/assets/images/campaign/campaign.png',
+                // 'file_type'          => "0"
+                // ]);
             }
         }
 
