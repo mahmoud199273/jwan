@@ -611,14 +611,16 @@ class CampignsController extends Controller
         $campaign->user_id          = $user->id;
         $campaign->save();
         
+        Attachment::where('campaign_id', $campaign->id)->forceDelete();
+        
         if(!$request->files_arr){
-            Attachment::where('campaign_id', $campaign->id)->forceDelete();
-            Attachment::firstOrNew([
+            
+            // Attachment::firstOrNew([
 
-                'campaign_id'       => $campaign->id,
+            //     'campaign_id'       => $campaign->id,
                 
-                'file'              => '/public/assets/images/campaign/campaign.png',                'file_type'          => '0',
-                ]);
+            //     'file'              => '/public/assets/images/campaign/campaign.png',                'file_type'          => '0',
+            //     ]);
 
 
         }else{
@@ -660,13 +662,13 @@ class CampignsController extends Controller
 
             if(!$no_image_flag)
             {
-                Attachment::create([
+                // Attachment::create([
 
-                'campaign_id'       => $campaign->id,
+                // 'campaign_id'       => $campaign->id,
 
-                'file'              => '/public/assets/images/campaign/campaign.png',
-                'file_type'          => "0"
-                ]);
+                // 'file'              => '/public/assets/images/campaign/campaign.png',
+                // 'file_type'          => "0"
+                // ]);
             }
         }
 
