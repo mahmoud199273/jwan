@@ -215,7 +215,7 @@
                 </div>
                 <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">إغلاق</button>
-                          <button type="submit" class="btn btn-primary">Save changes</button>
+                          <button type="submit" class="btn btn-primary">{{__('admin.save')}}</button>
 
                            
                 </div>
