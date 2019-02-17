@@ -892,7 +892,7 @@ class AuthController extends Controller
         }
 
             $this->ClearBlock($request->input('phone'),$account_type); // remove block attempts
-            return $this->generateToken( $request->only('phone','password','account_type') );
+            return $this->generateToken( $request->only('phone','password'),$account_type );
 
         }
 
@@ -962,8 +962,9 @@ class AuthController extends Controller
 
 
 
-    public function generateToken( $credentails )
+    public function generateToken( $credentails,$account_type )
     {
+        $credentails['account_type'] = $account_type;
     	try {
             if ( !$token = JWTAuth::attempt($credentails) ) {
 
