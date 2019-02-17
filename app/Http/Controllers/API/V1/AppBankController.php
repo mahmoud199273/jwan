@@ -9,6 +9,7 @@ use App\AppBankAccounts;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -29,7 +30,8 @@ class AppBankController extends BaseController
     public function index()
     {
         # code...
-        $banks = $this->appbankstransformer->transformCollection(AppBankAccounts::all());
+        $data = DB::table('app_bank_accounts')->get();
+        $banks = $this->appbankstransformer->transformCollection($data);
         return $this->sendResponse($banks,'App Banks read succesfully',200);
     }
 
