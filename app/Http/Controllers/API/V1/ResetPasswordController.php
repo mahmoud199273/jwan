@@ -86,7 +86,10 @@ class ResetPasswordController extends Controller
 
 
 
-
+    public function isPhoneExists( $phone , $account_type )
+    {
+        return User::where('phone',$phone)->where('account_type',$account_type)->first() ? true : false;
+    }
 
     public function sendCode( Request $request )
     {
@@ -104,6 +107,10 @@ class ResetPasswordController extends Controller
         if($request->header('account-type'))
         {
             $account_type = $request->header('account-type');
+        }
+
+        if ($this->isPhoneExists( $request->phone , $account_type )) {
+           return $this->setStatusCode(409)->respondWithError(trans('api_msgs.phone_exists'));
         }
 
         $lastSmS = $this->LastSmS($request->phone,1,$account_type); // check if message send and not passed 30 second
