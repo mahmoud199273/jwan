@@ -892,7 +892,7 @@ class AuthController extends Controller
         }
 
             $this->ClearBlock($request->input('phone'),$account_type); // remove block attempts
-            return $this->generateToken( $request->only('phone','password') );
+            return $this->generateToken( $request->only('phone','password','account_type') );
 
         }
 
