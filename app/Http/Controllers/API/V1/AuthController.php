@@ -964,7 +964,7 @@ class AuthController extends Controller
 
     public function generateToken( $credentails )
     {
-
+        dd($credentails);
     	try {
             if ( !$token = JWTAuth::attempt($credentails) ) {
 
