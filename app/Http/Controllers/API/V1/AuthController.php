@@ -962,7 +962,7 @@ class AuthController extends Controller
 
 
 
-    public function generateToken( $credentails,$account_type=0 )
+    public function generateToken( $credentails,$account_type='0' )
     {
         $credentails['account_type'] = $account_type;
     	try {
