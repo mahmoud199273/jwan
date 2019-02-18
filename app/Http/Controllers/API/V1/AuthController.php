@@ -105,7 +105,7 @@ class AuthController extends Controller
 
         if ( !$code ) {
 
-            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.invalid_code'));
+            return $this->setStatusCode(409)->respondWithError(trans('api_msgs.invalid_code'));
         }
 
         $current_time   = Carbon::now();
@@ -113,7 +113,7 @@ class AuthController extends Controller
         $expired_at = strtotime($code->expired_at);
         if ( $expired_at < $current or $expired_at == $current )  {
 
-            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.code_expire'));
+            return $this->setStatusCode(409)->respondWithError(trans('api_msgs.code_expire'));
 
         }else{
 
