@@ -109,7 +109,7 @@ class ResetPasswordController extends Controller
             $account_type = $request->header('account-type');
         }
 
-        if ($this->isPhoneExists( $request->phone , $account_type )) {
+        if (!$this->isPhoneExists( $request->phone , $account_type )) {
            return $this->setStatusCode(409)->respondWithError(trans('api_msgs.phone_exists'));
         }
 
