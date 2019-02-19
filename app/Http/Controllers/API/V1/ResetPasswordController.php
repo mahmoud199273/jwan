@@ -86,7 +86,10 @@ class ResetPasswordController extends Controller
 
 
 
-
+    public function isPhoneExists( $phone , $account_type )
+    {
+        return User::where('phone',$phone)->where('account_type',$account_type)->first() ? true : false;
+    }
 
     public function sendCode( Request $request )
     {
@@ -104,6 +107,10 @@ class ResetPasswordController extends Controller
         if($request->header('account-type'))
         {
             $account_type = $request->header('account-type');
+        }
+
+        if (!$this->isPhoneExists( $request->phone , $account_type )) {
+           return $this->setStatusCode(409)->respondWithError(trans('api_msgs.phone_exists'));
         }
 
         $lastSmS = $this->LastSmS($request->phone,1,$account_type); // check if message send and not passed 30 second
@@ -173,7 +180,7 @@ class ResetPasswordController extends Controller
 
         if ( !$code ) {
 
-            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.invalid_code'));
+            return $this->setStatusCode(409)->respondWithError(trans('api_msgs.invalid_code'));
         }
 
         $current    = strtotime(Carbon::now()->toDateTimeString());
@@ -181,7 +188,7 @@ class ResetPasswordController extends Controller
 
         if ( $expired_at < $current or $expired_at == $current )  {
 
-            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.invalid_code'));
+            return $this->setStatusCode(409)->respondWithError(trans('api_msgs.invalid_code'));
 
         }else{
             //ResetPassword::where([ [ 'code', $request->code ],[ 'used', '0'] ])->update(['used' => '1']);
@@ -218,7 +225,7 @@ class ResetPasswordController extends Controller
 
         if ( !$code ) {
 
-            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.invalid_code'));
+            return $this->setStatusCode(409)->respondWithError(trans('api_msgs.invalid_code'));
         }
 
         $current    = strtotime(Carbon::now()->toDateTimeString());
@@ -226,7 +233,7 @@ class ResetPasswordController extends Controller
 
         if ( $expired_at < $current or $expired_at == $current )  {
 
-            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.invalid_code'));
+            return $this->setStatusCode(409)->respondWithError(trans('api_msgs.invalid_code'));
 
         }else{
             ResetPassword::where([ [ 'token', $request->code ],[ 'used', '0'] ])->update(['used' => '1']);
@@ -310,7 +317,7 @@ class ResetPasswordController extends Controller
 
         if ( !$code ) {
 
-            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.invalid_code'));
+            return $this->setStatusCode(409)->respondWithError(trans('api_msgs.invalid_code'));
         }
 
         $current_time   = Carbon::now();
@@ -318,7 +325,7 @@ class ResetPasswordController extends Controller
         $expired_at = strtotime($code->expired_at);
         if ( $expired_at < $current or $expired_at == $current )  {
 
-            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.code_expire'));
+            return $this->setStatusCode(409)->respondWithError(trans('api_msgs.code_expire'));
 
         }else{
 

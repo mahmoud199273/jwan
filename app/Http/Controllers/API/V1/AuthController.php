@@ -105,7 +105,7 @@ class AuthController extends Controller
 
         if ( !$code ) {
 
-            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.invalid_code'));
+            return $this->setStatusCode(409)->respondWithError(trans('api_msgs.invalid_code'));
         }
 
         $current_time   = Carbon::now();
@@ -113,7 +113,7 @@ class AuthController extends Controller
         $expired_at = strtotime($code->expired_at);
         if ( $expired_at < $current or $expired_at == $current )  {
 
-            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.code_expire'));
+            return $this->setStatusCode(409)->respondWithError(trans('api_msgs.code_expire'));
 
         }else{
 
@@ -892,7 +892,7 @@ class AuthController extends Controller
         }
 
             $this->ClearBlock($request->input('phone'),$account_type); // remove block attempts
-            return $this->generateToken( $request->only('phone','password') );
+            return $this->generateToken( $request->only('phone','password'),$account_type );
 
         }
 
@@ -962,9 +962,9 @@ class AuthController extends Controller
 
 
 
-    public function generateToken( $credentails )
+    public function generateToken( $credentails,$account_type='0' )
     {
-
+        $credentails['account_type'] = $account_type;
     	try {
             if ( !$token = JWTAuth::attempt($credentails) ) {
 
