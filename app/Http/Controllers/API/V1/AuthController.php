@@ -160,9 +160,9 @@ class AuthController extends Controller
     }
 
 
-    public function isUserPhoneExists( $phone , $user_id )
+    public function isUserPhoneExists( $phone , $user_id,$account_type )
     {
-        return DB::table('users')->where([['id','<>',$user_id] ,['phone' ,$phone]])->first() ?  true : false ;
+        return DB::table('users')->where([['id','<>',$user_id] ,['phone' ,$phone],['account_type' ,$account_type]])->first() ?  true : false ;
 
     }
 
@@ -179,10 +179,16 @@ class AuthController extends Controller
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.enter_valid_phone'));
         }
 
+        $account_type = '0';
+        if($request->header('account-type'))
+        {
+            $account_type = $request->header('account-type');
+        }
+
         if($request->header('Authorization') && $request->header('Authorization') != '' && $request->header('Authorization') != null && $request->header('Authorization') != "null"){
             $user_auth =  $this->getAuthenticatedUser();
 
-            if ($this->isUserPhoneExists( $request->phone ,$user_auth->id)) {
+            if ($this->isUserPhoneExists( $request->phone ,$user_auth->id,$account_type)) {
                 return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
             }
 
@@ -192,11 +198,7 @@ class AuthController extends Controller
             }
         }
 
-        $account_type = '0';
-        if($request->header('account-type'))
-        {
-            $account_type = $request->header('account-type');
-        }
+        
         //create verify phone code
         $this->createVerificationCode( $request->phone,$request->country_id , $account_type );
 
