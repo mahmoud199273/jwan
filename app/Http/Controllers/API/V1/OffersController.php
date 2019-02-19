@@ -686,7 +686,7 @@ class OffersController extends Controller
 
             $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
 
-            $chat_content = 'تم إلغاء العرض'.$campaign->title;
+            $chat_content = 'تم الغاء عرضك على حملة '.$campaign->title;
             $chat = new Chat;
             $chat->from_user_id	= $user->id;
             $chat->to_user_id = $offer->influncer_id;
