@@ -175,7 +175,7 @@ class TransactionsController extends Controller
                                   ['transaction_id' =>  (int)$transactions->id,
                                   'offer_id'    => 0,
                                   'campaign_id'    => 0,
-                                  'type'          =>  14,
+                                  'type'          =>  22,
                                   'type_title'	=> 'transaction approve']);
 
         //$request->persist();
@@ -281,7 +281,7 @@ class TransactionsController extends Controller
                                   ['transaction_id' =>  (int)$transactions->id,
                                   'offer_id'    => 0,
                                   'campaign_id'    => 0,
-                                  'type'          =>  14,
+                                  'type'          =>  22,
                                   'type_title'	=> 'transaction approve']);
             }
             return response(['msg' => 'approved', 'status' => 'success']);
@@ -332,7 +332,7 @@ class TransactionsController extends Controller
                                   ['transaction_id' =>  (int)$TransactionData->id,
                                   'offer_id'    => (int)$TransactionData->offer_id,
                                   'campaign_id'    => (int)$TransactionData->campaign_id,
-                                  'type'          =>  14,
+                                  'type'          =>  22,
                                   'type_title'	=> 'transaction approve']);
 
             }
@@ -356,7 +356,7 @@ class TransactionsController extends Controller
                                 ['transaction_id' =>  (int)$TransactionData->id,
                                 'offer_id'    => (int)$TransactionData->offer_id,
                                 'campaign_id'    => (int)$TransactionData->campaign_id,
-                                'type'          =>  14,
+                                'type'          =>  22,
                                 'type_title'	=> 'transaction approve']);
 
                                   
