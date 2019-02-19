@@ -713,7 +713,7 @@ class UserController extends Controller
 
         $validator = Validator::make( $request->all(), [
             'country_id' => 'required',
-            'phone'      => 'required',
+            'phone'      => 'required|max:14|min:9|regex:/^[5][0-9]{4,}/',
         ]);
 
         
@@ -721,6 +721,10 @@ class UserController extends Controller
         if($request->header('account-type'))
         {
             $account_type = $request->header('account-type');
+        }
+
+        if ($validator->fails()) {
+            return $this->setStatusCode(422)->respondWithError($validator->messages()->first());
         }
 
         if ($this->isPhoneExists( $request->phone ,$user->id , $account_type)) {
@@ -732,11 +736,7 @@ class UserController extends Controller
             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.nothing_to_update'));
         }
 
-        if ($validator->fails()) {
-            return $this->setStatusCode(422)->respondWithError($validator->messages()->first());
-            //return $this->setStatusCode(422)->respondWithError($validator->messages());
-            //return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
-        }
+        
 
 
         app('App\Http\Controllers\API\V1\AuthController')->createVerificationCode($request->phone,$user->countries_id,$account_type);

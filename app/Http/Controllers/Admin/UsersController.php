@@ -163,7 +163,7 @@ class UsersController extends Controller
         if($user->phone !=$phone ){
             $verify = new VerifyPhoneCode;
             $verify->phone = $phone;
-            $verify->account_type = '1';
+            $verify->account_type = '0';
             $verify->code = $code;
             $verify->verified = '1';
             $verify->save();
