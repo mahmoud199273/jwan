@@ -188,7 +188,7 @@ class AuthController extends Controller
         if($request->header('Authorization') && $request->header('Authorization') != '' && $request->header('Authorization') != null && $request->header('Authorization') != "null"){
             $user_auth =  $this->getAuthenticatedUser();
 
-            if ($this->isUserPhoneExists( $request->phone ,$user_auth->id,$account_type)) {
+            if ($this->isUserPhoneExists( $request->phone ,$user_auth->id,$user_auth->account_type)) {
                 return $this->setStatusCode(422)->respondWithError(trans('api_msgs.phone_exists'));
             }
 
