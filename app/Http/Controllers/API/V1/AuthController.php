@@ -162,7 +162,7 @@ class AuthController extends Controller
 
     public function isUserPhoneExists( $phone , $user_id,$account_type )
     {
-        return DB::table('users')->where([['id','<>',$user_id] ,['phone' ,$phone],['account_type' ,$account_type]])->first() ?  true : false ;
+        return DB::table('users')->where([['id','<>',$user_id] ,['phone' ,$phone],['account_type' ,$account_type],['deleted_at',NULL]])->first() ?  true : false ;
 
     }
 
