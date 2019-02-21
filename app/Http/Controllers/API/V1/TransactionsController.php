@@ -218,7 +218,8 @@ class TransactionsController extends Controller
             $transations->sdk_token     = $request->sdk_token;
             $transations->merchant_reference     = $request->merchant_reference;
             $transations->card_number     = $request->card_number;
-            $transations->transaction_account_number     = $request->transaction_account_number;
+            //$transations->transaction_account_number     = $request->transaction_account_number;
+            $transations->transaction_account_number     = $request->fort_id;
             $transations->authorization_code     = $request->authorization_code;
             $transations->response_code     = $request->response_code;
             $transations->payment_option     = $request->payment_option;
