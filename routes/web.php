@@ -11,25 +11,17 @@
 |
 */
 
-
 if (!defined('ADMIN_PATH')) {
 	define('ADMIN_PATH', 'admin');
 }
 
-
 Route::group(['prefix'=>ADMIN_PATH],function(){
 
 	Route::group(['namespace'=>'Admin'],function(){
-
-
-
-		
 		Route::get('/admin', 'DashboardController@index');
 		
-
 		/*Route::resource('users','UsersController');
 		
-
 		Route::post('/users/activate'       , 'UsersController@activate');
 		Route::post('/users/ban'            , 'UsersController@ban');
 		Route::get('/user/search'           , 'UsersController@search');
