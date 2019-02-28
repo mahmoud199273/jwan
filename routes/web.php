@@ -15,11 +15,9 @@ if (!defined('ADMIN_PATH')) {
 	define('ADMIN_PATH', 'admin');
 }
 
-<<<<<<< HEAD
 URL::forceScheme('https');
 
-=======
->>>>>>> 24dd9f53bb36794b2db174371500192619165d32
+
 Route::group(['prefix'=>ADMIN_PATH],function(){
 
 	Route::group(['namespace'=>'Admin'],function(){

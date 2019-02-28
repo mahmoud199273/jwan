@@ -8,6 +8,8 @@ use App\Country;
 use App\Offer;
 use App\Notification;
 use App\Nathionality;
+use App\UserSocial;
+
 
 class InfluncerTransformer extends Transformer
 {
@@ -109,6 +111,8 @@ class InfluncerTransformer extends Transformer
                 'countries' => $user->countries,
 
                 'areas' =>$user->areas,
+
+                "socialUpdateUnderApproval"=> (boolean)UserSocial::where('user_id', $user->id)->count()
             ];
         }
     }
