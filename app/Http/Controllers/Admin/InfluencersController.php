@@ -189,7 +189,7 @@ class InfluencersController extends Controller
             $user->class = $request->class;
             $user->save();
 
-            @sendSMS($this->formatPhone($user->phone,$user->countries_id) , __('api_msgs.active_sms'));
+            dd(@sendSMS($this->formatPhone($user->phone,$user->countries_id) , __('api_msgs.active_sms')));
             return response(['msg' => 'activated', 'status' => 'success']);
         }
 

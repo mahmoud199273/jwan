@@ -1,23 +1,23 @@
-<?php 
+<?php
 
 function sendSMS( $numbers , $msg = 'welcome to Signify app')
 {
 
 		// $userAccount   = '966554554681';
 		// $passAccount   = '3419118asd';
-		// $sender        = '0554554681'; 
+		// $sender        = '0554554681';
 		$userAccount   = '966501566199';
 		$passAccount   = 'fkg3;lf$#vdGU1';
-		$sender        = 'signify'; 
+		$sender        = 'signify';
 		$MsgID         = 1;
-		$timeSend      = 0; 
-		$dateSend	   = 0;	 
-		$deleteKey	   = 0; 
-		$viewResult	   = 1; 
+		$timeSend      = 0;
+		$dateSend	   = 0;
+		$deleteKey	   = 0;
+		$viewResult	   = 1;
 
 		global $arraySendMsg;
 		$url = "www.mobily.ws/api/msgSend.php";
-		$applicationType = "68";  
+		$applicationType = "68";
 	    $msg = $msg;
 		$sender = urlencode($sender);
 		$domainName = $_SERVER['SERVER_NAME'];
