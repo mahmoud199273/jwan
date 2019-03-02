@@ -229,6 +229,7 @@ class InfluencersController extends Controller
         if($user_social)
         {
         $player_ids = $this->getUserPlayerIds($user_social->user_id);
+        dd($player_ids);
           if($request->approve=="approve")
           {
               $user =  User::find( $user_social->user_id );
