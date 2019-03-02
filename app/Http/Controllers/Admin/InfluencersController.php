@@ -245,11 +245,11 @@ class InfluencersController extends Controller
               $user->youtube = $user_social->youtube;
               $user->youtube_follwers = $user_social->youtube_follwers;
               $user->save();
-              sendNotification(1,'Your social media details update has been approved','تم الموافقة على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",['user_id' =>  (int)$user->id,'type'=>  21,'type_title'	=> 'social_media_change']);
+              sendNotification(1,'Your social media details update has been approved','تم الموافقة على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",['user_id' =>  (int)$user_social->user_id,'type'=>  21,'type_title'	=> 'social_media_change']);
           }
           else
           {
-            sendNotification(1,'Your social media details update has been rejected','تم رفض طلبك على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",['user_id' => (int)$user->id,'type'=> 21,'type_title' => 'social_media_change']);
+            sendNotification(1,'Your social media details update has been rejected','تم رفض طلبك على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",['user_id' => (int)$user_social->user_id,'type'=> 21,'type_title' => 'social_media_change']);
             dd($request->reject);
           }
           UserSocial::where('id',$id)->delete();
