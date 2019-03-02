@@ -224,7 +224,6 @@ class InfluencersController extends Controller
     }
     public function UpdateInfluencerSocial (Request $request , $id)
     {
-      //ssssssssss
         $user_social = UserSocial::where('id',$id)->first();
         if($user_social)
         {
