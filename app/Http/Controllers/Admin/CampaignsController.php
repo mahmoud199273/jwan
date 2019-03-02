@@ -40,7 +40,7 @@ class campaignsController extends Controller
         return $player_ids ? $player_ids : null;
     }
 
-    
+
     function testNot($id)
     {
             // $user_player_ids = $this->getUserSinglePlayerIds($id);//252
@@ -52,7 +52,7 @@ class campaignsController extends Controller
         $campaign_categories = CampaignCategory::where('campaign_id',$id)->pluck('category_id')->toArray();
         $campaign_countries = CampaignCountry::where('campaign_id',$id)->pluck('country_id')->toArray();
         $campaign_areas = CampaignArea::where('campaign_id',$id)->pluck('area_id')->toArray();
-        
+
             $users = DB::table('users')
             ->join('user_categories', 'users.id', '=', 'user_categories.user_id')
             ->join('user_countries', 'users.id', '=', 'user_countries.user_id')
@@ -72,9 +72,9 @@ class campaignsController extends Controller
             $users->orderBy("updated_at",'DESC');
 
             $player_ids = $users->pluck('user_player_ids.player_id')->toArray();
-            $result = sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,'public',
+            $result = sendNotification(1,'A new campaign was added','لدیك طلب لحملة جدیدة. قدم عرضك الآن',$player_ids,'public',
                                   ['campaign_id' =>  (int)$id,'type'=>  20,'type_title'=> 'new campaign']);
-            dd($player_ids,$result);                      
+            dd($player_ids,$result);
     }
     public function index()
     {
@@ -82,7 +82,7 @@ class campaignsController extends Controller
         $campaigns = Campaign::latest()->paginate(10);
 
         $influencers = User::where('account_type','1')->get();
-        
+
         $admin_camp = InfluencerCampaignsByAdmin::all();
 
         return view('admin.campaigns.index',compact('campaigns','influencers','admin_camp'));
@@ -185,7 +185,7 @@ class campaignsController extends Controller
         $campaign_countries =  CampaignCountry::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('country_id');
         $campaign_areas = CampaignArea::whereNull('deleted_at')->where('campaign_id',$id)->get()->pluck('area_id');
 
-        
+
         return view('admin.campaigns.edit',compact('campaign','users','campaign_status','countries','areas','categories','campaign_categories','campaign_countries','campaign_areas'));
     }
 
@@ -202,18 +202,18 @@ class campaignsController extends Controller
             $campaign->end_at = $end_date;
             $campaign->save();
 
-            
+
 
             $user_player_ids = $this->getUserSinglePlayerIds($campaign->user_id);
             sendNotification(0,'Your campaign has been approved','تم تفعيل الحملة الخاصه بك',$user_player_ids,"public",['campaign_id' =>  (int)$id,'type' =>  20,'type_title'  => 'new campaign']);
 
-            
+
         $campaign_categories = CampaignCategory::where('campaign_id',$id)->pluck('category_id')->toArray();
         $campaign_countries = CampaignCountry::where('campaign_id',$id)->pluck('country_id')->toArray();
 
         $campaign_areas = CampaignArea::where('campaign_id',$id)->pluck('area_id')->toArray();
-        
-        
+
+
             $users = DB::table('users')
             ->join('user_categories', 'users.id', '=', 'user_categories.user_id')
             ->join('user_countries', 'users.id', '=', 'user_countries.user_id')
@@ -234,7 +234,7 @@ class campaignsController extends Controller
 
             $player_ids = $users->pluck('user_player_ids.player_id')->toArray();
             //dd($player_ids);
-            sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,'public',
+            sendNotification(1,'A new campaign was added','لدیك طلب لحملة جدیدة. قدم عرضك الآن',$player_ids,'public',
                                   ['campaign_id' =>  (int)$id,'type'=>  20,'type_title'=> 'new campaign']);
     }
 
@@ -282,7 +282,7 @@ class campaignsController extends Controller
                         ]);
                 }
             }
-           
+
             if($areas_id !== null){
                 CampaignArea::where('campaign_id', $id)->forceDelete();
                 foreach ($areas_id  as $area_id) {
@@ -302,12 +302,12 @@ class campaignsController extends Controller
         {
             $this->UpdateCamapign($id);
         }elseif($campaign->status == 0 && $status == 2){
-            
+
             $user_player_ids = $this->getUserSinglePlayerIds($campaign->user_id);
             sendNotification(0,'Your campaign has been rejected','تم رفض الحملة الخاصه بك',$user_player_ids,"public",['campaign_id' =>  (int)$id,'type' =>  22,'type_title'  => 'rejected campaign']);
 
-        }   
-            
+        }
+
         return redirect()->back()->with('status' , __('admin.updated') );
     }
 
@@ -327,7 +327,7 @@ class campaignsController extends Controller
 
     public function approve( Request $request)
     {
-        
+
         if ( $request->ajax() ) {
 
             $settings = Setting::first();
@@ -341,18 +341,18 @@ class campaignsController extends Controller
             $campaign->end_at = $end_date;
             $campaign->save();
 
-            
+
 
             $user_player_ids = $this->getUserSinglePlayerIds($campaign->user_id);
             sendNotification(0,'Your campaign has been approved','تم تفعيل الحملة الخاصه بك',$user_player_ids,"public",['campaign_id' =>  (int)$request->id,'type' =>  20,'type_title'  => 'new campaign']);
 
-            
+
         $campaign_categories = CampaignCategory::where('campaign_id',$request->id)->pluck('category_id')->toArray();
         $campaign_countries = CampaignCountry::where('campaign_id',$request->id)->pluck('country_id')->toArray();
 
         $campaign_areas = CampaignArea::where('campaign_id',$request->id)->pluck('area_id')->toArray();
-        
-        
+
+
             $users = DB::table('users')
             ->join('user_categories', 'users.id', '=', 'user_categories.user_id')
             ->join('user_countries', 'users.id', '=', 'user_countries.user_id')
@@ -373,12 +373,12 @@ class campaignsController extends Controller
 
             $player_ids = $users->pluck('user_player_ids.player_id')->toArray();
             //dd($player_ids);
-            $result = sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,'public',
+            $result = sendNotification(1,'A new campaign was added','لدیك طلب لحملة جدیدة. قدم عرضك الآن',$player_ids,'public',
                                   ['campaign_id' =>  (int)$request->id,'type'=>  20,'type_title'=> 'new campaign']);
             return response(['msg' => 'approved', 'status' => 'success']);
         }
 
-        
+
     }
 
 
@@ -398,13 +398,13 @@ class campaignsController extends Controller
     //         //$campaign->save();
     //         $player_ids = $this->getUserPlayerIds();
     //         dd($player_ids);
-    //         sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,
+    //         sendNotification(1,'A new campaign was added','لدیك طلب لحملة جدیدة. قدم عرضك الآن',$player_ids,
     //                               ['campaign_id' =>  (int)$request->id,'type'=>  20,'type_title'=> 'new campaign']);
-            
+
     //         return response(['msg' => 'activated', 'status' => 'success']);
     //     }
 
-        
+
     // }
 
     public function reject( Request $request )
@@ -423,7 +423,7 @@ class campaignsController extends Controller
 
         // dd(20);
         $campaign_id = $request->campaign_id;
-        $infuncers = $request->influencers; 
+        $infuncers = $request->influencers;
 
         // dd($infuncers);
 
@@ -440,9 +440,9 @@ class campaignsController extends Controller
         }
 
          return redirect('/admin/campaigns');
-        
+
     }
 
 
-  
+
 }

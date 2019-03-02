@@ -477,7 +477,7 @@ class CampignsController extends Controller
             // $player_ids = $this->getUserPlayerIds($to_user_id);
             // Notification::create(['user_id' => $to_user_id,
             //                           'message' => 'A new campaign was added',
-            //                           'message_ar' => 'يوجد حملة جديدة',
+            //                           'message_ar' => 'لدیك طلب لحملة جدیدة. قدم عرضك الآن',
             //                           'campaign_id' =>  $offer->campaign_id,
             //                           'offer_id'    => 0,
             //                           'type'          =>  20,
@@ -486,7 +486,7 @@ class CampignsController extends Controller
             //
             // sendNotification($who,
             //                       'A new campaign was added',
-            //                       'يوجد حملة جديدة',
+            //                       'لدیك طلب لحملة جدیدة. قدم عرضك الآن',
             //                       $player_ids,
             //                       ['campaign_id' =>  (int)$offer->campaign_id,
             //                       'offer_id'    => (int)$offer->id,
