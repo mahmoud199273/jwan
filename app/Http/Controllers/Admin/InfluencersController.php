@@ -228,11 +228,9 @@ class InfluencersController extends Controller
         $user_social = UserSocial::where('id',$id)->first();
         if($user_social)
         {
-        $player_ids = $this->getUserPlayerIds($user_social->user_id);
-
+          $player_ids = $this->getUserPlayerIds($user_social->user_id);
           if($request->approve=="approve")
           {
-            dd($request->approve);
               $user =  User::find( $user_social->user_id );
               $user->facebook = $user_social->facebook;
               $user->facebook_follwers = $user_social->facebook_follwers;
@@ -247,12 +245,12 @@ class InfluencersController extends Controller
               $user->youtube = $user_social->youtube;
               $user->youtube_follwers = $user_social->youtube_follwers;
               $user->save();
-              sendNotification(1,'Your social media details update has been approved','تم الموافقة على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",[/*'user_id' =>  (int)$user->id,'type'=>  13,'type_title'	=> 'logout '*/]);
+              sendNotification(1,'Your social media details update has been approved','تم الموافقة على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",['user_id' =>  (int)$user->id,'type'=>  21,'type_title'	=> 'social_media_change']);
           }
           else
           {
+            sendNotification(1,'Your social media details update has been rejected','تم رفض طلبك على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",['user_id' => (int)$user->id,'type'=> 21,'type_title' => 'social_media_change']);
             dd($request->reject);
-            sendNotification(1,'Your social media details update has been rejected','تم رفض طلبك على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",[/*'user_id' => (int)$user->id,'type'=> 13,'type_title' => 'logout '*/]);
           }
           UserSocial::where('id',$id)->delete();
         }
