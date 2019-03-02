@@ -31,7 +31,7 @@ class InfluencersController extends Controller
         $users = User::where('is_active','0')->count();
         $users = User::select('users.*','v.code','v.verified','user_socials.id as social_id')
         ->LEFTJOIN('user_socials','user_socials.user_id','users.id')
-        ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'), 
+        ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'),
         function($join)
         {
             $join->on('users.phone', '=', 'v2.phone');
@@ -47,12 +47,12 @@ class InfluencersController extends Controller
        public function search( Request $request )
     {
         $query =  $request->q;
-        
+
         if ( $query == "") {
             return redirect()->back();
         }else{
                                     $users   = User::select('users.*','v.code','v.verified')
-                                    ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'), 
+                                    ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'),
                                     function($join)
                                     {
                                         $join->on('users.phone', '=', 'v2.phone');
@@ -74,7 +74,7 @@ class InfluencersController extends Controller
         }
     }
 
- 
+
 
     /**
      * Show the form for creating a new resource.
@@ -161,8 +161,8 @@ class InfluencersController extends Controller
             $verify->verified = '1';
             $verify->save();
         }
-        
-        
+
+
         return redirect()->back()->with('status' , __('admin.updated') );
     }
 
@@ -193,7 +193,7 @@ class InfluencersController extends Controller
             return response(['msg' => 'activated', 'status' => 'success']);
         }
 
-        
+
     }
 
     public function getUserPlayerIds( $user_id )
@@ -211,7 +211,7 @@ class InfluencersController extends Controller
 
             $player_ids = $this->getUserPlayerIds($user->id);
             sendNotification(1,'Your account is suspended,please refer to the admin ','تم ايقاف العضوية برجاء الرجوع الى الادارة',$player_ids,"public",['user_id' =>  (int)$user->id,'type'=>  13,'type_title'	=> 'logout ']);
-            
+
             return response(['msg' => 'banned', 'status' => 'success']);
         }
 
@@ -224,30 +224,39 @@ class InfluencersController extends Controller
     }
     public function UpdateInfluencerSocial (Request $request , $id)
     {
+      //ssssssssss
         $user_social = UserSocial::where('id',$id)->first();
-        if($user_social) 
+        $player_ids = $this->getUserPlayerIds($user->id);
+        if($user_social)
         {
-            $user =  User::find( $user_social->user_id );
-            $user->facebook = $user_social->facebook;
-            $user->facebook_follwers = $user_social->facebook_follwers;
-            $user->twitter = $user_social->twitter;
-            $user->twitter_follwers = $user_social->twitter_follwers;
-            $user->instgrame = $user_social->instgrame;
-            $user->instgrame_follwers = $user_social->instgrame_follwers;
-            $user->snapchat = $user_social->snapchat;
-            $user->snapchat_follwers = $user_social->snapchat_follwers;
-            $user->linkedin = $user_social->linkedin;
-            $user->linkedin_follwers = $user_social->linkedin_follwers;
-            $user->youtube = $user_social->youtube;
-            $user->youtube_follwers = $user_social->youtube_follwers;
-            $user->save();
-
-            UserSocial::where('id',$id)->delete();
+          if($request->approve=="approve")
+          {
+              $user =  User::find( $user_social->user_id );
+              $user->facebook = $user_social->facebook;
+              $user->facebook_follwers = $user_social->facebook_follwers;
+              $user->twitter = $user_social->twitter;
+              $user->twitter_follwers = $user_social->twitter_follwers;
+              $user->instgrame = $user_social->instgrame;
+              $user->instgrame_follwers = $user_social->instgrame_follwers;
+              $user->snapchat = $user_social->snapchat;
+              $user->snapchat_follwers = $user_social->snapchat_follwers;
+              $user->linkedin = $user_social->linkedin;
+              $user->linkedin_follwers = $user_social->linkedin_follwers;
+              $user->youtube = $user_social->youtube;
+              $user->youtube_follwers = $user_social->youtube_follwers;
+              $user->save();
+              sendNotification(1,'Your social media details update has been approved','تم الموافقة على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",[/*'user_id' =>  (int)$user->id,'type'=>  13,'type_title'	=> 'logout '*/]);
+          }
+          else
+          {
+            sendNotification(1,'Your social media details update has been rejected','تم رفض طلبك على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",[/*'user_id' => (int)$user->id,'type'=> 13,'type_title' => 'logout '*/]);
+          }
+          UserSocial::where('id',$id)->delete();
         }
         return redirect()->intended(config('app.admin_url').'/influencers');
     }
-    
-    
+
+
     public function unblock(Request $request)
     {
         $user =  User::find( $request->id );
@@ -257,9 +266,9 @@ class InfluencersController extends Controller
             $user->block_time = NULL;
             $user->save();
 
-           
+
             return response(['msg' => 'unblocked', 'status' => 'success']);
         }
     }
-    
+
 }
