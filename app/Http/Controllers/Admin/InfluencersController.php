@@ -201,6 +201,28 @@ class InfluencersController extends Controller
 
     }
 
+    public function formatPhone( $phone,$country_id )
+    {
+
+    //$country_code = Country::where('id',$country_id)->pluck('code');
+    $country_code = Country::where('id',$country_id)->first();
+
+    if($country_code) $country_code = $country_code->code;
+    else $country_code = "966";
+
+    $is_valid_phone = preg_match('/^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/', $phone);
+        if ($is_valid_phone) {
+            if (strncmp($phone, $country_code, 3) === 0) {
+                return $phone;
+            }else{
+                //return substr_replace($phone , $country_code, 0 , 1 );
+                return $country_code.$phone;
+            }
+        }
+
+        return false;
+    }
+
     public function getUserPlayerIds( $user_id )
     {
         $player_ids = UserPlayerId::where('user_id',$user_id)->pluck('player_id')->toArray();

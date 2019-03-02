@@ -13,7 +13,7 @@ use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
-    
+
     public function loginIndex()
     {
     	return view('admin.auth.login');
@@ -82,7 +82,7 @@ class AuthController extends Controller
     {
 
        // dd(10);
-        
+
       $admin = Auth::guard('admin')->user();
      // dd($admin->toArray());
         if(Auth::guard('admin')->user()){
@@ -91,7 +91,7 @@ class AuthController extends Controller
         }else{
             return redirect(config('app.admin_url').'/admin');
         }
-        
+
 
     }
 
@@ -105,18 +105,18 @@ class AuthController extends Controller
             $validator = Validator::make( $request->all(), [
                 'name'      => 'required|string|max:100|min:3',
                 'email'     => ['required', Rule::unique('admins')->ignore($admin->id, 'id')],
-                'password'  => 'nullable|string|min:6'        
+                'password'  => 'nullable|string|min:6'
 
             ]);
 
             if ($validator->fails()) {
                 return redirect()->back()->withInput($request->input())->withErrors($validator);
             }
-            
+
             Admin::find($admin->id)->update($request->all());
 
 
-    
+
 
             return redirect()->back()->with('status' , __('admin.updated') );
         }else{
@@ -124,7 +124,7 @@ class AuthController extends Controller
         }
     }
 
-
+    
 
 
     public function logout( Request $request )
