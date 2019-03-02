@@ -229,9 +229,10 @@ class InfluencersController extends Controller
         if($user_social)
         {
         $player_ids = $this->getUserPlayerIds($user_social->user_id);
-        dd($request->approve);
+
           if($request->approve=="approve")
           {
+            dd($request->approve);
               $user =  User::find( $user_social->user_id );
               $user->facebook = $user_social->facebook;
               $user->facebook_follwers = $user_social->facebook_follwers;
@@ -250,6 +251,7 @@ class InfluencersController extends Controller
           }
           else
           {
+            dd($request->reject);
             sendNotification(1,'Your social media details update has been rejected','تم رفض طلبك على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",[/*'user_id' => (int)$user->id,'type'=> 13,'type_title' => 'logout '*/]);
           }
           UserSocial::where('id',$id)->delete();
