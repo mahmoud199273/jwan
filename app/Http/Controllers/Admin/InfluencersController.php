@@ -226,9 +226,9 @@ class InfluencersController extends Controller
     {
       //ssssssssss
         $user_social = UserSocial::where('id',$id)->first();
-        $player_ids = $this->getUserPlayerIds($id);
         if($user_social)
         {
+        $player_ids = $this->getUserPlayerIds($user_social->user_id);
           if($request->approve=="approve")
           {
               $user =  User::find( $user_social->user_id );
