@@ -15,6 +15,10 @@ use App\VerifyPhoneCode;
 use Illuminate\Http\Request;
 
 
+use Illuminate\Support\Facades\Log;
+
+
+
 class InfluencersController extends Controller
 {
 
@@ -189,7 +193,8 @@ class InfluencersController extends Controller
             $user->class = $request->class;
             $user->save();
 
-            dd(@sendSMS($this->formatPhone($user->phone,$user->countries_id) , __('api_msgs.active_sms')));
+            $value = @sendSMS($this->formatPhone($user->phone,$user->countries_id) , __('api_msgs.active_sms'));
+            Log::info('User failed to login.', ['sms' => $value]);
             return response(['msg' => 'activated', 'status' => 'success']);
         }
 
