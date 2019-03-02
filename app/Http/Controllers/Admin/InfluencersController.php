@@ -250,7 +250,6 @@ class InfluencersController extends Controller
           else
           {
             sendNotification(1,'Your social media details update has been rejected','تم رفض طلبك على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",['user_id' => (int)$user_social->user_id,'type'=> 21,'type_title' => 'social_media_change']);
-            dd($request->reject);
           }
           UserSocial::where('id',$id)->delete();
         }
