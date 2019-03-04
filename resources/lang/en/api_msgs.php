@@ -45,7 +45,7 @@ return[
       'Already extended before'    => 'Already extended before',
       'you can not update this campaign'  => 'you can not update this campaign',
       'this campaign is not for you'    => 'this campaign is not for you',
-      'active_sms' => 'your account is activated as influencer in signify app and you can start using the app and produce your offers to customers',
+      'active_sms' => 'your account has been activated as an influencer in signify app and you can start using the app and produce your offers to customers',
       ''            => '',
       ''            => '',
       ''            => ''

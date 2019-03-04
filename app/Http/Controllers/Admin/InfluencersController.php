@@ -15,6 +15,10 @@ use App\VerifyPhoneCode;
 use Illuminate\Http\Request;
 
 
+use Illuminate\Support\Facades\Log;
+
+
+
 class InfluencersController extends Controller
 {
 
@@ -48,12 +52,12 @@ class InfluencersController extends Controller
        public function search( Request $request )
     {
         $query =  $request->q;
-        
+
         if ( $query == "") {
             return redirect()->back();
         }else{
                                     $users   = User::select('users.*','v.code','v.verified')
-                                    ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'), 
+                                    ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'),
                                     function($join)
                                     {
                                         $join->on('users.phone', '=', 'v2.phone');
@@ -75,7 +79,7 @@ class InfluencersController extends Controller
         }
     }
 
- 
+
 
     /**
      * Show the form for creating a new resource.
@@ -162,8 +166,8 @@ class InfluencersController extends Controller
             $verify->verified = '1';
             $verify->save();
         }
-        
-        
+
+
         return redirect()->back()->with('status' , __('admin.updated') );
     }
 
@@ -190,11 +194,34 @@ class InfluencersController extends Controller
             $user->class = $request->class;
             $user->save();
 
-            @sendSMS($this->formatPhone($user->phone,$user->countries_id) , __('api_msgs.active_sms'));
+            $value = @sendSMS($this->formatPhone($user->phone,$user->countries_id) , __('api_msgs.active_sms'));
+            Log::info('User failed to login.', ['sms' => $value]);
             return response(['msg' => 'activated', 'status' => 'success']);
         }
 
-        
+
+    }
+
+    public function formatPhone( $phone,$country_id )
+    {
+
+    //$country_code = Country::where('id',$country_id)->pluck('code');
+    $country_code = Country::where('id',$country_id)->first();
+
+    if($country_code) $country_code = $country_code->code;
+    else $country_code = "966";
+
+    $is_valid_phone = preg_match('/^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/', $phone);
+        if ($is_valid_phone) {
+            if (strncmp($phone, $country_code, 3) === 0) {
+                return $phone;
+            }else{
+                //return substr_replace($phone , $country_code, 0 , 1 );
+                return $country_code.$phone;
+            }
+        }
+
+        return false;
     }
 
     public function getUserPlayerIds( $user_id )
@@ -212,7 +239,7 @@ class InfluencersController extends Controller
 
             $player_ids = $this->getUserPlayerIds($user->id);
             sendNotification(1,'Your account is suspended,please refer to the admin ','تم ايقاف العضوية برجاء الرجوع الى الادارة',$player_ids,"public",['user_id' =>  (int)$user->id,'type'=>  13,'type_title'	=> 'logout ']);
-            
+
             return response(['msg' => 'banned', 'status' => 'success']);
         }
 
@@ -229,7 +256,7 @@ class InfluencersController extends Controller
         if($action=="reject"){
             // dd("reject");
             $user_social->delete();
-            sendNotification(1,'Your account is suspended,please refer to the admin ','تم ايقاف العضوية برجاء الرجوع الى الادارة',$player_ids,"public",['user_id' =>  (int)$user->id,'type'=>  13,'type_title'  => 'logout ']);
+            sendNotification(1,'Your social media details update has been rejected','تم رفض تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",['user_id' =>  (int)$user_social->user_id,'type'=>  21,'type_title' => 'social_media_change']);
 
         }
         else if($action=="accept" && $user_social){
@@ -248,13 +275,14 @@ class InfluencersController extends Controller
             $user->youtube = $user_social->youtube;
             $user->youtube_follwers = $user_social->youtube_follwers;
             $user->save();
+            sendNotification(1,'Your social media details update has been approved','تم الموافقة على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",['user_id' =>  (int)$user_social->user_id,'type'=>  21,'type_title' => 'social_media_change']);
 
             UserSocial::where('id',$id)->delete();
         }
         return redirect()->intended(config('app.admin_url').'/influencers');
     }
-    
-    
+
+
     public function unblock(Request $request)
     {
         $user =  User::find( $request->id );
@@ -264,9 +292,9 @@ class InfluencersController extends Controller
             $user->block_time = NULL;
             $user->save();
 
-           
+
             return response(['msg' => 'unblocked', 'status' => 'success']);
         }
     }
-    
+
 }
