@@ -82,8 +82,10 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::post('/influencers/unblock'            , 'InfluencersController@unblock');
 		Route::get('influencer/search','InfluencersController@search');
 		Route::get('influencers/{id}/social','InfluencersController@InfluencerSocial');
-		Route::patch('influencers/{id}/social/{action}','InfluencersController@UpdateInfluencerSocial');
-		Route::get('influencers/{id}/social/{action}','InfluencersController@UpdateInfluencerSocial');
+
+		Route::patch('influencers/{id}/social','InfluencersController@UpdateInfluencerSocial');
+		Route::get('influencers/{id}/social/delete','InfluencersController@rejectUpdateInfluencerSocial');
+
 
 		// Route::resource('users','UsersController');
 		// Route::post('/users/activate'       , 'UsersControllers@activate');

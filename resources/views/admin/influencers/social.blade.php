@@ -33,7 +33,7 @@
     </div>
 
     <!--begin::Form-->
-    <form class="m-form" action="{{url('admin/influencers')}}/{{ $row->id }}/social/accept" method="post" enctype="multipart/form-data">
+    <form class="m-form" action="{{url('admin/influencers')}}/{{ $row->id }}/social" method="post" enctype="multipart/form-data">
        
               {{ csrf_field() }}
               <input type="hidden" name="account_type" value="1" />
@@ -174,7 +174,7 @@
                     </div>
                     <div class="col-9">
                         <button type="submit" class="btn btn-brand">تأكيد</button>
-                        <a class="btn btn-danger" href="{{url('admin/influencers')}}/{{ $row->id }}/social/reject">رفض </a>
+                        <a class="btn btn-danger" href="{{url('admin/influencers')}}/{{ $row->id }}/social/delete">رفض </a>
                         <a type="reset" href="{{url('admin/influencers')}}" class="btn btn-secondary">عودة</a>
                     </div>
                 </div>
