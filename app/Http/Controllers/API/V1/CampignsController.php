@@ -315,7 +315,7 @@ class CampignsController extends Controller
             
             if(!$request->files_arr){
                 // Attachment::create([
-<<<<<<< HEAD
+
                     
                     // 'campaign_id'       => $campaign->id,
                     
@@ -516,119 +516,7 @@ class CampignsController extends Controller
                                                             'youtube'           => 'required',
                                                             
                                                             'instgrame'         => 'required',
-=======
 
-                // 'campaign_id'       => $campaign->id,
-
-                // 'file'              => '/public/assets/images/campaign/campaign.png',
-                // 'file_type'          => "0"
-                // ]);
-            }
-        }
-
-             $categories_id  =$request->categories_id;
-
-            foreach ($categories_id  as $id) {
-                CampaignCategory::create([
-
-                'campaign_id'       => $campaign->id,
-
-                'category_id' => $id
-
-
-                      ]);
-            }
-            $countries_id  =$request->countries_id;
-
-            foreach ($countries_id  as $id) {
-                CampaignCountry::create([
-
-                'campaign_id'       => $campaign->id,
-
-                'country_id' => $id
-
-
-                      ]);
-            }
-
-            $areas_id  =$request->areas_id;
-           
-            if($areas_id !== null){
-
-                foreach ($areas_id  as $id) {
-                    CampaignArea::create([
-
-                    'campaign_id'       => $campaign->id,
-
-                    'area_id' => $id
-
-
-                        ]);
-                }
-
-            }
-
-            // $player_ids = $this->getUserPlayerIds($to_user_id);
-            // Notification::create(['user_id' => $to_user_id,
-            //                           'message' => 'A new campaign was added',
-            //                           'message_ar' => 'لدیك طلب لحملة جدیدة. قدم عرضك الآن',
-            //                           'campaign_id' =>  $offer->campaign_id,
-            //                           'offer_id'    => 0,
-            //                           'type'          =>  20,
-            //                           'type_title'  => 'new campaign']);
-            //
-            //
-            // sendNotification($who,
-            //                       'A new campaign was added',
-            //                       'لدیك طلب لحملة جدیدة. قدم عرضك الآن',
-            //                       $player_ids,
-            //                       ['campaign_id' =>  (int)$offer->campaign_id,
-            //                       'offer_id'    => (int)$offer->id,
-            //                       'type'          =>  20,
-            //                       'type_title'  => 'new campaign']);
-
-        return $this->respondWithSuccess(trans('api_msgs.created'));
-
-    }
-
-      public function isUserOwnCampaign( $user_id,$id)
-    {
-        return Campaign::where('user_id',$user_id)->where('id',$id)->first() ? true : false;
-    }
-
-     public function isCampaignApproved( $campaign_id)
-    {
-        return Campaign::where('id',$campaign_id)->where('status','0')->first() ? true : false;
-    }
-
-
-
-    public function update( Request $request )
-    {
-        $user =  $this->getAuthenticatedUser();
-
-         if($user->account_type == '1'){
-             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the rigtt to be here'));
-
-        }
-
-        $validator = Validator::make( $request->all(), [
-
-            'id'                => 'required|exists:campaigns,id',
-
-            'title'             => 'required',
-
-
-            'facebook'          => 'required',
-
-            'twitter'           => 'required',
-
-            'snapchat'          => 'required',
-
-            'youtube'           => 'required',
-
-            'instgrame'         => 'required',
->>>>>>> faec4ead49f8cf16dc5c8d5b850373b641f4206d
 
             'male'              => 'required',
 

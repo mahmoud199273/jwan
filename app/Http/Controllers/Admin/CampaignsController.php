@@ -328,7 +328,7 @@ class campaignsController extends Controller
     }
 
     public function approve( Request $request)
-    {
+    {        
         if ( $request->ajax() ) {
             $settings = Setting::first();
             $amount = $settings->campaign_period;
