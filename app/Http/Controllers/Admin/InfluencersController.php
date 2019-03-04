@@ -195,6 +195,7 @@ class InfluencersController extends Controller
             $user->save();
 
             $value = @sendSMS($this->formatPhone($user->phone,$user->countries_id) , __('api_msgs.active_sms'));
+            // $value = sendSMS($this->formatPhone($user->phone,$user->countries_id) , __('api_msgs.active_sms'));
             Log::info('User failed to login.', ['sms' => $value]);
             return response(['msg' => 'activated', 'status' => 'success']);
         }
