@@ -436,35 +436,18 @@ class UserController extends Controller
                     } 
 
         $validator = Validator::make( $request->all(), [
-
             'facebook'      => 'nullable',
-
             'facebook_follwers' => 'nullable',
-
             'twitter' => 'nullable',
-
             'twitter_follwers' => 'nullable',
-
             'instgrame' => 'nullable',
-
             'instgrame_follwers' => 'nullable',
-
             'snapchat' => 'nullable',
-
             'snapchat_follwers' => 'nullable',
-
             'linkedin' => 'nullable',
-
             'linkedin_follwers' => 'nullable',
-
             'youtube'       => 'nullable',
-
             'youtube_follwers' => 'nullable'
-
-
-
-
-
         ]);
 
         if ($validator->fails()) {
@@ -478,6 +461,9 @@ class UserController extends Controller
             {
                 return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
             }
+
+            // dd(UserSocial::where('user_id', $user->id)->first());
+
 
             UserSocial::where('user_id', $user->id)->delete();
 

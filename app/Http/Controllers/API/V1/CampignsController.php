@@ -58,8 +58,6 @@ class CampignsController extends Controller
 
         $influncer_campaigns_offered = Offer::where('influncer_id',$influncer->id)->where('status','!=','2')->pluck('campaign_id')->toArray();
  
- 
- 
         $influncer_countries = UserCountry::where('user_id',$influncer->id)->pluck('country_id')->toArray();
 
         $influncer_areas = UserArea::where('user_id',$influncer->id)->pluck('area_id')->toArray();
@@ -82,11 +80,7 @@ class CampignsController extends Controller
         //dd($influncer_categories);
  
             $campaigns = DB::table('campaigns')
- 
- 
- 
             ->join('campaign_countries', 'campaigns.id', '=', 'campaign_countries.campaign_id')
- 
             ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id')
             ->LEFTjoin('campaign_areas', 'campaigns.id', '=', 'campaign_areas.campaign_id');
  
@@ -120,19 +114,15 @@ class CampignsController extends Controller
                 $campaigns->whereNotIn('campaigns.id',$influncer_campaigns_offered);
             }
             $campaigns->where('campaigns.status','1')
-            //->where(\DB::raw('Date(campaigns.end_at)') ,'>',\DB::raw('NOW()'))
-            ->where('campaigns.end_at','>',Carbon::now()->addHours(3)->toDateTimeString())
-            ->whereNull('campaigns.deleted_at')
-            ->groupBy('campaigns.id')
- 
- 
- 
- 
-             ->orderBy($orderBy,'DESC');
+                //->where(\DB::raw('Date(campaigns.end_at)') ,'>',\DB::raw('NOW()'))
+                ->where('campaigns.end_at','>',Carbon::now()->addHours(3)->toDateTimeString())
+                ->whereNull('campaigns.deleted_at')
+                ->groupBy('campaigns.id')
+                ->orderBy($orderBy,'DESC');
  
  
              $result = $campaigns->get();
-            //dd($campaigns);
+            // dd($result);
             
         return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('lang.read succefully'),200);
     }
@@ -233,307 +223,298 @@ class CampignsController extends Controller
              return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the rigtt to be here'));
 
         }
-
         $settings = Setting::first();
-
+        
         //dd((int)$user->balance,(int) $settings->min_balance);
-
+        
         if((int)$user->balance < (int) $settings->min_balance)
         {
             return $this->setStatusCode(405)->respondWithError(trans('api_msgs.campaign_balance').(int)$settings->min_balance.trans('api_msgs.currency'));
         }
-
+        
         $validator = Validator::make( $request->all(), [
-
+            
             'title'             => 'required',
-
-
+            
+            
             'facebook'          => 'required',
-
+            
             'twitter'           => 'required',
-
+            
             'snapchat'          => 'required',
-
+            
             'youtube'           => 'required',
-
+            
             'instgrame'         => 'required',
-
+            
             'male'              => 'required',
-
+            
             'female'            => 'required',
-
+            
             'general'           => 'required',
-
+            
             'description'       => 'required',
-
+            
             'scenario'          => 'required',
-
+            
             'maximum_rate'      => 'required',
-
+            
             'files_arr'         => 'nullable',
-
+            
             'categories_id'     => 'required',
-
+            
             'countries_id'    => 'required',
-
+            
             //'areas_id'      => 'required'
             'areas_id'      => 'nullable'
-
-
-
-        ]);
-
-        if ($validator->fails()) {
-            return $this->setStatusCode(422)->respondWithError($validator->messages());
-            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
-        }
-
-        $campaign = new Campaign;
-
-
-        $campaign->title            = $request->title;
-
-        $campaign->facebook            = $request->facebook;
-
-        $campaign->twitter            = $request->twitter;
-
-        $campaign->snapchat            = $request->snapchat;
-
-        $campaign->youtube            = $request->youtube;
-
-        $campaign->instgrame            = $request->instgrame;
-
-        $campaign->male            = $request->male;
-
-        $campaign->female            = $request->female;
-
-        $campaign->general            = $request->general;
-
-        $campaign->description            = $request->description;
-
-        $campaign->scenario            = $request->scenario;
-
-        $campaign->maximum_rate            = $request->maximum_rate;
-
-        $campaign->created_at            = Carbon::now()->addHours(3);
-
-        //$campaign->updated_date            = $request->updated_date;
-
-        //$campaign->status            = $request->status;
-
-        $campaign->user_id          = $user->id;
-        $campaign->save();
-        
-        if(!$request->files_arr){
-            // Attachment::create([
-
-            // 'campaign_id'       => $campaign->id,
-                
-            // 'file' => '/public/assets/images/campaign/campaign.png', 
-            //                'file_type'     => '0',
-            //     ]);
-
-
-        }else{
-
-        $files  =$request->files_arr;
-
-        $image_extensions = array('jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff');    
-        $video_extensions = array('heic','HEIC','webm','mkv','flv','flv','vob','ogg','ogg','ogv','gif','wmv','mp4','m4p','m4p','m4v','mpg','3gp');    
-        $pdf_extensions = array('pdf','doc','docx');  
-
-        
-            foreach ($files  as $file) {
-                //dd($file['file']);
-                $ext = pathinfo($file['file'], PATHINFO_EXTENSION);
-                $file_type = "0"; // image file 
-                $no_image_flag = 0;
-                $videoThumnb = '';
-                if(in_array($ext,$image_extensions))
-                {
-                    $no_image_flag = 1;
-                }
-                if(in_array($ext,$video_extensions) ) 
-                {
-                    $thumbName = time().'.png';
-                    $file_type = "1"; // video file
-                    // $videoThumnb = VideoThumbnail::createThumbnail(storage_path($file['file']), storage_path('public/assets/uploads'),$thumbName , 2, 600, 600);
-                    
-                    $thumb = VideoThumbnail::createThumbnail(public_path($file['file']), public_path("assets/uploads"), $thumbName, 3, 600, 600);
-
-                      // dd($thumb);      
-                    $thumbPath = '/public/assets/uploads/'.$thumbName;
-                    // dd($thumb,$thumbPath);
-                    // dd(file_get_contents(public_path("assets/uploads/")));
-
-                    $frame = 10;
-// choose file name 
-                    $movie = $file['file'];
-
-                    // dd($movie);
-                    // choose thumbnail name 
-                    $thumbnail = $thumbName;
-                    // dd($thumbName);
-
-                    // make an instance of the class 
-                    // $mov = new ffmpeg_movie($movie);
-
-                    // dd($mov);
-
-                    // get the frame defined above 
-                    // $frame = $mov->getFrame($frame);
-
-                    // if ($frame) {
-                    //     $gd_image = $frame->toGDImage();
-
-                    //     if ($gd_image) {
-                    //         imagepng($gd_image, $thumbnail);
-                    //         imagedestroy($gd_image);
-                    //         echo '<img src="'.$thumbnail.'">';
-                    //     }
-                    // }
-                    // if($videoThumnb){
-                    //     dd($thumbPath);    
-                    // }else{
-                    //     dd('error');
-                    // }
-                    
-                Attachment::create([
-
-                'campaign_id'       => $campaign->id,
-                
-                'file'              => $thumbPath,               
-                'file_type' => '0',
-                ]);
-
-                }  
-                elseif(in_array($ext,$pdf_extensions) ) 
-                {
-                    $file_type = "2"; // pdf file
-                }  
-                Attachment::create([
-
-                'campaign_id'       => $campaign->id,
-
-                'file'              => $file['file'],
-                'file_type'          => $file_type
-                ]);
+            
+            
+            
+            ]);
+            
+            if ($validator->fails()) {
+                return $this->setStatusCode(422)->respondWithError($validator->messages());
+                return $this->setStatusCode(422)->respondWithError(trans('api_msgs.invalid_data'));
             }
-
-            if($no_image_flag != 1)
-            {
+            
+            $campaign = new Campaign;
+            
+            
+            $campaign->title            = $request->title;
+            
+            $campaign->facebook            = $request->facebook;
+            
+            $campaign->twitter            = $request->twitter;
+            
+            $campaign->snapchat            = $request->snapchat;
+            
+            $campaign->youtube            = $request->youtube;
+            
+            $campaign->instgrame            = $request->instgrame;
+            
+            $campaign->male            = $request->male;
+            
+            $campaign->female            = $request->female;
+            
+            $campaign->general            = $request->general;
+            
+            $campaign->description            = $request->description;
+            
+            $campaign->scenario            = $request->scenario;
+            
+            $campaign->maximum_rate            = $request->maximum_rate;
+            
+            $campaign->created_at            = Carbon::now()->addHours(3);
+            
+            //$campaign->updated_date            = $request->updated_date;
+            
+            //$campaign->status            = $request->status;
+            
+            $campaign->user_id          = $user->id;
+            $campaign->save();
+            
+            if(!$request->files_arr){
                 // Attachment::create([
-
-                // 'campaign_id'       => $campaign->id,
-
-                // 'file'              => '/public/assets/images/campaign/campaign.png',
-                // 'file_type'          => "0"
-                // ]);
-            }
-        }
-
-             $categories_id  =$request->categories_id;
-
-            foreach ($categories_id  as $id) {
-                CampaignCategory::create([
-
-                'campaign_id'       => $campaign->id,
-
-                'category_id' => $id
-
-
-                      ]);
-            }
-            $countries_id  =$request->countries_id;
-
-            foreach ($countries_id  as $id) {
-                CampaignCountry::create([
-
-                'campaign_id'       => $campaign->id,
-
-                'country_id' => $id
-
-
-                      ]);
-            }
-
-            $areas_id  =$request->areas_id;
-           
-            if($areas_id !== null){
-
-                foreach ($areas_id  as $id) {
-                    CampaignArea::create([
-
-                    'campaign_id'       => $campaign->id,
-
-                    'area_id' => $id
-
-
-                        ]);
-                }
-
-            }
-
-            // $player_ids = $this->getUserPlayerIds($to_user_id);
-            // Notification::create(['user_id' => $to_user_id,
-            //                           'message' => 'A new campaign was added',
-            //                           'message_ar' => 'يوجد حملة جديدة',
-            //                           'campaign_id' =>  $offer->campaign_id,
-            //                           'offer_id'    => 0,
-            //                           'type'          =>  20,
-            //                           'type_title'  => 'new campaign']);
-            //
-            //
-            // sendNotification($who,
-            //                       'A new campaign was added',
-            //                       'يوجد حملة جديدة',
-            //                       $player_ids,
-            //                       ['campaign_id' =>  (int)$offer->campaign_id,
-            //                       'offer_id'    => (int)$offer->id,
-            //                       'type'          =>  20,
-            //                       'type_title'  => 'new campaign']);
-
-        return $this->respondWithSuccess(trans('api_msgs.created'));
-
-    }
-
-      public function isUserOwnCampaign( $user_id,$id)
-    {
-        return Campaign::where('user_id',$user_id)->where('id',$id)->first() ? true : false;
-    }
-
-     public function isCampaignApproved( $campaign_id)
-    {
-        return Campaign::where('id',$campaign_id)->where('status','0')->first() ? true : false;
-    }
-
-
-
-    public function update( Request $request )
-    {
-        $user =  $this->getAuthenticatedUser();
-
-         if($user->account_type == '1'){
-             return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the rigtt to be here'));
-
-        }
-
-        $validator = Validator::make( $request->all(), [
-
-            'id'                => 'required|exists:campaigns,id',
-
-            'title'             => 'required',
-
-
-            'facebook'          => 'required',
-
-            'twitter'           => 'required',
-
-            'snapchat'          => 'required',
-
-            'youtube'           => 'required',
-
-            'instgrame'         => 'required',
+                    
+                    // 'campaign_id'       => $campaign->id,
+                    
+                    // 'file' => '/public/assets/images/campaign/campaign.png', 
+                    //                'file_type'     => '0',
+                    //     ]);
+                    
+                    
+                }else{
+                    
+                    $files  =$request->files_arr;
+                    
+                    $image_extensions = array('jpeg' , 'jpg', 'gif', 'png', 'tif', 'tiff');    
+                    $video_extensions = array('heic','HEIC','webm','mkv','flv','flv','vob','ogg','ogg','ogv','gif','wmv','mp4','m4p','m4p','m4v','mpg','3gp');    
+                    $pdf_extensions = array('pdf','doc','docx');  
+                    
+                    foreach ($files  as $file) {
+                        //dd($file['file']);
+                        $ext = pathinfo($file['file'], PATHINFO_EXTENSION);
+                        $file_type = "0"; // image file 
+                        $no_image_flag = 0;
+                        $videoThumnb = '';
+                        if(in_array($ext,$image_extensions))
+                        {
+                            $no_image_flag = 1;
+                        }
+                        if(in_array($ext,$video_extensions) ) 
+                        {
+                            $thumbName = time().'.png';
+                            $file_type = "1"; // video file
+                            // $videoThumnb = VideoThumbnail::createThumbnail(storage_path($file['file']), storage_path('public/assets/uploads'),$thumbName , 2, 600, 600);
+                            
+                            $thumb = VideoThumbnail::createThumbnail(public_path($file['file']), public_path("assets/uploads"), $thumbName, 3, 600, 600);
+                            
+                            // dd($thumb);      
+                            $thumbPath = '/public/assets/uploads/'.$thumbName;
+                            // dd($thumb,$thumbPath);
+                            // dd(file_get_contents(public_path("assets/uploads/")));
+                            
+                            $frame = 10;
+                            // choose file name 
+                            $movie = $file['file'];
+                            
+                            // dd($movie);
+                            // choose thumbnail name 
+                            $thumbnail = $thumbName;
+                            // dd($thumbName);
+                            
+                            // make an instance of the class 
+                            // $mov = new ffmpeg_movie($movie);
+                            
+                            // dd($mov);
+                            
+                            // get the frame defined above 
+                            // $frame = $mov->getFrame($frame);
+                            
+                            // if ($frame) {
+                                //     $gd_image = $frame->toGDImage();
+                                
+                                //     if ($gd_image) {
+                                    //         imagepng($gd_image, $thumbnail);
+                                    //         imagedestroy($gd_image);
+                                    //         echo '<img src="'.$thumbnail.'">';
+                                    //     }
+                                    // }
+                                    // if($videoThumnb){
+                                        //     dd($thumbPath);    
+                                        // }else{
+                                            //     dd('error');
+                                            // }
+                                            
+                                            Attachment::create([
+                                                
+                                                'campaign_id'       => $campaign->id,
+                                                
+                                                'file'              => $thumbPath,               
+                                                'file_type' => '0',
+                                                ]);
+                                                
+                                            }  
+                                            elseif(in_array($ext,$pdf_extensions) ) 
+                                            {
+                                                $file_type = "2"; // pdf file
+                                            }  
+                                            Attachment::create([
+                                                
+                                                'campaign_id'       => $campaign->id,
+                                                
+                                                'file'              => $file['file'],
+                                                'file_type'          => $file_type
+                                                ]);
+                                            }
+                                            
+                                            if($no_image_flag != 1)
+                                            {
+                                                // Attachment::create([
+                                                    
+                                                    // 'campaign_id'       => $campaign->id,
+                                                    
+                                                    // 'file'              => '/public/assets/images/campaign/campaign.png',
+                                                    // 'file_type'          => "0"
+                                                    // ]);
+                                                }
+                                            }
+                                            
+                                            $categories_id  =$request->categories_id;
+                                            
+                                            foreach ($categories_id  as $id) {
+                                                CampaignCategory::create([
+                                                    'campaign_id'       => $campaign->id,                                                    
+                                                    'category_id' => $id                                                                        
+                                                    ]);
+                                                }
+                                                $countries_id  =$request->countries_id;
+                                                
+                                                foreach ($countries_id  as $id) {
+                                                    CampaignCountry::create([
+                                                        'campaign_id'       => $campaign->id,
+                                                        'country_id' => $id
+                                                        ]);
+                                                    }
+                                                    // dd("hi");
+                                                    
+                                                    $areas_id  =$request->areas_id;
+                                                    
+                                                    if($areas_id !== null){
+                                                        
+                                                        foreach ($areas_id  as $id) {
+                                                            CampaignArea::create([
+                                                                
+                                                                'campaign_id'       => $campaign->id,
+                                                                
+                                                                'area_id' => $id
+                                                                
+                                                                
+                                                                ]);
+                                                            }
+                                                            
+                                                        }
+                                                        
+                                                        // $player_ids = $this->getUserPlayerIds($to_user_id);
+                                                        // Notification::create(['user_id' => $to_user_id,
+                                                        //                           'message' => 'A new campaign was added',
+                                                        //                           'message_ar' => 'يوجد حملة جديدة',
+                                                        //                           'campaign_id' =>  $offer->campaign_id,
+                                                        //                           'offer_id'    => 0,
+                                                        //                           'type'          =>  20,
+                                                        //                           'type_title'  => 'new campaign']);
+                                                        //
+                                                        //
+                                                        // sendNotification($who,
+                                                        //                       'A new campaign was added',
+                                                        //                       'يوجد حملة جديدة',
+                                                        //                       $player_ids,
+                                                        //                       ['campaign_id' =>  (int)$offer->campaign_id,
+                                                        //                       'offer_id'    => (int)$offer->id,
+                                                        //                       'type'          =>  20,
+                                                        //                       'type_title'  => 'new campaign']);
+                                                        
+                                                        return $this->respondWithSuccess(trans('api_msgs.created'));
+                                                        
+                                                    }
+                                                    
+                                                    public function isUserOwnCampaign( $user_id,$id)
+                                                    {
+                                                        return Campaign::where('user_id',$user_id)->where('id',$id)->first() ? true : false;
+                                                    }
+                                                    
+                                                    public function isCampaignApproved( $campaign_id)
+                                                    {
+                                                        return Campaign::where('id',$campaign_id)->where('status','0')->first() ? true : false;
+                                                    }
+                                                    
+                                                    
+                                                    
+                                                    public function update( Request $request )
+                                                    {
+                                                        $user =  $this->getAuthenticatedUser();
+                                                        
+                                                        if($user->account_type == '1'){
+                                                            return $this->setStatusCode(422)->respondWithError(trans('api_msgs.you do not have the rigtt to be here'));
+                                                            
+                                                        }
+                                                        
+                                                        $validator = Validator::make( $request->all(), [
+                                                            
+                                                            'id'                => 'required|exists:campaigns,id',
+                                                            
+                                                            'title'             => 'required',
+                                                            
+                                                            
+                                                            'facebook'          => 'required',
+                                                            
+                                                            'twitter'           => 'required',
+                                                            
+                                                            'snapchat'          => 'required',
+                                                            
+                                                            'youtube'           => 'required',
+                                                            
+                                                            'instgrame'         => 'required',
 
             'male'              => 'required',
 

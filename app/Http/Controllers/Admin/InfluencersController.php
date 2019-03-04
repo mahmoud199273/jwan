@@ -26,21 +26,22 @@ class InfluencersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $users = User::where('is_active','0')->count();
+    public function index(){
+        // $users = User::where('is_active','0')->count();
         $users = User::select('users.*','v.code','v.verified','user_socials.id as social_id')
-        ->LEFTJOIN('user_socials','user_socials.user_id','users.id')
-        ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'), 
-        function($join)
-        {
-            $join->on('users.phone', '=', 'v2.phone');
-        })
-        ->leftJoin('verify_phone_codes as v', function($join)
-        {
-            $join->on('v.id', '=', 'v2.mx');
-            $join->on('v.phone','=','v2.phone');
-        })->where('users.account_type','1')->latest()->paginate(10);
+            ->LEFTJOIN('user_socials','user_socials.user_id','users.id')
+            ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'), 
+            function($join){
+                $join->on('users.phone', '=', 'v2.phone');
+            })
+            ->leftJoin('verify_phone_codes as v', function($join)
+            {
+                $join->on('v.id', '=', 'v2.mx');
+                $join->on('v.phone','=','v2.phone');
+            })->where('users.account_type','1')
+            ->latest()
+            ->paginate(10);
+
         return view('admin.influencers.index',compact('users'));
     }
 
@@ -222,11 +223,17 @@ class InfluencersController extends Controller
         $row = UserSocial::where('user_id',$id)->first();
         return view('admin.influencers.social',compact('row'));
     }
-    public function UpdateInfluencerSocial (Request $request , $id)
+    public function UpdateInfluencerSocial (Request $request , $id, $action)
     {
         $user_social = UserSocial::where('id',$id)->first();
-        if($user_social) 
-        {
+        if($action=="reject"){
+            // dd("reject");
+            $user_social->delete();
+            sendNotification(1,'Your account is suspended,please refer to the admin ','تم ايقاف العضوية برجاء الرجوع الى الادارة',$player_ids,"public",['user_id' =>  (int)$user->id,'type'=>  13,'type_title'  => 'logout ']);
+
+        }
+        else if($action=="accept" && $user_social){
+            // dd("approvled");
             $user =  User::find( $user_social->user_id );
             $user->facebook = $user_social->facebook;
             $user->facebook_follwers = $user_social->facebook_follwers;

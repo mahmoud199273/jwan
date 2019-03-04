@@ -76,6 +76,8 @@ class campaignsController extends Controller
                                   ['campaign_id' =>  (int)$id,'type'=>  20,'type_title'=> 'new campaign']);
             dd($player_ids,$result);                      
     }
+
+
     public function index()
     {
 
@@ -234,7 +236,7 @@ class campaignsController extends Controller
 
             $player_ids = $users->pluck('user_player_ids.player_id')->toArray();
             //dd($player_ids);
-            sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,'public',
+            sendNotification(1,'A new campaign was added','لديك طلب لحملة جديدة. قدم عرضك الآن',$player_ids,'public',
                                   ['campaign_id' =>  (int)$id,'type'=>  20,'type_title'=> 'new campaign']);
     }
 
@@ -327,12 +329,9 @@ class campaignsController extends Controller
 
     public function approve( Request $request)
     {
-        
         if ( $request->ajax() ) {
-
             $settings = Setting::first();
             $amount = $settings->campaign_period;
-
             $campaign = Campaign::find( $request->id );
             $end_date =  Carbon::parse($campaign->end_at)->addHours(3);
             $end_date = $end_date->addDays($amount);
@@ -340,9 +339,7 @@ class campaignsController extends Controller
             $campaign->class = $request->class;
             $campaign->end_at = $end_date;
             $campaign->save();
-
             
-
             $user_player_ids = $this->getUserSinglePlayerIds($campaign->user_id);
             sendNotification(0,'Your campaign has been approved','تم تفعيل الحملة الخاصه بك',$user_player_ids,"public",['campaign_id' =>  (int)$request->id,'type' =>  20,'type_title'  => 'new campaign']);
 
@@ -373,7 +370,7 @@ class campaignsController extends Controller
 
             $player_ids = $users->pluck('user_player_ids.player_id')->toArray();
             //dd($player_ids);
-            $result = sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,'public',
+            $result = sendNotification(1,'A new campaign was added','لديك طلب لحملة جديدة. قدم عرضك الآن',$player_ids,'public',
                                   ['campaign_id' =>  (int)$request->id,'type'=>  20,'type_title'=> 'new campaign']);
             return response(['msg' => 'approved', 'status' => 'success']);
         }
@@ -400,11 +397,8 @@ class campaignsController extends Controller
     //         dd($player_ids);
     //         sendNotification(1,'A new campaign was added','يوجد حملة جديدة',$player_ids,
     //                               ['campaign_id' =>  (int)$request->id,'type'=>  20,'type_title'=> 'new campaign']);
-            
     //         return response(['msg' => 'activated', 'status' => 'success']);
     //     }
-
-        
     // }
 
     public function reject( Request $request )
