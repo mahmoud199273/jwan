@@ -275,7 +275,7 @@ class InfluencersController extends Controller
             $user->save();
 
             $result = sendNotification(1,'Your social media details update has been approved','تم الموافقة على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",['user_id' =>  (int)$user_social->user_id,'type'=>  21,'type_title' => 'social_media_change']);
-            UserSocial::where('id',$id)->delete();
+            UserSocial::where('user_id',$id)->delete();
         }
         return redirect()->intended(config('app.admin_url').'/influencers');
     }
