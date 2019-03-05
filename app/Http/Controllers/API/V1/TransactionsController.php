@@ -28,7 +28,7 @@ class TransactionsController extends Controller
 
     function __construct(Request $request, TransactionsTransformer $transactionstransformer){
         App::setlocale($request->lang);
-    	$this->middleware('jwt.auth', ["except"=>["getCheckoutId","notifyDB"]]);
+    	$this->middleware('jwt.auth', ["except"=>["notifyDB"]]);
         $this->transactionstransformer   = $transactionstransformer;
     }
 
@@ -325,15 +325,51 @@ class TransactionsController extends Controller
     }
 
     public function notifyDB(Request $request){
-        dd(
-            $request->input("id","id undefined"), 
-            $request->input("resourcePath","resourcePath undefined"),
-            Self::PaymentOptions["Link"].$request->input("resourcePath")
-        );
+        // dd(
+        //     $request->input("id","id undefined"), 
+        //     $request->input("resourcePath","resourcePath undefined"),
+        //     Self::PaymentOptions["Link"].$request->input("resourcePath")
+        // );
+        $url = Self::PaymentOptions["Link"].$request->input("resourcePath");
+        $url .= "?authentication.userId=".Self::PaymentOptions["UserId"];
+        $url .= "&authentication.password=".Self::PaymentOptions["Password"];
+        $url .= "&authentication.entityId=".Self::PaymentOptions["EntityID"];
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);// this should be set to true in production
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $responseData = curl_exec($ch);
+        if(curl_errno($ch)) {
+            return curl_error($ch);
+        }
+        curl_close($ch);
+        $responseData = json_decode($responseData, true);
+        return $responseData;
     }
 
 
-    // private function getStatus
+    public function getStatus(Request $request){
+        $id = $request->input("id","undefined id");
+        $url = Self::PaymentOptions["Link"]."v1/checkouts/".$id."/payment";
+        $url .= "?authentication.userId=".Self::PaymentOptions["UserId"];
+        $url .= "&authentication.password=".Self::PaymentOptions["Password"];
+        $url .= "&authentication.entityId=".Self::PaymentOptions["EntityID"];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);// this should be set to true in production
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $responseData = curl_exec($ch);
+        if(curl_errno($ch)) {
+            return curl_error($ch);
+        }
+        curl_close($ch);
+        $responseData = json_decode($responseData, true);
+        return $responseData;
+    }
+
 
 
 }
