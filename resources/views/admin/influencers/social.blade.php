@@ -33,12 +33,12 @@
     </div>
 
     <!--begin::Form-->
-    <form class="m-form" action="{{url('admin/influencers')}}/{{ $row->id }}/social" method="post" enctype="multipart/form-data">
+    <form class="m-form" action="{{url('admin/influencers')}}/{{ $row->user_id }}/social" method="post" enctype="multipart/form-data">
        
               {{ csrf_field() }}
               <input type="hidden" name="account_type" value="1" />
                 {{ method_field('PATCH') }}
-                <input type="hidden" name="id" value="{{ $row->id }}">
+                <input type="hidden" name="id" value="{{ $row->user_id }}">
         <div class="m-portlet__body">
 
         @if($errors->any())
@@ -174,7 +174,7 @@
                     </div>
                     <div class="col-9">
                         <button type="submit" class="btn btn-brand">تأكيد</button>
-                        <a class="btn btn-danger" href="{{url('admin/influencers')}}/{{ $row->id }}/social/delete">رفض </a>
+                        <a class="btn btn-danger" href="{{url('admin/influencers')}}/{{ $row->user_id }}/social/delete">رفض </a>
                         <a type="reset" href="{{url('admin/influencers')}}" class="btn btn-secondary">عودة</a>
                     </div>
                 </div>

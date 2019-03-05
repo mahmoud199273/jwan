@@ -255,8 +255,9 @@ class InfluencersController extends Controller
 
     public function UpdateInfluencerSocial (Request $request , $id)
     {
-        $user_social = UserSocial::where('id',$id)->first();
+        $user_social = UserSocial::where('user_id',$id)->first();
         $player_ids = $this->getUserPlayerIds($id);
+
         if($user_social){
             $user =  User::find( $user_social->user_id );
             $user->facebook = $user_social->facebook;
@@ -272,15 +273,15 @@ class InfluencersController extends Controller
             $user->youtube = $user_social->youtube;
             $user->youtube_follwers = $user_social->youtube_follwers;
             $user->save();
-            sendNotification(1,'Your social media details update has been approved','تم الموافقة على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",['user_id' =>  (int)$user_social->user_id,'type'=>  21,'type_title' => 'social_media_change']);
 
+            $result = sendNotification(1,'Your social media details update has been approved','تم الموافقة على تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",['user_id' =>  (int)$user_social->user_id,'type'=>  21,'type_title' => 'social_media_change']);
             UserSocial::where('id',$id)->delete();
         }
         return redirect()->intended(config('app.admin_url').'/influencers');
     }
     public function rejectUpdateInfluencerSocial(Request $request , $id){
         $player_ids = $this->getUserPlayerIds($id);
-        $user_social = UserSocial::where('id',$id)->first();
+        $user_social = UserSocial::where('user_id',$id)->first();
 
         $user_social->delete();
         sendNotification(1,'Your social media details update has been rejected','تم رفض تحديث بيانات مواقع التواصل الخاصة بك',$player_ids,"",['user_id' =>  (int)$user_social->user_id,'type'=>  21,'type_title' => 'social_media_change']);

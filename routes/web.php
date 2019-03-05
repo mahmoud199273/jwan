@@ -16,7 +16,7 @@ if (!defined('ADMIN_PATH')) {
 }
 
 
-URL::forceScheme('https');
+if(env("APP_ENV")!="local") URL::forceScheme('https');
 
 
 Route::group(['prefix'=>ADMIN_PATH],function(){
