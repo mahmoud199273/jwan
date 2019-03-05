@@ -28,7 +28,7 @@ class TransactionsController extends Controller
 
     function __construct(Request $request, TransactionsTransformer $transactionstransformer){
         App::setlocale($request->lang);
-    	   $this->middleware('jwt.auth');
+    	$this->middleware('jwt.auth', ["except"=>["notifyDB"]]);
         $this->transactionstransformer   = $transactionstransformer;
     }
 
@@ -269,29 +269,44 @@ class TransactionsController extends Controller
     }
 
 
+
+
+
+
+    const PaymentOptions = [
+        "UserId"=> "8ac7a4c968cca59c0168e8d690593326",
+        "Password"=> "Gzexk2PShG",
+        "EntityID"=> "8ac7a4c968cca59c0168e8d70a23332a",
+        "PaymentMethods"=> ["VISA", "MASTER"],
+        "PaymentType"=> "DB",
+        "Currency"=> "SAR",
+        "Link"=>"https://test.oppwa.com/",
+
+        "testMode"=> "EXTERNAL",
+        "merchantTransactionId" => "", //your unique ID in your database
+        "customerEmail" => "", //the user email
+        "redirectLink" => "/api/v1/en/user/transaction/notifyDB",
+    ];
+
 //Payment with hyperpay APIs
-    public function sendInitRequest(Request $request){
-        $responseData = $this->sendTransactionPreparationRequest($request);
+    public function getCheckoutId(Request $request){
+        $amount = $request->input("amount","00.00");
+        $responseData = $this->sendTransactionPreparationRequest($amount);
         return response($responseData, 200)->header('Content-Type', 'application/json');
     }
 
-    private function sendTransactionPreparationRequest($request) {
-        $amount = $request->input("amount");
-        $currency = $request->input("currency");
-        $customerEmail = $request->input("customerEmail");
-        $redirectLink = $request->root()."/api/v1/en/custom/transaction/step2";
-        // dd($redirectLink);
-        $url = "https://test.oppwa.com/v1/checkouts";
-        $data = "authentication.userId=8ac7a4c968cca59c0168e8d690593326" .
-                    "&authentication.password=Gzexk2PShG" .
-                    "&authentication.entityId=8ac7a4c968cca59c0168e8d70a23332a" .
+    private function sendTransactionPreparationRequest($amount) {
+        $url = Self::PaymentOptions["Link"]."v1/checkouts";
+        $data = "authentication.userId=".Self::PaymentOptions["UserId"] .
+                    "&authentication.password=".Self::PaymentOptions["Password"] .
+                    "&authentication.entityId=".Self::PaymentOptions["EntityID"] .
                     "&amount=".$amount.
-                    "&currency=".$currency .
-                    "&paymentType=DB" .
-                    "&testMode=EXTERNAL" .
-                    "&merchantTransactionId=12345" .
-                    "&customer.email=me@ahmed-badawy.com" .
-                    "&notificationUrl=".$redirectLink;
+                    "&currency=".Self::PaymentOptions["Currency"] .
+                    "&paymentType=".Self::PaymentOptions["PaymentType"] .
+                    "&testMode=".Self::PaymentOptions["testMode"] .
+                    "&merchantTransactionId=".Self::PaymentOptions["merchantTransactionId"] .
+                    "&customer.email=".Self::PaymentOptions["customerEmail"] .
+                    "&notificationUrl=".env("APP_URL").Self::PaymentOptions["redirectLink"];
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -300,16 +315,21 @@ class TransactionsController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $responseData = curl_exec($ch);
         if(curl_errno($ch)) {
-            dd(curl_error($ch));
+            dd("error happened: ", curl_error($ch));
             return curl_error($ch);
         }
         curl_close($ch);
+        $responseData = json_decode($responseData, true);
+        $responseData["checkoutID"] =$responseData["id"];
         return $responseData;
     }
 
     public function notifyDB(Request $request){
-        Log::critical($request);
-        dd("your reached here");
+        dd(
+            $request->input("id","id undefined"), 
+            $request->input("resourcePath","resourcePath undefined"),
+            Self::PaymentOptions["Link"].$request->input("resourcePath")
+        );
     }
 
 }

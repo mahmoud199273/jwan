@@ -299,7 +299,6 @@ class InfluencersController extends Controller
             $user->block_time = NULL;
             $user->save();
 
-
             return response(['msg' => 'unblocked', 'status' => 'success']);
         }
     }

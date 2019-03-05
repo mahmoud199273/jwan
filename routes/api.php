@@ -268,8 +268,8 @@ Route::get('/influncer/notifications/unseen'		, 'API\V1\UserController@getNotifi
   Route::get('influncer/transaction/details/{id}', 'API\V1\TransactionsController@details');
 
 
-  Route::get('custom/transaction/step1', 'API\V1\TransactionsController@sendInitRequest');
-  Route::get('custom/transaction/step2/', 'API\V1\TransactionsController@notifyDB');
+  Route::get('user/transaction/getCheckoutId', 'API\V1\TransactionsController@getCheckoutId');
+  Route::get('user/transaction/notifyDB', 'API\V1\TransactionsController@notifyDB');
 
 
 /* about the app - license agreement */
