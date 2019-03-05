@@ -28,7 +28,7 @@ class TransactionsController extends Controller
 
     function __construct(Request $request, TransactionsTransformer $transactionstransformer){
         App::setlocale($request->lang);
-    	$this->middleware('jwt.auth', ["except"=>["notifyDB"]]);
+    	$this->middleware('jwt.auth', ["except"=>["getCheckoutId","notifyDB"]]);
         $this->transactionstransformer   = $transactionstransformer;
     }
 
@@ -331,5 +331,9 @@ class TransactionsController extends Controller
             Self::PaymentOptions["Link"].$request->input("resourcePath")
         );
     }
+
+
+    // private function getStatus
+
 
 }
