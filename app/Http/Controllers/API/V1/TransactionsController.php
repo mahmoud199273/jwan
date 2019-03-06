@@ -273,6 +273,7 @@ class TransactionsController extends Controller
 
 
 
+
     const PaymentOptions = [
         "UserId"=> "8ac7a4c968cca59c0168e8d690593326",
         "Password"=> "Gzexk2PShG",
@@ -345,6 +346,7 @@ class TransactionsController extends Controller
         }
         curl_close($ch);
         $responseData = json_decode($responseData, true);
+        // $this->updateTheDB();
         return $responseData;
     }
 
@@ -368,6 +370,49 @@ class TransactionsController extends Controller
         curl_close($ch);
         $responseData = json_decode($responseData, true);
         return $responseData;
+    }
+
+
+    private function updateTheDB(){
+        $user =  $this->getAuthenticatedUser();
+
+        $transations = new Transactions;
+        $transations->user_id = $user->id;
+
+
+            $transations->card_holder_name     = $request->card_holder_name;
+            $transations->transaction_account_name     = $request->card_holder_name;
+            $transations->sdk_token     = $request->sdk_token;
+            $transations->merchant_reference     = $request->merchant_reference;
+            $transations->card_number     = $request->card_number;
+            //$transations->transaction_account_number     = $request->transaction_account_number;
+            $transations->transaction_account_number     = $request->fort_id;
+            $transations->authorization_code     = $request->authorization_code;
+            $transations->response_code     = $request->response_code;
+            $transations->payment_option     = $request->payment_option;
+            $transations->fort_id     = $request->fort_id;
+            $transations->eci     = $request->eci;
+            $transations->customer_ip     = $request->customer_ip;
+            $transations->command     = $request->command;
+            $transations->status       = "1";
+
+
+        $transations->direction    = 0;
+        $transations->type         = 0;
+        $transations->campaign_id  = 0;
+        $transations->offer_id     = 0;
+        $transations->amount       = $request->transaction_amount;
+
+
+        $transations->save();
+
+
+        if($request->fort_id) // payfort online payment
+        {
+            $userData = User::find($user->id);
+            $user->balance = $userData->balance + $request->transaction_amount;
+            $user->save();
+        }
     }
 
 

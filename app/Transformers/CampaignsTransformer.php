@@ -56,83 +56,48 @@ class CampaignsTransformer extends Transformer
         {
             $ended_date_string = "تاريخ الحملة انتهى ولم يتم التعامل معاها";
         }
+
+        // if($campaign->id==133) dd(date($campaign->end_at) < date(now()));
         
         $return_array =  [
         	'id'       			=> (int) $campaign->id,
-
             'title'             => $campaign->title,
-
             //'user'              => isset($campaign->user()->select('id','name','image')->get()[0]) ? $campaign->user()->select('id','name','image')->get()[0] : null ,
-            
-
             //'image'         => $camapign->($user->image) ?config('app.url').$user->image : null,
-
             'rate'              => (int) Offer::select(DB::raw("IF( ROUND(SUM(influncer_rate)/COUNT(influncer_rate)), ROUND(SUM(influncer_rate)/COUNT(influncer_rate)), 0 ) as rate"))->where('campaign_id', $campaign->id)->first()->rate,
-
             'file'              => isset($campaign->attachments) ? $campaign->attachments : null,
-
             'number_of_offers'  =>  Offer::where('campaign_id',$campaign->id)->count(),
 
-
-
             //'file'             => Attachment::select,
-
             'description'       => $campaign->description,
-
             'scenario'          => $campaign->scenario,
 
-        	'facebook'          => (int) $campaign->facebook,
-
-        	'twitter'          	=> (int) $campaign->twitter,
-
+            'facebook'          => (int) $campaign->facebook,
+            'twitter'          	=> (int) $campaign->twitter,
             'snapchat'          => (int) $campaign->snapchat,
-
             'youtube'          	=> (int) $campaign->youtube,
-
             'instgrame'      	=> (int) $campaign->instgrame,
-
             'male'          	=> (int) $campaign->male,
-
             'female'          	=> (int) $campaign->female,
-
             'general'          	=> (int) $campaign->general,
 
-
-
             'maximum_rate'      => $campaign->maximum_rate,
-
-            'created_date'      => Carbon::parse($campaign->created_at)->toDateTimeString(),
-            'created_date_string' => Carbon::createFromTimeStamp(strtotime($campaign->created_at))->subHour('3')->diffForHumans() ,
-
-            'updated_date'      => Carbon::parse($campaign->updated_at)->toDateTimeString(),
-            'updated_date_string'      => Carbon::createFromTimeStamp(strtotime($campaign->updated_at))->subHour('3')->diffForHumans() ,
-
-            'ended_date'        => $campaign->end_at,
-            'ended_date_string' => Carbon::createFromTimeStamp(strtotime($campaign->end_at))->diffForHumans() ,
-            //'ended_date_string' => $ended_date_string,
-
+            'created_date'      => Carbon::parse($campaign->created_at)->toDateTimeString(),'created_date_string' => Carbon::createFromTimeStamp(strtotime($campaign->created_at))->subHour('3')->diffForHumans() ,
+            'updated_date'      => Carbon::parse($campaign->updated_at)->toDateTimeString(),'updated_date_string'      => Carbon::createFromTimeStamp(strtotime($campaign->updated_at))->subHour('3')->diffForHumans() ,
+            'ended_date'        => $campaign->end_at,'ended_date_string' => Carbon::createFromTimeStamp(strtotime($campaign->end_at))->diffForHumans() ,//'ended_date_string' => $ended_date_string,
             'campaign_status'   => (int) $campaign->status,
-
-            'status'   => (int) $campaign->status,
-            
-            'is_extened'	=> isset($campaign->is_extened) ? $campaign->is_extened : 0
-
+            'status'   => (int) $campaign->status,'is_extened'	=> isset($campaign->is_extened) ? $campaign->is_extened : 0,
+            "is_expired" => (boolean) ( $campaign->status==1 && date($campaign->end_at) < date(now()) )
 
         ];
 
-        if($past) 
-        {
-            $return_array['status_title'] = $ended_date_string;
-        }
-        else 
-        {
-            $return_array['status_title'] = $status_array[(int) $campaign->status];
-        }
+
+        if($past) $return_array['status_title'] = $ended_date_string; 
+        else $return_array['status_title'] = $status_array[(int) $campaign->status]; 
         
 
         if($this->user_flag) // influncer app 
-        {
-            $return_array['user'] = isset($campaign->user()->select('id','name','image')->get()[0]) ? $campaign->user()->select('id','name','image')->get()[0] : null ;
+        {$return_array['user'] = isset($campaign->user()->select('id','name','image')->get()[0]) ? $campaign->user()->select('id','name','image')->get()[0] : null ;
         }
         if($this->flag) // user app
         {

@@ -183,7 +183,6 @@ class CampignsController extends Controller
 
     public function allCampaigns(Request $request)
     {
-    # code...
         if($request->id){
             $user =  User::find($request->id);
         }
