@@ -151,29 +151,25 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
  Route::get('influencer/user/campaigns/{id}','API\V1\CampignsController@allCampaigns');
  Route::get('user/influencer/profile/{id}', 'API\V1\UserController@UserinfluncerProfile'); // user view influencer profile and campaignes
 
- // start Camapign routes
 
- Route::post('/user/add/campaign','API\V1\CampignsController@store');
-
- Route::post('/user/update/campaign','API\V1\CampignsController@update');
-
- Route::get('/user/archive/campaign','API\V1\CampignsController@archiveCampaigns');
-
- Route::get('/user/campaigns','API\V1\CampignsController@allCampaigns');
-
- Route::get('/influncer/campaigns','API\V1\CampignsController@index');
+// start Camapign routes
+  Route::post('/user/add/campaign','API\V1\CampignsController@store');
+  Route::get('/user/campaigns','API\V1\CampignsController@allCampaigns');
+  Route::get('/campaign/{id}','API\V1\CampignsController@show');
+  Route::post('/cancel/campaign','API\V1\CampignsController@cancelCampaign');
 
 
- Route::get('/campaign/{id}','API\V1\CampignsController@show');
+  Route::post('/close/campaign','API\V1\CampignsController@closeCampaign');
+  Route::post('/user/update/campaign','API\V1\CampignsController@update');
+  Route::get('/user/archive/campaign','API\V1\CampignsController@archiveCampaigns');
+  Route::get('/influncer/campaigns','API\V1\CampignsController@index');
 
- Route::post('/approve/campaign','API\V1\CampignsController@approveCampaign');
+  Route::post('/approve/campaign','API\V1\CampignsController@approveCampaign');
+  Route::post('/extend/campaign','API\V1\CampignsController@extendCampaign');
+  Route::post('/camapign/delete','API\V1\CampignsController@destroy');
 
- Route::post('/extend/campaign','API\V1\CampignsController@extendCampaign');
 
- Route::post('/cancel/campaign','API\V1\CampignsController@cancelCampaign');
- Route::post('/close/campaign','API\V1\CampignsController@closeCampaign');
 
- Route::post('/camapign/delete','API\V1\CampignsController@destroy');
 
   Route::post('/chat/add', 'API\V1\ChatController@store');
 
