@@ -30,7 +30,7 @@ class TransactionsController extends Controller
     function __construct(Request $request, TransactionsTransformer $transactionstransformer){
         App::setlocale($request->lang);
     	$this->middleware('jwt.auth', ["except"=>[
-            "notifyDB"
+            // "notifyDB"
         ]]);
         $this->transactionstransformer   = $transactionstransformer;
     }
