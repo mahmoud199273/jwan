@@ -58,7 +58,6 @@ class CampaignsTransformer extends Transformer
         }
 
         // if($campaign->id==133) dd(date($campaign->end_at) < date(now()));
-        
         $return_array =  [
         	'id'       			=> (int) $campaign->id,
             'title'             => $campaign->title,
@@ -87,9 +86,12 @@ class CampaignsTransformer extends Transformer
             'ended_date'        => $campaign->end_at,'ended_date_string' => Carbon::createFromTimeStamp(strtotime($campaign->end_at))->diffForHumans() ,//'ended_date_string' => $ended_date_string,
             'campaign_status'   => (int) $campaign->status,
             'status'   => (int) $campaign->status,'is_extened'	=> isset($campaign->is_extened) ? $campaign->is_extened : 0,
-            "is_expired" => (boolean) ( $campaign->status==1 && date($campaign->end_at) < date(now()) )
+            "is_expired" => (boolean) ( $campaign->status==1 && date($campaign->end_at) < date(now()) ),
+            "offers_id" => $campaign->offers_id
 
         ];
+
+        // dd($return_array);
 
 
         if($past) $return_array['status_title'] = $ended_date_string; 

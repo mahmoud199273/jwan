@@ -30,7 +30,7 @@ class TransactionsController extends Controller
     function __construct(Request $request, TransactionsTransformer $transactionstransformer){
         App::setlocale($request->lang);
     	$this->middleware('jwt.auth', ["except"=>[
-            // "notifyDB"
+            "notifyDB"
         ]]);
         $this->transactionstransformer   = $transactionstransformer;
     }
@@ -335,8 +335,7 @@ class TransactionsController extends Controller
         //     Self::PaymentOptions["Link"].$request->input("resourcePath")
         // );
         $resourcePath = str_replace("%2","/",$request->input("resourcePath"));
-
-        $user =  $this->getAuthenticatedUser();
+        // $user =  $this->getAuthenticatedUser();
         if(false) $responseData = $this->apiResponse;
         else{
             $url = Self::PaymentOptions["Link"].$resourcePath;
@@ -358,7 +357,7 @@ class TransactionsController extends Controller
         if(!isset($responseData["id"])) return ["msg"=>"id is not set", "response"=>$responseData];
 
         $this->updateTheDB($responseData, [
-            "user_id" => $user->id,
+            "user_id" => $request->user_id,
             "campaign_id" => $request->input("campaign_id",0),
             "offer_id" => $request->input("offer_id",0)
         ]);

@@ -183,27 +183,20 @@ class CampignsController extends Controller
 
     public function allCampaigns(Request $request)
     {
-        if($request->id){
-            $user =  User::find($request->id);
-        }
-        else
-        {
+        if($request->id) $user =  User::find($request->id);
+        else {
             $user =  $this->getAuthenticatedUser();
             $this->campaignsTransformer->setFlag(true);
         }
-        if ( $request->limit ) {
-                $this->setPagination($request->limit);
-            }
+        if ( $request->limit ) { $this->setPagination($request->limit); }
         //$data = Campaign::where('user_id' ,$user->id)->get();
-        $pagination = Campaign::where('user_id' ,$user->id)->orderBy('updated_at','DESC');
-        if($request->id) 
-        {
-            $pagination->where([['status', '!=', '0'],['status', '!=', '8'],['status', '!=', '9'],['status', '!=', '4'],['status', '!=', '5']]);
-        }
-        else
-        {
-            $pagination->where([['status', '!=', '8'],['status', '!=', '4']]);
-        }
+        $pagination = Campaign::where('campaigns.user_id' ,$user->id)->orderBy('updated_at','DESC');
+        if($request->id) $pagination
+                                    ->join('offers','campaigns.id','offers.campaign_id')
+                                    ->select(["campaigns.*","offers.id AS offers_id"])
+                                    ->whereNotIn('campaigns.status', [0,8,9,4,5]);
+        else $pagination->whereNotIn('campaigns.status', [8,4]);
+
         $pagination = $pagination->paginate($this->getPagination());
         //dd($pagination);
         $campaigns = $this->campaignsTransformer->transformCollection(collect($pagination->items()));
