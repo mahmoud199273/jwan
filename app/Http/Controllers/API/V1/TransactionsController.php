@@ -19,7 +19,8 @@ use Illuminate\Support\Facades\Crypt;
 
 
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Cache;
+
+use App\Offer;
 
 
 class TransactionsController extends Controller
@@ -328,6 +329,7 @@ class TransactionsController extends Controller
         return $responseData;
     }
 
+
     public function notifyDB(Request $request){
         // dd(
         //     $request->input("id","id undefined"), 
@@ -336,7 +338,7 @@ class TransactionsController extends Controller
         // );
         $resourcePath = str_replace("%2","/",$request->input("resourcePath"));
         // $user =  $this->getAuthenticatedUser();
-        if(false) $responseData = $this->apiResponse;
+        if(true) $responseData = $this->apiResponse;
         else{
             $url = Self::PaymentOptions["Link"].$resourcePath;
             $url .= "?authentication.userId=".Self::PaymentOptions["UserId"];
@@ -427,7 +429,6 @@ class TransactionsController extends Controller
         $transations->command     = $transaction_response["command"];
         $transations->status       = "1";
 
-
         $transations->direction    = 0;
         $transations->type         = 0;
         $transations->campaign_id  = $session_params["campaign_id"];
@@ -435,9 +436,15 @@ class TransactionsController extends Controller
         $transations->amount       = $transaction_response["transaction_amount"];
         $transaction = $transations->save();
 
-        $userData = User::find($session_params["user_id"]);
-        $userData->balance = $userData->balance + $transaction_response["transaction_amount"];
-        $user = $userData->save();
+        $offer = Offer::find($transations->offer_id);
+        $offer->status = 3;
+        $offer->save();
+
+        if($session_params["campaign_id"]){
+            $userData = User::find($session_params["user_id"]);
+            $userData->balance = $userData->balance + $transaction_response["transaction_amount"];
+            $user = $userData->save();
+        }
         // dd($transations, $userData);
     }
 
