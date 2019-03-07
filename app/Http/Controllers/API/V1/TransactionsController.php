@@ -440,10 +440,10 @@ class TransactionsController extends Controller
         $transaction = $transations->save();
 
         $offer = Offer::find($transations->offer_id);
-        $offer->status = 3;
+        $offer->status = 4;
         $offer->save();
 
-        if($session_params["campaign_id"]){
+        if(!$session_params["campaign_id"]){
             $userData = User::find($session_params["user_id"]);
             $userData->balance = $userData->balance + $transaction_response["transaction_amount"];
             $user = $userData->save();
