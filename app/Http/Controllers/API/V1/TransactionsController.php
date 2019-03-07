@@ -338,7 +338,7 @@ class TransactionsController extends Controller
         // );
         $resourcePath = str_replace("%2","/",$request->input("resourcePath"));
         // $user =  $this->getAuthenticatedUser();
-        if(false) $responseData = $this->apiResponse;
+        if(true) $responseData = $this->apiResponse;
         else{
             $url = Self::PaymentOptions["Link"].$resourcePath;
             $url .= "?authentication.userId=".Self::PaymentOptions["UserId"];
@@ -439,14 +439,14 @@ class TransactionsController extends Controller
         $transations->amount       = $transaction_response["transaction_amount"];
         $transaction = $transations->save();
 
-        $offer = Offer::find($transations->offer_id);
-        $offer->status = 4;
-        $offer->save();
-
         if($session_params["campaign_id"]==0 && $session_params["offer_id"]==0){
             $userData = User::find($session_params["user_id"]);
             $userData->balance = $userData->balance + $transaction_response["transaction_amount"];
             $user = $userData->save();
+        }else{
+            $offer = Offer::find($transations->offer_id);
+            $offer->status = 4;
+            $offer->save();
         }
         // dd($transations, $userData);
     }
