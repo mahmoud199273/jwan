@@ -353,7 +353,7 @@ class TransactionsController extends Controller
             }
             curl_close($ch);
         }
-        dd("something");
+        dd($responseData);
         $responseData = json_decode($responseData, true);
         if(!isset($responseData["id"])) return ["msg"=>"id is not set", "response"=>$responseData];
 
