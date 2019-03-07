@@ -399,7 +399,7 @@ class TransactionsController extends Controller
             "sdk_token"=> $responseData["id"],
             "merchant_reference"=> "", //$responseData["customParameters"]["SHOPPER_EndToEndIdentity"], 
             "card_number"=> $responseData["card"]["bin"]."******".$responseData["card"]["last4Digits"],  //512345******2346
-            "authorization_code" => $responseData["resultDetails"]["AuthorizeId"],
+            "authorization_code" => "0",//$responseData["resultDetails"]["AuthorizeId"],
             "response_code" => $responseData["result"]["code"],
             "payment_option" => $responseData["paymentBrand"],
 
