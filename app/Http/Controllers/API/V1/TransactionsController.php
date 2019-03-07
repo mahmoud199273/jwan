@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Crypt;
 
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 
 
 class TransactionsController extends Controller
@@ -331,22 +332,29 @@ class TransactionsController extends Controller
         //     $request->input("resourcePath","resourcePath undefined"),
         //     Self::PaymentOptions["Link"].$request->input("resourcePath")
         // );
-        $url = Self::PaymentOptions["Link"].$request->input("resourcePath");
-        $url .= "?authentication.userId=".Self::PaymentOptions["UserId"];
-        $url .= "&authentication.password=".Self::PaymentOptions["Password"];
-        $url .= "&authentication.entityId=".Self::PaymentOptions["EntityID"];
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);// this should be set to true in production
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $responseData = curl_exec($ch);
-        if(curl_errno($ch)) {
-            return curl_error($ch);
+        if(false) $responseData = json_decode($this->apiResponse,true);
+        else{
+            $url = Self::PaymentOptions["Link"].$request->input("resourcePath");
+            $url .= "?authentication.userId=".Self::PaymentOptions["UserId"];
+            $url .= "&authentication.password=".Self::PaymentOptions["Password"];
+            $url .= "&authentication.entityId=".Self::PaymentOptions["EntityID"];
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);// this should be set to true in production
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $responseData = curl_exec($ch);
+            if(curl_errno($ch)) {
+                return curl_error($ch);
+            }
+            curl_close($ch);
+            $responseData = json_decode($responseData, true);
         }
-        curl_close($ch);
-        $responseData = json_decode($responseData, true);
-        // $this->updateTheDB();
+        $this->updateTheDB($responseData, [
+            "user_id" => $request->user_id,
+            "campaign_id" => $request->campaign_id,
+            "offer_id" => $request->offer_id
+        ]);
         return $responseData;
     }
 
@@ -373,47 +381,106 @@ class TransactionsController extends Controller
     }
 
 
-    private function updateTheDB(){
-        $user =  $this->getAuthenticatedUser();
+    private function updateTheDB($responseData, $session_params){
+        if(!isset($responseData["id"])) dd("id not provided", $responseData);
+        // dd($responseData, $session_params);
+        $transaction_response = [
+            "id" => $responseData["id"],
+            "card_holder_name" => $responseData["card"]["holder"],
+            "transaction_amount" => $responseData["amount"],
+            "sdk_token"=> $responseData["id"],
+            "merchant_reference"=> $responseData["customParameters"]["SHOPPER_EndToEndIdentity"], 
+            "card_number"=> $responseData["card"]["bin"]."******".$responseData["card"]["last4Digits"],  //512345******2346
+            "authorization_code" => $responseData["resultDetails"]["AuthorizeId"],
+            "response_code" => $responseData["result"]["code"],
+            "payment_option" => $responseData["paymentBrand"],
+
+            "eci" => $responseData["ndc"],
+            "customer_ip" => $responseData["customer"]["ip"],
+            "command" => "PURCHASE"
+        ];
 
         $transations = new Transactions;
-        $transations->user_id = $user->id;
+        $transations->user_id = $session_params["user_id"];
 
+        $transations->card_holder_name     = $transaction_response["card_holder_name"];
+        $transations->transaction_account_name     = $transaction_response["card_holder_name"];
+        $transations->sdk_token     = $transaction_response["sdk_token"];
+        $transations->merchant_reference     = $transaction_response["merchant_reference"];
+        $transations->card_number     = $transaction_response["card_number"];
 
-            $transations->card_holder_name     = $request->card_holder_name;
-            $transations->transaction_account_name     = $request->card_holder_name;
-            $transations->sdk_token     = $request->sdk_token;
-            $transations->merchant_reference     = $request->merchant_reference;
-            $transations->card_number     = $request->card_number;
-            //$transations->transaction_account_number     = $request->transaction_account_number;
-            $transations->transaction_account_number     = $request->fort_id;
-            $transations->authorization_code     = $request->authorization_code;
-            $transations->response_code     = $request->response_code;
-            $transations->payment_option     = $request->payment_option;
-            $transations->fort_id     = $request->fort_id;
-            $transations->eci     = $request->eci;
-            $transations->customer_ip     = $request->customer_ip;
-            $transations->command     = $request->command;
-            $transations->status       = "1";
+        $transations->transaction_account_number     = $transaction_response["id"];
+        $transations->authorization_code     = $transaction_response["authorization_code"];
+        $transations->response_code     = $transaction_response["response_code"];
+        $transations->payment_option     = $transaction_response["payment_option"];
+        $transations->fort_id     = $transaction_response["id"];
+        $transations->eci     = $transaction_response["eci"];
+        $transations->customer_ip     = $transaction_response["customer_ip"];
+        $transations->command     = $transaction_response["command"];
+        $transations->status       = "1";
 
 
         $transations->direction    = 0;
         $transations->type         = 0;
         $transations->campaign_id  = 0;
         $transations->offer_id     = 0;
-        $transations->amount       = $request->transaction_amount;
+        $transations->amount       = $transaction_response["transaction_amount"];
+        $transaction = $transations->save();
 
-
-        $transations->save();
-
-
-        if($request->fort_id) // payfort online payment
-        {
-            $userData = User::find($user->id);
-            $user->balance = $userData->balance + $request->transaction_amount;
-            $user->save();
-        }
+        $userData = User::find($session_params["user_id"]);
+        $userData->balance = $userData->balance + $transaction_response["transaction_amount"];
+        $user = $userData->save();
+        // dd($transations,$userData);
     }
+
+
+
+
+
+
+    public $apiResponse = '{
+"id": "8ac7a4a069533d8601695351a98f17ff",
+"paymentType": "DB",
+"paymentBrand": "VISA",
+"amount": "5000.00",
+"currency": "SAR",
+"descriptor": "4229.2796.8916 Smaat",
+"result": {
+"code": "000.100.112",
+"description": "Request successfully processed in \'Merchant in Connector Test Mode\'"
+},
+"resultDetails": {
+"CscResultCode": "M",
+"ConnectorTxID1": "1100042026",
+"connectorId": "1100042026",
+"VerStatus": "Y",
+"BatchNo": "20190306",
+"AuthorizeId": "006522",
+"AvsResultCode": "Unsupported"
+},
+"card": {
+"bin": "420000",
+"last4Digits": "0000",
+"holder": "ggg",
+"expiryMonth": "12",
+"expiryYear": "2020"
+},
+"customer": {
+"ip": "41.44.9.232",
+"ipCountry": "EG"
+},
+"customParameters": {
+"SHOPPER_EndToEndIdentity": "46b89b12def462b88a2e6e0030d6c47af200d23a012d663dfe3e86258e5b7548",
+"CTPE_DESCRIPTOR_TEMPLATE": ""
+},
+"risk": {
+"score": "100"
+},
+"buildNumber": "d66d3fc05bf113625470780c5318c89ffbcbf88e@2019-03-06 11:53:17 +0000",
+"timestamp": "2019-03-06 14:04:35+0000",
+"ndc": "E88076796659FBA4394ECB794CD2E8E2.uat01-vm-tx04"
+}';
+
 
 
 
