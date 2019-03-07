@@ -334,7 +334,6 @@ class TransactionsController extends Controller
         //     $request->input("resourcePath","resourcePath undefined"),
         //     Self::PaymentOptions["Link"].$request->input("resourcePath")
         // );
-        dd("something");
         $resourcePath = str_replace("%2","/",$request->input("resourcePath"));
         // $user =  $this->getAuthenticatedUser();
         if(true) $responseData = $this->apiResponse;
@@ -354,6 +353,7 @@ class TransactionsController extends Controller
             }
             curl_close($ch);
         }
+        dd("something");
         $responseData = json_decode($responseData, true);
         if(!isset($responseData["id"])) return ["msg"=>"id is not set", "response"=>$responseData];
 
