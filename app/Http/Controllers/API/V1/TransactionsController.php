@@ -356,8 +356,8 @@ class TransactionsController extends Controller
 
         $this->updateTheDB($responseData, [
             "user_id" => $user->id,
-            "campaign_id" => $request->campaign_id,
-            "offer_id" => $request->offer_id
+            "campaign_id" => $request->input("campaign_id",0),
+            "offer_id" => $request->input("offer_id",0)
         ]);
         return $responseData;
     }
@@ -434,7 +434,7 @@ class TransactionsController extends Controller
         $userData = User::find($session_params["user_id"]);
         $userData->balance = $userData->balance + $transaction_response["transaction_amount"];
         $user = $userData->save();
-        dd($transations,$userData);
+        // dd($transations,$userData);
     }
 
 
