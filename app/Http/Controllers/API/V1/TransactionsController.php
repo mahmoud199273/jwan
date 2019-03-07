@@ -334,8 +334,8 @@ class TransactionsController extends Controller
         //     $request->input("resourcePath","resourcePath undefined"),
         //     Self::PaymentOptions["Link"].$request->input("resourcePath")
         // );
-        // $user =  $this->getAuthenticatedUser();
-        // dd($user);
+        $user =  $this->getAuthenticatedUser();
+        dd($user);
         if(false) $responseData = $this->apiResponse;
         else{
             $url = Self::PaymentOptions["Link"].$request->input("resourcePath");
@@ -354,7 +354,7 @@ class TransactionsController extends Controller
             curl_close($ch);
         }
         $responseData = json_decode($responseData, true);
-
+        // dd($responseData);
         $this->updateTheDB($responseData, [
             "user_id" => 9,
             "campaign_id" => $request->input("campaign_id",0),
@@ -394,7 +394,7 @@ class TransactionsController extends Controller
             "card_holder_name" => $responseData["card"]["holder"],
             "transaction_amount" => $responseData["amount"],
             "sdk_token"=> $responseData["id"],
-            "merchant_reference"=> $responseData["customParameters"]["SHOPPER_EndToEndIdentity"], 
+            "merchant_reference"=> "", //$responseData["customParameters"]["SHOPPER_EndToEndIdentity"], 
             "card_number"=> $responseData["card"]["bin"]."******".$responseData["card"]["last4Digits"],  //512345******2346
             "authorization_code" => $responseData["resultDetails"]["AuthorizeId"],
             "response_code" => $responseData["result"]["code"],
