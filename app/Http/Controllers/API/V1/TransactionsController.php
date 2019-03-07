@@ -353,7 +353,8 @@ class TransactionsController extends Controller
             curl_close($ch);
         }
         $responseData = json_decode($responseData, true);
-        // dd($responseData);
+        if(!isset($responseData["id"])) return "id is not set";
+
         $this->updateTheDB($responseData, [
             "user_id" => $user->id,
             "campaign_id" => $request->input("campaign_id",0),

@@ -262,6 +262,7 @@ Route::get('/influncer/notifications/unseen'		, 'API\V1\UserController@getNotifi
   Route::get('influncer/transaction/list', 'API\V1\TransactionsController@index');
   Route::get('user/transaction/details/{id}', 'API\V1\TransactionsController@details');
   Route::get('influncer/transaction/details/{id}', 'API\V1\TransactionsController@details');
+  Route::get('tokenToUser', 'API\V1\UserController@tokenToUser');
 
 
   Route::get('user/transaction/getCheckoutId', 'API\V1\TransactionsController@getCheckoutId');

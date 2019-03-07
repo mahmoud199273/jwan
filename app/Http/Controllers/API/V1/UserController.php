@@ -42,6 +42,11 @@ class UserController extends Controller
 
 
 
+    public function tokenToUser(){
+        $user =  collect($this->getAuthenticatedUser());
+        return ($user->only(["id","email","phone","name","is_active"]));
+        // return ["id"=>$user->id, "is_active"=>$user->is_active, ];
+    }
 
     public function profile( Request $request )
     {
