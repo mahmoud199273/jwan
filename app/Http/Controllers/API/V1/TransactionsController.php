@@ -443,7 +443,7 @@ class TransactionsController extends Controller
         $offer->status = 4;
         $offer->save();
 
-        if(!$session_params["campaign_id"]){
+        if($session_params["campaign_id"]==0 && $session_params["offer_id"]==0){
             $userData = User::find($session_params["user_id"]);
             $userData->balance = $userData->balance + $transaction_response["transaction_amount"];
             $user = $userData->save();
