@@ -335,7 +335,6 @@ class TransactionsController extends Controller
         //     Self::PaymentOptions["Link"].$request->input("resourcePath")
         // );
         $user =  $this->getAuthenticatedUser();
-        dd($user);
         if(false) $responseData = $this->apiResponse;
         else{
             $url = Self::PaymentOptions["Link"].$request->input("resourcePath");
@@ -356,7 +355,7 @@ class TransactionsController extends Controller
         $responseData = json_decode($responseData, true);
         // dd($responseData);
         $this->updateTheDB($responseData, [
-            "user_id" => 9,
+            "user_id" => $user->id,
             "campaign_id" => $request->input("campaign_id",0),
             "offer_id" => $request->input("offer_id",0)
         ]);
@@ -388,7 +387,8 @@ class TransactionsController extends Controller
 
     private function updateTheDB($responseData, $session_params){
         if(!isset($responseData["id"])) dd("id not provided", $responseData);
-        // dd($responseData, $session_params);
+        dd($responseData, $session_params);
+        
         $transaction_response = [
             "id" => $responseData["id"],
             "card_holder_name" => $responseData["card"]["holder"],
