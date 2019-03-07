@@ -29,7 +29,9 @@ class TransactionsController extends Controller
 
     function __construct(Request $request, TransactionsTransformer $transactionstransformer){
         App::setlocale($request->lang);
-    	$this->middleware('jwt.auth', ["except"=>["notifyDB"]]);
+    	$this->middleware('jwt.auth', ["except"=>[
+            // "notifyDB"
+        ]]);
         $this->transactionstransformer   = $transactionstransformer;
     }
 
@@ -332,7 +334,7 @@ class TransactionsController extends Controller
         //     $request->input("resourcePath","resourcePath undefined"),
         //     Self::PaymentOptions["Link"].$request->input("resourcePath")
         // );
-        if(false) $responseData = json_decode($this->apiResponse,true);
+        if(false) $responseData = $this->apiResponse;
         else{
             $url = Self::PaymentOptions["Link"].$request->input("resourcePath");
             $url .= "?authentication.userId=".Self::PaymentOptions["UserId"];
@@ -348,10 +350,12 @@ class TransactionsController extends Controller
                 return curl_error($ch);
             }
             curl_close($ch);
-            $responseData = json_decode($responseData, true);
         }
+        $responseData = json_decode($responseData, true);
+        $user =  $this->getAuthenticatedUser();
+
         $this->updateTheDB($responseData, [
-            "user_id" => $request->user_id,
+            "user_id" => $user->id,
             "campaign_id" => $request->campaign_id,
             "offer_id" => $request->offer_id
         ]);
@@ -430,7 +434,7 @@ class TransactionsController extends Controller
         $userData = User::find($session_params["user_id"]);
         $userData->balance = $userData->balance + $transaction_response["transaction_amount"];
         $user = $userData->save();
-        // dd($transations,$userData);
+        dd($transations,$userData);
     }
 
 
