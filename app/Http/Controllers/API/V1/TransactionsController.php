@@ -387,7 +387,7 @@ class TransactionsController extends Controller
 
     private function updateTheDB($responseData, $session_params){
         if(!isset($responseData["id"])) dd("id not provided", $responseData, $session_params);
-        dd($responseData, $session_params);
+        // dd($responseData, $session_params);
 
         $transaction_response = [
             "id" => $responseData["id"],
@@ -427,8 +427,8 @@ class TransactionsController extends Controller
 
         $transations->direction    = 0;
         $transations->type         = 0;
-        $transations->campaign_id  = 0;
-        $transations->offer_id     = 0;
+        $transations->campaign_id  = $session_params["campaign_id"];
+        $transations->offer_id     = $session_params["offer_id"];
         $transations->amount       = $transaction_response["transaction_amount"];
         $transaction = $transations->save();
 
