@@ -358,11 +358,14 @@ class TransactionsController extends Controller
         $responseData = json_decode($responseData, true);
         if(!isset($responseData["id"])) return ["msg"=>"id is not set", "response"=>$responseData];
 
-        $this->updateTheDB($responseData, [
-            "user_id" => $request->input("user_id",9),
-            "campaign_id" => $request->input("campaign_id",0),
-            "offer_id" => $request->input("offer_id",0)
-        ]);
+        if( isset($responseData["result"]["code"]) && $responseData["result"]["code"] == "000.100.112" ){
+            $this->updateTheDB($responseData, [
+                "user_id" => $request->input("user_id",9),
+                "campaign_id" => $request->input("campaign_id",0),
+                "offer_id" => $request->input("offer_id",0)
+            ]);
+        }else return "error happened, didn't update the DB";
+
         // dd($responseData);
         return $responseData;
     }
