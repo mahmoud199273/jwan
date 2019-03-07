@@ -30,7 +30,7 @@ class TransactionsController extends Controller
     function __construct(Request $request, TransactionsTransformer $transactionstransformer){
         App::setlocale($request->lang);
     	$this->middleware('jwt.auth', ["except"=>[
-            // "notifyDB"
+            "notifyDB"
         ]]);
         $this->transactionstransformer   = $transactionstransformer;
     }
@@ -335,6 +335,7 @@ class TransactionsController extends Controller
         //     Self::PaymentOptions["Link"].$request->input("resourcePath")
         // );
         // $user =  $this->getAuthenticatedUser();
+        // dd($user);
         if(false) $responseData = $this->apiResponse;
         else{
             $url = Self::PaymentOptions["Link"].$request->input("resourcePath");
