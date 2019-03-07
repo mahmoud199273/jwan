@@ -192,7 +192,8 @@ class CampignsController extends Controller
         //$data = Campaign::where('user_id' ,$user->id)->get();
         $pagination = Campaign::where('campaigns.user_id' ,$user->id)->orderBy('updated_at','DESC');
         if($request->id) $pagination
-                                    ->join('offers','campaigns.id','offers.campaign_id')
+                                    ->leftJoin('offers','campaigns.id','offers.campaign_id')
+                                    ->whereNull("offers.id")
                                     ->select(["campaigns.*","offers.id AS offers_id"])
                                     ->whereNotIn('campaigns.status', [0,8,9,4,5]);
         else $pagination->whereNotIn('campaigns.status', [8,4]);
