@@ -386,9 +386,9 @@ class TransactionsController extends Controller
 
 
     private function updateTheDB($responseData, $session_params){
-        if(!isset($responseData["id"])) dd("id not provided", $responseData);
+        if(!isset($responseData["id"])) dd("id not provided", $responseData, $session_params);
         dd($responseData, $session_params);
-        
+
         $transaction_response = [
             "id" => $responseData["id"],
             "card_holder_name" => $responseData["card"]["holder"],
