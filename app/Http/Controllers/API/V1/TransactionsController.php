@@ -361,7 +361,7 @@ class TransactionsController extends Controller
             "campaign_id" => $request->input("campaign_id",0),
             "offer_id" => $request->input("offer_id",0)
         ]);
-        dd($responseData);
+        // dd($responseData);
         return $responseData;
     }
 
