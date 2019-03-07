@@ -335,7 +335,7 @@ class TransactionsController extends Controller
         //     Self::PaymentOptions["Link"].$request->input("resourcePath")
         // );
         $user =  $this->getAuthenticatedUser();
-        if(false) $responseData = $this->apiResponse;
+        if(true) $responseData = $this->apiResponse;
         else{
             $url = Self::PaymentOptions["Link"].$request->input("resourcePath");
             $url .= "?authentication.userId=".Self::PaymentOptions["UserId"];
