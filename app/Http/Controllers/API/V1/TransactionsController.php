@@ -334,10 +334,12 @@ class TransactionsController extends Controller
         //     $request->input("resourcePath","resourcePath undefined"),
         //     Self::PaymentOptions["Link"].$request->input("resourcePath")
         // );
+        $resourcePath = str_replace("%2","/",$request->input("resourcePath"));
+
         $user =  $this->getAuthenticatedUser();
         if(false) $responseData = $this->apiResponse;
         else{
-            $url = Self::PaymentOptions["Link"].$request->input("resourcePath");
+            $url = Self::PaymentOptions["Link"].$resourcePath;
             $url .= "?authentication.userId=".Self::PaymentOptions["UserId"];
             $url .= "&authentication.password=".Self::PaymentOptions["Password"];
             $url .= "&authentication.entityId=".Self::PaymentOptions["EntityID"];
@@ -353,7 +355,7 @@ class TransactionsController extends Controller
             curl_close($ch);
         }
         $responseData = json_decode($responseData, true);
-        if(!isset($responseData["id"])) return "id is not set";
+        if(!isset($responseData["id"])) return ["msg"=>"id is not set", "response"=>$responseData];
 
         $this->updateTheDB($responseData, [
             "user_id" => $user->id,
