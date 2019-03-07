@@ -334,7 +334,6 @@ class TransactionsController extends Controller
         //     $request->input("resourcePath","resourcePath undefined"),
         //     Self::PaymentOptions["Link"].$request->input("resourcePath")
         // );
-        sleep(3);
         $resourcePath = str_replace("%2","/",$request->input("resourcePath"));
         // $user =  $this->getAuthenticatedUser();
         if(false) $responseData = $this->apiResponse;
@@ -358,7 +357,7 @@ class TransactionsController extends Controller
         if(!isset($responseData["id"])) return ["msg"=>"id is not set", "response"=>$responseData];
 
         $this->updateTheDB($responseData, [
-            "user_id" => $request->user_id,
+            "user_id" => $request->input("user_id",9),
             "campaign_id" => $request->input("campaign_id",0),
             "offer_id" => $request->input("offer_id",0)
         ]);
