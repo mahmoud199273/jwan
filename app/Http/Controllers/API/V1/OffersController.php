@@ -1041,7 +1041,7 @@ class OffersController extends Controller
         $offer->campaign_id     = $request->campaign_id;
         $offer->user_id         = $campaign->user_id;
         $offer->influncer_id    = $influncer->id;
-        $offer->cost            = $request->cost;
+        $offer->cost            = str_replace(",",".",$request->cost);
         $offer->description     = $request->description;
         if($request->facebook) $offer->facebook        = $request->facebook;
         if($request->twitter) $offer->twitter         = $request->twitter;
@@ -1132,7 +1132,7 @@ class OffersController extends Controller
 
 
        $offer = Offer::find($request->id);
-       $offer->cost            = $request->cost;
+       $offer->cost            = str_replace(",",".",$request->cost);
        if(strlen($request->description)!=0)
        {
          $offer->description     = $request->description;
