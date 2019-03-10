@@ -63,8 +63,6 @@ Route::post('influncer/send/verfiy/code'	, 'API\V1\AuthController@sendVerifyCode
 Route::post('user/verfiy/mobile/code'	, 'API\V1\AuthController@verifyMobileCode');
 Route::post('influncer/verfiy/mobile/code'	, 'API\V1\AuthController@verifyMobileCode');
 // mahmoud abdelrahman 8/11/2018
-
-
 Route::post('user/send/reset/code'	, 'API\V1\ResetPasswordController@sendCode');
 
 
@@ -79,14 +77,14 @@ Route::post('influncer/verify/reset/code', 'API\V1\ResetPasswordController@verif
 Route::post('influncer/reset/password', 'API\V1\ResetPasswordController@resetPassword');
 
 
+
+Route::get('influencer/verification/{verificationCode}', 'API\V1\VerificationsController@checkVerificationCode');
+
+
+
 Route::get('user/profile', 'API\V1\UserController@profile');
-
-
 Route::post('user/update/phone','API\V1\UserController@updatePhone');// user update phone
-
-
 Route::post('user/update/profile', 'API\V1\UserController@updateProfile');
-
 Route::post('user/update/channels', 'API\V1\UserController@userChannels');
 
 
