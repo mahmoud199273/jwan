@@ -10,10 +10,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 // use Illuminate\Support\Facades\DB;
 // use Illuminate\Support\Facades\Input;
-// use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Validator;
 // use Illuminate\Validation\Rule;
 // use Illuminate\Support\Facades\Crypt;
-
+use App\Helpers\ResponseHelper as responseHelper;
 
 
 class VerificationsController extends Controller
@@ -25,17 +25,35 @@ class VerificationsController extends Controller
 
 
 
-    public function checkVerificationCode($verificationCode){
+    public function checkVerificationCode($lang, $verificationCode){
+        // return responseHelper::Success("created");
+        $rules = [ 
+            'verificationCode' => 'required|regex:/^[0-9]{4,}/',
+        ];
+        $validator = Validator::make(["verificationCode"=>$verificationCode], $rules);
+        if ($validator->fails()) return $this->setStatusCode(403)->respondWithError($validator->messages());
 
-      if($verificationCode==1234)         return [
+        if($verificationCode=="1234") return [
             "status" => "success",
             "data" => null
         ];  
-      else          return [
+        else          return [
             "status" => "fail",
             "data" => ["description"=>"this verification code isn't allowed"]
         ];  
     }
+
+    public function requestVerificationCode(Request $request){
+        $rules = [ 
+            'email' => 'required|unique:users,email',
+            'phone' => 'required|max:14|min:9|regex:/^[5][0-9]{4,}/',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) return $this->setStatusCode(403)->respondWithError($validator->messages());
+
+        return "success";
+    }
+
 
 
 

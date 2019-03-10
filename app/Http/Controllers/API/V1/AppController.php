@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Models\AppSettings;
 
 
 class AppController extends BaseController
@@ -41,50 +42,14 @@ public function index()
     return $this->sendResponse(array('categories'=>$categories, 'countries'=>$countries, 'nationalities'=>$nationalities), 'categories read succesfully',200);
 }
 
-
-/*public function store(Request $request)
-{
-    # code...
-
-
-}
-
-
-
-
-
-
-public function show( $id)
-{
-    $country = Country::find($id);
-    if (   is_null($country)   ) {
-        # code...
-        return $this->sendError(  'post not found ! ');
+public function settings(){
+    $settings = AppSettings::all();
+    $response_array = [];
+    foreach($settings as $set){
+        $response_array[$set->field] = $set->value;
     }
-    return $this->sendResponse($country->toArray(), 'country read succesfully');
-
+    return $response_array; 
 }
-
-
-
-// update book
-public function update(Request $request , Country $country)
-{
-
-
-}
-
-
-
-
-
-// delete book
-public function destroy(Country $country)
-{
-
-
-
-}*/
 
 
 

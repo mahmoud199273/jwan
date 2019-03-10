@@ -77,9 +77,9 @@ Route::post('influncer/verify/reset/code', 'API\V1\ResetPasswordController@verif
 Route::post('influncer/reset/password', 'API\V1\ResetPasswordController@resetPassword');
 
 
-
-Route::get('influencer/verification/{verificationCode}', 'API\V1\VerificationsController@checkVerificationCode');
-
+Route::get('user/verification/checkVerificationCode/{verificationCode}', 'API\V1\VerificationsController@checkVerificationCode');
+Route::post('user/verification/requestVerificationCode', 'API\V1\VerificationsController@requestVerificationCode');
+Route::get('/settings','API\V1\AppController@settings') ;
 
 
 Route::get('user/profile', 'API\V1\UserController@profile');
@@ -270,11 +270,8 @@ Route::get('/influncer/notifications/unseen'		, 'API\V1\UserController@getNotifi
 
 /* about the app - license agreement */
 Route::get('/about/app','API\V1\AboutAppController@index') ;
-
 Route::get('user/privacy/policy','API\V1\AboutAppController@privacyPolicy');
-
 Route::get('influncer/privacy/policy','API\V1\AboutAppController@influncerPrivacyPolicy');
-
 Route::post('contact','API\V1\AboutAppController@contactUs');
 
 
