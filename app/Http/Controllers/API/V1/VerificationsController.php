@@ -25,15 +25,15 @@ class VerificationsController extends Controller
 
 
 
-    public function checkVerificationCode($lang, $verificationCode){
+    public function checkVerificationCode(Request $request){
         // return responseHelper::Success("created");
         $rules = [ 
             'verificationCode' => 'required|regex:/^[0-9]{4,}/',
         ];
-        $validator = Validator::make(["verificationCode"=>$verificationCode], $rules);
+        $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) return $this->setStatusCode(403)->respondWithError($validator->messages());
 
-        if($verificationCode=="1234") return [
+        if($request->verificationCode=="1234") return [
             "status" => "success",
             "data" => null
         ];  
