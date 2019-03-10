@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use App\Models\AppSettings;
+use App\Setting;
 
 
 class AppController extends BaseController
@@ -43,12 +43,8 @@ public function index()
 }
 
 public function settings(){
-    $settings = AppSettings::all();
-    $response_array = [];
-    foreach($settings as $set){
-        $response_array[$set->field] = $set->value;
-    }
-    return $response_array; 
+    $settings = Setting::first();
+    return $settings; 
 }
 
 
