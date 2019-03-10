@@ -149,10 +149,7 @@ class TransactionsController extends Controller
     public function store( Request $request )
     {
         $user =  $this->getAuthenticatedUser();
-        if($user->account_type != 0)
-        {
-            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
-        }
+        if($user->account_type != 0) return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
         // $validator = Validator::make( $request->all(), [
         //     'transaction_amount'            => 'required|numeric',
         //     'transaction_bank_name'         =>  'required',
@@ -295,6 +292,12 @@ class TransactionsController extends Controller
 
 //Payment with hyperpay APIs
     public function getCheckoutId(Request $request){
+        $user =  $this->getAuthenticatedUser();
+        if($user->account_type != 0) return $this->setStatusCode(401)->respondWithError(trans('api_msgs.not_authorized'));
+        $rules = [ 'amount' => 'required|string' ];
+        $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) return $this->setStatusCode(403)->respondWithError($validator->messages());
+        
         $amount = $request->input("amount","00.00");
         $responseData = $this->sendTransactionPreparationRequest($amount);
         return response($responseData, 200)->header('Content-Type', 'application/json');
@@ -331,12 +334,19 @@ class TransactionsController extends Controller
 
 
     public function notifyDB(Request $request){
-        // dd(
-        //     $request->input("id","id undefined"), 
-        //     $request->input("resourcePath","resourcePath undefined"),
-        //     Self::PaymentOptions["Link"].$request->input("resourcePath")
-        // );
-        $resourcePath = str_replace("%2","/",$request->input("resourcePath"));
+        $rules = [ 
+            "resourcePath"=>"required|string",
+            "user_id"=>"required|integer",
+            "campaign_id"=>"integer",
+            "offer_id"=>"integer"
+        ];
+        $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) return $this->setStatusCode(403)->respondWithError($validator->messages());
+        
+        $user = User::find($request->user_id);
+        if($user->account_type != 0) return $this->setStatusCode(401)->respondWithError(trans('api_msgs.not_authorized'));
+
+        $resourcePath = str_replace("%2","/",$request->resourcePath);
         // $user =  $this->getAuthenticatedUser();
         if(false) $responseData = $this->apiResponse;
         else{
@@ -356,18 +366,16 @@ class TransactionsController extends Controller
             curl_close($ch);
         }
         $responseData = json_decode($responseData, true);
-        if(!isset($responseData["id"])) return ["msg"=>"id is not set", "response"=>$responseData];
-
-        if( isset($responseData["result"]["code"]) && $responseData["result"]["code"] == "000.100.112" ){
+        
+        if( isset($responseData["id"]) 
+                && isset($responseData["result"]["code"]) 
+                && $responseData["result"]["code"] == "000.100.112" ){
             $this->updateTheDB($responseData, [
-                "user_id" => $request->input("user_id",9),
+                "user" => $user,
                 "campaign_id" => $request->input("campaign_id",0),
                 "offer_id" => $request->input("offer_id",0)
             ]);
-        }else return "error happened, didn't update the DB";
-
-        // dd($responseData);
-        return $responseData;
+        }else return ["msg"=>"problem with the response, ".$response["result"]["description"]."...", "response"=>$responseData];
     }
 
 
@@ -394,8 +402,8 @@ class TransactionsController extends Controller
 
 
     private function updateTheDB($responseData, $session_params){
-        if(!isset($responseData["id"])) dd("id not provided", $responseData, $session_params);
         // dd($responseData, $session_params);
+        $user = $session_params["user"];
 
         $transaction_response = [
             "id" => $responseData["id"],
@@ -414,7 +422,7 @@ class TransactionsController extends Controller
         ];
 
         $transations = new Transactions;
-        $transations->user_id = $session_params["user_id"];
+        $transations->user_id = $user->id;
 
         $transations->card_holder_name     = $transaction_response["card_holder_name"];
         $transations->transaction_account_name     = $transaction_response["card_holder_name"];
@@ -439,11 +447,10 @@ class TransactionsController extends Controller
         $transations->amount       = $transaction_response["transaction_amount"];
         $transaction = $transations->save();
 
-        if($session_params["campaign_id"]==0 && $session_params["offer_id"]==0){
-            $userData = User::find($session_params["user_id"]);
-            $userData->balance = $userData->balance + $transaction_response["transaction_amount"];
-            $user = $userData->save();
-        }else{
+        if($session_params["campaign_id"]==0 && $session_params["offer_id"]==0){    //if rechargin
+            $user->balance = $user->balance + $transaction_response["transaction_amount"];
+            $user = $user->save();
+        }else{                                                              //if paying for a campaign
             $offer = Offer::find($transations->offer_id);
             $offer->status = 4;
             $offer->save();
