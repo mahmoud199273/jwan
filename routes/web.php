@@ -148,6 +148,8 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 		Route::resource('offers','OffersController');
 		Route::get('offers/{id}/{campaign}','OffersController@campaigns');
 
+		Route::resource("invitations", "InvitationsController");
+
 	});
 });
 

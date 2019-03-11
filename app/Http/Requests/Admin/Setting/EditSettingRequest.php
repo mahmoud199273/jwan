@@ -22,14 +22,17 @@ class EditSettingRequest extends BaseRequest
             'commission'                    => 'required',
             'tax'                           => 'required',
             'min_balance'                   => 'required',
+            // 'checkVerificationCodeScenario' => 'required'
             
         ];
     }
 
     public function persist($id)
     {
-        //dd($this->request->all());
-        Setting::find($id)->Update($this->request->all());
+        $params = $this->request->all();
+        $params["checkVerificationCodeScenario"] = (isset($params["checkVerificationCodeScenario"]) && $params["checkVerificationCodeScenario"] == "on") ? true : false;
+        // dd($params);
+        Setting::find($id)->Update($params);
         //Setting::where('id',$id)->Update($this->request->all());
     }
 

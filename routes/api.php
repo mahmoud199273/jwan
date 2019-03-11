@@ -77,8 +77,8 @@ Route::post('influncer/verify/reset/code', 'API\V1\ResetPasswordController@verif
 Route::post('influncer/reset/password', 'API\V1\ResetPasswordController@resetPassword');
 
 
-Route::post('user/verification/checkVerificationCode', 'API\V1\VerificationsController@checkVerificationCode');
-Route::post('user/verification/requestVerificationCode', 'API\V1\VerificationsController@requestVerificationCode');
+Route::post('user/invitations/checkVerificationCode', 'API\V1\InvitationsController@checkVerificationCode');
+Route::post('user/invitations/requestVerificationCode', 'API\V1\InvitationsController@requestVerificationCode');
 Route::get('/settings','API\V1\AppController@settings') ;
 
 

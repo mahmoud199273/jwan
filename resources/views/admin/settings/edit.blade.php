@@ -90,6 +90,12 @@
                 </div>
             </div>
 
+            <div class="form-group m-form__group row">
+                <label for="verification_code_scenario" class="col-2 col-form-label">{{ __('admin.verification_code_scenario') }}</label>
+                <div class="col-9">
+                    <input type="checkbox" class="form-control" id="verification_code_scenario" name="checkVerificationCodeScenario" {{ $row->checkVerificationCodeScenario ? 'checked' : '' }}>
+                </div>
+            </div>
           
 
             <!-- <div class="form-group m-form__group row {{ $errors->has('logo') ? 'has-danger' : ''}}">

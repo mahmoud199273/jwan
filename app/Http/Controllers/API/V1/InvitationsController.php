@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\Validator;
 // use Illuminate\Validation\Rule;
 // use Illuminate\Support\Facades\Crypt;
 use App\Helpers\ResponseHelper as responseHelper;
+use App\Models\Invitations;
 
 
-class VerificationsController extends Controller
+class InvitationsController extends Controller
 {
     function __construct(Request $request){
         App::setlocale($request->lang);
@@ -33,7 +34,8 @@ class VerificationsController extends Controller
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) return $this->setStatusCode(403)->respondWithError($validator->messages());
 
-        if($request->verificationCode=="1234") return [
+        $invitation = Invitations::where("code", $request->verificationCode)->first();
+        if($invitation) return [
             "status" => "success",
             "data" => null
         ];  
@@ -51,7 +53,14 @@ class VerificationsController extends Controller
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) return $this->setStatusCode(403)->respondWithError($validator->messages());
 
-        return "success";
+        // $res = Invitations::create(["email"=>$request->email, "phone"=>$request->phone]);
+        // dd($res);
+        return [
+            "status" => "success",
+            "data" => [
+                "message" => "invitation request was added"
+            ]
+        ];
     }
 
 

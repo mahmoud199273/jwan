@@ -50,14 +50,8 @@
                             <thead>
                                 <tr>
                                     <th><b>{{ __('admin.campaign_period') }}</b></th>
-
                                     <th><b>{{ __('admin.commission') }}</b></th>
-
-                                    
-
                                     <th><b>{{ __('admin.control') }}</b></th>
-
-                                    
                                 </tr>
                             </thead>
                             <tbody>
