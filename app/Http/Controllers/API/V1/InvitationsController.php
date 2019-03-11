@@ -27,7 +27,9 @@ class InvitationsController extends Controller
 
 
     public function checkVerificationCode(Request $request){
-        // return responseHelper::Success("created");
+        // responseHelper::$Headers = ["key1"=>"var1"];
+        // return responseHelper::Success("created",["message"=>"hello world"]);
+
         $rules = [ 
             'verificationCode' => 'required|regex:/^[0-9]{4,}/',
         ];
@@ -39,7 +41,7 @@ class InvitationsController extends Controller
             "status" => "success",
             "data" => null
         ];  
-        else          return [
+        else return [
             "status" => "fail",
             "data" => ["description"=>"this verification code isn't allowed"]
         ];  
@@ -47,14 +49,21 @@ class InvitationsController extends Controller
 
     public function requestVerificationCode(Request $request){
         $rules = [ 
-            'email' => 'required|unique:users,email',
+            'email' => 'required',
             'phone' => 'required|max:14|min:9|regex:/^[5][0-9]{4,}/',
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) return $this->setStatusCode(403)->respondWithError($validator->messages());
 
-        // $res = Invitations::create(["email"=>$request->email, "phone"=>$request->phone]);
-        // dd($res);
+        $trytofind = Invitations::where("email",$request->email)->orWhere("phone",$request->phone)->first();
+        if($trytofind) return [
+            "status" => "fail",
+            "data" => [
+                "message" => "this email or phone number was added before"
+            ]
+        ];
+
+        $res = Invitations::create(["email"=>$request->email, "phone"=>$request->phone]);
         return [
             "status" => "success",
             "data" => [

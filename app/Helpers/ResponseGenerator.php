@@ -48,32 +48,29 @@ class ResponseHelper extends ENUMS{
     }
 
 
-    public static function Success($status,$data=null){
+    public static function Success($operationStatus,$data=null){
       $status = "success";
-      switch ($status) {
+      $response_array["status"] = $status;
+      switch ($operationStatus) {
         case "created":
-          $response = response([
-            "status"=>$status,
-            "data"=>$data
-          ]);
+          $response_array["data"] = $data;
+          $status_code = ENUMS::NoContent;
           break;
-        case "NoContent": //success but there are no content
-          $response = response($data);
+        case "noContent": //success but there are no content
+          $response_array["data"] = $data;
+          $status_code = ENUMS::NoContent;
           break;
         default: //success
-          $response = response($data);
+          $response_array["data"] = $data;
           break;
       }
+      $response = response($response_array, $status_code);
       $response = Self::attachHeaders($response);
       return $response;
     }
 
 
-    public static $Headers = [
-      "val1"=>"cont1",
-      "val2"=>"cont2",
-      "val3"=>"cont3",
-    ];
+    public static $Headers = [];
     public static function attachHeaders($response){
       return $response->withHeaders(Self::$Headers);
     }
