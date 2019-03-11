@@ -48,31 +48,66 @@ class ResponseHelper extends ENUMS{
     }
 
 
-    public static function Success($operationStatus,$data=null){
+
+    public static $Headers = [];
+    public static function attachHeaders($response){
+      return $response->withHeaders(Self::$Headers);
+    }
+
+    public static function Success($operationStatus,$data=null){ 
+      if(!in_array($operationStatus, ["success","created","noContent"])) die("error: not a recognizable success status");
       $status = "success";
       $response_array["status"] = $status;
       switch ($operationStatus) {
         case "created":
-          $response_array["data"] = $data;
-          $status_code = ENUMS::NoContent;
+          $status_code = ENUMS::Created;
+          if($data==null) $data = ["message"=>"Created Successfully"];
           break;
-        case "noContent": //success but there are no content
-          $response_array["data"] = $data;
+        case "noContent": //success but there are no content, EX: delete requests
           $status_code = ENUMS::NoContent;
           break;
         default: //success
-          $response_array["data"] = $data;
+          $status_code = ENUMS::Success;
           break;
       }
+      $response_array["data"] = ($operationStatus!="noContent") ? $data : null;
       $response = response($response_array, $status_code);
       $response = Self::attachHeaders($response);
       return $response;
     }
 
 
-    public static $Headers = [];
-    public static function attachHeaders($response){
-      return $response->withHeaders(Self::$Headers);
+
+    public static function Fail($operationStatus,$data=null){ 
+      if(!in_array($operationStatus, ["failedToProceed","validationError","validationDublicationError","resourceNotFound","userNotAuthenticated"])) die("error: not a recognizable fail status");
+      $status = "fail";
+      $response_array["status"] = $status;
+      switch ($operationStatus) {
+        case "validationError": 
+          $status_code = ENUMS::ValidationError;
+          if($data==null) $data = ["message"=>"Validation Error"];
+          break;
+        case "validationDublicationError": 
+          $status_code = ENUMS::ValidationDublicationError;
+          if($data==null) $data = ["message"=>"Validation Dublication Error"];
+          break;
+        case "resourceNotFound": 
+          $status_code = ENUMS::ResourceNotFound;
+          if($data==null) $data = ["message"=>"Resource Not Found"];
+          break;
+        case "userNotAuthenticated": 
+          $status_code = ENUMS::UserNotAuthenticated;
+          if($data==null) $data = ["message"=>"User Not Authenticated"];
+          break;
+        default: //success
+          $status_code = ENUMS::FailedToProceed;
+          if($data==null) $data = ["message"=>"Failed To Proceed"];
+          break;
+      }
+      $response_array["data"] = $data;
+      $response = response($response_array, $status_code);
+      $response = Self::attachHeaders($response);
+      return $response;
     }
 
 

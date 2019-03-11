@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 // use Illuminate\Support\Facades\Crypt;
 use App\Helpers\ResponseHelper as responseHelper;
 use App\Models\Invitations;
+use App\Models\InvitationCodes;
 
 
 class InvitationsController extends Controller
@@ -29,22 +30,12 @@ class InvitationsController extends Controller
     public function checkVerificationCode(Request $request){
         // responseHelper::$Headers = ["key1"=>"var1"];
         // return responseHelper::Success("created",["message"=>"hello world"]);
+        $validator = Validator::make($request->all(), ['verificationCode' => 'required|regex:/^[0-9]{4,}/']);
+        if ($validator->fails()) return responseHelper::Fail("validationError",$validator->messages());
 
-        $rules = [ 
-            'verificationCode' => 'required|regex:/^[0-9]{4,}/',
-        ];
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) return $this->setStatusCode(403)->respondWithError($validator->messages());
-
-        $invitation = Invitations::where("code", $request->verificationCode)->first();
-        if($invitation) return [
-            "status" => "success",
-            "data" => null
-        ];  
-        else return [
-            "status" => "fail",
-            "data" => ["description"=>"this verification code isn't allowed"]
-        ];  
+        $code = InvitationCodes::where("code", $request->verificationCode)->where("status","ACTIVE")->first();
+        if($code) return responseHelper::Success("success",["message"=>"Verification Code Found."]);  
+        else return responseHelper::Fail("resourceNotFound",["message"=>"this code is not registered or it's already used before."]);  
     }
 
     public function requestVerificationCode(Request $request){
@@ -53,23 +44,13 @@ class InvitationsController extends Controller
             'phone' => 'required|max:14|min:9|regex:/^[5][0-9]{4,}/',
         ];
         $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) return $this->setStatusCode(403)->respondWithError($validator->messages());
+        if ($validator->fails()) return responseHelper::Fail("validationError",$validator->messages());
 
         $trytofind = Invitations::where("email",$request->email)->orWhere("phone",$request->phone)->first();
-        if($trytofind) return [
-            "status" => "fail",
-            "data" => [
-                "message" => "this email or phone number was added before"
-            ]
-        ];
+        if($trytofind) return responseHelper::Fail("validationDublicationError",["message" => "this email or phone number was added before."]);
 
         $res = Invitations::create(["email"=>$request->email, "phone"=>$request->phone]);
-        return [
-            "status" => "success",
-            "data" => [
-                "message" => "invitation request was added"
-            ]
-        ];
+        return responseHelper::Success("created",["message" => "invitation request was added."]);
     }
 
 
