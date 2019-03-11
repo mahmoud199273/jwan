@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <form class="m-form" action="{{url('admin/user/search')}}" method="get" id="search_form">
+    <form class="m-form" action="{{url('admin/invitations/search')}}" method="get" id="search_form">
         <div class="form-group m-form__group row ">
             <label for="q" class="col-1 col-form-label"></label>
             <div class="col-6">
@@ -52,7 +52,7 @@
                             </h3>
                         </div>
                     </div>
-                    <div class="m-portlet__head-tools">
+<!--                     <div class="m-portlet__head-tools">
 
                         <a href="{{url('admin/users/create')}}" class="btn btn-brand m-btn m-btn--icon m-btn--wide m-btn--md m--margin-right-10">
                             <span>
@@ -61,7 +61,7 @@
                             </span>
                         </a>
 
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="m-portlet__body">
@@ -75,7 +75,7 @@
                                 <tr>
                                     <th><b>{{ __('admin.email') }}</b></th>
                                     <th><b>{{ __('admin.phone') }}</b></th>
-                                    <th><b>{{ __('admin.status') }}</b></th>
+                                    <!-- <th><b>{{ __('admin.status') }}</b></th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,8 +84,8 @@
                                 <tr>
                                     <td>{{ $invite->email }}</td>
                                     <td>{{ $invite->phone }}</td>
-                                    <td class="text-center">{!! ($invite->status)? "<i class='fa fa-check m--font-success'></i>" : 
-                                    "<i class='fa fa-times m--font-danger'></i>" !!}</td>
+<!--                                     <td class="text-center">{!! ($invite->status)? "<i class='fa fa-check m--font-success'></i>" : 
+                                    "<i class='fa fa-times m--font-danger'></i>" !!}</td> -->
                                 </tr>
                             @endforeach
                             @endif

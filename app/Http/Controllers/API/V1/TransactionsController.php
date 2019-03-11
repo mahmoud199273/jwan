@@ -375,7 +375,7 @@ class TransactionsController extends Controller
                 "campaign_id" => $request->input("campaign_id",0),
                 "offer_id" => $request->input("offer_id",0)
             ]);
-        }else return ["msg"=>"problem with the response, ".$response["result"]["description"]."...", "response"=>$responseData];
+        }else return ["msg"=>"problem with the response, ".$responseData["result"]["description"]."...", "response"=>$responseData];
     }
 
 
