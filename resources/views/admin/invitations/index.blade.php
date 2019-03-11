@@ -76,71 +76,17 @@
                                     <th><b>{{ __('admin.email') }}</b></th>
                                     <th><b>{{ __('admin.phone') }}</b></th>
                                     <th><b>{{ __('admin.status') }}</b></th>
-                                     <th><b>{{ __('admin.invitations_code') }}</b></th>
-
                                 </tr>
                             </thead>
                             <tbody>
-                                @if($users)
-                                @foreach ($users as $user)
+                                @if($invitations)
+                                @foreach ($invitations as $invite)
                                 <tr>
-                                    <th scope="row">{{ $user->name }}</th>
-                                    <td>{{ $user->phone }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td class="text-center">{!! ($user->is_active)? "<i class='fa fa-check m--font-success'></i>" : 
+                                    <td>{{ $invite->email }}</td>
+                                    <td>{{ $invite->phone }}</td>
+                                    <td class="text-center">{!! ($invite->status)? "<i class='fa fa-check m--font-success'></i>" : 
                                     "<i class='fa fa-times m--font-danger'></i>" !!}</td>
-                                    <td>{{ $user->balance }}</td>
-                                    <td>{{ $user->code }}</td>
-                                    <td class="text-center">
-                                        @if($user->verified == 1) 
-                                            {{ __('admin.verified') }}
-                                        @else
-                                            {{ __('admin.unverified') }}
-                                        @endif    
-                                    </td>
-                                    <td>
-                                        <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <a type="button" href="{{url('admin/users')}}/{{ $user->id }}" class="m-btn m-btn m-btn--square btn btn-secondary">
-                                                <i class="fa fa-eye m--font-primary"></i>
-                                            </a>
-                                            @if($user->is_active)
-                                            <a type="button" data-id = "{{ $user->id }}"
-                                                class="m-btn m-btn m-btn--square btn btn-secondary _ban">
-                                                <i class="fa fa-times m--font-danger"></i>
-                                            </a>
-                                            @else
-                                            <a type="button"  data-id = "{{ $user->id }}" 
-                                                class="m-btn m-btn m-btn--square btn btn-secondary _activate">
-                                                <i class="fa fa-check m--font-success"></i>
-                                            </a>
-                                            @endif
-                                            <a type="button" 
-                                            href="{{url('admin/users')}}/{{ $user->id }}/edit" 
-                                            class="m-btn m-btn m-btn--square btn btn-secondary">
-                                            <i class="fa fa-edit m--font-info"></i>
-                                        </a>
-                                        @php $ispast = \Carbon\Carbon::parse($user->block_time)->isPast() @endphp
-                                        
-                                        @if($user->block == 1 && !$ispast)
-                                        <a type="button"  data-id = "{{ $user->id }}" 
-                                                class="m-btn m-btn m-btn--square btn btn-secondary _unblock">
-                                               الغاء الحظر
-                                        </a>
-                                        @endif
-
-                                        <a type="button" 
-                                            href="{{url('admin/transactions')}}/{{ $user->id }}/transaction" 
-                                            class="m-btn m-btn m-btn--square btn btn-secondary">
-                                            {{ __('admin.transactions') }} 
-                                        </a>
-
-                                        <a type="button"  data-id = "{{ $user->id }}" 
-                                            class="m-btn m-btn m-btn--square btn btn-secondary _removeUser">
-                                            <i class="flaticon-delete-1 m--font-danger"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+                                </tr>
                             @endforeach
                             @endif
                         </tbody>
@@ -149,16 +95,16 @@
                 </div>
             </div>
             <!--end::Section-->
-            @if($users)
+            @if($invitations)
             <div> 
                 <span>
                     <span>{{ __('admin.showing') }}</span>
-                    {{($users->currentpage()-1)*$users->perpage()+1}} 
+                    {{($invitations->currentpage()-1)*$invitations->perpage()+1}} 
                     <span>{{ __('admin.to') }}</span> 
-                    {{$users->currentpage()*$users->perpage()}}
+                    {{$invitations->currentpage()*$invitations->perpage()}}
                 </span> 
                 <span>{{ __('admin.from') }}</span>
-                <span class="badge badge-info">{{ $users->total() }}</span>
+                <span class="badge badge-info">{{ $invitations->total() }}</span>
                 <span>{{ __('admin.items') }}</span>
             </div>
             @endif
@@ -173,15 +119,15 @@
 
 <div class="container">
     <div class="text-center">
-       @if($users)
-       {{ $users->links() }}
+       @if($invitations)
+       {{ $invitations->links() }}
        @endif
    </div>
 </div>
 <br>
 @if(isset($query ) or isset($message))
 <div>
-    <a href="{{url('admin/users')}}" class="btn btn-danger m-btn m-btn--icon m-btn--wide">
+    <a href="{{url('admin/invitations')}}" class="btn btn-danger m-btn m-btn--icon m-btn--wide">
         <span>
             <i class="la la-warning"></i>
             <span>{{ __('admin.cancel_search') }}</span>

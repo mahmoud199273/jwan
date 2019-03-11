@@ -49,7 +49,9 @@ class ResponseHelper extends ENUMS{
 
 
 
-    public static $Headers = [];
+    public static $Headers = [
+      "Content-Type" => "application/json"
+    ];
     public static function attachHeaders($response){
       return $response->withHeaders(Self::$Headers);
     }

@@ -291,7 +291,6 @@ return [
     /* m.abdelrahman  */ 
 
     "invitations" => "الدعوات",   
-    "invitations_code" => "كود الدعوة" ,
     
 
 ];

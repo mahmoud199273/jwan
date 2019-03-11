@@ -28,9 +28,7 @@ class InvitationsController extends Controller
 
 
     public function checkVerificationCode(Request $request){
-        // responseHelper::$Headers = ["key1"=>"var1"];
-        // return responseHelper::Success("created",["message"=>"hello world"]);
-        $validator = Validator::make($request->all(), ['verificationCode' => 'required|regex:/^[0-9]{4,}/']);
+        $validator = Validator::make($request->all(), ['verificationCode' => 'required|regex:/^[0-9a-zA-Z]{4,}/']);
         if ($validator->fails()) return responseHelper::Fail("validationError",$validator->messages());
 
         $code = InvitationCodes::where("code", $request->verificationCode)->where("status","ACTIVE")->first();

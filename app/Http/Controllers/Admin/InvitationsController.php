@@ -7,12 +7,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Admin\User\EditUserRequest;
 use App\Http\Requests\Admin\User\StoreUserRequest;
-use App\Models\Invitations;
 use App\User;
 use App\UserPlayerId;
 use App\VerifyPhoneCode;
 use Illuminate\Http\Request;
 
+use App\Models\Invitations;
+use App\Models\InvitationCodes;
 
 class InvitationsController extends Controller
 {
@@ -27,7 +28,7 @@ class InvitationsController extends Controller
      */
     public function index()
     {
-        $invitations = Invitations::all();
+        $invitations = Invitations::->paginate(10);
         $users = User::select('users.*','v.code','v.verified')
         ->LEFTJOIN(DB::raw('(SELECT phone, max(id) as mx from verify_phone_codes GROUP BY phone) as v2'), 
         function($join)
@@ -39,7 +40,7 @@ class InvitationsController extends Controller
             $join->on('v.id', '=', 'v2.mx');
             $join->on('v.phone','=','v2.phone');
         })->where('users.account_type','0')->latest()->paginate(10);
-        return view('admin.invitations.index',compact('users', "invitations"));
+        return view('admin.invitations.index',compact("invitations"));
     }
 
        public function search( Request $request )
