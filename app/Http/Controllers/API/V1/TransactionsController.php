@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Crypt;
 use App\Setting;
+use App\Helpers\ResponseHelper as responseHelper;
 
 
 use Illuminate\Support\Facades\Log;
@@ -336,7 +337,7 @@ class TransactionsController extends Controller
 
 
     public function notifyDB(Request $request){
-        $rules = [ 
+        $rules = [
             "resourcePath"=>"required|string",
             "user_id"=>"required|integer",
             "campaign_id"=>"integer",
@@ -350,7 +351,7 @@ class TransactionsController extends Controller
 
         $resourcePath = str_replace("%2","/",$request->resourcePath);
         // $user =  $this->getAuthenticatedUser();
-        if(true) $responseData = $this->apiResponse;
+        if(false) $responseData = $this->apiResponse;
         else{
             $url = Self::PaymentOptions["Link"].$resourcePath;
             $url .= "?authentication.userId=".Self::PaymentOptions["UserId"];
@@ -377,7 +378,7 @@ class TransactionsController extends Controller
                 "campaign_id" => $request->input("campaign_id",0),
                 "offer_id" => $request->input("offer_id",0)
             ]);
-        }else return ["msg"=>"problem with the response, ".$responseData["result"]["description"]."...", "response"=>$responseData];
+        }else return responseHelper::Fail("failedToProceed",["msg"=>"problem with the response, ".$responseData["result"]["description"]."...", "response"=>$responseData]);
     }
 
 
@@ -523,7 +524,7 @@ class TransactionsController extends Controller
             $user->balance = $user->balance - $total_offer_value;
             $user->save();
 
-            return "success in transaction in offer payment";
+            return responseHelper::Success("success",["message"=>"success in transaction in offer payment"]);
         }
         // dd($transations, $userData);
     }
