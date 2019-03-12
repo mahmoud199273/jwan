@@ -351,7 +351,7 @@ class TransactionsController extends Controller
 
         $resourcePath = str_replace("%2","/",$request->resourcePath);
         // $user =  $this->getAuthenticatedUser();
-        if(false) $responseData = $this->apiResponse;
+        if(true && env("APP_ENV")=="local") $responseData = $this->apiResponse;
         else{
             $url = Self::PaymentOptions["Link"].$resourcePath;
             $url .= "?authentication.userId=".Self::PaymentOptions["UserId"];
@@ -522,10 +522,14 @@ class TransactionsController extends Controller
 
             $transations->save();
 
-            $user->balance = $user->balance - $total_offer_value;
+            if(($user->balance + $transaction_response["transaction_amount"]) < $total_offer_value){
+                $user->balance = $user->balance + $transaction_response["transaction_amount"];
+                return responseHelper::Success("success",["message"=>"the payment succeeded but the amount isn't enough"]);
+            }else $user->balance = ($user->balance + $transaction_response["transaction_amount"]) - $total_offer_value;
             $user->save();
 
-            return responseHelper::Success("success",["message"=>"success in transaction in offer payment"]);
+            $transaction_response["message"] = "success in transaction in offer payment";
+            return responseHelper::Success("success", $transaction_response);
         }
         // dd($transations, $userData);
     }
