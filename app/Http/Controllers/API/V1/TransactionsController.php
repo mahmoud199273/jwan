@@ -453,7 +453,8 @@ class TransactionsController extends Controller
 
             $user->balance = $user->balance + $transaction_response["transaction_amount"];
             $user = $user->save();
-            return responseHelper::Success("success",["message"=>"success in transaction in wallet transaction"]);
+            $transaction_response["message"] = "success in transaction in offer payment";
+            return responseHelper::Success("success",$transaction_response);
         }
         else{                                                              //if paying for a campaign
             // $offer = Offer::find($transations->offer_id);
@@ -525,12 +526,13 @@ class TransactionsController extends Controller
             if(($user->balance + $transaction_response["transaction_amount"]) < $total_offer_value){
                 $user->balance = $user->balance + $transaction_response["transaction_amount"];
                 $user->save();
-                return responseHelper::Success("success",["message"=>"the payment succeeded but the amount isn't enough"]);
+                $transaction_response["message"] = "success in transaction in offer payment";
+                return responseHelper::Success("success",$transaction_response);
             }else{
                 $user->balance = ($user->balance + $transaction_response["transaction_amount"]) - $total_offer_value;
                 $user->save();
             }
-            
+
             $transaction_response["message"] = "success in transaction in offer payment";
             return responseHelper::Success("success", $transaction_response);
         }
