@@ -524,10 +524,13 @@ class TransactionsController extends Controller
 
             if(($user->balance + $transaction_response["transaction_amount"]) < $total_offer_value){
                 $user->balance = $user->balance + $transaction_response["transaction_amount"];
+                $user->save();
                 return responseHelper::Success("success",["message"=>"the payment succeeded but the amount isn't enough"]);
-            }else $user->balance = ($user->balance + $transaction_response["transaction_amount"]) - $total_offer_value;
-            $user->save();
-
+            }else{
+                $user->balance = ($user->balance + $transaction_response["transaction_amount"]) - $total_offer_value;
+                $user->save();
+            }
+            
             $transaction_response["message"] = "success in transaction in offer payment";
             return responseHelper::Success("success", $transaction_response);
         }
