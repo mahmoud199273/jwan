@@ -168,6 +168,8 @@ return [
         //Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
 
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+
     ],
 
     /*

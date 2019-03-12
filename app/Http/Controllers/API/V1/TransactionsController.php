@@ -19,6 +19,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Crypt;
 use App\Setting;
 use App\Helpers\ResponseHelper as responseHelper;
+use App\Helpers\LoggerHelper as logg;
 
 
 use Illuminate\Support\Facades\Log;
@@ -370,6 +371,8 @@ class TransactionsController extends Controller
         }
         $responseData = json_decode($responseData, true);
         
+        logg::log(["request"=>$request->all(), "responseData"=>$responseData]);
+
         if( isset($responseData["id"]) 
                 && isset($responseData["result"]["code"]) 
                 && $responseData["result"]["code"] == "000.100.112" ){

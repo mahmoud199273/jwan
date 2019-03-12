@@ -12,6 +12,7 @@
         "laravelcollective/html": "^5.7",
         "pawlox/video-thumbnail": "^1.0",
         "php-ffmpeg/php-ffmpeg": "^0.13.0",
+        "rap2hpoutre/laravel-log-viewer": "^1.1",
         "tymon/jwt-auth": "^0.5.12"
     },
     "require-dev": {

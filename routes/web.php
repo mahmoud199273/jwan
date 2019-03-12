@@ -19,6 +19,10 @@ if (!defined('ADMIN_PATH')) {
 if(env("APP_ENV")!="local") URL::forceScheme('https');
 
 
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
+
+
 Route::group(['prefix'=>ADMIN_PATH],function(){
 
 	Route::group(['namespace'=>'Admin'],function(){

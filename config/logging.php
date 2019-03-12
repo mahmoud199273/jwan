@@ -33,31 +33,42 @@ return [
     */
 
     'channels' => [
+
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single','daily'],
         ],
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path('logs/lumen.log'),
+            'level' => 'debug',
+        ],
+        'CustomLogFile1' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/CustomLogFile1-'.date("d-m-Y").".log"),
             'level' => 'debug',
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path('logs/Daily-'.date("d-m-Y").".log"),
             'level' => 'debug',
-            'days' => 7,
+            'days' => 14,
         ],
 
-        'slack' => [
-            'driver' => 'slack',
-            'url' => env('LOG_SLACK_WEBHOOK_URL'),
-            'username' => 'Laravel Log',
-            'emoji' => ':boom:',
-            'level' => 'critical',
-        ],
+
+        // 'slack' => [
+        //     'driver' => 'slack',
+        //     'url' => env('LOG_SLACK_WEBHOOK_URL'),
+        //     'username' => 'Laravel Log',
+        //     'emoji' => ':boom:',
+        //     'level' => 'critical',
+        // ],
+
+
+
+        
 
         'stderr' => [
             'driver' => 'monolog',
