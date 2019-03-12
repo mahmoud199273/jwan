@@ -351,7 +351,7 @@ class TransactionsController extends Controller
 
         $resourcePath = str_replace("%2","/",$request->resourcePath);
         // $user =  $this->getAuthenticatedUser();
-        if(false) $responseData = $this->apiResponse;
+        if(true) $responseData = $this->apiResponse;
         else{
             $url = Self::PaymentOptions["Link"].$resourcePath;
             $url .= "?authentication.userId=".Self::PaymentOptions["UserId"];
@@ -453,7 +453,7 @@ class TransactionsController extends Controller
 
             $user->balance = $user->balance + $transaction_response["transaction_amount"];
             $user = $user->save();
-            return "success in transaction in wallet transaction";
+            return responseHelper::Success("success",["message"=>"success in transaction in wallet transaction"]);
         }
         else{                                                              //if paying for a campaign
             // $offer = Offer::find($transations->offer_id);
