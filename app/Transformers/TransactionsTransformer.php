@@ -142,10 +142,10 @@ class TransactionsTransformer extends Transformer
 
         if($this->flag) // influencer transactions
         {
-            $return_array['amount'] = $transaction->amount;
+            $return_array['amount'] = $transaction->amount - ($commission * $transaction->amount / 100);
             $return_array['cost']   = $transaction->amount; 
             $return_array['vat'] = 0; 
-            $return_array['commission'] = 0;
+            $return_array['commission'] = $commission;
         }
         else 
         {
