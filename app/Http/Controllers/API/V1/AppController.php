@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Setting;
+use App\Helpers\ResponseHelper as responseHelper;
 
 
 class AppController extends BaseController
@@ -45,6 +46,7 @@ public function index()
 public function settings(){
     $settings = Setting::first();
     return $settings; 
+    // return responseHelper::Success("success",$settings);  
 }
 
 

@@ -47,7 +47,8 @@
 			"file": "routes/web.php",
 			"settings":
 			{
-				"buffer_size": 5896,
+				"buffer_size": 6145,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
@@ -61,44 +62,54 @@
 			}
 		},
 		{
-			"file": "app/Http/Controllers/API/V1/AppController.php",
-			"settings":
-			{
-				"buffer_size": 1624,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/Http/Requests/Admin/Setting/EditSettingRequest.php",
-			"settings":
-			{
-				"buffer_size": 1066,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/Http/Controllers/API/V1/InvitationsController.php",
-			"settings":
-			{
-				"buffer_size": 52786,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "app/Http/Controllers/Admin/InvitationsController.php",
 			"settings":
 			{
-				"buffer_size": 3306,
+				"buffer_size": 1494,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "app/Models/Invitations.php",
+			"file": "resources/views/admin/templates/side_nav.blade.php",
 			"settings":
 			{
-				"buffer_size": 176,
+				"buffer_size": 7707,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "resources/views/admin/invitations/invitationCodes.blade.php",
+			"settings":
+			{
+				"buffer_size": 4226,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "resources/views/admin/invitations/create.blade.php",
+			"settings":
+			{
+				"buffer_size": 14167,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "resources/views/admin/invitations/index.blade.php",
+			"settings":
+			{
+				"buffer_size": 5192,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "resources/lang/ar/admin.php",
+			"settings":
+			{
+				"buffer_size": 13688,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -143,6 +154,13 @@
 	],
 	"file_history":
 	[
+		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/TransactionsController.php",
+		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/InvitationsController.php",
+		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/AppController.php",
+		"/C/xampp/htdocs/signify-backend/app/Http/Requests/Admin/Setting/EditSettingRequest.php",
+		"/C/xampp/htdocs/signify-backend/app/Helpers/ResponseGenerator.php",
+		"/C/xampp/htdocs/signify-backend/app/Models/invitationCodes.php",
+		"/C/xampp/htdocs/signify-backend/app/Models/Invitations.php",
 		"/C/Users/cems-it/Desktop/localProjects/Basic-React-Redux-server/package.json",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/SettingsController.php",
 		"/C/xampp/htdocs/signify-backend/app/Models/Admin/Invitations.php",
@@ -153,17 +171,13 @@
 		"/C/xampp/htdocs/signify-backend/resources/views/admin/settings/edit.blade.php",
 		"/C/xampp/htdocs/signify-backend/routes/web.php",
 		"/C/xampp/htdocs/testing/nodejs/index.html",
-		"/C/xampp/htdocs/signify-backend/app/Helpers/ResponseGenerator.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/InvitationsController.php",
 		"/C/xampp/htdocs/signify-backend/resources/views/admin/invitations/index.blade.php",
 		"/C/xampp/htdocs/signify-backend/resources/views/admin/invitations/index.php",
-		"/C/xampp/htdocs/signify-backend/app/Http/Requests/Admin/Setting/EditSettingRequest.php",
 		"/C/xampp/htdocs/signify-backend/resources/views/admin/settings/index.blade.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/VerificationsController.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/UserController.php",
-		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/AppController.php",
 		"/C/xampp/htdocs/signify-backend/vendor/laravel/framework/src/Illuminate/Support/Facades/Request.php",
-		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/TransactionsController.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/TransactionsController.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/AboutAppController.php",
 		"/C/xampp/htdocs/signify-backend/app/Setting.php",
@@ -251,7 +265,7 @@
 	],
 	"find":
 	{
-		"height": 27.0
+		"height": 40.0
 	},
 	"find_in_files":
 	{
@@ -265,6 +279,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"er",
+			"invitations",
+			"user",
+			"users",
+			"invitation",
+			"//success but there are no content",
 			"Verifications",
 			"users",
 			"settings",
@@ -335,7 +355,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -344,15 +364,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5896,
+						"buffer_size": 6145,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5703,
-								5703
+								5750,
+								5750
 							]
 						],
 						"settings":
@@ -361,10 +381,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2574.0,
+						"translation.y": 2304.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -380,8 +400,8 @@
 						"selection":
 						[
 							[
-								2579,
-								2579
+								549,
+								549
 							]
 						],
 						"settings":
@@ -391,57 +411,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 702.0,
+						"translation.y": 126.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "app/Http/Controllers/API/V1/AppController.php",
+					"file": "app/Http/Controllers/Admin/InvitationsController.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1624,
+						"buffer_size": 1494,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1617,
-								1617
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 430.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "app/Http/Requests/Admin/Setting/EditSettingRequest.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1066,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								596,
-								625
+								1379,
+								1379
 							]
 						],
 						"settings":
@@ -458,20 +448,49 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "app/Http/Controllers/API/V1/InvitationsController.php",
+					"buffer": 3,
+					"file": "resources/views/admin/templates/side_nav.blade.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 52786,
+						"buffer_size": 7707,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1163,
-								1163
+								2125,
+								2140
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 594.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "resources/views/admin/invitations/invitationCodes.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4226,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1049,
+								1049
 							]
 						],
 						"settings":
@@ -481,27 +500,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 378.0,
+						"translation.y": 162.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 5,
-					"file": "app/Http/Controllers/Admin/InvitationsController.php",
+					"file": "resources/views/admin/invitations/create.blade.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3306,
+						"buffer_size": 14167,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								259,
-								259
+								252,
+								252
 							]
 						],
 						"settings":
@@ -519,30 +538,62 @@
 				},
 				{
 					"buffer": 6,
-					"file": "app/Models/Invitations.php",
+					"file": "resources/views/admin/invitations/index.blade.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 176,
+						"buffer_size": 5192,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								175,
-								175
+								3753,
+								3758
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1512.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "resources/lang/ar/admin.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13688,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13648,
+								13663
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4908.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -597,8 +648,36 @@
 		"selected_items":
 		[
 			[
+				"transactioncontroller",
+				"app\\Http\\Controllers\\API\\V1\\TransactionsController.php"
+			],
+			[
+				"transac",
+				"app\\Http\\Controllers\\API\\V1\\TransactionsController.php"
+			],
+			[
+				"side",
+				"resources\\views\\admin\\templates\\side_nav.blade.php"
+			],
+			[
 				"invitacon",
-				"app\\Http\\Controllers\\Admin\\InvitationsController.php"
+				"app\\Http\\Controllers\\API\\V1\\InvitationsController.php"
+			],
+			[
+				"lang/admin",
+				"resources\\lang\\ar\\admin.php"
+			],
+			[
+				"inviind",
+				"resources\\views\\admin\\invitations\\index.blade.php"
+			],
+			[
+				"invitations",
+				"app\\Models\\Invitations.php"
+			],
+			[
+				"respon",
+				"app\\Helpers\\ResponseGenerator.php"
 			],
 			[
 				"admin/invi",
@@ -657,10 +736,6 @@
 				"app\\Http\\Requests\\Admin\\Setting\\EditSettingRequest.php"
 			],
 			[
-				"lang/admin",
-				"resources\\lang\\ar\\admin.php"
-			],
-			[
 				"api",
 				"routes\\api.php"
 			],
@@ -699,10 +774,6 @@
 			[
 				"authcon",
 				"app\\Http\\Controllers\\API\\V1\\AuthController.php"
-			],
-			[
-				"transac",
-				"app\\Http\\Controllers\\API\\V1\\TransactionsController.php"
 			],
 			[
 				".ignore",

@@ -291,6 +291,8 @@ return [
     /* m.abdelrahman  */ 
 
     "invitations" => "الدعوات",   
-    "invitationCodes" => "أكواد الدعوات"
+    "invitationCodes" => "أكواد الدعوات",
+    "invitationCode" => "كود الدعوة",
+    "codeMessage" => "مسموح بأربعة حروف أو ارقام فقط"
 
 ];

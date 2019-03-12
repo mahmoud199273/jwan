@@ -8,6 +8,7 @@ use App\Transformers\TransactionsTransformer;
 use App\User;
 use App\BankAccounts;
 use App\Transactions;
+use App\Campaign;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Crypt;
+use App\Setting;
 
 
 use Illuminate\Support\Facades\Log;
@@ -348,7 +350,7 @@ class TransactionsController extends Controller
 
         $resourcePath = str_replace("%2","/",$request->resourcePath);
         // $user =  $this->getAuthenticatedUser();
-        if(false) $responseData = $this->apiResponse;
+        if(true) $responseData = $this->apiResponse;
         else{
             $url = Self::PaymentOptions["Link"].$resourcePath;
             $url .= "?authentication.userId=".Self::PaymentOptions["UserId"];
@@ -370,7 +372,7 @@ class TransactionsController extends Controller
         if( isset($responseData["id"]) 
                 && isset($responseData["result"]["code"]) 
                 && $responseData["result"]["code"] == "000.100.112" ){
-            $this->updateTheDB($responseData, [
+            return $this->updateTheDB($responseData, [
                 "user" => $user,
                 "campaign_id" => $request->input("campaign_id",0),
                 "offer_id" => $request->input("offer_id",0)
@@ -424,39 +426,109 @@ class TransactionsController extends Controller
         $transations = new Transactions;
         $transations->user_id = $user->id;
 
-        $transations->card_holder_name     = $transaction_response["card_holder_name"];
-        $transations->transaction_account_name     = $transaction_response["card_holder_name"];
-        $transations->sdk_token     = $transaction_response["sdk_token"];
-        $transations->merchant_reference     = $transaction_response["merchant_reference"];
-        $transations->card_number     = $transaction_response["card_number"];
-
-        $transations->transaction_account_number     = $transaction_response["id"];
-        $transations->authorization_code     = $transaction_response["authorization_code"];
-        $transations->response_code     = $transaction_response["response_code"];
-        $transations->payment_option     = $transaction_response["payment_option"];
-        $transations->fort_id     = $transaction_response["id"];
-        $transations->eci     = $transaction_response["eci"];
-        $transations->customer_ip     = $transaction_response["customer_ip"];
-        $transations->command     = $transaction_response["command"];
-        $transations->status       = "1";
-
-        $transations->direction    = 0;
-        $transations->type         = 0;
-        $transations->campaign_id  = $session_params["campaign_id"];
-        $transations->offer_id     = $session_params["offer_id"];
-        $transations->amount       = $transaction_response["transaction_amount"];
-        $transaction = $transations->save();
-
         if($session_params["campaign_id"]==0 && $session_params["offer_id"]==0){    //if rechargin
+            $transations->card_holder_name     = $transaction_response["card_holder_name"];
+            $transations->transaction_account_name     = $transaction_response["card_holder_name"];
+            $transations->sdk_token     = $transaction_response["sdk_token"];
+            $transations->merchant_reference     = $transaction_response["merchant_reference"];
+            $transations->card_number     = $transaction_response["card_number"];
+
+            $transations->transaction_account_number     = $transaction_response["id"];
+            $transations->authorization_code     = $transaction_response["authorization_code"];
+            $transations->response_code     = $transaction_response["response_code"];
+            $transations->payment_option     = $transaction_response["payment_option"];
+            $transations->fort_id     = $transaction_response["id"];
+            $transations->eci     = $transaction_response["eci"];
+            $transations->customer_ip     = $transaction_response["customer_ip"];
+            $transations->command     = $transaction_response["command"];
+            $transations->status       = "1";
+
+            $transations->direction    = 0;
+            $transations->type         = 0;
+            $transations->campaign_id  = $session_params["campaign_id"];
+            $transations->offer_id     = $session_params["offer_id"];
+            $transations->amount       = $transaction_response["transaction_amount"];
+            $transaction = $transations->save();
+
             $user->balance = $user->balance + $transaction_response["transaction_amount"];
             $user = $user->save();
-        }else{                                                              //if paying for a campaign
-            $offer = Offer::find($transations->offer_id);
-            $offer->status = 4;
-            $offer->save();
+            return "success in transaction in wallet transaction";
+        }
+        else{                                                              //if paying for a campaign
+            // $offer = Offer::find($transations->offer_id);
+            // $offer->status = 4;
+            // $offer->save();
+
+            $offer = Offer::where([['id', $session_params["offer_id"]], ['status', "1"]])->get()->first();
+            if(!$offer) die('api_msgs.offer is not found or not approved'); 
+            $settings = Setting::first();
+            $tax = (int)$settings->tax; // app tax value in percentage
+
+            // offer cost before add commission or tax
+            $total_offer_value =(int)$offer->cost; 
+
+            // get commission value of offer
+            //$offer_commission = round((($total_offer_value * $commission) / 100), 2); 
+            $offer_commission = 0; 
+
+            // offer cost after add commission vlaue
+            $total_offer_value = $total_offer_value + $offer_commission ; 
+
+            // get tax value from offer cost 
+            $offer_tax = round((($total_offer_value * $tax) / 100), 2);
+
+            // final offer cost after add commission and tax values
+            $total_offer_value = $total_offer_value + $offer_tax ;
+            
+            //if((int)$offer->cost > (int)$userData->balance)
+            if($total_offer_value > (int)$user->balance && !isset($transaction_response["id"])){ die("offer not payed"); }
+            
+            $offer->status = "3";
+            // $offer->save();
+            ///////////////////////////////////// payment success or redirect /////////////////////////////////////
+
+            $campaign = Campaign::where('id', $session_params["campaign_id"])->get()->first();
+
+            if($offer->cost) $transations->amount = $offer->cost;
+            else $transations->amount     = 0;
+            $transations->direction = 1;
+            $transations->type     = 1;
+            $transations->status     = 0;
+            $transations->campaign_id     = $offer->campaign_id;
+            $transations->offer_id     = $offer->id;
+
+            // if($request->amount) $transations->transaction_amount     = $request->amount;
+            // else $transations->transaction_amount     = $total_offer_value;
+            $transations->transaction_amount     = $transaction_response["transaction_amount"];
+
+
+            $transations->card_holder_name     = $transaction_response["card_holder_name"];
+            $transations->transaction_account_name     = $transaction_response["card_holder_name"];
+            $transations->sdk_token     = $transaction_response["sdk_token"];
+            $transations->merchant_reference     = $transaction_response["merchant_reference"];
+            $transations->card_number     = $transaction_response["card_number"];
+
+            $transations->transaction_account_number     = $transaction_response["id"];
+            $transations->authorization_code     = $transaction_response["authorization_code"];
+            $transations->response_code     = $transaction_response["response_code"];
+            $transations->payment_option     = $transaction_response["payment_option"];
+            $transations->fort_id     = $transaction_response["id"];
+            $transations->eci     = $transaction_response["eci"];
+            $transations->customer_ip     = $transaction_response["customer_ip"];
+            $transations->command     = $transaction_response["command"];
+            $transations->status       = "1";
+
+            $transations->save();
+
+            $user->balance = $user->balance - $total_offer_value;
+            $user->save();
+
+            return "success in transaction in offer payment";
         }
         // dd($transations, $userData);
     }
+
+
 
 
 

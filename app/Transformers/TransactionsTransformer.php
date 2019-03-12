@@ -155,13 +155,14 @@ class TransactionsTransformer extends Transformer
 
                 $commission_vat_value = (float)$transaction->transaction_amount - (float)$transaction->amount;
                 $commission_value = round((($transaction->amount * $commission) / 100), 2);
-                $vat = $commission_vat_value - $commission_value;
+                $vat = round((($transaction->amount * $tax) / 100), 2);
 
 
                 $return_array['amount']           = $transaction->transaction_amount;
                 $return_array['cost']             = $transaction->amount; //(int)(($transaction->amount * 95) / 100),
                 $return_array['vat']              = $vat; //(int) ($transaction->amount * 5) / 100,
-                $return_array['commission']       = $commission_value;
+                $return_array['commission']       = 0;
+                //$return_array['commission']       = $commission_value;
             }
             else 
             {

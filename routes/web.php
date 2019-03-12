@@ -150,7 +150,10 @@ Route::group(['prefix'=>ADMIN_PATH],function(){
 
 
 		Route::get("invitations", "InvitationsController@index");
+		Route::post("invitations", "InvitationsController@store");
 		Route::get("invitations/search", "InvitationsController@search");
+		Route::get("invitationCodes", "InvitationsController@invitationCodes");
+		Route::get("invitationCodes/add", "InvitationsController@addInvitaionCodeView");
 
 	});
 });

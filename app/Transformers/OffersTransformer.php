@@ -49,7 +49,8 @@ class OffersTransformer extends Transformer
         $total_offer_value =(int)$offer->cost; 
 
             // get commission value of offer
-        $offer_commission = round((($total_offer_value * $commission) / 100), 2); 
+        //$offer_commission = round((($total_offer_value * $commission) / 100), 2); 
+        $offer_commission = 0; 
 
             // offer cost after add commission vlaue
         $total_offer_value = $total_offer_value + $offer_commission ; 

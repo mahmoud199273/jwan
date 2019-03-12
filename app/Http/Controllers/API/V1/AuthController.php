@@ -20,6 +20,9 @@ use Illuminate\Validation\Rule;
 use JWTAuth;
 use Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Models\InvitationCodes;
+
+
 
 class AuthController extends Controller
 {
@@ -450,14 +453,19 @@ class AuthController extends Controller
 
            $this->createVerificationCode( arTOen($request->phone),$request->country_id , '0' );
 
+           if($request->has("invitation_code")){ $this->deprecate_invitation_code($request->invitation_code); }
+
             //$token = JWTAuth::fromUser($user);
 
             //return Response::json( compact('token'));
 
            return $this->respondWithSuccess(trans('api_msgs.success'));
-
-
     }
+
+    private function deprecate_invitation_code($invitation_code){
+        InvitationCodes::where("code",$invitation_code)->update(["status"=>"USED"]);
+    }
+
 
     public function registerInfluncer( Request $request )
     {

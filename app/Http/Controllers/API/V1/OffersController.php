@@ -333,6 +333,7 @@ class OffersController extends Controller
 
         public function pay(Request $request)
         {
+          // $request = Transactions::find(130);
             $user =  $this->getAuthenticatedUser();
 
             if($user->account_type != 0)
@@ -403,8 +404,6 @@ class OffersController extends Controller
             $offer->status = "3";
             $offer->save();
             ///////////////////////////////////// payment success or redirect /////////////////////////////////////
-
-
 
             $campaign = Campaign::where('id', $offer->campaign_id)->get()->first();
 

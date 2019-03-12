@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Invitations;
 use App\Models\InvitationCodes;
+use Illuminate\Support\Facades\Validator;
+use App\Helpers\ResponseHelper as responseHelper;
 
 class InvitationsController extends Controller
 {
@@ -39,7 +41,29 @@ class InvitationsController extends Controller
         }
     }
 
- 
+    public function invitationCodes(){
+        $invitations = InvitationCodes::paginate(10);
+        return view('admin.invitations.invitationCodes',compact("invitations"));
+    }
 
+    public function addInvitaionCodeView(){
+        return view('admin.invitations.create');
+    }
+
+    public function store(Request $request){
+        $rules = [ 
+            'code' => 'required|regex:/^[a-zA-Z0-9]{4}/',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) return responseHelper::Fail("validationError",$validator->messages());
+
+        $trytofind = InvitationCodes::where("code",$request->code)->first();
+        if($trytofind) return redirect()->back()->with('status' , __('admin.created') );
+        // return responseHelper::Fail("validationDublicationError",["message" => "this code was added before."]);
+
+        $res = InvitationCodes::create(["code" => $request->code, "status"=> "ACTIVE"]);
+        // return responseHelper::Success("created",["message" => "invitation code request was added."]);
+        return redirect()->back()->with('status' , __('admin.created') );
+    }
 
 }
