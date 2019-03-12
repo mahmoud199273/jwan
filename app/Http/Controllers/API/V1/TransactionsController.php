@@ -461,7 +461,8 @@ class TransactionsController extends Controller
             // $offer->save();
 
             $offer = Offer::where([['id', $session_params["offer_id"]], ['status', "1"]])->get()->first();
-            if(!$offer) die('api_msgs.offer is not found or not approved'); 
+            if(!$offer) return responseHelper::Fail("resourceNotFound",["message"=>"offer is not found or not approved"]);
+
             $settings = Setting::first();
             $tax = (int)$settings->tax; // app tax value in percentage
 
@@ -485,7 +486,7 @@ class TransactionsController extends Controller
             if($total_offer_value > (int)$user->balance && !isset($transaction_response["id"])){ die("offer not payed"); }
             
             $offer->status = "3";
-            // $offer->save();
+            $offer->save();
             ///////////////////////////////////// payment success or redirect /////////////////////////////////////
 
             $campaign = Campaign::where('id', $session_params["campaign_id"])->get()->first();
