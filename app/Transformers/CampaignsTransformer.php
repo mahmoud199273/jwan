@@ -87,7 +87,8 @@ class CampaignsTransformer extends Transformer
             'campaign_status'   => (int) $campaign->status,
             'status'   => (int) $campaign->status,'is_extened'	=> isset($campaign->is_extened) ? $campaign->is_extened : 0,
             "is_expired" => (boolean) ( $campaign->status==1 && date($campaign->end_at) < date(now()) ),
-            "offers_id" => $campaign->offers_id
+            "offers_id" => $campaign->offers_id,
+            "class" => $campaign->class
 
         ];
 

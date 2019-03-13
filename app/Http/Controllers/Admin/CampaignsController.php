@@ -329,6 +329,8 @@ class campaignsController extends Controller
 
     public function approve( Request $request)
     {        
+        // print_r($request->class);die;
+        
         if ( $request->ajax() ) {
             $settings = Setting::first();
             $amount = $settings->campaign_period;
@@ -425,13 +427,9 @@ class campaignsController extends Controller
 
          if($infuncers !== null){
 
-             foreach($infuncers as $id){
-            InfluencerCampaignsByAdmin::create([
-
-                'campaign_id'       => $campaign_id,
-                'Influencer_id'     => $id
-                ]);
-             }
+            foreach($infuncers as $id){
+                InfluencerCampaignsByAdmin::create(['campaign_id' => $campaign_id, 'Influencer_id' => $id ]);
+            }
 
         }
 

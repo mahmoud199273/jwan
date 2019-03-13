@@ -27,6 +27,7 @@ use Illuminate\Validation\Rule;
 use Pawlox\VideoThumbnail\Facade\VideoThumbnail;
 // use Pawlox\VideoThumbnail\VideoThumbnail;
 
+
 class CampignsController extends Controller
 {
 
@@ -43,14 +44,14 @@ class CampignsController extends Controller
     public function index( Request $request )
     {
         $influncer =  $this->getAuthenticatedUser();
-        
+
         if($influncer->account_type != 1)
         {
             return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
         }
 
-        $campaign_ids = InfluncerCampaign::where('influncer_id',$influncer->id)->pluck('campaign_id')->toArray();
-         //dd($campaign_ids);
+        $selected_campaigns = InfluncerCampaign::where('influncer_id',$influncer->id)->pluck('campaign_id')->toArray();
+         //dd($selected_campaigns);
  
         //$orderBy = 'created_at';
         $orderBy = 'updated_at';
@@ -67,7 +68,11 @@ class CampignsController extends Controller
         {
             //$areas_campaigns_id = Campaign::Select('campaigns.id')->join('campaign_areas','campaign_areas.campaign_id','campaigns.id')->whereNotIn('campaign_areas.area_id',$influncer_areas)->groupBy('campaigns.id')->pluck('campaigns.id')->toArray();
             
-            $areas_campaigns_id = Campaign::Select('campaigns.id')->LEFTjoin('campaign_areas','campaign_areas.campaign_id','campaigns.id')->whereIn('campaign_areas.area_id',$influncer_areas)->ORwhereNull('campaign_areas.campaign_id')->groupBy('campaigns.id')->pluck('campaigns.id')->toArray();
+            $areas_campaigns_id = Campaign::Select('campaigns.id')
+                    ->LEFTjoin('campaign_areas','campaign_areas.campaign_id','campaigns.id')
+                    ->whereIn('campaign_areas.area_id',$influncer_areas)
+                    ->ORwhereNull('campaign_areas.campaign_id')
+                    ->groupBy('campaigns.id')->pluck('campaigns.id')->toArray();
 
             //$areas_campaigns_id[]= Campaign::Select('campaigns.id')->LEFTjoin('campaign_areas','campaign_areas.campaign_id','campaigns.id')->whereNull('campaign_areas.campaign_id')->groupBy('campaigns.id')->pluck('campaigns.id')->toArray();
 
@@ -75,14 +80,12 @@ class CampignsController extends Controller
         }
         
         //dd($areas_campaigns_id);
- 
- 
         //dd($influncer_categories);
  
             $campaigns = DB::table('campaigns')
-            ->join('campaign_countries', 'campaigns.id', '=', 'campaign_countries.campaign_id')
-            ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id')
-            ->LEFTjoin('campaign_areas', 'campaigns.id', '=', 'campaign_areas.campaign_id');
+                ->join('campaign_countries', 'campaigns.id', '=', 'campaign_countries.campaign_id')
+                ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id')
+                ->LEFTjoin('campaign_areas', 'campaigns.id', '=', 'campaign_areas.campaign_id');
  
             if($influncer_categories){
                 $campaigns->whereIn('campaign_categories.category_id',$influncer_categories);
@@ -102,27 +105,53 @@ class CampignsController extends Controller
                 
                 $campaigns->whereIn('campaigns.id',$areas_campaigns_id);
             }
- 
- 
+
+
             $campaigns->select('campaigns.*');
  
- 
-            if ($campaign_ids) {
-                $campaigns->whereNotIn('campaigns.id',$campaign_ids);
+            if ($selected_campaigns) {
+                $campaigns->whereNotIn('campaigns.id',$selected_campaigns);
             }
             if ($influncer_campaigns_offered) {
                 $campaigns->whereNotIn('campaigns.id',$influncer_campaigns_offered);
             }
+            if($influncer->class){
+                $campaigns->where('campaigns.class',$influncer->class);
+            }
+
+
+//-----------This Section Search For Campaigns Selected By Admin--------------------------
+            $influencerCampaignsByAdmin = DB::table('campaigns')
+                            ->join('influencer_campaigns_by_admin',"campaigns.id", "=", 'influencer_campaigns_by_admin.campaign_id')
+                            ->where("influencer_campaigns_by_admin.Influencer_id", $influncer->id)
+                            ->groupBy('campaigns.id')->pluck('campaigns.id')->toArray();
+            // dd($influencerCampaignsByAdmin);
+            // dd([$selected_campaigns, $influncer_campaigns_offered]);  // where not in
+
+            $campaigns
+                    // ->orWhereIn('campaigns.id', $influencerCampaignsByAdmin)
+                    // ->whereNotIn('campaigns.id', array_merge ($selected_campaigns, $influncer_campaigns_offered))
+                    ;
+//------------------------------------------------------------------------------------------
+
+
             $campaigns->where('campaigns.status','1')
                 //->where(\DB::raw('Date(campaigns.end_at)') ,'>',\DB::raw('NOW()'))
                 ->where('campaigns.end_at','>',Carbon::now()->addHours(3)->toDateTimeString())
                 ->whereNull('campaigns.deleted_at')
                 ->groupBy('campaigns.id')
                 ->orderBy($orderBy,'DESC');
- 
- 
-             $result = $campaigns->get();
+                // ->orderBy("id",'ASC');
+
+
+            // if(env("APP_ENV")=="local") DB::enableQueryLog();
+
+            // $campaigns->union($influencerCampaignsByAdmin);
+            $result = $campaigns->get();
+
             // dd($result);
+            // dd(DB::getQueryLog());
+
             
         return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('lang.read succefully'),200);
     }
