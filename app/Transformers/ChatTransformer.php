@@ -12,7 +12,7 @@ class ChatTransformer extends Transformer
 	public function transform($chat) : array
     {
 
-			$type_array = array(1=>"action", 2=>"url", 3=>"image", 4=>"file", 5=>"string");
+			$type_array = array(1=>"string", 2=>"url", 3=>"image", 4=>"file", 5=>"action");
         return [
             'id'            => (int) $chat->id,
 		        'from_user_id'  => (int) $chat->from_user_id,
