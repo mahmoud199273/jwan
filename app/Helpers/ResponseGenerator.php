@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 use Symfony\Component\HttpFoundation\Response;
+use App\Helpers\LoggerHelper as logg;
 
 abstract class ENUMS {
     const __default = 200;
@@ -75,6 +76,9 @@ class ResponseHelper extends ENUMS{
       $response_array["data"] = ($operationStatus!="noContent") ? $data : null;
       $response = response($response_array, $status_code);
       $response = Self::attachHeaders($response);
+
+      logg::log(["type"=>"response", "response"=> $response_array], 2);
+
       return $response;
     }
 
@@ -109,6 +113,8 @@ class ResponseHelper extends ENUMS{
       $response_array["data"] = $data;
       $response = response($response_array, $status_code);
       $response = Self::attachHeaders($response);
+      
+      logg::log(["type"=>"response", "response"=> $response_array], 2);
       return $response;
     }
 
