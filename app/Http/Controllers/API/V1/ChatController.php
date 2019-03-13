@@ -164,7 +164,8 @@ public function store(Request $request)
                               'type'          =>  12,
                               'type_title'  => 'new chat',
                               'chat_content'         => $request->content,
-                              'chat_type'       => $chat->type]);
+                              'chat_type'       => $chat->type,
+                                  "action" => false]);
         }  
         //return $this->respondWithSuccess(__('api_msgs.created'));
         return $this->sendResponse(['offer' => $offer->id ],trans('api_msgs.created'),200);
