@@ -350,6 +350,8 @@ class TransactionsController extends Controller
             "campaign_id"=>"integer",
             "offer_id"=>"integer"
         ];
+        logg::log($request->all(),"notifyDB Request Params");
+        
         $validator = Validator::make(Input::all(), $rules);
         if ($validator->fails()) return $this->setStatusCode(403)->respondWithError($validator->messages());
         
