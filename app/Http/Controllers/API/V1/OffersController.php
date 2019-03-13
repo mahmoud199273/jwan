@@ -249,7 +249,7 @@ class OffersController extends Controller
             $chat->created_at   = Carbon::now()->addHours(3);
             $chat->updated_at   = Carbon::now()->addHours(3);
             $chat->content = Crypt::encryptString('تم الموافقة على عرضك على حملة '.$campaign->title);
-            $chat->type = 1;
+            $chat->type = 5;
             $chat->save();
 
             $player_ids = $this->getUserPlayerIds($offer->influncer_id);
@@ -305,7 +305,7 @@ class OffersController extends Controller
                     $chat->created_at   = Carbon::now()->addHours(3);
                     $chat->updated_at   = Carbon::now()->addHours(3);
                     $chat->content = Crypt::encryptString($chat_content);
-                    $chat->type = 1;
+                    $chat->type = 5;
                     $chat->save();
 
                     $player_ids = $this->getUserPlayerIds($offer->influncer_id);
@@ -472,7 +472,7 @@ class OffersController extends Controller
             $chat->created_at   = Carbon::now()->addHours(3);
             $chat->updated_at   = Carbon::now()->addHours(3);
             $chat->content = Crypt::encryptString($chat_content);
-            $chat->type = 1;
+            $chat->type = 5;
             $chat->save();
 
             $player_ids = $this->getUserPlayerIds($offer->influncer_id);
@@ -577,7 +577,7 @@ class OffersController extends Controller
             $chat->created_at   = Carbon::now()->addHours(3);
             $chat->updated_at   = Carbon::now()->addHours(3);
             $chat->content = Crypt::encryptString($request->comment);
-            $chat->type = 1;
+            $chat->type = 5;
             $chat->save();
             }
             ///////////////////////////////////// payment success or redirect /////////////////////////////////////
@@ -605,7 +605,9 @@ class OffersController extends Controller
                                   'type'          =>  7,
                                   'type_title'	=> 'finished offer',
                                   'chat_content'         => $request->comment,
-                                  'chat_type'       => 1]);
+                                  'chat_type'       => 1,
+                                  "action" => true
+                                ]);
             //////////////////// new push /////////////////////////////////////
             return $this->respondWithSuccess(trans('api_msgs.updated'));
         }
@@ -649,7 +651,7 @@ class OffersController extends Controller
             $chat->created_at   = Carbon::now()->addHours(3);
             $chat->updated_at   = Carbon::now()->addHours(3);
             $chat->content = Crypt::encryptString($request->comment);
-            $chat->type = 1;
+            $chat->type = 5;
             $chat->save();
             }
             ///////////////////////////////////// payment success or redirect /////////////////////////////////////
@@ -694,7 +696,7 @@ class OffersController extends Controller
             $chat->created_at   = Carbon::now()->addHours(3);
             $chat->updated_at   = Carbon::now()->addHours(3);
             $chat->content = Crypt::encryptString($chat_content);
-            $chat->type = 1;
+            $chat->type = 5;
             $chat->save();
 
             $player_ids = $this->getUserPlayerIds($offer->influncer_id);
@@ -751,7 +753,7 @@ class OffersController extends Controller
                     $chat->created_at   = Carbon::now()->addHours(3);
                     $chat->updated_at   = Carbon::now()->addHours(3);
                     $chat->content = Crypt::encryptString($chat_content);
-                    $chat->type = 1;
+                    $chat->type = 5;
                     $chat->save();
 
                     $player_ids = $this->getUserPlayerIds($campaign->user_id);
@@ -823,7 +825,7 @@ class OffersController extends Controller
                     $chat->created_at   = Carbon::now()->addHours(3);
                     $chat->updated_at   = Carbon::now()->addHours(3);
                     $chat->content = Crypt::encryptString($chat_content);
-                    $chat->type = 1;
+                    $chat->type = 5;
                     $chat->save();
 
                     $player_ids = $this->getUserPlayerIds($campaign->user_id);
@@ -902,7 +904,7 @@ class OffersController extends Controller
                     $chat->created_at   = Carbon::now()->addHours(3);
                     $chat->updated_at   = Carbon::now()->addHours(3);
                     $chat->content = Crypt::encryptString($chat_content);
-                    $chat->type = 1;
+                    $chat->type = 5;
                     $chat->save();
 
 
@@ -987,7 +989,7 @@ class OffersController extends Controller
                     $chat->created_at   = Carbon::now()->addHours(3);
                     $chat->updated_at   = Carbon::now()->addHours(3);
                     $chat->content = Crypt::encryptString($request->comment);
-                    $chat->type = 1;
+                    $chat->type = 5;
                     $chat->save();
                     }
                     ///////////////////////////////////// payment success or redirect /////////////////////////////////////
@@ -1061,7 +1063,7 @@ class OffersController extends Controller
         $chat->created_at   = Carbon::now()->addHours(3);
         $chat->updated_at   = Carbon::now()->addHours(3);
         $chat->content = Crypt::encryptString($request->description);
-        $chat->type = 1;
+        $chat->type = 5;
         $chat->save();
         }
 
@@ -1085,7 +1087,8 @@ class OffersController extends Controller
                               'type'          =>  0,
                               'type_title'	=> 'new offer',
                               'chat_content'         => $request->description,
-                              'chat_type'       => 1]);
+                              'chat_type'       => 1,
+                                  "action" => true]);
 
 
 
@@ -1164,7 +1167,7 @@ class OffersController extends Controller
         {
             $chat->content = Crypt::encryptString('يوجد تعديل جديد على عرض حملة '.$campaign->title);
         }   
-         $chat->type = 1;
+         $chat->type = 5;
          $chat->save();
        
 
@@ -1188,7 +1191,8 @@ class OffersController extends Controller
                              'type'          =>  14,
                              'type_title'	=> 'update offer',
                              'chat_content'         => $request->description,
-                             'chat_type'       => 1]);
+                             'chat_type'       => 1,
+                                  "action" => true]);
       //////////////////////////////////// new push //////////////////////////////////////////////////////
 
        return $this->respondWithSuccess(trans('api_msgs.created'));
