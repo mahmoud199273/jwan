@@ -20,6 +20,11 @@ abstract class ENUMS {
 class ResponseHelper extends ENUMS{
     //Please check: https://github.com/omniti-labs/jsend
 
+    public static function setLogChannel($logName){
+      logg::setChannel($logName);
+    }
+
+
     // status: (success or failure)
     // message: 
     // data: null or json array
@@ -113,7 +118,7 @@ class ResponseHelper extends ENUMS{
       $response_array["data"] = $data;
       $response = response($response_array, $status_code);
       $response = Self::attachHeaders($response);
-      
+
       logg::log(["type"=>"response", "response"=> $response_array], 2);
       return $response;
     }

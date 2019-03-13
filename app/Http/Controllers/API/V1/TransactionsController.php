@@ -37,6 +37,8 @@ class TransactionsController extends Controller
     	$this->middleware('jwt.auth', ["except"=>[
             "notifyDB"
         ]]);
+        logg::setChannel("payment");
+        responseHelper::setLogChannel("payment");
         $this->transactionstransformer   = $transactionstransformer;
     }
 
@@ -295,19 +297,23 @@ class TransactionsController extends Controller
     ];
 
 //Payment with hyperpay APIs
-    public function getCheckoutId(Request $request){
+    public function getCheckoutId(Request $request){        
+        logg::log($request->all(),"getCheckoutId");
         $user =  $this->getAuthenticatedUser();
-        if($user->account_type != 0) return $this->setStatusCode(401)->respondWithError(trans('api_msgs.not_authorized'));
+        if($user->account_type != 0) return responseHelper::Fail("userNotAuthenticated",["message"=>trans('api_msgs.not_authorized')]);
         $rules = [ 'amount' => 'required|string' ];
         $validator = Validator::make(Input::all(), $rules);
-        if ($validator->fails()) return $this->setStatusCode(403)->respondWithError($validator->messages());
+        if ($validator->fails()) return responseHelper::Fail("validationError",$validator->messages());
         
         $amount = $request->input("amount","00.00");
-        $responseData = $this->sendTransactionPreparationRequest($amount);
+        $responseData = $this->sendTransactionPreparationRequest($amount, $user, $request->input("offer_id",null));
+        logg::log($responseData,"getCheckoutIdResponse");
         return response($responseData, 200)->header('Content-Type', 'application/json');
     }
 
-    private function sendTransactionPreparationRequest($amount) {
+    private function sendTransactionPreparationRequest($amount, $user, $offer_id = null) {
+        $merchantTransactionId = ($offer_id) ? $offer_id : $user->id;
+
         $url = Self::PaymentOptions["Link"]."v1/checkouts";
         $data = "authentication.userId=".Self::PaymentOptions["UserId"] .
                     "&authentication.password=".Self::PaymentOptions["Password"] .
@@ -316,8 +322,8 @@ class TransactionsController extends Controller
                     "&currency=".Self::PaymentOptions["Currency"] .
                     "&paymentType=".Self::PaymentOptions["PaymentType"] .
                     "&testMode=".Self::PaymentOptions["testMode"] .
-                    "&merchantTransactionId=".Self::PaymentOptions["merchantTransactionId"] .
-                    "&customer.email=".Self::PaymentOptions["customerEmail"] .
+                    "&merchantTransactionId=".$merchantTransactionId .
+                    "&customer.email=".$user->email .
                     "&notificationUrl=".env("APP_URL").Self::PaymentOptions["redirectLink"];
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

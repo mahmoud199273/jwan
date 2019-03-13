@@ -44,9 +44,9 @@ return [
             'path' => storage_path('logs/lumen.log'),
             'level' => 'debug',
         ],
-        'CustomLogFile1' => [
+        'payment' => [
             'driver' => 'single',
-            'path' => storage_path('logs/CustomLogFile1-'.date("d-m-Y").".log"),
+            'path' => storage_path('logs/payment-'.date("d-m-Y").".log"),
             'level' => 'debug',
         ],
 
