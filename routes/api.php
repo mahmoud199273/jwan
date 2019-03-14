@@ -167,8 +167,8 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
   Route::post('/close/campaign','API\V1\CampignsController@closeCampaign');
   Route::post('/user/update/campaign','API\V1\CampignsController@update');
   Route::get('/user/archive/campaign','API\V1\CampignsController@archiveCampaigns');
-  Route::get('/influncer/campaigns','API\V1\CampignsController@index45');
-  Route::get('/influncer/campaigns45','API\V1\CampignsController@index45');
+  Route::get('/influncer/campaigns','API\V1\CampignsController@index');
+  // Route::get('/influncer/campaigns45','API\V1\CampignsController@index45');
 
   Route::post('/approve/campaign','API\V1\CampignsController@approveCampaign');
   Route::post('/extend/campaign','API\V1\CampignsController@extendCampaign');

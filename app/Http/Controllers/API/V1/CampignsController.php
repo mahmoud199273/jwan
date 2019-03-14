@@ -328,7 +328,7 @@ class CampignsController extends Controller
  
              $result = $campaigns->get();
 
-            $res = []; foreach($result as $item) $res[] = $item->id; dd($res);
+            // $res = []; foreach($result as $item) $res[] = $item->id; dd($res);
             
         return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('lang.read succefully'),200);
     }
