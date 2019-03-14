@@ -192,7 +192,6 @@ Route::post('influncer/update/profile', 'API\V1\UserController@updateInfluncerPr
  
 
  /* influncer offers route */
-
   Route::post('/influncer/create/offer','API\V1\OffersController@store');
   Route::post('/influncer/update/offer','API\V1\OffersController@update');
 
@@ -202,9 +201,7 @@ Route::post('/offer/user/status','API\V1\OffersController@offerStatus');
 
 Route::get('/user/campaign/offers/{campaign_id}','API\V1\OffersController@index');
 
-
 Route::get('/influncer/offers','API\V1\OffersController@allOffers');
-
 Route::get('/influncer/offer/{id}','API\V1\OffersController@show');
 
 

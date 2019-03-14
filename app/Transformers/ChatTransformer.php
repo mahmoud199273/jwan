@@ -9,13 +9,14 @@ use App\User;
 
 class ChatTransformer extends Transformer
 {
-	public function transform($chat) : array
-    {
-
-			$type_array = array(1=>"string", 2=>"url", 3=>"image", 4=>"file", 5=>"action");
+	public function transform($chat) : array {
+		if($chat->type==5){ $type = 1; $action = true; }
+		else { $type = $chat->type; $action = false; }
+		$type_array = array(1=>"string", 2=>"url", 3=>"image", 4=>"file", 5=>"action");
         return [
             'id'            => (int) $chat->id,
-            'type'       => (int) $chat->type,
+            'type'       => $type,
+            "action" => $action,
 		        'from_user_id'  => (int) $chat->from_user_id,
 						'from'					=> User::where('id', $chat->from_user_id)->get()->first(),
 			      'to_user_id'  => (int) $chat->to_user_id,
