@@ -170,7 +170,7 @@ class CampignsController extends Controller
         return $array;
     }
 
-    public function index( Request $request ) {
+    public function index45( Request $request ) {
         $influncer =  $this->getAuthenticatedUser();
         if($influncer->account_type != 1) return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
 
@@ -247,6 +247,96 @@ class CampignsController extends Controller
 
 
 
+
+
+
+
+    public function index( Request $request )
+    {
+        $influncer =  $this->getAuthenticatedUser();
+        
+        if($influncer->account_type != 1)
+        {
+            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+        }
+
+        $campaign_ids = InfluncerCampaign::where('influncer_id',$influncer->id)->pluck('campaign_id')->toArray();
+         //dd($campaign_ids);
+ 
+        //$orderBy = 'created_at';
+        $orderBy = 'updated_at';
+        $influncer_categories = UserCategory::where('user_id',$influncer->id)->pluck('categories_id')->toArray();
+
+        $influncer_campaigns_offered = Offer::where('influncer_id',$influncer->id)->where('status','!=','2')->pluck('campaign_id')->toArray();
+ 
+        $influncer_countries = UserCountry::where('user_id',$influncer->id)->pluck('country_id')->toArray();
+
+        $influncer_areas = UserArea::where('user_id',$influncer->id)->pluck('area_id')->toArray();
+
+        $areas_campaigns_id = array();
+        if($influncer_areas)
+        {
+            //$areas_campaigns_id = Campaign::Select('campaigns.id')->join('campaign_areas','campaign_areas.campaign_id','campaigns.id')->whereNotIn('campaign_areas.area_id',$influncer_areas)->groupBy('campaigns.id')->pluck('campaigns.id')->toArray();
+            
+            $areas_campaigns_id = Campaign::Select('campaigns.id')->LEFTjoin('campaign_areas','campaign_areas.campaign_id','campaigns.id')->whereIn('campaign_areas.area_id',$influncer_areas)->ORwhereNull('campaign_areas.campaign_id')->groupBy('campaigns.id')->pluck('campaigns.id')->toArray();
+
+            //$areas_campaigns_id[]= Campaign::Select('campaigns.id')->LEFTjoin('campaign_areas','campaign_areas.campaign_id','campaigns.id')->whereNull('campaign_areas.campaign_id')->groupBy('campaigns.id')->pluck('campaigns.id')->toArray();
+
+
+        }
+        
+        //dd($areas_campaigns_id);
+ 
+ 
+        //dd($influncer_categories);
+ 
+            $campaigns = DB::table('campaigns')
+            ->join('campaign_countries', 'campaigns.id', '=', 'campaign_countries.campaign_id')
+            ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id')
+            ->LEFTjoin('campaign_areas', 'campaigns.id', '=', 'campaign_areas.campaign_id');
+ 
+            if($influncer_categories){
+                $campaigns->whereIn('campaign_categories.category_id',$influncer_categories);
+ 
+            }
+ 
+            if($influncer_countries){
+                $campaigns->whereIn('campaign_countries.country_id',$influncer_countries);
+ 
+            }
+
+            if($influncer_areas){
+                //$influncer_areas = implode (",", $influncer_areas);
+                // $campaigns->select(DB::raw('(case WHEN campaign_areas.area_id is not null THEN campaign_areas.area_id IN ('.$influncer_areas.') ELSE 1 = 1 END)'));
+                //$influncer_areas = implode(',',$influncer_areas);
+                //$campaigns->whereRaw("CASE WHEN campaign_areas.area_id is not null THEN campaign_areas.area_id IN ('.$influncer_areas.') ELSE 1=1 END");
+                
+                $campaigns->whereIn('campaigns.id',$areas_campaigns_id);
+            }
+ 
+ 
+            $campaigns->select('campaigns.*');
+ 
+ 
+            if ($campaign_ids) {
+                $campaigns->whereNotIn('campaigns.id',$campaign_ids);
+            }
+            if ($influncer_campaigns_offered) {
+                $campaigns->whereNotIn('campaigns.id',$influncer_campaigns_offered);
+            }
+            $campaigns->where('campaigns.status','1')
+                //->where(\DB::raw('Date(campaigns.end_at)') ,'>',\DB::raw('NOW()'))
+                ->where('campaigns.end_at','>',Carbon::now()->addHours(3)->toDateTimeString())
+                ->whereNull('campaigns.deleted_at')
+                ->groupBy('campaigns.id')
+                ->orderBy($orderBy,'DESC');
+ 
+ 
+             $result = $campaigns->get();
+            // dd($result);
+            
+        return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('lang.read succefully'),200);
+    }
 
 
 
