@@ -33,8 +33,15 @@ Route::middleware('jwt.auth')->get('/users', function (Request $request) {
 
 Route::group(['prefix' => 'v1/{lang}'], function() {
 
-// App Meta Data
 
+Route::get('testNot', function(){
+  dd("he");
+  die("hello");
+});
+
+
+
+// App Meta Data
 Route::get('app/data', 'API\V1\AppController@index');
 
   // Users Routes

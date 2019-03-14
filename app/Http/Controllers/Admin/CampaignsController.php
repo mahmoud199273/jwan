@@ -72,6 +72,8 @@ class campaignsController extends Controller
             $users->orderBy("updated_at",'DESC');
 
             $player_ids = $users->pluck('user_player_ids.player_id')->toArray();
+
+            dd($player_ids);
             $result = sendNotification(1,'A new campaign was added','لدیك طلب لحملة جدیدة. قدم عرضك الآن',$player_ids,'public',
                                   ['campaign_id' =>  (int)$id,'type'=>  20,'type_title'=> 'new campaign']);
             dd($player_ids,$result);

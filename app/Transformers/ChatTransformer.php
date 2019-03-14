@@ -17,10 +17,6 @@ class ChatTransformer extends Transformer
             'id'            => (int) $chat->id,
             'type'       => $type,
             "action" => $action,
-		        'from_user_id'  => (int) $chat->from_user_id,
-						'from'					=> User::where('id', $chat->from_user_id)->get()->first(),
-			      'to_user_id'  => (int) $chat->to_user_id,
-						'to'					=> User::where('id', $chat->to_user_id)->get()->first(),
 						'offer_id'		=> (int) $chat->offer_id,
 						'campaign_id'		=> (int) $chat->campaign_id,
             'content'          => Crypt::decryptString($chat->content),
@@ -29,6 +25,11 @@ class ChatTransformer extends Transformer
 						'created_date_string'      => Carbon::createFromTimeStamp(strtotime($chat->created_at))->diffForHumans(),
             'sent_time'     => Carbon::parse($chat->created_at)->format('M,d Y H:i'),
             'sent_time_string'     => Carbon::createFromTimeStamp(strtotime($chat->created_at))->diffForHumans(),
+
+		        'from_user_id'  => (int) $chat->from_user_id,
+						'from'					=> User::where('id', $chat->from_user_id)->get()->first(),
+			      'to_user_id'  => (int) $chat->to_user_id,
+						'to'					=> User::where('id', $chat->to_user_id)->get()->first(),
         ];
     }
 }
