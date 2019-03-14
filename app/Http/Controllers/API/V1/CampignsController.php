@@ -327,7 +327,7 @@ class CampignsController extends Controller
                             ->groupBy('campaigns.id')->pluck('campaigns.id')->toArray();
             // dd($influencerCampaignsByAdmin, $where_not_in_ids);
 
-            $campaigns->orWhereIn('campaigns.id', $this->remove_array_from_array($influencerCampaignsByAdmin,$where_not_in_ids))
+            // $campaigns->orWhereIn('campaigns.id', $this->remove_array_from_array($influencerCampaignsByAdmin,$where_not_in_ids))
             //         ->whereNotIn('campaigns.id', $where_not_in_ids)
                     ;
 //------------------------------------------------------------------------------------------
@@ -343,7 +343,7 @@ class CampignsController extends Controller
  
              $result = $campaigns->get();
 
-            $res = []; foreach($result as $item) $res[] = $item->id; dd($res);
+            // $res = []; foreach($result as $item) $res[] = $item->id; dd($res);
             
         return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('lang.read succefully'),200);
     }
