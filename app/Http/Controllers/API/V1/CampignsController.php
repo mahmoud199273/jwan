@@ -41,7 +41,7 @@ class CampignsController extends Controller
 
 
 
-    public function index( Request $request )
+    public function index23( Request $request )
     {
         $influncer =  $this->getAuthenticatedUser();
 
@@ -149,7 +149,7 @@ class CampignsController extends Controller
             // $campaigns->union($influencerCampaignsByAdmin);
             $result = $campaigns->get();
 
-            // dd($result);
+            dd($result);
             // dd(DB::getQueryLog());
 
             
@@ -157,6 +157,91 @@ class CampignsController extends Controller
     }
 
 
+
+
+
+
+    private function remove_array_from_array($array, $remove_array){
+        $array = array_unique($array);
+        $remove_array = array_unique($remove_array);
+        foreach($remove_array as $elm1){
+            foreach($array as $key2=>$elm2) if($elm2==$elm1) unset($array[$key2]);
+        }
+        return $array;
+    }
+
+    public function index( Request $request ) {
+        $influncer =  $this->getAuthenticatedUser();
+        if($influncer->account_type != 1) return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
+
+        $selected_campaigns_ids = InfluncerCampaign::where('influncer_id',$influncer->id)->pluck('campaign_id')->toArray();
+        $orderBy = 'updated_at'; // 'created_at';
+        $influncer_categories = UserCategory::where('user_id',$influncer->id)->pluck('categories_id')->toArray();
+        $influncer_campaigns_offered = Offer::where('influncer_id',$influncer->id)->where('status','!=','2')->pluck('campaign_id')->toArray();
+        $influncer_countries = UserCountry::where('user_id',$influncer->id)->pluck('country_id')->toArray();
+        $influncer_areas = UserArea::where('user_id',$influncer->id)->pluck('area_id')->toArray();
+
+        $where_in_ids = [];
+        $where_not_in_ids = array_merge($selected_campaigns_ids, $influncer_campaigns_offered);
+
+        if(!empty($influncer_areas)) {
+            $areas_campaigns_id = Campaign::Select('campaigns.id')
+                    ->LEFTjoin('campaign_areas','campaign_areas.campaign_id','campaigns.id')
+                    ->whereIn('campaign_areas.area_id',$influncer_areas)
+                    ->ORwhereNull('campaign_areas.campaign_id')
+                    ->groupBy('campaigns.id')->pluck('campaigns.id')->toArray();
+            $where_in_ids = array_merge($where_in_ids, $areas_campaigns_id);
+        }
+
+
+        $campaigns = DB::table('campaigns')
+                ->join('campaign_countries', 'campaigns.id', '=', 'campaign_countries.campaign_id')
+                ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id')
+                ->LEFTjoin('campaign_areas', 'campaigns.id', '=', 'campaign_areas.campaign_id');
+ 
+        if(!empty($influncer_categories)){ $campaigns->whereIn('campaign_categories.category_id',$influncer_categories); }
+        if(!empty($influncer_countries)){ $campaigns->whereIn('campaign_countries.country_id',$influncer_countries); }
+        if($influncer->class){ $campaigns->where('campaigns.class',$influncer->class); }
+
+        $final_array = $this->remove_array_from_array($where_in_ids,$where_not_in_ids);
+        $campaigns->whereIn("campaigns.id",$final_array);
+        
+        $campaigns->select('campaigns.*');
+ 
+
+//-----------This Section Search For Campaigns Selected By Admin--------------------------
+            $influencerCampaignsByAdmin = DB::table('campaigns')
+                            ->join('influencer_campaigns_by_admin',"campaigns.id", "=", 'influencer_campaigns_by_admin.campaign_id')
+                            ->where("influencer_campaigns_by_admin.Influencer_id", $influncer->id)
+                            ->groupBy('campaigns.id')->pluck('campaigns.id')->toArray();
+            // dd($influencerCampaignsByAdmin, $where_not_in_ids);
+
+            // $campaigns->orWhereIn('campaigns.id', $this->remove_array_from_array($influencerCampaignsByAdmin,$where_not_in_ids))
+            //         ->whereNotIn('campaigns.id', $where_not_in_ids)
+                    ;
+//------------------------------------------------------------------------------------------
+
+
+            $campaigns->where('campaigns.status','1')
+                //->where(\DB::raw('Date(campaigns.end_at)') ,'>',\DB::raw('NOW()'))
+                ->where('campaigns.end_at','>',Carbon::now()->addHours(3)->toDateTimeString())
+                ->whereNull('campaigns.deleted_at')
+                ->groupBy('campaigns.id')
+                ->orderBy($orderBy,'DESC');
+                // ->orderBy("id",'ASC');
+
+
+            // if(env("APP_ENV")=="local") DB::enableQueryLog();
+
+            // $campaigns->union($influencerCampaignsByAdmin);
+            $result = $campaigns->get();
+
+            dd($result);
+            // dd(DB::getQueryLog());
+
+            
+        return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('lang.read succefully'),200);
+    }
 
 
 

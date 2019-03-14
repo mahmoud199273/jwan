@@ -1,4 +1,6 @@
 <?php
+use App\Helpers\LoggerHelper as logg;
+logg::setChannel("notifications");
 
 
     function sendNotification($account_type, $msg = 'new message',$msg_ar = 'new message ar' ,$player_id = null ,$tag_key="chat",  $data = array())
@@ -26,6 +28,7 @@
                         'contents' => $content,
                         'content_available' => true
                         );
+
         $fields = json_encode($fields);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
@@ -38,6 +41,9 @@
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         $response = curl_exec($ch);
         curl_close($ch);
+
+        logg::log($response,"NotificationSent");
+
         return $response;
     }
 

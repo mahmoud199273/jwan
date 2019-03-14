@@ -94,6 +94,9 @@ class campaignsController extends Controller
      public function search( Request $request )
     {
         //dd(10);
+        $influencers = User::where('account_type','1')->get();
+        $admin_camp = InfluencerCampaignsByAdmin::all();
+
         $query =  $request->q;
         if ( $query == "") {
             return redirect()->back();
@@ -103,10 +106,12 @@ class campaignsController extends Controller
                                     ->orWhere('created_at','LIKE','%'.$query.'%')
                                      ->paginate(10);
             $campaigns->appends( ['q' => $request->q] );
+            $message = __('admin.no_result');
+
             if (count ( $campaigns ) > 0){
-                return view('admin.campaigns.index',[ 'campaigns' => $campaigns ])->withQuery($query);
+                return view('admin.campaigns.index',compact('campaigns','influencers','admin_camp'))->withQuery($query);
             }else{
-                return view('admin.campaigns.index',[ 'campaigns'=> null ,'message' => __('admin.no_result') ]);
+                return view('admin.campaigns.index',compact('campaigns','influencers','admin_camp',"message"));
             }
         }
     }

@@ -44,17 +44,23 @@ return [
             'path' => storage_path('logs/lumen.log'),
             'level' => 'debug',
         ],
-        'payment' => [
-            'driver' => 'single',
-            'path' => storage_path('logs/payment-'.date("d-m-Y").".log"),
-            'level' => 'debug',
-        ],
-
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/Daily-'.date("d-m-Y").".log"),
             'level' => 'debug',
             'days' => 14,
+        ],
+
+
+        'payment' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/payment-'.date("d-m-Y").".log"),
+            'level' => 'debug',
+        ],
+        'notifications' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/notifications-'.date("d-m-Y").".log"),
+            'level' => 'debug',
         ],
 
 

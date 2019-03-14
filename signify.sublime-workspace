@@ -44,63 +44,18 @@
 	"buffers":
 	[
 		{
-			"file": "routes/web.php",
-			"settings":
-			{
-				"buffer_size": 6266,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "routes/api.php",
 			"settings":
 			{
 				"buffer_size": 10758,
-				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "app/Http/Controllers/API/V1/AuthController.php",
+			"file": "app/Http/Controllers/API/V1/ChatController.php",
 			"settings":
 			{
-				"buffer_size": 30637,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/Http/Controllers/Admin/InvitationsController.php",
-			"settings":
-			{
-				"buffer_size": 2542,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/Transformers/OffersTransformer.php",
-			"settings":
-			{
-				"buffer_size": 3752,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "database/migrations/2018_10_11_082722_create_offers_table.php",
-			"settings":
-			{
-				"buffer_size": 1737,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/Transformers/TransactionsTransformer.php",
-			"settings":
-			{
-				"buffer_size": 7765,
+				"buffer_size": 6411,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -109,68 +64,42 @@
 			"file": "app/Http/Controllers/API/V1/OffersController.php",
 			"settings":
 			{
-				"buffer_size": 56747,
+				"buffer_size": 56936,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "app/Transactions.php",
+			"file": "app/Transformers/ChatTransformer.php",
 			"settings":
 			{
-				"buffer_size": 916,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/Http/Controllers/API/V1/InvitationsController.php",
-			"settings":
-			{
-				"buffer_size": 2207,
+				"buffer_size": 1342,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "app/Http/Controllers/API/V1/AppController.php",
+			"file": "/C/Users/cems-it/Desktop/server login.txt",
 			"settings":
 			{
-				"buffer_size": 1736,
+				"buffer_size": 408,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "app/Http/Controllers/API/V1/CampignsController.php",
+			"settings":
+			{
+				"buffer_size": 44437,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "resources/views/admin/invitations/invitationCodes.blade.php",
+			"file": "routes/web.php",
 			"settings":
 			{
-				"buffer_size": 4241,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/Http/Controllers/Admin/CityController.php",
-			"settings":
-			{
-				"buffer_size": 3044,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/Http/Controllers/Admin/ContactUsController.php",
-			"settings":
-			{
-				"buffer_size": 1156,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "resources/lang/ar/admin.php",
-			"settings":
-			{
-				"buffer_size": 13781,
-				"encoding": "UTF-8",
+				"buffer_size": 6266,
 				"line_ending": "Windows"
 			}
 		}
@@ -214,15 +143,36 @@
 	],
 	"file_history":
 	[
-		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/TransactionsController.php",
-		"/C/xampp/htdocs/signify-backend/config/app.php",
-		"/C/xampp/htdocs/signify-backend/app/Helpers/LoggerHelper.php",
-		"/C/xampp/htdocs/signify-backend/storage/logs/Daily-12-03-2019-2019-03-12.log",
 		"/C/xampp/htdocs/signify-backend/.env",
-		"/C/xampp/htdocs/signify-backend/config/logging.php",
-		"/C/xampp/htdocs/signify-backend/app/Offer.php",
-		"/C/xampp/htdocs/signify-backend/app/Transformers/TransactionsTransformer.php",
+		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/CampaignsController.php",
+		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/CampignsController.php",
+		"/C/xampp/htdocs/signify-backend/app/Transformers/CampaignsTransformer.php",
+		"/C/xampp/htdocs/signify-backend/resources/lang/ar/admin.php",
+		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/ContactUsController.php",
+		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/CityController.php",
+		"/C/xampp/htdocs/signify-backend/resources/views/admin/invitations/invitationCodes.blade.php",
+		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/AppController.php",
+		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/InvitationsController.php",
+		"/C/xampp/htdocs/signify-backend/app/Transactions.php",
+		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/OffersController.php",
+		"/C/xampp/htdocs/signify-backend/app/Helpers/LoggerHelper.php",
+		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/TransactionsController.php",
+		"/C/xampp/htdocs/signify-backend/database/migrations/2018_10_11_082722_create_offers_table.php",
 		"/C/xampp/htdocs/signify-backend/app/Transformers/OffersTransformer.php",
+		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/InvitationsController.php",
+		"/C/xampp/htdocs/signify-backend/routes/web.php",
+		"/C/xampp/htdocs/signify-backend/app/Helpers/ResponseGenerator.php",
+		"/C/xampp/htdocs/signify-backend/routes/api.php",
+		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/AuthController.php",
+		"/C/Users/cems-it/Desktop/server login.txt",
+		"/C/xampp/htdocs/signify-backend/vendor/psy/psysh/test/FakeShell.php",
+		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/TransactionsController.php",
+		"/C/xampp/htdocs/signify-backend/config/logging.php",
+		"/C/xampp/htdocs/signify-backend/vendor/ramsey/uuid/src/Generator/RandomBytesGenerator.php",
+		"/C/xampp/htdocs/signify-backend/app/Transformers/TransactionsTransformer.php",
+		"/C/xampp/htdocs/signify-backend/config/app.php",
+		"/C/xampp/htdocs/signify-backend/storage/logs/Daily-12-03-2019-2019-03-12.log",
+		"/C/xampp/htdocs/signify-backend/app/Offer.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/UsersController.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/BankAccountsController.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/InfluencersController.php",
@@ -231,40 +181,28 @@
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/UserController.php",
 		"/C/xampp/htdocs/signify-backend/resources/views/admin/templates/side_nav.blade.php",
 		"/C/xampp/htdocs/signify-backend/app/Models/invitationCodes.php",
-		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/InvitationsController.php",
 		"/C/xampp/htdocs/signify-backend/resources/views/admin/invitations/index.blade.php",
-		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/AppController.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Requests/Admin/Setting/EditSettingRequest.php",
-		"/C/xampp/htdocs/signify-backend/app/Helpers/ResponseGenerator.php",
 		"/C/xampp/htdocs/signify-backend/app/Models/Invitations.php",
 		"/C/Users/cems-it/Desktop/localProjects/Basic-React-Redux-server/package.json",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/SettingsController.php",
 		"/C/xampp/htdocs/signify-backend/app/Models/Admin/Invitations.php",
 		"/C/xampp/htdocs/signify-backend/vendor/phpunit/phpunit/tests/end-to-end/mock-objects/generator/nonexistent_class_with_namespace_starting_with_separator.phpt",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Auth/VerificationController.php",
-		"/C/xampp/htdocs/signify-backend/routes/api.php",
-		"/C/xampp/htdocs/signify-backend/resources/lang/ar/admin.php",
 		"/C/xampp/htdocs/signify-backend/resources/views/admin/settings/edit.blade.php",
-		"/C/xampp/htdocs/signify-backend/routes/web.php",
 		"/C/xampp/htdocs/testing/nodejs/index.html",
-		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/InvitationsController.php",
 		"/C/xampp/htdocs/signify-backend/resources/views/admin/invitations/index.php",
 		"/C/xampp/htdocs/signify-backend/resources/views/admin/settings/index.blade.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/VerificationsController.php",
 		"/C/xampp/htdocs/signify-backend/vendor/laravel/framework/src/Illuminate/Support/Facades/Request.php",
-		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/TransactionsController.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/AboutAppController.php",
 		"/C/xampp/htdocs/signify-backend/app/Setting.php",
-		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/CampignsController.php",
-		"/C/xampp/htdocs/signify-backend/app/Transformers/CampaignsTransformer.php",
 		"/C/xampp/htdocs/signify-backend/app/Models/AppSettings.php",
 		"/C/xampp/htdocs/signify-backend/app/Models/API/Settings.php",
 		"/C/xampp/htdocs/signify-backend/app/AboutApp.php",
 		"/C/Users/cems-it/Downloads/transactions.sql",
-		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/AuthController.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/AuthController.php",
 		"/C/xampp/htdocs/signify-backend/.gitignore",
-		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/API/V1/OffersController.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/OffersController.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Kernel.php",
 		"/C/xampp/htdocs/signify-backend/resources/lang/ar/api_msgs.php",
@@ -273,7 +211,6 @@
 		"/C/xampp/htdocs/signify-backend/app/Helpers/send_sms.php",
 		"/C/xampp/htdocs/signify-backend/storage/framework/cache/data.txt",
 		"/C/xampp/htdocs/signify-backend/storage/framework/cache/.gitignore",
-		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Admin/CampaignsController.php",
 		"/C/xampp/htdocs/signify-backend/app/Http/Controllers/Auth/RegisterController.php",
 		"/C/xampp/htdocs/signify-backend/config/jwt.php",
 		"/C/xampp/htdocs/signify-backend/config/auth.php",
@@ -345,9 +282,25 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"chat_content",
+			"chat_type",
+			"$chat->type",
+			"chat",
+			"Chat",
+			"chat",
+			"InfluncerCampaign",
+			"InfluencerCampaignsByAdmin",
+			"notify",
+			"msg",
+			"Payment",
+			"CustomLogFile1",
+			"noti",
+			"mers",
+			"logg",
+			"llog",
 			"notifyDB",
 			"Setting",
 			"'API\\V1\\TransactionsController@testingSomething'",
@@ -436,40 +389,11 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "routes/web.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6266,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								455,
-								455
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "routes/api.php",
 					"semi_transient": false,
 					"settings":
@@ -481,8 +405,8 @@
 						"selection":
 						[
 							[
-								9756,
-								9760
+								6195,
+								6195
 							]
 						],
 						"settings":
@@ -492,177 +416,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 4572.0,
+						"translation.y": 2898.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "app/Http/Controllers/API/V1/AuthController.php",
+					"buffer": 1,
+					"file": "app/Http/Controllers/API/V1/ChatController.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 30637,
+						"buffer_size": 6411,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								28305,
-								28317
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 17586.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "app/Http/Controllers/Admin/InvitationsController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2542,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2539,
-								2539
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 864.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "app/Transformers/OffersTransformer.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3752,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1301,
-								1301
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 810.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "database/migrations/2018_10_11_082722_create_offers_table.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1737,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1395,
-								1395
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 378.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "app/Transformers/TransactionsTransformer.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7765,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6111,
-								6111
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2268.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "app/Http/Controllers/API/V1/OffersController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 56747,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								19304,
-								19304
+								5634,
+								5646
 							]
 						],
 						"settings":
@@ -672,220 +446,156 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 8170.0,
+						"translation.y": 2754.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/Http/Controllers/API/V1/OffersController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 56936,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								26431,
+								26431
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 10746.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/Transformers/ChatTransformer.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1342,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								353,
+								353
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 324.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/C/Users/cems-it/Desktop/server login.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 408,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								148,
+								162
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "app/Http/Controllers/API/V1/CampignsController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 44437,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5734,
+								5734
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2068.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "routes/web.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6266,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3998,
+								4017
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1656.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "app/Transactions.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 916,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 108.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "app/Http/Controllers/API/V1/InvitationsController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2207,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1916,
-								1942
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 612.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "app/Http/Controllers/API/V1/AppController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1736,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1710,
-								1710
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 432.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 14,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "resources/views/admin/invitations/invitationCodes.blade.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4241,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1180,
-								1180
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "app/Http/Controllers/Admin/CityController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3044,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "app/Http/Controllers/Admin/ContactUsController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1156,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "resources/lang/ar/admin.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 13781,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								10929,
-								10931
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3657.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 13,
 					"type": "text"
 				}
 			]
@@ -940,8 +650,128 @@
 		"selected_items":
 		[
 			[
+				"offercon",
+				"app\\Http\\Controllers\\API\\V1\\OffersController.php"
+			],
+			[
+				"chattran",
+				"app\\Transformers\\ChatTransformer.php"
+			],
+			[
+				"chatcont",
+				"app\\Http\\Controllers\\API\\V1\\ChatController.php"
+			],
+			[
+				".env",
+				".env"
+			],
+			[
+				"CampignsController",
+				"app\\Http\\Controllers\\API\\V1\\CampignsController.php"
+			],
+			[
+				"CampaignsController",
+				"app\\Http\\Controllers\\Admin\\CampaignsController.php"
+			],
+			[
+				"web.",
+				"routes\\web.php"
+			],
+			[
+				"campatra",
+				"app\\Transformers\\CampaignsTransformer.php"
+			],
+			[
+				"campacon",
+				"app\\Http\\Controllers\\Admin\\CampaignsController.php"
+			],
+			[
+				"api",
+				"routes\\api.php"
+			],
+			[
+				"responsg",
+				"app\\Helpers\\ResponseGenerator.php"
+			],
+			[
+				"reshel",
+				"vendor\\psy\\psysh\\test\\FakeShell.php"
+			],
+			[
+				"logg",
+				"app\\Helpers\\LoggerHelper.php"
+			],
+			[
+				"respons",
+				"app\\Helpers\\ResponseGenerator.php"
+			],
+			[
+				"transactioncontroller",
+				"app\\Http\\Controllers\\API\\V1\\TransactionsController.php"
+			],
+			[
+				"transaccon",
+				"app\\Http\\Controllers\\Admin\\TransactionsController.php"
+			],
+			[
+				"logging",
+				"config\\logging.php"
+			],
+			[
+				"respong",
+				"app\\Helpers\\ResponseGenerator.php"
+			],
+			[
+				"resgene",
+				"vendor\\ramsey\\uuid\\src\\Generator\\RandomBytesGenerator.php"
+			],
+			[
+				"res",
+				"app\\Helpers\\ResponseGenerator.php"
+			],
+			[
+				"loggerh",
+				"app\\Helpers\\LoggerHelper.php"
+			],
+			[
+				"transaccont",
+				"app\\Http\\Controllers\\API\\V1\\TransactionsController.php"
+			],
+			[
 				"transac",
 				"app\\Transformers\\TransactionsTransformer.php"
+			],
+			[
+				"logger",
+				"app\\Helpers\\LoggerHelper.php"
+			],
+			[
+				"resp",
+				"app\\Helpers\\ResponseGenerator.php"
+			],
+			[
+				"transactioncontro",
+				"app\\Http\\Controllers\\API\\V1\\TransactionsController.php"
+			],
+			[
+				"transacon",
+				"app\\Http\\Controllers\\Admin\\TransactionsController.php"
+			],
+			[
+				"transa",
+				"app\\Transformers\\TransactionsTransformer.php"
+			],
+			[
+				"response",
+				"app\\Helpers\\ResponseGenerator.php"
+			],
+			[
+				"log",
+				"app\\Helpers\\LoggerHelper.php"
+			],
+			[
+				"authcon",
+				"app\\Http\\Controllers\\API\\V1\\AuthController.php"
 			],
 			[
 				"transact",
@@ -972,14 +802,6 @@
 				"app\\Offer.php"
 			],
 			[
-				".env",
-				".env"
-			],
-			[
-				"respons",
-				"app\\Helpers\\ResponseGenerator.php"
-			],
-			[
 				"offertr",
 				"app\\Transformers\\OffersTransformer.php"
 			],
@@ -996,14 +818,6 @@
 				"database\\migrations\\2018_10_11_082722_create_offers_table.php"
 			],
 			[
-				"offercon",
-				"app\\Http\\Controllers\\API\\V1\\OffersController.php"
-			],
-			[
-				"transa",
-				"app\\Transformers\\TransactionsTransformer.php"
-			],
-			[
 				"transcon",
 				"app\\Http\\Controllers\\API\\V1\\TransactionsController.php"
 			],
@@ -1014,10 +828,6 @@
 			[
 				"offercontroll",
 				"app\\Http\\Controllers\\API\\V1\\OffersController.php"
-			],
-			[
-				"api",
-				"routes\\api.php"
 			],
 			[
 				"Transactions",
@@ -1070,10 +880,6 @@
 			[
 				"invitacon",
 				"app\\Http\\Controllers\\Admin\\InvitationsController.php"
-			],
-			[
-				"transactioncontroller",
-				"app\\Http\\Controllers\\API\\V1\\TransactionsController.php"
 			],
 			[
 				"side",
@@ -1156,10 +962,6 @@
 				"app\\Http\\Controllers\\Admin\\UsersController.php"
 			],
 			[
-				"transaccon",
-				"app\\Http\\Controllers\\Admin\\TransactionsController.php"
-			],
-			[
 				"transformca",
 				"app\\Transformers\\CampaignsTransformer.php"
 			],
@@ -1170,10 +972,6 @@
 			[
 				"aboutapp",
 				"app\\Http\\Controllers\\API\\V1\\AboutAppController.php"
-			],
-			[
-				"authcon",
-				"app\\Http\\Controllers\\API\\V1\\AuthController.php"
 			],
 			[
 				".ignore",
@@ -1288,10 +1086,6 @@
 				"app\\Http\\Controllers\\Admin\\CampaignsController.php"
 			],
 			[
-				"CampaignsController",
-				"app\\Http\\Controllers\\Admin\\CampaignsController.php"
-			],
-			[
 				"API\\V1\\CampignsController.php",
 				"app\\Http\\Controllers\\API\\V1\\CampignsController.php"
 			],
@@ -1321,10 +1115,6 @@
 			],
 			[
 				"campaigncontrol",
-				"app\\Http\\Controllers\\Admin\\CampaignsController.php"
-			],
-			[
-				"campacon",
 				"app\\Http\\Controllers\\Admin\\CampaignsController.php"
 			],
 			[
@@ -1370,14 +1160,6 @@
 			[
 				"routes/",
 				"routes\\web.php"
-			],
-			[
-				"loggin",
-				"vendor\\laravel\\lumen-framework\\config\\logging.php"
-			],
-			[
-				"compaincont",
-				"app\\Http\\Controllers\\Admin\\ComplaintsController.php"
 			]
 		],
 		"width": 0.0
