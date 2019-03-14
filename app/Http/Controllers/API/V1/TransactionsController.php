@@ -322,7 +322,8 @@ class TransactionsController extends Controller
                     "&currency=".Self::PaymentOptions["Currency"] .
                     "&paymentType=".Self::PaymentOptions["PaymentType"] .
                     "&testMode=".Self::PaymentOptions["testMode"] .
-                    "&merchantTransactionId=".$merchantTransactionId .
+                    // "&merchantTransactionId=".$merchantTransactionId .
+                    "&merchantTransactionId=".
                     "&customer.email=".$user->email .
                     "&notificationUrl=".env("APP_URL").Self::PaymentOptions["redirectLink"];
         $ch = curl_init();
