@@ -194,6 +194,8 @@ class CampignsController extends Controller
         }
 
 
+
+
         $campaigns = DB::table('campaigns')
                 ->join('campaign_countries', 'campaigns.id', '=', 'campaign_countries.campaign_id')
                 ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id')
