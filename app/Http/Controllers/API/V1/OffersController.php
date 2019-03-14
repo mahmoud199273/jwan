@@ -1063,7 +1063,7 @@ class OffersController extends Controller
         $chat->created_at   = Carbon::now()->addHours(3);
         $chat->updated_at   = Carbon::now()->addHours(3);
         $chat->content = Crypt::encryptString($request->description);
-        $chat->type = 5;
+        $chat->type = 1;
         $chat->save();
         }
 

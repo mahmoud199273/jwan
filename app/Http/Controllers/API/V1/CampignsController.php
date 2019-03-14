@@ -318,6 +318,21 @@ class CampignsController extends Controller
             if ($influncer_campaigns_offered) {
                 $campaigns->whereNotIn('campaigns.id',$influncer_campaigns_offered);
             }
+
+
+//-----------This Section Search For Campaigns Selected By Admin--------------------------
+            $influencerCampaignsByAdmin = DB::table('campaigns')
+                            ->join('influencer_campaigns_by_admin',"campaigns.id", "=", 'influencer_campaigns_by_admin.campaign_id')
+                            ->where("influencer_campaigns_by_admin.Influencer_id", $influncer->id)
+                            ->groupBy('campaigns.id')->pluck('campaigns.id')->toArray();
+            // dd($influencerCampaignsByAdmin, $where_not_in_ids);
+
+            $campaigns->orWhereIn('campaigns.id', $this->remove_array_from_array($influencerCampaignsByAdmin,$where_not_in_ids))
+            //         ->whereNotIn('campaigns.id', $where_not_in_ids)
+                    ;
+//------------------------------------------------------------------------------------------
+
+                    
             $campaigns->where('campaigns.status','1')
                 //->where(\DB::raw('Date(campaigns.end_at)') ,'>',\DB::raw('NOW()'))
                 ->where('campaigns.end_at','>',Carbon::now()->addHours(3)->toDateTimeString())
@@ -328,7 +343,7 @@ class CampignsController extends Controller
  
              $result = $campaigns->get();
 
-            // $res = []; foreach($result as $item) $res[] = $item->id; dd($res);
+            $res = []; foreach($result as $item) $res[] = $item->id; dd($res);
             
         return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('lang.read succefully'),200);
     }

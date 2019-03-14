@@ -139,9 +139,8 @@ public function store(Request $request)
           $chat->save();
         }  
         
-
         // push notifications
-
+        
 
         $player_ids = $this->getUserPlayerIds($to_user_id);
         Notification::create(['user_id' => $to_user_id,
