@@ -308,7 +308,8 @@ class CampignsController extends Controller
                 $campaigns->whereIn('campaigns.id',$areas_campaigns_id);
             }
  
- 
+            if($influncer->class){ $campaigns->where('campaigns.class',$influncer->class); }
+
             $campaigns->select('campaigns.*');
  
  
@@ -321,18 +322,22 @@ class CampignsController extends Controller
 
 
 //-----------This Section Search For Campaigns Selected By Admin--------------------------
+            $where_not_in_ids = array_merge ($campaign_ids, $influncer_campaigns_offered);
             $influencerCampaignsByAdmin = DB::table('campaigns')
                             ->join('influencer_campaigns_by_admin',"campaigns.id", "=", 'influencer_campaigns_by_admin.campaign_id')
                             ->where("influencer_campaigns_by_admin.Influencer_id", $influncer->id)
                             ->groupBy('campaigns.id')->pluck('campaigns.id')->toArray();
-            // dd($influencerCampaignsByAdmin, $where_not_in_ids);
+            // dd($influencerCampaignsByAdmin );
 
-            // $campaigns->orWhereIn('campaigns.id', $this->remove_array_from_array($influencerCampaignsByAdmin,$where_not_in_ids))
-            //         ->whereNotIn('campaigns.id', $where_not_in_ids)
-                    ;
+            // $campaigns
+            // ->orWhereIn('campaigns.id', $this->remove_array_from_array($influencerCampaignsByAdmin,$where_not_in_ids))
+
+                // ->orWhereIn('campaigns.id', $influencerCampaignsByAdmin)
+                    // ->whereNotIn('campaigns.id', $where_not_in_ids)
+                    // ;
 //------------------------------------------------------------------------------------------
 
-                    
+
             $campaigns->where('campaigns.status','1')
                 //->where(\DB::raw('Date(campaigns.end_at)') ,'>',\DB::raw('NOW()'))
                 ->where('campaigns.end_at','>',Carbon::now()->addHours(3)->toDateTimeString())
