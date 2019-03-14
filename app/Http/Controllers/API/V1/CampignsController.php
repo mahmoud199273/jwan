@@ -193,9 +193,6 @@ class CampignsController extends Controller
             $where_in_ids = array_merge($where_in_ids, $areas_campaigns_id);
         }
 
-
-
-
         $campaigns = DB::table('campaigns')
                 ->join('campaign_countries', 'campaigns.id', '=', 'campaign_countries.campaign_id')
                 ->join('campaign_categories', 'campaigns.id', '=', 'campaign_categories.campaign_id')
@@ -203,9 +200,9 @@ class CampignsController extends Controller
  
         if(!empty($influncer_categories)){ $campaigns->whereIn('campaign_categories.category_id',$influncer_categories); }
         if(!empty($influncer_countries)){ $campaigns->whereIn('campaign_countries.country_id',$influncer_countries); }
-        if($influncer->class){ $campaigns->where('campaigns.class',$influncer->class); }
+        // if($influncer->class){ $campaigns->where('campaigns.class',$influncer->class); }
 
-        $final_array = $this->remove_array_from_array($where_in_ids,$where_not_in_ids);
+        $final_array = $this->remove_array_from_array($where_in_ids, $where_not_in_ids);
         $campaigns->whereIn("campaigns.id",$final_array);
         
         $campaigns->select('campaigns.*');
@@ -238,7 +235,8 @@ class CampignsController extends Controller
             // $campaigns->union($influencerCampaignsByAdmin);
             $result = $campaigns->get();
 
-            dd($result);
+            // $res = []; foreach($result as $item) $res[] = $item->id; dd($res);
+
             // dd(DB::getQueryLog());
 
             
@@ -251,14 +249,10 @@ class CampignsController extends Controller
 
 
 
-    public function index( Request $request )
-    {
+    public function index( Request $request ) {
         $influncer =  $this->getAuthenticatedUser();
         
-        if($influncer->account_type != 1)
-        {
-            return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized'));
-        }
+        if($influncer->account_type != 1) {return $this->setStatusCode(404)->respondWithError(trans('api_msgs.not_authorized')); }
 
         $campaign_ids = InfluncerCampaign::where('influncer_id',$influncer->id)->pluck('campaign_id')->toArray();
          //dd($campaign_ids);
@@ -333,7 +327,8 @@ class CampignsController extends Controller
  
  
              $result = $campaigns->get();
-            // dd($result);
+
+            $res = []; foreach($result as $item) $res[] = $item->id; dd($res);
             
         return $this->sendResponse( $this->campaignsTransformer->transformCollection($result),trans('lang.read succefully'),200);
     }
