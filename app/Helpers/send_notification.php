@@ -42,7 +42,7 @@ logg::setChannel("notifications");
         $response = curl_exec($ch);
         curl_close($ch);
 
-        logg::log($response,"NotificationSent");
+        logg::log(["request"=>$fields, "response"=>$response],"NotificationSent");
 
         return $response;
     }
