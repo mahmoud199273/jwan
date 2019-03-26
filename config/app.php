@@ -148,7 +148,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Pawlox\VideoThumbnail\VideoThumbnailServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -168,7 +167,6 @@ return [
         //Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
 
-        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
     ],
 
@@ -223,7 +221,6 @@ return [
         //'Mobily'    => abdullahobaid\mobilywslaraval\Mobily::class,
         'JWTAuth'=>'Tymon\JWTAuth\Facades\JWTAuth',
         'JWTFactory'=>'Tymon\JWTAuth\Facades\JWTFactory',
-        'VideoThumbnail' => Pawlox\VideoThumbnail\Facade\VideoThumbnail::class,
 
     ],
 

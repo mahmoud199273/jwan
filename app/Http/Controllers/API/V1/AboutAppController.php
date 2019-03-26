@@ -20,18 +20,28 @@ class AboutAppController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
         $about_arr = [];
         $about = AboutApp::first();
-        $about_arr['body']      = $about->body;
-        $about_arr['body_ar']      = $about->body_ar;
-        $about_arr['facebook']  = $about ?  $about->fb_link : "http://facebook.com";
-        $about_arr['twitter']   = $about ? $about->twitter_link : "http://twitter.com";
-        $about_arr['google']    = $about ? $about->google_link : "http://google.com";
-        $about_arr['instagram'] = $about ? $about->insta_link : "http://instagram.com";
-
-        $about_arr['snapchat'] = $about ? $about->snap_link : "http://snapchat.com";
+        // $about_arr['body']      = $about->body;
+        // $about_arr['body_ar']      = $about->body_ar;
+        // $about_arr['facebook']  = $about ?  $about->fb_link : "http://facebook.com";
+        // $about_arr['twitter']   = $about ? $about->twitter_link : "http://twitter.com";
+        // $about_arr['google']    = $about ? $about->google_link : "http://google.com";
+        // $about_arr['instagram'] = $about ? $about->insta_link : "http://instagram.com";
+        // $about_arr['snapchat'] = $about ? $about->snap_link : "http://snapchat.com";
+        if($about){
+            $about_arr['privacy_title'] =  	(App::isLocale('en'))? $about->privacy_title_en : $about->privacy_title_ar;
+            $about_arr['privacy_policy'] = 	(App::isLocale('en'))? $about->privacy_policy_en : $about->privacy_policy_ar;
+            $about_arr['term_title'] = 	(App::isLocale('en'))? $about->influncer_privacy_title_en : $about->influncer_privacy_title_ar;
+            $about_arr['term_conditions'] = 	(App::isLocale('en'))? $about->influncer_privacy_policy_en : $about->influncer_privacy_policy_ar;
+        }else{
+            $about_arr['privacy_title'] =  "";
+            $about_arr['privacy_policy'] = "";
+            $about_arr['term_title'] = "";
+            $about_arr['term_conditions'] = "";
+        }
 
         return $this->respond([
             'data' => $about_arr,

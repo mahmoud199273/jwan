@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatenathionalitiesTable extends Migration
+class CreateContactAnswersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreatenathionalitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('nationalities', function (Blueprint $table) {
+        Schema::create('contact_answers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('name_ar');
+            $table->string('quest_ids')->nullable();
+            $table->string('answers')->nullable();
+            $table->string('notes')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreatenathionalitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nationalities');
+        Schema::dropIfExists('contact_answers');
     }
 }

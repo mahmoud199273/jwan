@@ -33,10 +33,10 @@ class CreateColumnToTables extends Migration
 
          });
 
-          Schema::table('nathionalities', function ( $table) {
-            $table->softDeletes();
+         //  Schema::table('nathionalities', function ( $table) {
+         //    $table->softDeletes();
 
-         });
+         // });
 
           Schema::table('user_categories', function ( $table) {
             $table->softDeletes();
@@ -53,10 +53,10 @@ class CreateColumnToTables extends Migration
 
          });
 
-          Schema::table('admins', function ( $table) {
-            $table->softDeletes();
+         //  Schema::table('admins', function ( $table) {
+         //    $table->softDeletes();
 
-         });
+         // });
 
           Schema::table('campaigns', function ($table) {
             $table->softDeletes();
