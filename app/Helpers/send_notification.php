@@ -7,13 +7,13 @@ logg::setChannel("notifications");
 		{
 			if($account_type == 0) //user
 			{
-					$app_id = "2a3346f8-2d2b-4658-8577-d8e8f9903932";
-					$auth_key = "YjVhODBiYjMtMmZmZi00ZDc0LTgyZmYtMDNmM2U2YzY3MjVm";
+					$app_id = "??????";
+					$auth_key = "???????";
 			}
 			elseif($account_type == 1)//influncer
 			{
-					$app_id = "b424f52b-e243-411c-81b0-b3cc568470b2";
-					$auth_key = "YTJiZDk1OGUtZmYxMy00ZWMyLWI1YTUtNDcxODVkNjQzNWJm";
+					$app_id = "??????";
+					$auth_key = "???????";
       }
        //$daTags = array(array("key" => "$tag_key", "relation" => "=", "value" => 1),);
         $content = array(
